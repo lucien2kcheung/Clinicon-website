@@ -119,6 +119,10 @@ section[id],div[id="top"]{scroll-margin-top:160px}
 .chip:hover{border-color:var(--teal)}
 .chip.active{background:var(--ink);color:#fff;border-color:var(--ink)}
 .grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(265px,1fr));gap:26px}
+.seemore-wrap{display:flex;justify-content:center;margin-top:34px}
+.seemore-btn{background:var(--white);color:var(--ink);border:1.5px solid var(--ink);padding:12px 34px;border-radius:999px;font-family:inherit;font-weight:600;font-size:.92rem;cursor:pointer;transition:.2s}
+.seemore-btn:hover{background:var(--ink);color:#fff}
+.seemore-btn[hidden]{display:none}
 .card{background:var(--white);border:1px solid var(--line);border-radius:var(--radius);overflow:hidden;display:flex;flex-direction:column;transition:transform .25s,box-shadow .25s;cursor:pointer}
 .card:hover{transform:translateY(-5px);box-shadow:var(--shadow-lg)}
 .card .imgwrap{aspect-ratio:4/3;background:#eef3f5;overflow:hidden;position:relative}
@@ -263,7 +267,7 @@ footer .fbtm{padding-top:22px;font-size:.84rem;display:flex;justify-content:spac
 
 <!-- TOP BAR -->
 <div class="topbar"><div class="wrap">
-  <span data-i18n="tb_tagline">🇭🇰 Hong Kong · Authorized partner for 30+ brands incl. Solventum (previously 3M Healthcare)</span>
+  <span data-i18n="tb_tagline">Hong Kong · Authorized partner for 30+ brands incl. Solventum (previously 3M Healthcare)</span>
   <span class="tb-ship" data-i18n="tb_shipping">🚚 Free shipping with orders over HK$500</span>
   <span class="tb-right">
     <a href="tel:+85227301883">Tel: +852 2730 1883</a>
@@ -348,6 +352,7 @@ footer .fbtm{padding-top:22px;font-size:.84rem;display:flex;justify-content:spac
     </div>
     <div class="filters" id="filters"></div>
     <div class="grid" id="grid"></div>
+    <div class="seemore-wrap"><button class="seemore-btn" id="seeMore" data-i18n="see_more">See more</button></div>
   </div>
 </section>
 
@@ -459,7 +464,7 @@ footer .fbtm{padding-top:22px;font-size:.84rem;display:flex;justify-content:spac
         <a href="tel:+85227301883">+852 2730 1883</a>
         <a href="https://wa.me/85293209650" target="_blank" rel="noopener">WhatsApp: 9320 9650</a>
         <a href="mailto:info@clinicon.com.hk">info@clinicon.com.hk</a>
-        <span style="font-size:.9rem;display:block;padding-top:6px">Unit 411, Lippo Sun Plaza,<br>28 Canton Road, Tsimshatsui, Kowloon, HK</span>
+        <span style="font-size:.9rem;display:block;padding-top:6px" data-i18n="foot_addr">Unit 411, Lippo Sun Plaza,<br>28 Canton Road, Tsimshatsui, Kowloon, HK</span>
       </div>
     </div>
     <div class="fbtm">
@@ -2263,8 +2268,8 @@ const PRODUCTS = [
    Chinese strings sourced from your live /zh site where available.
    ============================================================ */
 const T = {
-  tb_tagline:{en:"🇭🇰 Hong Kong · Authorized partner for 30+ brands incl. Solventum (previously 3M Healthcare)",
-              tc:"🇭🇰 香港 · 超過30個品牌的授權合作夥伴，包括 Solventum（前稱 3M 醫療保健）"},
+  tb_tagline:{en:"Hong Kong · Authorized partner for 30+ brands incl. Solventum (previously 3M Healthcare)",
+              tc:"香港 · 超過30個品牌的授權合作夥伴，包括 Solventum（前稱 3M 醫療保健）"},
   nav_products:{en:"Products", tc:"產品"},
   nav_about:{en:"About Us", tc:"關於我們"},
   nav_opportunities:{en:"Opportunities", tc:"機會"},
@@ -2327,6 +2332,8 @@ const T = {
   c_social:{en:"Social", tc:"社交媒體"},
   c_addr_val:{en:"Unit 411, Lippo Sun Plaza, 28 Canton Road, Tsimshatsui, Kowloon, Hong Kong",
               tc:"香港九龍尖沙咀廣東道28號力寶太陽廣場411室"},
+  foot_addr:{en:"Unit 411, Lippo Sun Plaza,<br>28 Canton Road, Tsimshatsui, Kowloon, HK",
+             tc:"香港九龍尖沙咀廣東道28號<br>力寶太陽廣場411室"},
   form_first:{en:"First Name", tc:"名字"},
   form_last:{en:"Last Name", tc:"姓氏"},
   form_phone:{en:"Phone Number", tc:"電話號碼"},
@@ -2364,7 +2371,8 @@ const T = {
   price_from:{en:"from", tc:"由"},
   search_ph:{en:"Search products…", tc:"搜尋產品…"},
   search_btn:{en:"Search", tc:"搜尋"},
-  no_results:{en:"No products match your search.", tc:"沒有符合搜尋的產品。"}
+  no_results:{en:"No products match your search.", tc:"沒有符合搜尋的產品。"},
+  see_more:{en:"See more", tc:"查看更多"}
 };
 
 let LANG = "en";   // current language
@@ -2378,6 +2386,8 @@ const grid = document.getElementById("grid");
 const filtersEl = document.getElementById("filters");
 let activeCat = "All";
 let searchQ = "";
+const GRID_INITIAL = 12, GRID_STEP = 12;
+let gridLimit = GRID_INITIAL;
 
 function renderFilters(){
   const cats = ["All", ...Array.from(new Set(PRODUCTS.map(p=>p.category)))];
@@ -2404,11 +2414,14 @@ function matchesSearch(p){
 
 function renderGrid(){
   const list = PRODUCTS.filter(p=>(activeCat==="All"||p.category===activeCat) && matchesSearch(p));
+  const seeMoreBtn = document.getElementById("seeMore");
   if(!list.length){
     grid.innerHTML = `<div class="noresults" style="grid-column:1/-1">${T.no_results[LANG]}</div>`;
+    if(seeMoreBtn) seeMoreBtn.hidden = true;
     return;
   }
-  grid.innerHTML = list.map((p,i)=>{
+  const shown = list.slice(0, gridLimit);
+  grid.innerHTML = shown.map((p,i)=>{
     const idx = PRODUCTS.indexOf(p);
     return `<article class="card reveal" data-idx="${idx}" style="transition-delay:${(i%6)*40}ms">
       <div class="imgwrap">${p.ribbon?`<span class="ribbon">${p.ribbon}</span>`:""}<img src="${p.image}" alt="${pname(p)}" loading="lazy"></div>
@@ -2419,18 +2432,21 @@ function renderGrid(){
       </div>
     </article>`;
   }).join("");
+  if(seeMoreBtn) seeMoreBtn.hidden = (list.length <= gridLimit);
   observeReveals();
 }
 
 const searchEl = document.getElementById("search");
 function runSearch(){
   searchQ = searchEl.value.trim().toLowerCase();
+  gridLimit = GRID_INITIAL;
   renderGrid();
   // bring the user to the results
   document.getElementById("products").scrollIntoView({behavior:"smooth", block:"start"});
 }
 searchEl.addEventListener("input",e=>{
   searchQ = e.target.value.trim().toLowerCase();
+  gridLimit = GRID_INITIAL;
   renderGrid();
 });
 searchEl.addEventListener("keydown",e=>{ if(e.key==="Enter") runSearch(); });
@@ -2439,7 +2455,13 @@ document.getElementById("searchBtn").addEventListener("click", runSearch);
 filtersEl.addEventListener("click",e=>{
   const b = e.target.closest(".chip"); if(!b) return;
   activeCat = b.dataset.cat;
+  gridLimit = GRID_INITIAL;
   document.querySelectorAll(".chip").forEach(c=>c.classList.toggle("active",c===b));
+  renderGrid();
+});
+
+document.getElementById("seeMore").addEventListener("click",()=>{
+  gridLimit += GRID_STEP;
   renderGrid();
 });
 
