@@ -293,6 +293,8 @@ footer .fbtm{padding-top:22px;font-size:.84rem;display:flex;justify-content:spac
   .burger{display:flex}
   footer .fgrid{grid-template-columns:1fr;gap:28px}
 }
+.cardlink{display:block;color:inherit;text-decoration:none}
+.cardlink:hover{color:inherit}
 </style>
 </head>
 <body>
@@ -5324,6 +5326,8 @@ function placeholderHTML(){
 }
 window.imgFail = function(img){ img.outerHTML = placeholderHTML(); };
 
+function ppSlugify(s){return (s||"product").toLowerCase().normalize("NFKD").replace(/[^a-z0-9]+/g,"-").replace(/^-+|-+$/g,"").slice(0,80)||"product";}
+const SLUGS=(()=>{const used={},out=[];for(const p of PRODUCTS){let b=ppSlugify(p.name_en||p.name_tc),sl=b,n=2;while(used[sl])sl=b+"-"+(n++);used[sl]=1;out.push(sl);}return out;})();
 function renderGrid(){
   const list = PRODUCTS.filter(p=>(activeCat==="All"||p.category===activeCat) && (activeBrand==="All"||p.brand===activeBrand) && matchesSearch(p));
   const seeMoreBtn = document.getElementById("seeMore");
@@ -5342,12 +5346,14 @@ function renderGrid(){
     if(p.brand && p.brand!=="Other") tags.push(`<span class="tag brand">${p.brand}</span>`);
     if(p.category) tags.push(`<span class="tag cat">${p.category}</span>`);
     return `<article class="card reveal" data-idx="${idx}" style="transition-delay:${(i%6)*40}ms">
+      <a class="cardlink" href="/products/${SLUGS[idx]}" target="_blank" rel="noopener">
       <div class="imgwrap">${p.ribbon?`<span class="ribbon">${p.ribbon}</span>`:""}${imgInner}</div>
       <div class="body">
         <div class="tags">${tags.join("")}</div>
         <h3>${pname(p)}</h3>
         <div class="price">${priceLabel(p)}</div>
       </div>
+      </a>
     </article>`;
   }).join("");
   if(seeMoreBtn) seeMoreBtn.hidden = (list.length <= gridLimit);
@@ -5446,10 +5452,8 @@ document.addEventListener("click",e=>{ if(!e.target.closest(".navdrop")) closeDr
 const modalBg = document.getElementById("modalBg");
 const modal = document.getElementById("modal");
 
-grid.addEventListener("click",e=>{
-  const card = e.target.closest(".card"); if(!card) return;
-  openModal(PRODUCTS[+card.dataset.idx]);
-});
+/* Product cards are real links that open the product page in a new tab
+   (target="_blank" in renderGrid). No modal popup on card click. */
 
 function openModal(p){
   const idx = PRODUCTS.indexOf(p);
