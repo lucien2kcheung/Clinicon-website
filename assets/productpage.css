@@ -29,6 +29,17 @@
 .pp-back{display:inline-flex;align-items:center;color:var(--teal-dark);font-weight:600;text-decoration:none;font-size:.95rem;}
 .pp-back:hover{text-decoration:underline;}
 
+/* Add to cart */
+.pp-add{display:inline-flex;align-items:center;gap:6px;background:var(--ink);color:#fff;font-family:Archivo,system-ui,sans-serif;font-weight:600;font-size:.95rem;padding:11px 18px;border:none;border-radius:999px;cursor:pointer;transition:background .15s,transform .12s;}
+.pp-add:hover{background:var(--teal-dark);}
+.pp-add:active{transform:translateY(1px);}
+.pp-variants .pp-add{padding:6px 13px;font-size:.84rem;}
+.pp-variants td:last-child{text-align:right;}
+
+.pp-toast{position:fixed;left:50%;bottom:24px;transform:translateX(-50%) translateY(20px);background:var(--ink);color:#fff;padding:12px 20px;border-radius:999px;box-shadow:var(--shadow-lg);font-size:.95rem;opacity:0;pointer-events:none;transition:opacity .25s,transform .25s;z-index:1000;display:flex;gap:12px;align-items:center;}
+.pp-toast.show{opacity:1;transform:translateX(-50%) translateY(0);pointer-events:auto;}
+.pp-toast-link{color:#7fe7c4;font-weight:700;text-decoration:underline;}
+
 .pp-specs{margin:14px 0 0;padding-left:20px;color:var(--ink-soft);}
 .pp-specs li{margin-bottom:6px;}
 
