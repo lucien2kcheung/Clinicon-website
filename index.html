@@ -5552,7 +5552,7 @@ function renderCart(){
     <div class="cart-item">
       <div class="ci-info">
         <div class="ci-name">${cartItemName(it)}</div>
-        <div class="ci-price">${fmt(it.price)}</div>
+        <div class="ci-price">${it.noprice ? "NA" : fmt(it.price)}</div>
         <div class="ci-controls">
           <button class="qbtn" data-q="minus" data-k="${it.key}">−</button>
           <span class="qnum">${it.qty}</span>
@@ -5562,7 +5562,7 @@ function renderCart(){
       </div>
     </div>`).join("");
   footEl.innerHTML = `
-    <div class="cart-total-row"><span class="ct-label">${T.cart_total[LANG]}</span><span class="ct-amt">${fmt(cartTotal())}</span></div>
+    <div class="cart-total-row"><span class="ct-label">${T.cart_total[LANG]}</span><span class="ct-amt">${cartTotal()>0 ? fmt(cartTotal()) : "NA"}</span></div>
     <a class="cart-send-btn" id="cartSend" href="#">
       <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2a10 10 0 0 0-8.6 15l-1.3 4.7 4.8-1.3A10 10 0 1 0 12 2zm5.8 14.1c-.2.7-1.4 1.3-2 1.4-.5.1-1.2.1-1.9-.1-.4-.1-1-.3-1.7-.6-3-1.3-4.9-4.3-5.1-4.5-.1-.2-1.2-1.5-1.2-2.9s.7-2 1-2.3c.2-.3.5-.3.7-.3h.5c.2 0 .4 0 .6.5l.8 2c.1.1.1.3 0 .5l-.4.5-.3.3c-.2.2-.3.4-.2.6.2.4.9 1.4 1.9 2.3 1.3 1.1 2.3 1.5 2.6 1.6.2.1.4.1.6-.1l.8-1c.2-.2.4-.2.6-.1l2 .9c.2.1.4.2.4.3.1.2.1.8-.1 1.5z"/></svg>
       ${T.cart_send[LANG]}
@@ -5579,9 +5579,9 @@ function renderCart(){
 function sendCartWhatsApp(){
   if(!cart.length) return;
   let lines = [T.cart_wa_intro[LANG], ""];
-  cart.forEach(it=>{ lines.push(`• ${cartItemName(it)} ×${it.qty} = ${fmt(it.price*it.qty)}`); });
+  cart.forEach(it=>{ lines.push(`• ${cartItemName(it)} ×${it.qty} = ${it.noprice ? "NA" : fmt(it.price*it.qty)}`); });
   lines.push("");
-  lines.push(`${T.cart_wa_total[LANG]}: ${fmt(cartTotal())}`);
+  lines.push(`${T.cart_wa_total[LANG]}: ${cartTotal()>0 ? fmt(cartTotal()) : "NA"}`);
   const msg = encodeURIComponent(lines.join("\n"));
   window.open(`${WA}?text=${msg}`, "_blank");
 }
@@ -5594,6 +5594,11 @@ function closeCart(){ cartPanel.classList.remove("open"); cartOverlay.classList.
 document.getElementById("cartToggle").addEventListener("click",openCart);
 document.getElementById("cartClose").addEventListener("click",closeCart);
 cartOverlay.addEventListener("click",closeCart);
+
+/* live-update the cart when another tab (e.g. a product page) changes it */
+window.addEventListener("storage",function(e){ if(e.key==="clinicon_cart"){ try{cart=JSON.parse(e.newValue||"[]");}catch(_){cart=[];} renderCart(); } });
+/* open the cart automatically if arriving from a product page "View cart" link */
+if(location.search.indexOf("cart=open")>=0){ try{openCart();}catch(_){} }
 
 /* ---------- Apply UI language ---------- */
 function applyLang(lang){

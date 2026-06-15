@@ -52,7 +52,7 @@ function priceParts(p) {
     if (isFinite(min) && min > 0) return { en: "From " + fmtPrice(min), tc: fmtPrice(min) + " 起", num: min };
   }
   if (p.price) return { en: fmtPrice(p.price), tc: fmtPrice(p.price), num: p.price };
-  return { en: "Enquire for price", tc: "請查詢價格", num: 0 };
+  return { en: "NA", tc: "NA", num: 0, na: true };
 }
 
 function relatedFor(i, n = 4) {
@@ -178,9 +178,13 @@ function page(p, slug, i) {
     : `<img src="${abs(p.image)}" alt="${esc(p.name_en)}" width="640" height="640" loading="eager">`;
 
   const variants = (p.variants && p.variants.length)
-    ? `<table class="pp-variants"><thead><tr><th>${bi("Model", "型號")}</th><th>${bi("Price", "價格")}</th></tr></thead><tbody>${
-        p.variants.map(v => `<tr><td>${esc(v[0])}</td><td>${fmtPrice(v[1])}</td></tr>`).join("")
+    ? `<table class="pp-variants"><thead><tr><th>${bi("Model", "型號")}</th><th>${bi("Price", "價格")}</th><th></th></tr></thead><tbody>${
+        p.variants.map((v, k) => `<tr><td>${esc(v[0])}</td><td>${fmtPrice(v[1])}</td><td><button class="pp-add" data-vi="${k}">${bi("Add", "加入")}</button></td></tr>`).join("")
       }</tbody></table>` : "";
+
+  // solo add-to-cart button for simple (non-variant) products — priced or NA
+  const addSolo = !(p.variants && p.variants.length)
+    ? `<button class="pp-add pp-add-solo" data-vi="-1">${bi("Add to cart", "加入購物車")}</button>` : "";
 
   const specs = (p.specs && p.specs.length)
     ? `<ul class="pp-specs">${p.specs.map(s => `<li>${esc(s)}</li>`).join("")}</ul>` : "";
@@ -231,6 +235,7 @@ ${header()}
       <div class="pp-price">${bi(pr.en, pr.tc)}</div>
       ${variants}
       <div class="pp-cta">
+        ${addSolo}
         <a class="pp-wa pp-en" href="${waEn}" target="_blank" rel="noopener">${WA_SVG} Enquire via WhatsApp</a>
         <a class="pp-wa pp-tc" href="${waTc}" target="_blank" rel="noopener">${WA_SVG} 透過 WhatsApp 查詢</a>
         <a class="pp-back" href="/#products">${bi("← All products", "← 所有產品")}</a>
@@ -248,6 +253,12 @@ ${header()}
     <span class="pp-tc">如需下單或查詢，請透過 WhatsApp <a href="${WA}" target="_blank" rel="noopener">9320 9650</a> 與我們聯絡，或電郵至 <a href="mailto:info@clinicon.com.hk">info@clinicon.com.hk</a>。</span>
   </p>
 </main>
+
+<div class="pp-toast" id="ppToast" role="status" aria-live="polite">
+  <span class="pp-en">Added to cart ✓</span><span class="pp-tc">已加入購物車 ✓</span>
+  <a class="pp-toast-link" href="/?cart=open"><span class="pp-en">View cart</span><span class="pp-tc">查看購物車</span></a>
+</div>
+<script>window.PP={pi:${i},name_en:${JSON.stringify(p.name_en)},name_tc:${JSON.stringify(p.name_tc || "")},price:${Number(p.price) || 0},na:${pr.na ? "true" : "false"},variants:${JSON.stringify(p.variants || [])}};</script>
 ${footer()}
 <script>
 (function(){
@@ -261,6 +272,26 @@ ${footer()}
   document.querySelectorAll(".langtog button").forEach(function(b){b.addEventListener("click",function(){set(b.getAttribute("data-pp-lang"))})});
   var bg=document.getElementById("burger"),m=document.getElementById("menu");
   if(bg&&m)bg.addEventListener("click",function(){m.classList.toggle("open")});
+})();
+(function(){
+  var P=window.PP; if(!P) return;
+  var toast=document.getElementById("ppToast");
+  function showToast(){ if(!toast)return; toast.classList.add("show"); clearTimeout(toast._t); toast._t=setTimeout(function(){toast.classList.remove("show");},2600); }
+  document.querySelectorAll(".pp-add").forEach(function(b){
+    b.addEventListener("click",function(){
+      var vi=parseInt(b.getAttribute("data-vi"),10);
+      var isVar=vi>=0 && P.variants[vi];
+      var price=isVar?P.variants[vi][1]:P.price;
+      var vlabel=isVar?P.variants[vi][0]:"";
+      var noprice=!isVar && P.na;
+      var key=P.pi+"_"+vi;
+      var cart=[]; try{cart=JSON.parse(localStorage.getItem("clinicon_cart")||"[]");}catch(e){}
+      var ex=null; for(var i=0;i<cart.length;i++){if(cart[i].key===key){ex=cart[i];break;}}
+      if(ex)ex.qty++; else cart.push({key:key,name_en:P.name_en,name_tc:P.name_tc,vlabel:vlabel,price:price,qty:1,noprice:noprice});
+      try{localStorage.setItem("clinicon_cart",JSON.stringify(cart));}catch(e){}
+      showToast();
+    });
+  });
 })();
 </script>
 </body>

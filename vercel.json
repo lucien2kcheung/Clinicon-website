@@ -4,6 +4,11 @@
       "source": "/product-page/子宮托-ring-pessary",
       "destination": "/products/ring-pessary",
       "permanent": true
+    },
+    {
+      "source": "/product-page/%E5%AD%90%E5%AE%AE%E6%89%98-ring-pessary",
+      "destination": "/products/ring-pessary",
+      "permanent": true
     }
   ]
 }
