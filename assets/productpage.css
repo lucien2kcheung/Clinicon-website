@@ -1,0 +1,58 @@
+/* Clinicon product page layout — uses brand tokens from site.css */
+.pp-main{padding:24px 20px 64px;}
+.pp-crumb{font-size:.85rem;color:var(--ink-soft);margin:8px 0 22px;display:flex;gap:8px;flex-wrap:wrap;align-items:center;}
+.pp-crumb a{color:var(--teal-dark);text-decoration:none;}
+.pp-crumb a:hover{text-decoration:underline;}
+.pp-crumb span[aria-current]{color:var(--ink);font-weight:600;}
+
+.pp-grid{display:grid;grid-template-columns:1fr 1fr;gap:40px;align-items:start;}
+@media(max-width:760px){.pp-grid{grid-template-columns:1fr;gap:24px;}}
+
+.pp-figure{background:var(--white);border:1px solid var(--line);border-radius:var(--radius);box-shadow:var(--shadow);padding:24px;display:grid;place-items:center;min-height:320px;}
+.pp-figure img{max-width:100%;height:auto;object-fit:contain;}
+.pp-noimg{color:var(--ink-soft);font-size:.95rem;border:1px dashed var(--line);border-radius:10px;padding:60px 24px;width:100%;text-align:center;}
+
+.pp-eyebrow{font-family:Archivo,system-ui,sans-serif;text-transform:uppercase;letter-spacing:.12em;font-size:.72rem;font-weight:700;color:var(--teal-dark);margin-bottom:10px;}
+.pp-name{font-family:Fraunces,Georgia,serif;font-size:clamp(1.6rem,3.4vw,2.3rem);line-height:1.15;color:var(--ink);margin:0 0 6px;}
+.pp-name-tc{font-size:1.15rem;color:var(--ink-soft);margin-bottom:14px;}
+.pp-price{font-family:Fraunces,Georgia,serif;font-size:1.7rem;color:var(--ink);font-weight:600;margin:14px 0 18px;}
+
+.pp-variants{border-collapse:collapse;width:100%;max-width:380px;margin:0 0 18px;font-size:.95rem;}
+.pp-variants th,.pp-variants td{text-align:left;padding:8px 10px;border-bottom:1px solid var(--line);}
+.pp-variants thead th{background:var(--paper);font-size:.78rem;text-transform:uppercase;letter-spacing:.05em;color:var(--ink-soft);}
+
+.pp-cta{display:flex;gap:12px;flex-wrap:wrap;align-items:center;margin:6px 0 18px;}
+.pp-wa{display:inline-flex;align-items:center;gap:9px;white-space:nowrap;background:#25D366;color:#fff;font-family:Archivo,system-ui,sans-serif;font-weight:700;font-size:1rem;padding:13px 20px;border-radius:999px;text-decoration:none;transition:background .18s,box-shadow .18s,transform .15s;}
+.pp-wa svg{width:20px;height:20px;flex:none;}
+.pp-wa:hover{background:#1ebe5d;box-shadow:var(--shadow-lg);}
+.pp-wa:active{transform:translateY(1px);}
+.pp-back{display:inline-flex;align-items:center;color:var(--teal-dark);font-weight:600;text-decoration:none;font-size:.95rem;}
+.pp-back:hover{text-decoration:underline;}
+
+.pp-specs{margin:14px 0 0;padding-left:20px;color:var(--ink-soft);}
+.pp-specs li{margin-bottom:6px;}
+
+.pp-desc{margin:48px 0 0;max-width:760px;}
+.pp-desc h2{font-family:Fraunces,Georgia,serif;font-size:1.4rem;color:var(--ink);margin:0 0 12px;}
+.pp-desc p{color:var(--ink-soft);line-height:1.75;margin:0 0 14px;}
+
+.pp-enquiry-note{margin:40px 0 0;padding:16px 18px;background:var(--paper);border:1px solid var(--line);border-radius:var(--radius);font-size:.95rem;color:var(--ink-soft);max-width:760px;}
+.pp-enquiry-note a{color:var(--teal-dark);font-weight:600;}
+
+/* EN / 繁 visibility for product-specific bilingual bits */
+html[data-pp-lang="en"] .pp-tc{display:none;}
+html[data-pp-lang="tc"] .pp-en{display:none;}
+
+/* Related products */
+.pp-related{margin:48px 0 0;}
+.pp-related h2{font-family:Fraunces,Georgia,serif;font-size:1.4rem;color:var(--ink);margin:0 0 18px;}
+.pp-rel-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:18px;}
+@media(max-width:860px){.pp-rel-grid{grid-template-columns:repeat(2,1fr);}}
+@media(max-width:460px){.pp-rel-grid{grid-template-columns:1fr 1fr;gap:12px;}}
+.pp-rel-card{display:flex;flex-direction:column;background:var(--white);border:1px solid var(--line);border-radius:var(--radius);overflow:hidden;text-decoration:none;color:inherit;box-shadow:var(--shadow);transition:transform .18s,box-shadow .18s;}
+.pp-rel-card:hover{transform:translateY(-3px);box-shadow:var(--shadow-lg);}
+.pp-rel-fig{aspect-ratio:1/1;background:var(--paper);display:grid;place-items:center;padding:14px;border-bottom:1px solid var(--line);}
+.pp-rel-fig img{max-width:100%;max-height:100%;object-fit:contain;}
+.pp-rel-noimg{width:100%;height:100%;min-height:120px;background:repeating-linear-gradient(45deg,var(--paper),var(--paper) 10px,#eef3f5 10px,#eef3f5 20px);border-radius:8px;}
+.pp-rel-name{font-size:.9rem;font-weight:600;color:var(--ink);padding:12px 12px 4px;line-height:1.35;flex:1;}
+.pp-rel-price{font-size:.9rem;color:var(--teal-dark);font-weight:700;padding:0 12px 14px;}
