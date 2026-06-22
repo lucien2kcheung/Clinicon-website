@@ -110,6 +110,7 @@ function footer() {
         <a href="/#products">${bi("Products", "產品")}</a>
         <a href="/#about">${bi("About Us", "關於我們")}</a>
         <a href="/#contact">${bi("Contact", "聯絡我們")}</a>
+        <a href="/terms-and-conditions">${bi("Terms &amp; Conditions", "條款及細則")}</a>
       </div>
       <div>
         <h4>${bi("Contact", "聯絡")}</h4>
@@ -308,7 +309,7 @@ products.forEach((p, i) => {
 });
 
 const today = new Date().toISOString().slice(0, 10);
-const urls = [`${SITE}/`, ...slugs.map(s => `${SITE}/products/${s}`)];
+const urls = [`${SITE}/`, `${SITE}/terms-and-conditions`, ...slugs.map(s => `${SITE}/products/${s}`)];
 fs.writeFileSync(path.join(OUT, "sitemap.xml"),
   `<?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
