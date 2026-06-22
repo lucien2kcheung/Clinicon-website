@@ -275,6 +275,13 @@ footer .fbtm{padding-top:22px;font-size:.84rem;display:flex;justify-content:spac
 /* ---------- Reveal animation ---------- */
 .reveal{opacity:0;transform:translateY(24px);transition:opacity .7s ease,transform .7s ease}
 .reveal.in{opacity:1;transform:none}
+/* ---------- Brand logo wall ---------- */
+.brands{border-top:1px solid var(--line)}
+.brand-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:14px}
+.brand-tile{display:flex;align-items:center;justify-content:center;background:var(--white);border:1px solid var(--line);border-radius:var(--radius);padding:22px 18px;min-height:104px;transition:box-shadow .2s,transform .2s}
+.brand-tile:hover{box-shadow:var(--shadow);transform:translateY(-2px)}
+.brand-tile img{max-height:54px;max-width:100%;width:auto;object-fit:contain}
+@media(max-width:560px){.brand-grid{grid-template-columns:repeat(auto-fill,minmax(116px,1fr));gap:10px}.brand-tile{min-height:86px;padding:16px 12px}.brand-tile img{max-height:42px}}
 
 /* ---------- Responsive ---------- */
 @media(max-width:860px){
@@ -318,7 +325,7 @@ footer .fbtm{padding-top:22px;font-size:.84rem;display:flex;justify-content:spac
     </a>
     <div class="menu" id="menu">
       <div class="navdrop" id="brandsDrop">
-        <a href="#products" class="navdrop-trigger" data-i18n="nav_brands">Brands<svg class="caret" width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"></polyline></svg></a>
+        <a href="#brands" class="navdrop-trigger" data-i18n="nav_brands">Brands<svg class="caret" width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"></polyline></svg></a>
         <div class="navdrop-panel" id="brandsPanel"></div>
       </div>
       <div class="navdrop" id="catsDrop">
@@ -370,6 +377,59 @@ footer .fbtm{padding-top:22px;font-size:.84rem;display:flex;justify-content:spac
       <div class="stat"><b>1980</b><span data-i18n="hero_s1">Founded in Hong Kong, serving the healthcare sector for over four decades</span></div>
       <div class="stat"><b>30+</b><span data-i18n="hero_s2">Authorized brand partnerships, including Solventum (previously 3M Healthcare)</span></div>
       <div class="stat"><b>1-stop</b><span data-i18n="hero_s3">Procurement for hospitals, clinics, labs &amp; government</span></div>
+    </div>
+  </div>
+</section>
+
+<!-- BRANDS -->
+<section class="block brands" id="brands">
+  <div class="wrap">
+    <div class="sec-head reveal">
+      <span class="eyebrow" data-i18n="brands_eyebrow">Our Partners</span>
+      <h2 data-i18n="brands_h2">Brands we work with</h2>
+      <p data-i18n="brands_p">As an authorized distributor for 30+ leading healthcare brands, we bring trusted, quality-assured products to Hong Kong's hospitals, clinics, laboratories and government departments.</p>
+    </div>
+    <div class="brand-grid reveal">
+      <div class="brand-tile"><img src="/images/brands/3m.png" alt="3M" loading="lazy"></div>
+      <div class="brand-tile"><img src="/images/brands/alp-k2.png" alt="ALP K2" loading="lazy"></div>
+      <div class="brand-tile"><img src="/images/brands/b-braun.png" alt="B. Braun" loading="lazy"></div>
+      <div class="brand-tile"><img src="/images/brands/baxter.png" alt="Baxter" loading="lazy"></div>
+      <div class="brand-tile"><img src="/images/brands/betadine.png" alt="Betadine" loading="lazy"></div>
+      <div class="brand-tile"><img src="/images/brands/braun.png" alt="Braun" loading="lazy"></div>
+      <div class="brand-tile"><img src="/images/brands/cardinal-detecto.png" alt="Cardinal Detecto" loading="lazy"></div>
+      <div class="brand-tile"><img src="/images/brands/ccd-international.png" alt="CCD International" loading="lazy"></div>
+      <div class="brand-tile"><img src="/images/brands/covidien.jpeg" alt="Covidien" loading="lazy"></div>
+      <div class="brand-tile"><img src="/images/brands/daiwha.png" alt="Daiwha" loading="lazy"></div>
+      <div class="brand-tile"><img src="/images/brands/eos.jpeg" alt="EOS" loading="lazy"></div>
+      <div class="brand-tile"><img src="/images/brands/ethicon.jpeg" alt="Ethicon" loading="lazy"></div>
+      <div class="brand-tile"><img src="/images/brands/heine.png" alt="Heine" loading="lazy"></div>
+      <div class="brand-tile"><img src="/images/brands/inbody.png" alt="InBody" loading="lazy"></div>
+      <div class="brand-tile"><img src="/images/brands/johnson-and-johnson.png" alt="Johnson & Johnson" loading="lazy"></div>
+      <div class="brand-tile"><img src="/images/brands/kenz.png" alt="Kenz" loading="lazy"></div>
+      <div class="brand-tile"><img src="/images/brands/koffmann.png" alt="Köffmann" loading="lazy"></div>
+      <div class="brand-tile"><img src="/images/brands/littmann.png" alt="Littmann" loading="lazy"></div>
+      <div class="brand-tile"><img src="/images/brands/medline.png" alt="Medline" loading="lazy"></div>
+      <div class="brand-tile"><img src="/images/brands/miltex.png" alt="Miltex" loading="lazy"></div>
+      <div class="brand-tile"><img src="/images/brands/mir.png" alt="MIR" loading="lazy"></div>
+      <div class="brand-tile"><img src="/images/brands/omron.jpeg" alt="Omron" loading="lazy"></div>
+      <div class="brand-tile"><img src="/images/brands/purell.png" alt="Purell" loading="lazy"></div>
+      <div class="brand-tile"><img src="/images/brands/reda.png" alt="Reda" loading="lazy"></div>
+      <div class="brand-tile"><img src="/images/brands/riester.png" alt="Riester" loading="lazy"></div>
+      <div class="brand-tile"><img src="/images/brands/scimitar.jpeg" alt="Scimitar" loading="lazy"></div>
+      <div class="brand-tile"><img src="/images/brands/sigma.png" alt="Sigma" loading="lazy"></div>
+      <div class="brand-tile"><img src="/images/brands/smith-nephew.png" alt="Smith & Nephew" loading="lazy"></div>
+      <div class="brand-tile"><img src="/images/brands/solventum.png" alt="Solventum" loading="lazy"></div>
+      <div class="brand-tile"><img src="/images/brands/spirit.png" alt="Spirit" loading="lazy"></div>
+      <div class="brand-tile"><img src="/images/brands/sugico.png" alt="Sugico" loading="lazy"></div>
+      <div class="brand-tile"><img src="/images/brands/swann-morton.png" alt="Swann-Morton" loading="lazy"></div>
+      <div class="brand-tile"><img src="/images/brands/takara-belmont.jpeg" alt="Takara Belmont" loading="lazy"></div>
+      <div class="brand-tile"><img src="/images/brands/tanita.png" alt="Tanita" loading="lazy"></div>
+      <div class="brand-tile"><img src="/images/brands/tecno-gaz.jpeg" alt="Tecno-Gaz" loading="lazy"></div>
+      <div class="brand-tile"><img src="/images/brands/terumo.png" alt="Terumo" loading="lazy"></div>
+      <div class="brand-tile"><img src="/images/brands/tidi.png" alt="TIDI" loading="lazy"></div>
+      <div class="brand-tile"><img src="/images/brands/top-glove.png" alt="Top Glove" loading="lazy"></div>
+      <div class="brand-tile"><img src="/images/brands/wallach.png" alt="Wallach" loading="lazy"></div>
+      <div class="brand-tile"><img src="/images/brands/welch-allyn.png" alt="Welch Allyn" loading="lazy"></div>
     </div>
   </div>
 </section>
@@ -5136,6 +5196,9 @@ const T = {
   hero_s2:{en:"Authorized brand partnerships, including Solventum (previously 3M Healthcare)", tc:"授權品牌合作夥伴，包括 Solventum（前稱 3M 醫療保健）"},
   hero_s3:{en:"Procurement for hospitals, clinics, labs & government", tc:"為醫院、診所、實驗室及政府採購"},
   hero_badge:{en:"45+ YEARS", tc:"45年以上"},
+  brands_eyebrow:{en:"Our Partners", tc:"合作夥伴"},
+  brands_h2:{en:"Brands we work with", tc:"合作品牌"},
+  brands_p:{en:"As an authorized distributor for 30+ leading healthcare brands, we bring trusted, quality-assured products to Hong Kong's hospitals, clinics, laboratories and government departments.", tc:"作為30多個領先醫療品牌的授權分銷商，我們為香港的醫院、診所、化驗所及政府部門提供值得信賴、品質保證的產品。"},
   trust_1:{en:"Hospitals", tc:"醫院"},
   trust_2:{en:"Clinics", tc:"診所"},
   trust_3:{en:"Laboratories", tc:"實驗室"},
@@ -5385,11 +5448,13 @@ catsPanel.addEventListener("click",e=>{
 // tap-to-open on touch / mobile (desktop uses :hover)
 document.querySelectorAll(".navdrop-trigger").forEach(t=>{
   t.addEventListener("click",e=>{
+    // "Brands" navigates to the on-page logo section instead of toggling the dropdown
+    const nd = t.closest(".navdrop");
+    if(nd && nd.id==="brandsDrop"){ closeDrops(); return; }
     e.preventDefault();
-    const d = t.closest(".navdrop");
-    const wasOpen = d.classList.contains("open");
+    const wasOpen = nd.classList.contains("open");
     closeDrops();
-    if(!wasOpen) d.classList.add("open");
+    if(!wasOpen) nd.classList.add("open");
   });
 });
 document.addEventListener("click",e=>{ if(!e.target.closest(".navdrop")) closeDrops(); });
