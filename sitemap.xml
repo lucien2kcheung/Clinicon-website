@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
-  <url><loc>https://www.clinicon.com.hk/</loc><lastmod>2026-06-22</lastmod></url>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:xhtml="http://www.w3.org/1999/xhtml">
+  <url><loc>https://www.clinicon.com.hk/</loc><lastmod>2026-06-25</lastmod><xhtml:link rel="alternate" hreflang="en" href="https://www.clinicon.com.hk/"/><xhtml:link rel="alternate" hreflang="zh-Hant" href="https://www.clinicon.com.hk/zh"/><xhtml:link rel="alternate" hreflang="x-default" href="https://www.clinicon.com.hk/"/></url>
+  <url><loc>https://www.clinicon.com.hk/zh</loc><lastmod>2026-06-25</lastmod><xhtml:link rel="alternate" hreflang="en" href="https://www.clinicon.com.hk/"/><xhtml:link rel="alternate" hreflang="zh-Hant" href="https://www.clinicon.com.hk/zh"/><xhtml:link rel="alternate" hreflang="x-default" href="https://www.clinicon.com.hk/"/></url>
   <url><loc>https://www.clinicon.com.hk/terms-and-conditions</loc><lastmod>2026-06-22</lastmod></url>
   <url><loc>https://www.clinicon.com.hk/products/hmfvh-4001-perfection-upright-pharmaceutical-refrigerator-solid-door</loc><lastmod>2026-06-22</lastmod></url>
   <url><loc>https://www.clinicon.com.hk/products/hmfvh-4011-perfection-upright-pharmaceutical-refrigerator-glass-door</loc><lastmod>2026-06-22</lastmod></url>

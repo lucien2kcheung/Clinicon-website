@@ -1791,13 +1791,8 @@
       "permanent": true
     },
     {
-      "source": "/zh/:path*",
-      "destination": "/",
-      "permanent": true
-    },
-    {
-      "source": "/zh",
-      "destination": "/",
+      "source": "/category/:path*",
+      "destination": "/#products",
       "permanent": true
     }
   ]
