@@ -5,6 +5,10 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Clinicon Medical Ltd. — Trusted Medical Supplies in Hong Kong since 1980</title>
 <meta name="description" content="Founded in 1980, Clinicon Medical Ltd. is a trusted Hong Kong medical supplies distributor and authorized partner for 30+ brands including Solventum (previously 3M Healthcare). Serving hospitals, clinics, laboratories and government departments.">
+<link rel="canonical" href="https://www.clinicon.com.hk/">
+<link rel="alternate" hreflang="en" href="https://www.clinicon.com.hk/">
+<link rel="alternate" hreflang="zh-Hant" href="https://www.clinicon.com.hk/zh">
+<link rel="alternate" hreflang="x-default" href="https://www.clinicon.com.hk/">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600;9..144,700&family=Archivo:wght@400;500;600;700&family=Noto+Sans+HK:wght@400;500;700&display=swap" rel="stylesheet">
@@ -5632,7 +5636,7 @@ function applyLang(lang){
 }
 document.getElementById("langtog").addEventListener("click",e=>{
   const b = e.target.closest("button"); if(!b) return;
-  applyLang(b.dataset.lang);
+  location.href = (b.dataset.lang==="tc") ? "/zh" : "/";
 });
 
 /* ---------- Reveal on scroll ---------- */
