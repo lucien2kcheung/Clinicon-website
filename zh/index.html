@@ -1,0 +1,5725 @@
+<!DOCTYPE html><html lang="zh-Hant"><head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>健力醫療器材有限公司 — 香港可靠的醫療用品供應商（自1980年）</title>
+<meta name="description" content="健力醫療器材有限公司成立於1980年，是香港值得信賴的醫療用品分銷商，代理超過30個品牌（包括 Solventum，前稱 3M 醫療保健），為醫院、診所、化驗所、大學及政府部門提供專業的一站式採購服務。">
+<link rel="canonical" href="https://www.clinicon.com.hk/zh">
+<link rel="alternate" hreflang="en" href="https://www.clinicon.com.hk/">
+<link rel="alternate" hreflang="zh-Hant" href="https://www.clinicon.com.hk/zh">
+<link rel="alternate" hreflang="x-default" href="https://www.clinicon.com.hk/">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600;9..144,700&amp;family=Archivo:wght@400;500;600;700&amp;family=Noto+Sans+HK:wght@400;500;700&amp;display=swap" rel="stylesheet">
+<style>
+:root{
+  --ink:#0f2a3f;        /* deep clinical navy */
+  --ink-soft:#3a566b;
+  --paper:#f7f9fa;
+  --white:#ffffff;
+  --teal:#0d9488;       /* medical teal accent */
+  --teal-dark:#0a7268;
+  --line:#dde5ea;
+  --shadow:0 1px 3px rgba(15,42,63,.06),0 8px 24px rgba(15,42,63,.06);
+  --shadow-lg:0 12px 40px rgba(15,42,63,.12);
+  --radius:14px;
+  --maxw:1180px;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{font-family:'Archivo','Noto Sans HK',system-ui,sans-serif;color:var(--ink);background:var(--paper);line-height:1.6;-webkit-font-smoothing:antialiased}
+h1,h2,h3,h4{font-family:'Fraunces',Georgia,serif;font-weight:600;line-height:1.12;letter-spacing:-.01em}
+/* When in a Chinese language mode, headings use Noto (Fraunces has no CJK glyphs) */
+html[lang^="zh"] h1,html[lang^="zh"] h2,html[lang^="zh"] h3,html[lang^="zh"] h4{font-family:'Noto Sans HK','Fraunces',sans-serif;font-weight:700;letter-spacing:0}
+html[lang^="zh"] body,html[lang^="zh"]{font-family:'Noto Sans HK','Archivo',sans-serif}
+a{color:inherit;text-decoration:none}
+img{display:block;max-width:100%}
+.wrap{max-width:var(--maxw);margin:0 auto;padding:0 24px}
+
+/* ---------- Top bar ---------- */
+.topbar{background:var(--ink);color:#cfe0ea;font-size:.82rem;letter-spacing:.02em}
+.topbar .wrap{display:flex;justify-content:space-between;align-items:center;gap:16px;padding:8px 24px;flex-wrap:wrap}
+.topbar a{color:#cfe0ea}
+.topbar a:hover{color:#fff}
+.topbar .tb-right{display:flex;gap:18px;align-items:center}
+.topbar .tb-ship{font-weight:600;color:#9fe6c4}
+@media(max-width:760px){.topbar .tb-ship{order:3;width:100%;text-align:center;color:#bdf0d6}}
+
+/* ---------- Header ---------- */
+header{position:sticky;top:0;z-index:50;background:rgba(247,249,250,.88);backdrop-filter:blur(10px);border-bottom:1px solid var(--line)}
+.nav{display:flex;align-items:center;justify-content:space-between;gap:24px;padding:14px 24px;max-width:var(--maxw);margin:0 auto}
+.brand{display:flex;align-items:center;gap:12px}
+.brand img{height:88px;width:auto}
+.brand .bt{display:flex;flex-direction:column;line-height:1.05}
+.brand .bt b{font-family:'Fraunces';font-size:1.18rem;color:var(--ink);font-weight:600}
+.brand .bt span{font-size:.72rem;color:var(--ink-soft);letter-spacing:.04em}
+.menu{display:flex;gap:26px;align-items:center;font-size:.92rem;font-weight:500}
+.menu a{padding:6px 2px;position:relative;color:var(--ink)}
+.menu a::after{content:"";position:absolute;left:0;bottom:-2px;width:0;height:2px;background:var(--teal);transition:width .25s ease}
+.menu a:hover::after{width:100%}
+.menu a:hover{color:var(--teal-dark)}
+/* ---------- Nav dropdowns (Brands / Products) ---------- */
+.navdrop{position:relative}
+.navdrop-trigger{display:inline-flex;align-items:center;gap:5px;cursor:pointer}
+.navdrop .caret{transition:transform .2s;opacity:.65}
+.navdrop:hover .caret,.navdrop.open .caret{transform:rotate(180deg)}
+.navdrop-panel{position:absolute;top:calc(100% + 10px);left:0;min-width:230px;max-width:340px;
+  background:var(--white);border:1px solid var(--line);border-radius:14px;box-shadow:var(--shadow);
+  padding:8px;opacity:0;visibility:hidden;transform:translateY(-6px);transition:.18s ease;z-index:60;
+  max-height:min(70vh,440px);overflow-y:auto;display:grid;grid-template-columns:1fr 1fr;gap:2px}
+.navdrop:hover .navdrop-panel,.navdrop.open .navdrop-panel{opacity:1;visibility:visible;transform:translateY(0)}
+.navdrop-panel::before{content:"";position:absolute;top:-10px;left:0;right:0;height:10px}
+.navdrop-panel button{grid-column:auto;text-align:left;border:0;background:none;font-family:inherit;
+  font-size:.84rem;font-weight:500;color:var(--ink);padding:8px 11px;border-radius:8px;cursor:pointer;
+  transition:.15s;display:flex;justify-content:space-between;align-items:center;gap:8px;width:100%;white-space:nowrap}
+.navdrop-panel button:hover{background:var(--paper);color:var(--teal-dark)}
+.navdrop-panel button .cnt{font-size:.72rem;color:var(--ink-soft);font-weight:600}
+.navdrop-panel .dd-all{grid-column:1/-1;font-weight:700;border-bottom:1px solid var(--line);border-radius:0;margin-bottom:2px}
+/* ---------- Card tags + placeholder ---------- */
+.card .tags{display:flex;flex-wrap:wrap;gap:5px;margin:2px 0 8px}
+.card .tag{font-size:.66rem;font-weight:700;letter-spacing:.02em;padding:3px 8px;border-radius:999px;text-transform:uppercase}
+.card .tag.brand{background:rgba(13,148,136,.12);color:var(--teal-dark)}
+.card .tag.cat{background:rgba(15,42,63,.07);color:var(--ink-soft)}
+.imgwrap .noimg{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:8px;
+  background:repeating-linear-gradient(45deg,var(--paper),var(--paper) 12px,#eef2f4 12px,#eef2f4 24px);color:var(--ink-soft)}
+.imgwrap .noimg svg{opacity:.5}
+.imgwrap .noimg span{font-size:.72rem;font-weight:600}
+.wa-btn{display:inline-flex;align-items:center;gap:8px;background:#25D366;color:#fff;padding:10px 18px;border-radius:999px;font-weight:600;font-size:.9rem;transition:transform .2s,background .2s;box-shadow:0 4px 14px rgba(37,211,102,.35)}
+.wa-btn:hover{background:#1da851;transform:translateY(-1px);color:#fff}
+.burger{display:none;background:none;border:0;cursor:pointer;flex-direction:column;gap:5px;padding:6px}
+.burger span{width:24px;height:2px;background:var(--ink);display:block;transition:.3s}
+/* language toggle */
+.langtog{display:inline-flex;border:1.5px solid var(--line);border-radius:999px;overflow:hidden;background:var(--white)}
+.langtog button{border:0;background:none;font-family:'Noto Sans HK',inherit;font-size:.82rem;font-weight:600;padding:7px 12px;cursor:pointer;color:var(--ink-soft);transition:.2s}
+.langtog button:hover{color:var(--teal-dark)}
+.langtog button.active{background:var(--ink);color:#fff}
+
+/* ---------- Hero ---------- */
+.hero{position:relative;overflow:hidden;background:
+  radial-gradient(1100px 500px at 78% -8%,rgba(13,148,136,.12),transparent 60%),
+  radial-gradient(900px 600px at 5% 20%,rgba(15,42,63,.06),transparent 55%),
+  var(--paper)}
+.hero .wrap{padding:84px 24px 70px;display:grid;grid-template-columns:1.05fr .95fr;gap:54px;align-items:center}
+.hero .eyebrow{display:inline-flex;align-items:center;gap:9px;font-size:.8rem;font-weight:600;letter-spacing:.12em;text-transform:uppercase;color:var(--teal-dark);margin-bottom:22px}
+.hero .eyebrow::before{content:"";width:30px;height:1.5px;background:var(--teal)}
+.hero h1{font-size:clamp(2.5rem,5vw,4rem);color:var(--ink)}
+.hero h1 em{font-style:italic;color:var(--teal-dark)}
+html[lang^="zh"] .hero h1 em{font-style:normal}
+.hero p.lede{font-size:1.12rem;color:var(--ink-soft);margin:24px 0 32px;max-width:33em}
+.hero .cta-row{display:flex;gap:14px;flex-wrap:wrap}
+.btn-primary{background:var(--ink);color:#fff;padding:14px 26px;border-radius:999px;font-weight:600;transition:transform .2s,box-shadow .2s}
+.btn-primary:hover{transform:translateY(-2px);box-shadow:var(--shadow-lg);color:#fff}
+.btn-ghost{padding:14px 26px;border-radius:999px;font-weight:600;border:1.5px solid var(--line);color:var(--ink);transition:.2s;background:var(--white)}
+.btn-ghost:hover{border-color:var(--teal);color:var(--teal-dark)}
+.hero-card{position:relative;background:var(--white);border-radius:20px;box-shadow:var(--shadow-lg);padding:30px;border:1px solid var(--line)}
+.hero-card .stat{display:flex;align-items:baseline;gap:12px;padding:14px 0;border-bottom:1px dashed var(--line)}
+.hero-card .stat:last-child{border-bottom:0}
+.hero-card .stat b{font-family:'Fraunces';font-size:2.2rem;color:var(--teal-dark);min-width:96px}
+.hero-card .stat span{color:var(--ink-soft);font-size:.96rem}
+.hero-card .badge{position:absolute;top:-16px;right:24px;background:var(--teal);color:#fff;font-size:.74rem;font-weight:700;letter-spacing:.08em;padding:7px 14px;border-radius:999px;box-shadow:0 6px 18px rgba(13,148,136,.4)}
+
+/* ---------- Trust strip ---------- */
+.trust{background:var(--ink);color:#dbe7ee}
+.trust .wrap{padding:26px 24px;display:flex;flex-wrap:wrap;gap:18px 40px;justify-content:center;align-items:center;font-size:.95rem}
+.trust b{color:#fff}
+.trust .dot{width:5px;height:5px;border-radius:50%;background:var(--teal)}
+
+/* ---------- Sections ---------- */
+section.block{padding:74px 0}
+section[id],div[id="top"]{scroll-margin-top:160px}
+.sec-head{max-width:680px;margin-bottom:42px}
+.sec-head .eyebrow{font-size:.78rem;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:var(--teal-dark);display:block;margin-bottom:12px}
+.sec-head h2{font-size:clamp(1.9rem,3.4vw,2.7rem);color:var(--ink)}
+.sec-head p{color:var(--ink-soft);margin-top:14px;font-size:1.05rem}
+
+/* ---------- Category filter + product grid ---------- */
+/* ---------- Sticky search bar (pinned under header) ---------- */
+.searchbar{position:sticky;top:var(--head-h,74px);z-index:45;background:rgba(247,249,250,.95);backdrop-filter:blur(10px);border-bottom:1px solid var(--line);padding:12px 0}
+.searchbar-inner{display:flex;gap:12px;align-items:center}
+.searchwrap{position:relative;flex:1;max-width:560px}
+.searchwrap svg{position:absolute;left:15px;top:50%;transform:translateY(-50%);color:var(--ink-soft);pointer-events:none}
+#search{width:100%;padding:12px 16px 12px 44px;border:1.5px solid var(--line);border-radius:999px;font-family:inherit;font-size:.95rem;color:var(--ink);background:var(--white);transition:.2s}
+#search:focus{outline:none;border-color:var(--teal);box-shadow:0 0 0 3px rgba(13,148,136,.12)}
+.search-btn{background:var(--ink);color:#fff;border:0;padding:12px 24px;border-radius:999px;font-family:inherit;font-weight:600;font-size:.92rem;cursor:pointer;transition:.2s;white-space:nowrap}
+.search-btn:hover{background:var(--teal-dark)}
+.filters{display:flex;gap:10px;flex-wrap:wrap;margin-bottom:34px}
+.chip{border:1.5px solid var(--line);background:var(--white);color:var(--ink);padding:9px 18px;border-radius:999px;font-size:.88rem;font-weight:600;cursor:pointer;transition:.2s;font-family:inherit}
+.noresults{text-align:center;padding:50px 20px;color:var(--ink-soft);font-size:1.05rem}
+.chip:hover{border-color:var(--teal)}
+.chip.active{background:var(--ink);color:#fff;border-color:var(--ink)}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(265px,1fr));gap:26px}
+.seemore-wrap{display:flex;justify-content:center;margin-top:34px}
+.seemore-btn{background:var(--white);color:var(--ink);border:1.5px solid var(--ink);padding:12px 34px;border-radius:999px;font-family:inherit;font-weight:600;font-size:.92rem;cursor:pointer;transition:.2s}
+.seemore-btn:hover{background:var(--ink);color:#fff}
+.seemore-btn[hidden]{display:none}
+.card{background:var(--white);border:1px solid var(--line);border-radius:var(--radius);overflow:hidden;display:flex;flex-direction:column;transition:transform .25s,box-shadow .25s;cursor:pointer}
+.card:hover{transform:translateY(-5px);box-shadow:var(--shadow-lg)}
+.card .imgwrap{aspect-ratio:4/3;background:#eef3f5;overflow:hidden;position:relative}
+.card .imgwrap img{width:100%;height:100%;object-fit:contain;padding:14px;transition:transform .4s}
+.card:hover .imgwrap img{transform:scale(1.04)}
+.card .ribbon{position:absolute;top:12px;left:12px;background:var(--teal);color:#fff;font-size:.68rem;font-weight:700;letter-spacing:.06em;padding:5px 11px;border-radius:999px;text-transform:uppercase}
+.card .body{padding:18px 18px 20px;display:flex;flex-direction:column;flex:1}
+.card .cat{font-size:.72rem;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--teal-dark);margin-bottom:7px}
+.card h3{font-size:1.04rem;font-weight:600;color:var(--ink);line-height:1.25;margin-bottom:10px;flex:1}
+.card .price{font-family:'Fraunces';font-size:1.3rem;font-weight:600;color:var(--ink)}
+.card .price small{font-size:.8rem;color:var(--ink-soft);font-weight:400}
+.card .from{font-size:.74rem;color:var(--ink-soft);font-weight:400;display:block;margin-bottom:-2px}
+
+/* ---------- Modal ---------- */
+.modal-bg{position:fixed;inset:0;background:rgba(15,42,63,.55);backdrop-filter:blur(4px);z-index:100;display:none;align-items:flex-start;justify-content:center;padding:40px 20px;overflow-y:auto}
+.modal-bg.open{display:flex}
+.modal{background:var(--white);border-radius:18px;max-width:880px;width:100%;box-shadow:var(--shadow-lg);overflow:hidden;animation:pop .3s ease}
+@keyframes pop{from{opacity:0;transform:translateY(14px) scale(.98)}to{opacity:1;transform:none}}
+.modal .mhead{display:grid;grid-template-columns:1fr 1fr;gap:0}
+.modal .mimg{background:#eef3f5;aspect-ratio:1;display:flex;align-items:center;justify-content:center;padding:28px}
+.modal .mimg img{max-width:100%;max-height:100%;object-fit:contain}
+.modal .mmeta{padding:34px 32px}
+.modal .mmeta .cat{font-size:.74rem;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--teal-dark);margin-bottom:10px}
+.modal .mmeta h2{font-size:1.5rem;color:var(--ink);margin-bottom:14px;line-height:1.18}
+.modal .mmeta .mprice{font-family:'Fraunces';font-size:1.7rem;color:var(--ink);margin-bottom:8px}
+/* ---------- Add-to-cart buttons ---------- */
+.add-btn{display:inline-flex;align-items:center;gap:6px;background:var(--teal);color:#fff;border:0;padding:8px 16px;border-radius:999px;font-family:inherit;font-weight:600;font-size:.85rem;cursor:pointer;transition:.2s}
+.add-btn:hover{background:var(--teal-dark)}
+.add-btn.added{background:#1b7a3e}
+.vrow .add-btn{padding:5px 12px;font-size:.78rem}
+.vrow{align-items:center}
+/* ---------- Cart toggle + panel ---------- */
+.cart-toggle{position:fixed;top:50%;right:0;transform:translateY(-50%);z-index:80;background:var(--teal);color:#fff;border:0;padding:18px 14px;border-radius:14px 0 0 14px;cursor:pointer;display:flex;flex-direction:column;align-items:center;gap:7px;box-shadow:-6px 0 22px rgba(13,148,136,.4);transition:.2s}
+.cart-toggle:hover{background:var(--teal-dark);padding-right:20px}
+.cart-toggle svg{width:30px;height:30px}
+.cart-toggle .cart-label{font-size:.68rem;font-weight:700;letter-spacing:.05em;text-transform:uppercase;writing-mode:vertical-rl;text-orientation:mixed}
+.cart-toggle .cart-count{position:absolute;top:-9px;left:-9px;background:var(--ink);color:#fff;font-size:.74rem;font-weight:700;min-width:23px;height:23px;border-radius:999px;display:flex;align-items:center;justify-content:center;padding:0 6px;border:2px solid var(--paper)}
+.cart-count.zero{display:none}
+.cart-overlay{position:fixed;inset:0;background:rgba(15,42,63,.4);z-index:90;opacity:0;pointer-events:none;transition:opacity .3s}
+.cart-overlay.open{opacity:1;pointer-events:auto}
+.cart-panel{position:fixed;top:0;right:0;height:100%;width:380px;max-width:90vw;background:var(--white);z-index:95;box-shadow:-8px 0 40px rgba(15,42,63,.2);transform:translateX(100%);transition:transform .32s cubic-bezier(.4,0,.2,1);display:flex;flex-direction:column}
+.cart-panel.open{transform:translateX(0)}
+.cart-head{display:flex;align-items:center;justify-content:space-between;padding:22px 22px 16px;border-bottom:1px solid var(--line)}
+.cart-head h3{font-family:'Fraunces';font-size:1.3rem;color:var(--ink)}
+.cart-close{background:none;border:0;font-size:1.6rem;cursor:pointer;color:var(--ink-soft);line-height:1}
+.cart-items{flex:1;overflow-y:auto;padding:12px 22px}
+.cart-item{display:flex;gap:12px;padding:14px 0;border-bottom:1px solid var(--line)}
+.cart-item .ci-info{flex:1;min-width:0}
+.cart-item .ci-name{font-size:.9rem;font-weight:600;color:var(--ink);line-height:1.3;margin-bottom:6px}
+.cart-item .ci-price{font-size:.85rem;color:var(--ink-soft)}
+.cart-item .ci-controls{display:flex;align-items:center;gap:8px;margin-top:8px}
+.cart-item .qbtn{width:24px;height:24px;border:1.5px solid var(--line);background:var(--white);border-radius:6px;cursor:pointer;font-size:1rem;line-height:1;color:var(--ink);display:flex;align-items:center;justify-content:center}
+.cart-item .qbtn:hover{border-color:var(--teal);color:var(--teal-dark)}
+.cart-item .qnum{font-size:.9rem;font-weight:600;min-width:20px;text-align:center}
+.cart-item .ci-remove{margin-left:auto;background:none;border:0;color:#c0392b;font-size:.78rem;cursor:pointer;text-decoration:underline}
+.cart-empty{text-align:center;color:var(--ink-soft);padding:50px 20px;font-size:.95rem}
+.cart-foot{border-top:1px solid var(--line);padding:18px 22px;background:var(--paper)}
+.cart-total-row{display:flex;justify-content:space-between;align-items:baseline;margin-bottom:14px}
+.cart-total-row .ct-label{font-weight:600;color:var(--ink)}
+.cart-total-row .ct-amt{font-family:'Fraunces';font-size:1.5rem;font-weight:600;color:var(--ink)}
+.cart-send-btn{display:flex;align-items:center;justify-content:center;gap:8px;width:100%;background:#25D366;color:#fff;border:0;padding:13px;border-radius:999px;font-family:inherit;font-weight:600;font-size:.92rem;cursor:pointer;transition:.2s;text-decoration:none}
+.cart-send-btn:hover{background:#1da851}
+.cart-send-btn svg{width:18px;height:18px}
+.cart-clear-btn{display:block;width:100%;background:none;border:0;color:var(--ink-soft);font-size:.8rem;cursor:pointer;margin-top:10px;text-decoration:underline;font-family:inherit}
+@media(max-width:520px){.cart-toggle{top:auto;bottom:20px;transform:none;border-radius:12px}}
+.modal .variants{margin:16px 0}
+.modal .variants .vrow{display:flex;justify-content:space-between;padding:9px 0;border-bottom:1px solid var(--line);font-size:.95rem}
+.modal .variants .vrow b{font-family:'Fraunces';color:var(--teal-dark)}
+.modal .mbody{padding:8px 32px 34px}
+.modal .blurb{color:var(--ink-soft);font-size:1rem;line-height:1.7;margin-bottom:24px}
+.modal .spectable{width:100%;border-collapse:collapse;font-size:.9rem}
+.modal .spectable th{text-align:left;font-family:'Fraunces';font-size:1.05rem;color:var(--ink);padding:18px 0 10px;border-bottom:2px solid var(--ink)}
+.modal .spectable td{padding:9px 0;border-bottom:1px solid var(--line);vertical-align:top}
+.modal .spectable td:first-child{color:var(--ink-soft);width:42%;padding-right:16px}
+.modal .spectable td:last-child{color:var(--ink);font-weight:500}
+.modal .mfoot{padding:24px 32px 32px;background:var(--paper);border-top:1px solid var(--line);display:flex;gap:12px;align-items:center;flex-wrap:wrap}
+.mclose{position:absolute;top:18px;right:20px;background:rgba(255,255,255,.9);border:0;width:38px;height:38px;border-radius:50%;font-size:1.4rem;cursor:pointer;color:var(--ink);z-index:2;box-shadow:var(--shadow);line-height:1}
+
+/* ---------- About / split ---------- */
+.split{display:grid;grid-template-columns:1fr 1fr;gap:54px;align-items:center}
+.split img{border-radius:16px;box-shadow:var(--shadow);width:100%;aspect-ratio:4/3;object-fit:cover}
+.split h2{font-size:clamp(1.8rem,3.2vw,2.5rem);margin-bottom:18px}
+.split p{color:var(--ink-soft);margin-bottom:16px}
+.values{list-style:none;margin-top:8px}
+.values li{padding:12px 0;border-bottom:1px solid var(--line);display:flex;gap:12px}
+.values li b{font-family:'Fraunces';color:var(--teal-dark);min-width:120px}
+
+/* ---------- Contact ---------- */
+.contact-grid{display:grid;grid-template-columns:1fr 1fr;gap:48px}
+.cinfo .crow{display:flex;gap:14px;padding:16px 0;border-bottom:1px solid var(--line)}
+.cinfo .crow .lbl{font-weight:700;min-width:90px;color:var(--ink)}
+.cinfo .crow a,.cinfo .crow span{color:var(--ink-soft)}
+.cform{background:var(--white);border:1px solid var(--line);border-radius:var(--radius);padding:30px}
+.cform label{display:block;font-size:.84rem;font-weight:600;margin:14px 0 6px;color:var(--ink)}
+.cform input,.cform textarea{width:100%;padding:12px 14px;border:1.5px solid var(--line);border-radius:10px;font-family:inherit;font-size:.95rem;color:var(--ink);background:var(--paper);transition:.2s}
+.cform input:focus,.cform textarea:focus{outline:none;border-color:var(--teal);background:#fff}
+.cform textarea{min-height:120px;resize:vertical}
+.cform button{margin-top:18px;width:100%;background:var(--ink);color:#fff;border:0;padding:14px;border-radius:999px;font-weight:600;font-size:.96rem;cursor:pointer;font-family:inherit;transition:.2s}
+.cform button:hover{background:var(--teal-dark)}
+.cform button:disabled{opacity:.6;cursor:not-allowed}
+.form-hint{font-size:.8rem;color:var(--ink-soft);margin:8px 0 2px}
+.form-error{display:none;background:#fdecea;color:#b3261e;border:1px solid #f3c2bd;border-radius:8px;padding:10px 12px;font-size:.85rem;margin-top:14px}
+.form-error.show{display:block}
+.form-ok{display:none;background:#e7f6ec;color:#1b7a3e;border:1px solid #b9e2c6;border-radius:8px;padding:10px 12px;font-size:.85rem;margin-top:14px}
+.form-ok.show{display:block}
+.cform input.invalid,.cform textarea.invalid{border-color:#d9534f;background:#fff}
+.social-row{display:inline-flex;gap:10px;align-items:center}
+.social-ico{display:inline-flex;align-items:center;justify-content:center;width:34px;height:34px;border-radius:8px;color:#fff;transition:.2s}
+.social-ico[aria-label="Facebook"]{background:#fff;color:#1877F2;border:1px solid var(--line)}
+.social-ico[aria-label="Instagram"]{background:radial-gradient(circle at 30% 110%,#fdf497 0%,#fdf497 5%,#fd5949 45%,#d6249f 60%,#285AEB 90%)}
+.social-ico[aria-label="LinkedIn"]{background:#fff;color:#0A66C2;border:1px solid var(--line)}
+.social-ico:hover{transform:translateY(-2px);filter:brightness(1.08)}
+.social-ico svg{width:18px;height:18px}
+
+/* ---------- Footer ---------- */
+footer{background:var(--ink);color:#aec5d2;padding:54px 0 28px;margin-top:30px}
+footer .fgrid{display:grid;grid-template-columns:1.4fr 1fr 1fr;gap:40px;padding-bottom:34px;border-bottom:1px solid rgba(255,255,255,.12)}
+footer h4{color:#fff;font-size:1rem;margin-bottom:16px}
+footer a{color:#aec5d2;display:block;padding:5px 0;font-size:.92rem}
+footer a:hover{color:#fff}
+footer .flogo{font-family:'Fraunces';font-size:1.4rem;color:#fff;margin-bottom:8px}
+footer .fbtm{padding-top:22px;font-size:.84rem;display:flex;justify-content:space-between;flex-wrap:wrap;gap:10px;color:#7d9aac}
+
+/* ---------- Reveal animation ---------- */
+.reveal{opacity:0;transform:translateY(24px);transition:opacity .7s ease,transform .7s ease}
+.reveal.in{opacity:1;transform:none}
+/* ---------- Brand logo wall ---------- */
+.brands{border-top:1px solid var(--line)}
+.brand-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:14px}
+.brand-tile{display:flex;align-items:center;justify-content:center;background:var(--white);border:1px solid var(--line);border-radius:var(--radius);padding:22px 18px;min-height:104px;transition:box-shadow .2s,transform .2s}
+.brand-tile:hover{box-shadow:var(--shadow);transform:translateY(-2px)}
+.brand-tile img{max-height:54px;max-width:100%;width:auto;object-fit:contain}
+@media(max-width:560px){.brand-grid{grid-template-columns:repeat(auto-fill,minmax(116px,1fr));gap:10px}.brand-tile{min-height:86px;padding:16px 12px}.brand-tile img{max-height:42px}}
+
+/* ---------- Responsive ---------- */
+@media(max-width:860px){
+  .hero .wrap{grid-template-columns:1fr;gap:40px}
+  .split,.contact-grid{grid-template-columns:1fr;gap:32px}
+  .modal .mhead{grid-template-columns:1fr}
+  .menu{display:none;position:absolute;top:100%;left:0;right:0;background:var(--white);flex-direction:column;padding:18px 24px;gap:6px;border-bottom:1px solid var(--line);box-shadow:var(--shadow)}
+  .menu.open{display:flex}
+  .navdrop{width:100%}
+  .navdrop-trigger{justify-content:space-between;width:100%;padding:8px 2px}
+  .navdrop-panel{position:static;opacity:1;visibility:visible;transform:none;box-shadow:none;border:0;
+    border-radius:0;padding:0 0 6px 12px;min-width:0;max-width:none;max-height:260px;display:block}
+  .navdrop:not(.open) .navdrop-panel{display:none}
+  .navdrop .navdrop-panel button{white-space:normal}
+  .menu a{padding:10px 0}
+  .burger{display:flex}
+  footer .fgrid{grid-template-columns:1fr;gap:28px}
+}
+.cardlink{display:block;color:inherit;text-decoration:none}
+.cardlink:hover{color:inherit}
+</style>
+</head>
+<body>
+
+<!-- TOP BAR -->
+<div class="topbar"><div class="wrap">
+  <span data-i18n="tb_tagline">香港 · 超過30個品牌的授權合作夥伴，包括 Solventum（前稱 3M 醫療保健）</span>
+  <span class="tb-ship" data-i18n="tb_shipping">🚚 訂單滿 HK$500 免費送貨</span>
+  <span class="tb-right">
+    <a href="tel:+85227301883">Tel: +852 2730 1883</a>
+    <a href="mailto:info@clinicon.com.hk">info@clinicon.com.hk</a>
+  </span>
+</div></div>
+
+<!-- HEADER -->
+<header>
+  <nav class="nav">
+    <a class="brand" href="#top">
+      <img src="images/clinicon%20logo.png" alt="Clinicon Medical logo">
+      <span class="bt"><b>Clinicon Medical</b><span>健力醫療器材有限公司</span></span>
+    </a>
+    <div class="menu" id="menu">
+      <div class="navdrop" id="brandsDrop">
+        <a href="#brands" class="navdrop-trigger" data-i18n="nav_brands">品牌<svg class="caret" width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"></polyline></svg></a>
+        <div class="navdrop-panel" id="brandsPanel"></div>
+      </div>
+      <div class="navdrop" id="catsDrop">
+        <a href="#products" class="navdrop-trigger" data-i18n="nav_products">產品<svg class="caret" width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"></polyline></svg></a>
+        <div class="navdrop-panel" id="catsPanel"></div>
+      </div>
+      <a href="#about" data-i18n="nav_about">關於我們</a>
+      <a href="#opportunities" data-i18n="nav_opportunities">機會</a>
+      <a href="#contact" data-i18n="nav_contact">聯絡我們</a>
+      <a class="wa-btn" href="https://wa.me/85293209650" target="_blank" rel="noopener">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2a10 10 0 0 0-8.6 15l-1.3 4.7 4.8-1.3A10 10 0 1 0 12 2zm5.8 14.1c-.2.7-1.4 1.3-2 1.4-.5.1-1.2.1-1.9-.1-.4-.1-1-.3-1.7-.6-3-1.3-4.9-4.3-5.1-4.5-.1-.2-1.2-1.5-1.2-2.9s.7-2 1-2.3c.2-.3.5-.3.7-.3h.5c.2 0 .4 0 .6.5l.8 2c.1.1.1.3 0 .5l-.4.5-.3.3c-.2.2-.3.4-.2.6.2.4.9 1.4 1.9 2.3 1.3 1.1 2.3 1.5 2.6 1.6.2.1.4.1.6-.1l.8-1c.2-.2.4-.2.6-.1l2 .9c.2.1.4.2.4.3.1.2.1.8-.1 1.5z"></path></svg>
+        <span data-i18n="nav_order">透過 WhatsApp 下單</span>
+      </a>
+      <div class="langtog" id="langtog">
+        <button data-lang="en" class="">EN</button>
+        <button data-lang="tc" class="active">繁</button>
+      </div>
+    </div>
+    <button class="burger" id="burger" aria-label="Menu"><span></span><span></span><span></span></button>
+  </nav>
+</header>
+
+<!-- STICKY SEARCH BAR (pinned under header, always visible) -->
+<div class="searchbar" id="searchbar">
+  <div class="wrap searchbar-inner">
+    <div class="searchwrap">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="11" cy="11" r="7"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
+      <input type="text" id="search" data-i18n-ph="search_ph" placeholder="搜尋產品…" autocomplete="off">
+    </div>
+    <button class="search-btn" id="searchBtn" data-i18n="search_btn">搜尋</button>
+  </div>
+</div>
+
+<!-- HERO -->
+<a id="top"></a>
+<section class="hero">
+  <div class="wrap">
+    <div>
+      <span class="eyebrow" data-i18n="hero_eyebrow">自1980年值得信賴</span>
+      <h1 data-i18n="hero_h1">為<em>香港</em>醫護專業人員提供可靠的醫療用品。</h1>
+      <p class="lede" data-i18n="hero_lede">健力醫療器材有限公司是值得信賴的經銷商，服務醫院、診所、實驗室、大學和政府部門，提供優質產品和專業的一站式採購服務。</p>
+      <div class="cta-row">
+        <a class="btn-primary" href="#products" data-i18n="hero_cta1">瀏覽產品</a>
+        <a class="btn-ghost" href="https://wa.me/85293209650" target="_blank" rel="noopener" data-i18n="hero_cta2">索取報價</a>
+      </div>
+    </div>
+    <div class="hero-card reveal">
+      <span class="badge" data-i18n="hero_badge">45年以上</span>
+      <div class="stat"><b>1980</b><span data-i18n="hero_s1">於香港成立，服務醫療界超過四十年</span></div>
+      <div class="stat"><b>30+</b><span data-i18n="hero_s2">授權品牌合作夥伴，包括 Solventum（前稱 3M 醫療保健）</span></div>
+      <div class="stat"><b>1-stop</b><span data-i18n="hero_s3">為醫院、診所、實驗室及政府採購</span></div>
+    </div>
+  </div>
+</section>
+
+<!-- BRANDS -->
+<section class="block brands" id="brands">
+  <div class="wrap">
+    <div class="sec-head reveal">
+      <span class="eyebrow" data-i18n="brands_eyebrow">合作夥伴</span>
+      <h2 data-i18n="brands_h2">合作品牌</h2>
+      <p data-i18n="brands_p">作為30多個領先醫療品牌的授權分銷商，我們為香港的醫院、診所、化驗所及政府部門提供值得信賴、品質保證的產品。</p>
+    </div>
+    <div class="brand-grid reveal">
+      <div class="brand-tile"><img src="/images/brands/3m.png" alt="3M" loading="lazy"></div>
+      <div class="brand-tile"><img src="/images/brands/alp-k2.png" alt="ALP K2" loading="lazy"></div>
+      <div class="brand-tile"><img src="/images/brands/b-braun.png" alt="B. Braun" loading="lazy"></div>
+      <div class="brand-tile"><img src="/images/brands/baxter.png" alt="Baxter" loading="lazy"></div>
+      <div class="brand-tile"><img src="/images/brands/betadine.png" alt="Betadine" loading="lazy"></div>
+      <div class="brand-tile"><img src="/images/brands/braun.png" alt="Braun" loading="lazy"></div>
+      <div class="brand-tile"><img src="/images/brands/cardinal-detecto.png" alt="Cardinal Detecto" loading="lazy"></div>
+      <div class="brand-tile"><img src="/images/brands/ccd-international.png" alt="CCD International" loading="lazy"></div>
+      <div class="brand-tile"><img src="/images/brands/covidien.jpeg" alt="Covidien" loading="lazy"></div>
+      <div class="brand-tile"><img src="/images/brands/daiwha.png" alt="Daiwha" loading="lazy"></div>
+      <div class="brand-tile"><img src="/images/brands/eos.jpeg" alt="EOS" loading="lazy"></div>
+      <div class="brand-tile"><img src="/images/brands/ethicon.jpeg" alt="Ethicon" loading="lazy"></div>
+      <div class="brand-tile"><img src="/images/brands/heine.png" alt="Heine" loading="lazy"></div>
+      <div class="brand-tile"><img src="/images/brands/inbody.png" alt="InBody" loading="lazy"></div>
+      <div class="brand-tile"><img src="/images/brands/johnson-and-johnson.png" alt="Johnson &amp; Johnson" loading="lazy"></div>
+      <div class="brand-tile"><img src="/images/brands/kenz.png" alt="Kenz" loading="lazy"></div>
+      <div class="brand-tile"><img src="/images/brands/koffmann.png" alt="Köffmann" loading="lazy"></div>
+      <div class="brand-tile"><img src="/images/brands/littmann.png" alt="Littmann" loading="lazy"></div>
+      <div class="brand-tile"><img src="/images/brands/medline.png" alt="Medline" loading="lazy"></div>
+      <div class="brand-tile"><img src="/images/brands/miltex.png" alt="Miltex" loading="lazy"></div>
+      <div class="brand-tile"><img src="/images/brands/mir.png" alt="MIR" loading="lazy"></div>
+      <div class="brand-tile"><img src="/images/brands/omron.jpeg" alt="Omron" loading="lazy"></div>
+      <div class="brand-tile"><img src="/images/brands/purell.png" alt="Purell" loading="lazy"></div>
+      <div class="brand-tile"><img src="/images/brands/reda.png" alt="Reda" loading="lazy"></div>
+      <div class="brand-tile"><img src="/images/brands/riester.png" alt="Riester" loading="lazy"></div>
+      <div class="brand-tile"><img src="/images/brands/scimitar.jpeg" alt="Scimitar" loading="lazy"></div>
+      <div class="brand-tile"><img src="/images/brands/sigma.png" alt="Sigma" loading="lazy"></div>
+      <div class="brand-tile"><img src="/images/brands/smith-nephew.png" alt="Smith &amp; Nephew" loading="lazy"></div>
+      <div class="brand-tile"><img src="/images/brands/solventum.png" alt="Solventum" loading="lazy"></div>
+      <div class="brand-tile"><img src="/images/brands/spirit.png" alt="Spirit" loading="lazy"></div>
+      <div class="brand-tile"><img src="/images/brands/sugico.png" alt="Sugico" loading="lazy"></div>
+      <div class="brand-tile"><img src="/images/brands/swann-morton.png" alt="Swann-Morton" loading="lazy"></div>
+      <div class="brand-tile"><img src="/images/brands/takara-belmont.jpeg" alt="Takara Belmont" loading="lazy"></div>
+      <div class="brand-tile"><img src="/images/brands/tanita.png" alt="Tanita" loading="lazy"></div>
+      <div class="brand-tile"><img src="/images/brands/tecno-gaz.jpeg" alt="Tecno-Gaz" loading="lazy"></div>
+      <div class="brand-tile"><img src="/images/brands/terumo.png" alt="Terumo" loading="lazy"></div>
+      <div class="brand-tile"><img src="/images/brands/tidi.png" alt="TIDI" loading="lazy"></div>
+      <div class="brand-tile"><img src="/images/brands/top-glove.png" alt="Top Glove" loading="lazy"></div>
+      <div class="brand-tile"><img src="/images/brands/wallach.png" alt="Wallach" loading="lazy"></div>
+      <div class="brand-tile"><img src="/images/brands/welch-allyn.png" alt="Welch Allyn" loading="lazy"></div>
+    </div>
+  </div>
+</section>
+
+<!-- TRUST STRIP -->
+<div class="trust"><div class="wrap">
+  <span><b data-i18n="trust_1">醫院</b></span><span class="dot"></span>
+  <span><b data-i18n="trust_2">診所</b></span><span class="dot"></span>
+  <span><b data-i18n="trust_3">實驗室</b></span><span class="dot"></span>
+  <span><b data-i18n="trust_4">大學</b></span><span class="dot"></span>
+  <span><b data-i18n="trust_5">政府部門</b></span>
+</div></div>
+
+<!-- PRODUCTS -->
+<section class="block" id="products">
+  <div class="wrap">
+    <div class="sec-head reveal">
+      <span class="eyebrow" data-i18n="prod_eyebrow">產品目錄</span>
+      <h2 data-i18n="prod_h2">高品質醫療器材</h2>
+      <p data-i18n="prod_p">產品種類繁多未能盡錄，如需查詢或下單，請發送 WhatsApp 訊息至 93209650。</p>
+    </div>
+    <div class="filters" id="filters"></div>
+    <div class="grid" id="grid"></div>
+    <div class="seemore-wrap"><button class="seemore-btn" id="seeMore" data-i18n="see_more">查看更多</button></div>
+  </div>
+</section>
+
+<!-- ABOUT -->
+<section class="block" id="about" style="background:var(--white);border-top:1px solid var(--line);border-bottom:1px solid var(--line)">
+  <div class="wrap split">
+    <div class="reveal">
+      <span class="eyebrow" style="font-size:.78rem;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:var(--teal-dark);display:block;margin-bottom:12px" data-i18n="about_eyebrow">關於健力</span>
+      <h2 data-i18n="about_h2">四十年值得信賴的醫療供應</h2>
+      <p data-i18n="about_p1">健力醫療器材有限公司是一家香港公司，專注於為診所、安老院和醫院供應高品質的醫療產品。憑藉45年的經驗，我們致力於提供頂級產品，並與客戶建立長久的合作關係。</p>
+      <p data-i18n="about_p2">我們對品質、誠信和專業的承諾，以及透明度、道德商業操守和持續改進，使我們在醫療用品領域脫穎而出。</p>
+      <ul class="values">
+        <li><b data-i18n="val1_t">承諾</b><span data-i18n="val1_d">確保客戶能獲得可靠、必需的醫療產品及量身定制的解決方案。</span></li>
+        <li><b data-i18n="val2_t">誠信</b><span data-i18n="val2_d">在每一次互動中保持透明和道德的商業操守。</span></li>
+        <li><b data-i18n="val3_t">創新</b><span data-i18n="val3_d">靈活適應，使我們在不斷發展的行業中保持領先。</span></li>
+      </ul>
+    </div>
+    <div class="reveal">
+      <img src="images/about%20us.jpg" alt="Medical tools overview">
+    </div>
+  </div>
+</section>
+
+<!-- OPPORTUNITIES -->
+<section class="block" id="opportunities">
+  <div class="wrap">
+    <div class="sec-head reveal">
+      <span class="eyebrow" data-i18n="opp_eyebrow">職業與合作</span>
+      <h2 data-i18n="opp_h2">健力的機會</h2>
+      <p data-i18n="opp_p">我們一直在尋找充滿熱情、盡心盡力、目標明確的人才。如果您能在快節奏的環境中茁壯成長，並希望您的工作直接影響病患護理，我們期待您的加入。</p>
+    </div>
+    <div class="split">
+      <div class="reveal">
+        <img src="images/images.jpg" alt="Clinicon team opportunities">
+      </div>
+      <div class="reveal">
+        <ul class="values">
+          <li><b data-i18n="opp1_t">有意義的工作</b><span data-i18n="opp1_d">您的努力有助於為手術室、診所和長期護理機構提供物資。</span></li>
+          <li><b data-i18n="opp2_t">薪酬福利</b><span data-i18n="opp2_d">退休計劃和成長機會。</span></li>
+          <li><b data-i18n="opp3_t">充滿活力的團隊</b><span data-i18n="opp3_d">在重要的醫療領域中展現主動性和創新精神。</span></li>
+        </ul>
+        <p style="color:var(--ink-soft);margin:18px 0" data-i18n="opp_apply_p">準備好申請了嗎？請將您的履歷和求職信（說明您的興趣）發送給我們，並在主旨欄註明職位名稱。</p>
+        <a class="btn-primary" href="mailto:jason@clinicon.com.hk?subject=Opportunities%20with%20Clinicon" data-i18n="opp_apply_btn">立即申請</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section class="block" id="contact" style="background:var(--white);border-top:1px solid var(--line)">
+  <div class="wrap">
+    <div class="sec-head reveal">
+      <span class="eyebrow" data-i18n="contact_eyebrow">聯絡我們</span>
+      <h2 data-i18n="contact_h2">讓我們知道</h2>
+      <p data-i18n="contact_p">有疑問、回饋，或準備下單？請與我們聯絡，我們會盡快回覆您。</p>
+    </div>
+    <div class="contact-grid">
+      <div class="cinfo reveal">
+        <div class="crow"><span class="lbl" data-i18n="c_address">地址</span><span data-i18n="c_addr_val">香港九龍尖沙咀廣東道28號力寶太陽廣場411室</span></div>
+        <div class="crow"><span class="lbl" data-i18n="c_phone">電話</span><a href="tel:+85227301883">+852 2730 1883</a></div>
+        <div class="crow"><span class="lbl" data-i18n="c_whatsapp">WhatsApp</span><a href="https://wa.me/85293209650" target="_blank" rel="noopener">9320 9650</a></div>
+        <div class="crow"><span class="lbl" data-i18n="c_fax">傳真</span><span>+852 2736 1106</span></div>
+        <div class="crow"><span class="lbl" data-i18n="c_email">電郵</span><a href="mailto:info@clinicon.com.hk">info@clinicon.com.hk</a></div>
+        <div class="crow"><span class="lbl" data-i18n="c_social">社交媒體</span><span class="social-row">
+          <a class="social-ico" href="https://www.facebook.com/profile.php?id=100057245778951" target="_blank" rel="noopener" aria-label="Facebook">
+            <svg viewBox="0 0 24 24" fill="currentColor"><path d="M24 12.07C24 5.4 18.63 0 12 0S0 5.4 0 12.07C0 18.1 4.39 23.1 10.13 24v-8.44H7.08v-3.49h3.05V9.41c0-3.02 1.79-4.69 4.53-4.69 1.31 0 2.69.24 2.69.24v2.97h-1.52c-1.49 0-1.96.93-1.96 1.89v2.25h3.33l-.53 3.49h-2.8V24C19.61 23.1 24 18.1 24 12.07z"></path></svg>
+          </a>
+          <a class="social-ico" href="https://www.instagram.com/cliniconmedical/" target="_blank" rel="noopener" aria-label="Instagram">
+            <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2.16c3.2 0 3.58.01 4.85.07 1.17.05 1.8.25 2.23.41.56.22.96.48 1.38.9.42.42.68.82.9 1.38.16.42.36 1.06.41 2.23.06 1.27.07 1.65.07 4.85s-.01 3.58-.07 4.85c-.05 1.17-.25 1.8-.41 2.23-.22.56-.48.96-.9 1.38-.42.42-.82.68-1.38.9-.42.16-1.06.36-2.23.41-1.27.06-1.65.07-4.85.07s-3.58-.01-4.85-.07c-1.17-.05-1.8-.25-2.23-.41a3.72 3.72 0 0 1-1.38-.9 3.72 3.72 0 0 1-.9-1.38c-.16-.42-.36-1.06-.41-2.23C2.17 15.58 2.16 15.2 2.16 12s.01-3.58.07-4.85c.05-1.17.25-1.8.41-2.23.22-.56.48-.96.9-1.38.42-.42.82-.68 1.38-.9.42-.16 1.06-.36 2.23-.41C8.42 2.17 8.8 2.16 12 2.16zM12 0C8.74 0 8.33.01 7.05.07 5.78.13 4.9.33 4.14.63c-.79.31-1.46.72-2.12 1.38C1.36 2.67.95 3.34.63 4.14.33 4.9.13 5.78.07 7.05.01 8.33 0 8.74 0 12s.01 3.67.07 4.95c.06 1.27.26 2.15.56 2.91.31.79.72 1.46 1.38 2.12.66.66 1.33 1.07 2.12 1.38.76.3 1.64.5 2.91.56C8.33 23.99 8.74 24 12 24s3.67-.01 4.95-.07c1.27-.06 2.15-.26 2.91-.56.79-.31 1.46-.72 2.12-1.38.66-.66 1.07-1.33 1.38-2.12.3-.76.5-1.64.56-2.91.06-1.28.07-1.69.07-4.95s-.01-3.67-.07-4.95c-.06-1.27-.26-2.15-.56-2.91a5.88 5.88 0 0 0-1.38-2.12A5.88 5.88 0 0 0 19.86.63c-.76-.3-1.64-.5-2.91-.56C15.67.01 15.26 0 12 0zm0 5.84A6.16 6.16 0 1 0 18.16 12 6.16 6.16 0 0 0 12 5.84zM12 16a4 4 0 1 1 4-4 4 4 0 0 1-4 4zm6.41-10.85a1.44 1.44 0 1 0 1.44 1.44 1.44 1.44 0 0 0-1.44-1.44z"></path></svg>
+          </a>
+          <a class="social-ico" href="https://hk.linkedin.com/company/clinicon-medical-limited" target="_blank" rel="noopener" aria-label="LinkedIn">
+            <svg viewBox="0 0 24 24" fill="currentColor"><path d="M20.45 20.45h-3.56v-5.57c0-1.33-.02-3.04-1.85-3.04-1.85 0-2.14 1.45-2.14 2.94v5.67H9.35V9h3.41v1.56h.05c.48-.9 1.64-1.85 3.37-1.85 3.6 0 4.27 2.37 4.27 5.45v6.29zM5.34 7.43a2.06 2.06 0 1 1 0-4.13 2.06 2.06 0 0 1 0 4.13zM7.12 20.45H3.55V9h3.57v11.45zM22.22 0H1.77C.8 0 0 .77 0 1.73v20.54C0 23.22.8 24 1.77 24h20.45c.98 0 1.78-.78 1.78-1.73V1.73C24 .77 23.2 0 22.22 0z"></path></svg>
+          </a>
+        </span></div>
+      </div>
+      <!-- Form posts to Formspree (endpoint: mrevpkaw). Submissions are emailed to info@clinicon.com.hk. -->
+      <form class="cform reveal" id="contactForm" action="https://formspree.io/f/mrevpkaw" method="POST" novalidate="">
+        <label data-i18n="form_first">名字</label><input type="text" name="first_name" required="">
+        <label data-i18n="form_last">姓氏</label><input type="text" name="last_name">
+        <label data-i18n="form_phone">電話號碼</label><input type="text" name="phone" id="f_phone" inputmode="numeric" autocomplete="tel">
+        <label data-i18n="form_email">電郵</label><input type="text" name="email" id="f_email" autocomplete="email">
+        <p class="form-hint" data-i18n="form_contact_hint">請提供電郵地址或電話號碼。</p>
+        <label data-i18n="form_msg">訊息</label><textarea name="message" required=""></textarea>
+        <div class="form-error" id="formError" role="alert"></div>
+        <div class="form-ok" id="formOk"></div>
+        <button type="submit" data-i18n="form_send">傳送訊息</button>
+      </form>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="wrap">
+    <div class="fgrid">
+      <div>
+        <div class="flogo">Clinicon Medical Ltd.</div>
+        <p style="font-size:.9rem;max-width:30em" data-i18n="foot_about">成立於1980年。值得信賴的香港醫療用品經銷商，致力於品質與價值，服務醫療界超過45年。</p>
+      </div>
+      <div>
+        <h4 data-i18n="foot_explore">探索</h4>
+        <a href="#products" data-i18n="nav_products">產品</a>
+        <a href="#about" data-i18n="nav_about">關於我們</a>
+        <a href="#opportunities" data-i18n="nav_opportunities">機會</a>
+        <a href="#contact" data-i18n="nav_contact">聯絡我們</a>
+        <a href="/terms-and-conditions" data-i18n="nav_terms">條款及細則</a>
+      </div>
+      <div>
+        <h4 data-i18n="foot_contact">聯絡</h4>
+        <a href="tel:+85227301883">+852 2730 1883</a>
+        <a href="https://wa.me/85293209650" target="_blank" rel="noopener">WhatsApp: 9320 9650</a>
+        <a href="mailto:info@clinicon.com.hk">info@clinicon.com.hk</a>
+        <span style="font-size:.9rem;display:block;padding-top:6px" data-i18n="foot_addr">香港九龍尖沙咀廣東道28號<br>力寶太陽廣場411室</span>
+      </div>
+    </div>
+    <div class="fbtm">
+      <span data-i18n="foot_rights">© 2026 健力醫療器材有限公司 版權所有。</span>
+      <span>健力醫療器材有限公司</span>
+    </div>
+  </div>
+</footer>
+
+<!-- MODAL -->
+<div class="modal-bg" id="modalBg">
+  <div class="modal" id="modal"></div>
+</div>
+
+<!-- CART -->
+<button class="cart-toggle" id="cartToggle" aria-label="Open cart">
+  <span class="cart-count zero" id="cartCount">0</span>
+  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="21" r="1"></circle><circle cx="20" cy="21" r="1"></circle><path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"></path></svg>
+  <span class="cart-label" data-i18n="cart_label">購物車</span>
+</button>
+<div class="cart-overlay" id="cartOverlay"></div>
+<aside class="cart-panel" id="cartPanel" aria-label="Shopping cart">
+  <div class="cart-head">
+    <h3 data-i18n="cart_title">您的選擇</h3>
+    <button class="cart-close" id="cartClose" aria-label="Close">×</button>
+  </div>
+  <div class="cart-items" id="cartItems"></div>
+  <div class="cart-foot" id="cartFoot"></div>
+</aside>
+
+<script>
+/* ============================================================
+   PRODUCT DATA  (bilingual: English + Traditional Chinese)
+   Each product: {name_en, name_tc, category, price, ribbon, image,
+                  blurb, specs:[[label,value]...], variants:[[name,price]...]}
+   To load all 89 products: run  build_bilingual.py  (reads catalog_products.csv
+   + export_zh.csv) — it writes products_array.js. Replace the array below with
+   its contents. Products with no Chinese name use their English name.
+   ============================================================ */
+const WA = "https://wa.me/85293209650";
+const PRODUCTS = [
+ {
+  "name_en": "HMFvh 4001 Perfection – Upright Pharmaceutical Refrigerator (Solid Door)",
+  "name_tc": "HMFvh 4001 Perfection – 直立式藥品雪櫃（實心門）",
+  "category": "Refrigeration & Equipment",
+  "price": 22500,
+  "ribbon": "",
+  "image": "images/HMFvh_4001_Perfection_%E2%80%93_Upright_Pharmaceutical_Refrigerator_%28Solid_Door%29.png",
+  "specs": [],
+  "variants": [],
+  "blurb_en": "The Liebherr HMFvh 4001 delivers high‑capacity pharmaceutical storage in a slim 600 mm‑wide cabinet with a solid insulated door for maximum protection from light and temperature swings. Ventilated cooling, a precision electronic controller and +2 °C SafetyDevice safeguard sensitive medicines across the 394 L interior. With low annual energy consumption, electronic PIN lock, SmartLock and built‑in SmartMonitoring connectivity, this model is ideal for hospital pharmacies and clinics that need secure, standards‑compliant storage with efficient running costs.",
+  "blurb_tc": "",
+  "brand": "Liebherr",
+  "tags": [
+   "Liebherr",
+   "Refrigeration & Equipment"
+  ]
+ },
+ {
+  "name_en": "HMFvh 4011 Perfection – Upright Pharmaceutical Refrigerator (Glass Door)",
+  "name_tc": "HMFvh 4011 Perfection – 直立式藥品雪櫃（玻璃門）",
+  "category": "Refrigeration & Equipment",
+  "price": 23600,
+  "ribbon": "",
+  "image": "images/HMFvh_4011_Perfection_%E2%80%93_Upright_Pharmaceutical_Refrigerator_%28Glass_Door%29.png",
+  "specs": [],
+  "variants": [],
+  "blurb_en": "The Liebherr HMFvh 4011 is a full‑height pharmaceutical refrigerator that combines outstanding product visibility with precise temperature control. A tall insulated glass door and vertical LED lighting give staff a clear view of all shelves, while dynamic forced‑air cooling keeps the entire 420 L interior within ±2 K of the setpoint. Electronic locking, SmartLock automatic alarm locking and integrated SmartMonitoring connectivity make this an excellent choice for hospital pharmacies and healthcare facilities that need secure, fully traceable storage.",
+  "blurb_tc": "",
+  "brand": "Liebherr",
+  "tags": [
+   "Liebherr",
+   "Refrigeration & Equipment"
+  ]
+ },
+ {
+  "name_en": "HMTvh 1501 Perfection – Under‑bench Pharmaceutical Refrigerator (Solid Door)",
+  "name_tc": "HMTvh 1501 Perfection – 工作枱下型藥品雪櫃（實心門）",
+  "category": "Refrigeration & Equipment",
+  "price": 17000,
+  "ribbon": "",
+  "image": "images/HMTvh_1501_Perfection_%E2%80%93_Under%E2%80%91bench_Pharmaceutical_Refrigerator_%28Solid_Door%29.png",
+  "specs": [],
+  "variants": [],
+  "blurb_en": "The Liebherr HMTvh 1501 offers secure, DIN 13277‑compliant storage in an energy‑efficient under‑bench footprint. Its solid insulated door protects light‑sensitive pharmaceuticals, while the ventilated cooling system and advanced electronic controller ensure tight temperature stability around +5 °C. With electronic locking, SmartMonitoring connectivity and an integrated data logger, this 134 L unit is ideal for pharmacies and treatment rooms that need reliable performance without sacrificing valuable floor space.",
+  "blurb_tc": "",
+  "brand": "Liebherr",
+  "tags": [
+   "Liebherr",
+   "Refrigeration & Equipment"
+  ]
+ },
+ {
+  "name_en": "HMTvh 1511 Perfection – Under‑bench Pharmaceutical Refrigerator (Glass Door)",
+  "name_tc": "HMTvh 1511 Perfection – 工作枱下型藥品雪櫃（玻璃門）",
+  "category": "Refrigeration & Equipment",
+  "price": 18000,
+  "ribbon": "",
+  "image": "images/HMTvh_1511_Perfection_%E2%80%93_Under%E2%80%91bench_Pharmaceutical_Refrigerator_%28Glass_Door%29.png",
+  "specs": [],
+  "variants": [],
+  "blurb_en": "Key specifications Gross / net capacity: 137 / 102 litres Exterior dimensions (W × D × H): 597 × 605 × 819 mm Interior dimensions (W × D × H): 450 × 460 × 620 mm Temperature range: +5 °C (factory set, pharmaceutical storage) Temperature stability: ±2 K from setpoint Cooling system / defrost: Forced‑air (ventilated) / automatic Ambient temperature range: +10 °C to +35 °C Energy consumption (365 days): 187 kWh Refrigerant: R600a Sound level: 44 dB(A) Exterior finish: Steel, white Doo",
+  "blurb_tc": "",
+  "brand": "Liebherr",
+  "tags": [
+   "Liebherr",
+   "Refrigeration & Equipment"
+  ]
+ },
+ {
+  "name_en": "NCCO Air Treatment Unit 空氣淨化系統",
+  "name_tc": "NCCO Air Treatment Unit 空氣淨化系統",
+  "category": "Accessories",
+  "price": 4888,
+  "ribbon": "",
+  "image": "images/NCCO_Air_Treatment_Unit_%E7%A9%BA%E6%B0%A3%E6%B7%A8%E5%8C%96%E7%B3%BB%E7%B5%B1.jpg",
+  "specs": [],
+  "variants": [],
+  "blurb_en": "BM100 The BM100 NCCO Air Treatment Unit is a compact purifier designed for bedrooms, offices and clinics that need quiet, reliable protection. Using patented NCCO technology from HKUST, it captures and decomposes formaldehyde, VOCs and other harmful gases instead of just trapping them in filters. The multi‑stage system (pre‑filter, optional static filter, HEPA filter and NCCO reactor) is certified to remove more than 99.99% of human coronavirus in air tests, while intelligent protection mode automatically enters sleep mode after 8 hours of continuous use. NCCO’s patented nano‑catalytic technology continuously decomposes VOCs, formaldehyde, odours, bacteria and viruses into harmless water vapour and carbon dioxide, with no secondary pollution or ozone buildup, and has been proven in lab tests to remove over 99.9% of airborne viruses and VOCs. Wi",
+  "blurb_tc": "",
+  "brand": "NCCO",
+  "tags": [
+   "NCCO",
+   "Accessories"
+  ]
+ },
+ {
+  "name_en": "BRAUN 百靈牌耳鼓探熱器 Ear Thermometer",
+  "name_tc": "BRAUN 百靈牌耳鼓探熱器 Ear Thermometer",
+  "category": "Diagnostic Supplies",
+  "price": 900,
+  "ribbon": "",
+  "image": "images/BRAUN_%E7%99%BE%E9%9D%88%E7%89%8C%E8%80%B3%E9%BC%93%E6%8E%A2%E7%86%B1%E5%99%A8_Ear_Thermometer.png",
+  "specs": [],
+  "variants": [
+   [
+    "PRO-6000",
+    900
+   ],
+   [
+    "IRT",
+    900
+   ]
+  ],
+  "blurb_en": "",
+  "blurb_tc": "",
+  "brand": "Braun",
+  "tags": [
+   "Braun",
+   "Diagnostic Supplies"
+  ]
+ },
+ {
+  "name_en": "Disposable Razor 手術除毛剃刀",
+  "name_tc": "Disposable Razor 手術除毛剃刀",
+  "category": "Treatment Room Supplies",
+  "price": 3,
+  "ribbon": "",
+  "image": "images/Disposable_Razor_%E6%89%8B%E8%A1%93%E9%99%A4%E6%AF%9B%E5%89%83%E5%88%80.jpg",
+  "specs": [],
+  "variants": [
+   [
+    "100/box",
+    180
+   ],
+   [
+    "Each",
+    3
+   ]
+  ],
+  "blurb_en": "100/box......$180",
+  "blurb_tc": "",
+  "brand": "Other",
+  "tags": [
+   "Treatment Room Supplies"
+  ]
+ },
+ {
+  "name_en": "皮膚刮匙 Disposable Dermal Curette",
+  "name_tc": "皮膚刮匙 Disposable Dermal Curette",
+  "category": "Treatment Room Supplies",
+  "price": 54,
+  "ribbon": "",
+  "image": "images/%E7%9A%AE%E8%86%9A%E5%88%AE%E5%8C%99_Disposable_Dermal_Curette.png",
+  "specs": [],
+  "variants": [
+   [
+    "Each",
+    54
+   ],
+   [
+    "50/box",
+    2500
+   ]
+  ],
+  "blurb_en": "50/box......$2,500",
+  "blurb_tc": "",
+  "brand": "Other",
+  "tags": [
+   "Treatment Room Supplies"
+  ]
+ },
+ {
+  "name_en": "取樣打孔筆",
+  "name_tc": "取樣打孔筆",
+  "category": "Other Consumables",
+  "price": 54,
+  "ribbon": "",
+  "image": "images/%E5%8F%96%E6%A8%A3%E6%89%93%E5%AD%94%E7%AD%86.jpg",
+  "specs": [],
+  "variants": [
+   [
+    "Each",
+    54
+   ],
+   [
+    "50/box",
+    2500
+   ]
+  ],
+  "blurb_en": "50/box......$2,500",
+  "blurb_tc": "",
+  "brand": "Other",
+  "tags": [
+   "Other Consumables"
+  ]
+ },
+ {
+  "name_en": "Baxter 0.05% Chlorhexidine 傷口清洗消毒藥水 (藍水)",
+  "name_tc": "Baxter 0.05% Chlorhexidine 傷口清洗消毒藥水 (藍水)",
+  "category": "Disinfectant Solutions",
+  "price": 35,
+  "ribbon": "",
+  "image": "images/Baxter_0.05%25_Chlorhexidine_%E5%82%B7%E5%8F%A3%E6%B8%85%E6%B4%97%E6%B6%88%E6%AF%92%E8%97%A5%E6%B0%B4_%28%E8%97%8D%E6%B0%B4%29.png",
+  "specs": [],
+  "variants": [
+   [
+    "500ml",
+    35
+   ],
+   [
+    "1L",
+    35
+   ],
+   [
+    "100ml",
+    35
+   ]
+  ],
+  "blurb_en": "",
+  "blurb_tc": "",
+  "brand": "BAXTER",
+  "tags": [
+   "BAXTER",
+   "Disinfectant Solutions"
+  ]
+ },
+ {
+  "name_en": "3M 00135LF Bowie 抽真空測試包",
+  "name_tc": "3M 00135LF Bowie 抽真空測試包",
+  "category": "Autoclave Accessories",
+  "price": 1285,
+  "ribbon": "",
+  "image": "images/3M_00135LF_Bowie_%E6%8A%BD%E7%9C%9F%E7%A9%BA%E6%B8%AC%E8%A9%A6%E5%8C%85.jpg",
+  "specs": [],
+  "variants": [],
+  "blurb_en": "30/box",
+  "blurb_tc": "",
+  "brand": "3M",
+  "tags": [
+   "3M",
+   "Autoclave Accessories"
+  ]
+ },
+ {
+  "name_en": "3M 1243A 蒸氣滅菌整合性化學指示片",
+  "name_tc": "3M 1243A 蒸氣滅菌整合性化學指示片",
+  "category": "Autoclave Accessories",
+  "price": 1060,
+  "ribbon": "",
+  "image": "images/3M_1243A_%E8%92%B8%E6%B0%A3%E6%BB%85%E8%8F%8C%E6%95%B4%E5%90%88%E6%80%A7%E5%8C%96%E5%AD%B8%E6%8C%87%E7%A4%BA%E7%89%87.jpg",
+  "specs": [],
+  "variants": [],
+  "blurb_en": "500/bag",
+  "blurb_tc": "",
+  "brand": "3M",
+  "tags": [
+   "3M",
+   "Autoclave Accessories"
+  ]
+ },
+ {
+  "name_en": "3M 運動導電墊片 2238",
+  "name_tc": "3M 運動導電墊片 2238",
+  "category": "ECG Accessories",
+  "price": 145,
+  "ribbon": "",
+  "image": "images/3M_%E9%81%8B%E5%8B%95%E5%B0%8E%E9%9B%BB%E5%A2%8A%E7%89%87_2238.jpg",
+  "specs": [],
+  "variants": [],
+  "blurb_en": "50/bag",
+  "blurb_tc": "",
+  "brand": "3M",
+  "tags": [
+   "3M",
+   "ECG Accessories"
+  ]
+ },
+ {
+  "name_en": "3M 靜態導電墊片 2330",
+  "name_tc": "3M 靜態導電墊片 2330",
+  "category": "ECG Accessories",
+  "price": 288,
+  "ribbon": "",
+  "image": "images/3M_%E9%9D%9C%E6%85%8B%E5%B0%8E%E9%9B%BB%E5%A2%8A%E7%89%87_2330.jpg",
+  "specs": [],
+  "variants": [],
+  "blurb_en": "100/bag",
+  "blurb_tc": "",
+  "brand": "3M",
+  "tags": [
+   "3M",
+   "ECG Accessories"
+  ]
+ },
+ {
+  "name_en": "氣孔導管 Guedal Airways",
+  "name_tc": "氣孔導管 Guedal Airways",
+  "category": "Catheters",
+  "price": 28,
+  "ribbon": "",
+  "image": "images/%E6%B0%A3%E5%AD%94%E5%B0%8E%E7%AE%A1_Guedal_Airways.png",
+  "specs": [],
+  "variants": [],
+  "blurb_en": "Sterile",
+  "blurb_tc": "",
+  "brand": "Other",
+  "tags": [
+   "Catheters"
+  ]
+ },
+ {
+  "name_en": "3M Autoclave 變色膠紙",
+  "name_tc": "3M Autoclave 變色膠紙",
+  "category": "Autoclave Accessories",
+  "price": 93,
+  "ribbon": "",
+  "image": "images/3M_Autoclave_%E8%AE%8A%E8%89%B2%E8%86%A0%E7%B4%99.jpg",
+  "specs": [],
+  "variants": [
+   [
+    "1\" 60yd",
+    93
+   ],
+   [
+    "3/4\" 60yd",
+    93
+   ],
+   [
+    "1/2\" 60yd",
+    93
+   ]
+  ],
+  "blurb_en": "1322",
+  "blurb_tc": "",
+  "brand": "3M",
+  "tags": [
+   "3M",
+   "Autoclave Accessories"
+  ]
+ },
+ {
+  "name_en": "Scimitar 手術縫線",
+  "name_tc": "Scimitar 手術縫線",
+  "category": "Scalpel Blades & Sutures",
+  "price": 260,
+  "ribbon": "",
+  "image": "images/Scimitar_%E6%89%8B%E8%A1%93%E7%B8%AB%E7%B7%9A.jpg",
+  "specs": [],
+  "variants": [
+   [
+    "CG344",
+    260
+   ],
+   [
+    "4/0 PG188",
+    260
+   ],
+   [
+    "2/0 PG146",
+    260
+   ],
+   [
+    "4/0 NY974",
+    260
+   ],
+   [
+    "4/0 BS688",
+    260
+   ],
+   [
+    "CG380",
+    260
+   ],
+   [
+    "3/0 NY954",
+    260
+   ],
+   [
+    "5/0 PG192",
+    260
+   ],
+   [
+    "3/0 PG166D",
+    260
+   ],
+   [
+    "5/0 NY986",
+    260
+   ],
+   [
+    "3/0 BS664",
+    260
+   ],
+   [
+    "6/0 BS699",
+    260
+   ],
+   [
+    "5/0 BS696",
+    260
+   ],
+   [
+    "CG372",
+    260
+   ],
+   [
+    "2/0 NY936",
+    260
+   ],
+   [
+    "2/0 BS638",
+    260
+   ],
+   [
+    "CG294",
+    260
+   ],
+   [
+    "6/0 NY994",
+    260
+   ]
+  ],
+  "blurb_en": "Nylon/Silk/Catgut",
+  "blurb_tc": "",
+  "brand": "Scimitar",
+  "tags": [
+   "Scimitar",
+   "Scalpel Blades & Sutures"
+  ]
+ },
+ {
+  "name_en": "ETHILON 手術縫線",
+  "name_tc": "ETHILON 手術縫線",
+  "category": "Scalpel Blades & Sutures",
+  "price": 1240,
+  "ribbon": "",
+  "image": "images/ETHILON_%E6%89%8B%E8%A1%93%E7%B8%AB%E7%B7%9A.jpg",
+  "specs": [],
+  "variants": [
+   [
+    "1866G 6/0 12/box",
+    1240
+   ],
+   [
+    "1865H 5/0 36/box",
+    1240
+   ],
+   [
+    "W1625BH 3/0 36/box",
+    1240
+   ],
+   [
+    "1667ZH 4/0 36/box",
+    1240
+   ]
+  ],
+  "blurb_en": "",
+  "blurb_tc": "",
+  "brand": "ETHILON",
+  "tags": [
+   "ETHILON",
+   "Scalpel Blades & Sutures"
+  ]
+ },
+ {
+  "name_en": "VICRYL 手術縫線",
+  "name_tc": "VICRYL 手術縫線",
+  "category": "Scalpel Blades & Sutures",
+  "price": 1750,
+  "ribbon": "",
+  "image": "images/VICRYL_%E6%89%8B%E8%A1%93%E7%B8%AB%E7%B7%9A.jpg",
+  "specs": [],
+  "variants": [
+   [
+    "VCP427H 3/0 36/box",
+    1750
+   ],
+   [
+    "VCP845G 4/0 12/box",
+    1750
+   ]
+  ],
+  "blurb_en": "",
+  "blurb_tc": "",
+  "brand": "VICRYL",
+  "tags": [
+   "VICRYL",
+   "Scalpel Blades & Sutures"
+  ]
+ },
+ {
+  "name_en": "醫療廢棄膠袋 Plastic Waste Bag",
+  "name_tc": "醫療廢棄膠袋 Plastic Waste Bag",
+  "category": "Syringes & Needles",
+  "price": 40,
+  "ribbon": "",
+  "image": "images/%E9%86%AB%E7%99%82%E5%BB%A2%E6%A3%84%E8%86%A0%E8%A2%8B_Plastic_Waste_Bag.jpg",
+  "specs": [
+   [
+    "<p>L",
+    "24\" x W: 14\" x H: 10\"</p><p>10/pack</p>"
+   ]
+  ],
+  "variants": [],
+  "blurb_en": "L: 24\" x W: 14\" x H: 10\" 10/pack",
+  "blurb_tc": "",
+  "brand": "Other",
+  "tags": [
+   "Syringes & Needles"
+  ]
+ },
+ {
+  "name_en": "S+N Primapore 傷口護墊貼",
+  "name_tc": "S+N Primapore 傷口護墊貼",
+  "category": "Wound Management",
+  "price": 280,
+  "ribbon": "",
+  "image": "images/S%2BN_Primapore_%E5%82%B7%E5%8F%A3%E8%AD%B7%E5%A2%8A%E8%B2%BC.jpg",
+  "specs": [],
+  "variants": [
+   [
+    "10cm x 8cm 20/box",
+    280
+   ],
+   [
+    "15cm x 8cm 20/box",
+    280
+   ],
+   [
+    "8.3cm x 6cm 50/box",
+    280
+   ],
+   [
+    "7.2 cm x 5cm 100/box",
+    280
+   ]
+  ],
+  "blurb_en": "",
+  "blurb_tc": "",
+  "brand": "Smith&Nephew",
+  "tags": [
+   "Smith&Nephew",
+   "Wound Management"
+  ]
+ },
+ {
+  "name_en": "S+N Jelonet 凡士林油性紗布",
+  "name_tc": "S+N Jelonet 凡士林油性紗布",
+  "category": "Wound Management",
+  "price": 90,
+  "ribbon": "",
+  "image": "images/S%2BN_Jelonet_%E5%87%A1%E5%A3%AB%E6%9E%97%E6%B2%B9%E6%80%A7%E7%B4%97%E5%B8%83.jpg",
+  "specs": [],
+  "variants": [
+   [
+    "5cm x 5cm 50/box",
+    90
+   ],
+   [
+    "10cm x 10cm 10/box",
+    90
+   ]
+  ],
+  "blurb_en": "",
+  "blurb_tc": "",
+  "brand": "Smith&Nephew",
+  "tags": [
+   "Smith&Nephew",
+   "Wound Management"
+  ]
+ },
+ {
+  "name_en": "S+N Bactigras 防菌油性紗布",
+  "name_tc": "S+N Bactigras 防菌油性紗布",
+  "category": "Wound Management",
+  "price": 188,
+  "ribbon": "",
+  "image": "images/S%2BN_Bactigras_%E9%98%B2%E8%8F%8C%E6%B2%B9%E6%80%A7%E7%B4%97%E5%B8%83.jpg",
+  "specs": [],
+  "variants": [
+   [
+    "10cm x 10cm 10/box",
+    188
+   ],
+   [
+    "5cm x 5cm 50/box",
+    188
+   ]
+  ],
+  "blurb_en": "",
+  "blurb_tc": "",
+  "brand": "Smith&Nephew",
+  "tags": [
+   "Smith&Nephew",
+   "Wound Management"
+  ]
+ },
+ {
+  "name_en": "子宮托 Ring Pessary",
+  "name_tc": "子宮托 Ring Pessary",
+  "category": "Gynecology",
+  "price": 400,
+  "ribbon": "",
+  "image": "images/%E5%AD%90%E5%AE%AE%E6%89%98_Ring_Pessary.jpg",
+  "specs": [],
+  "variants": [],
+  "blurb_en": "Silicone, reusable",
+  "blurb_tc": "",
+  "brand": "Other",
+  "tags": [
+   "Gynecology"
+  ]
+ },
+ {
+  "name_en": "3M 1492V 生物指示劑 Biological Indicator",
+  "name_tc": "3M 1492V 生物指示劑 Biological Indicator",
+  "category": "Autoclave Accessories",
+  "price": 3240,
+  "ribbon": "",
+  "image": "images/3M_1492V_%E7%94%9F%E7%89%A9%E6%8C%87%E7%A4%BA%E5%8A%91_Biological_Indicator.jpg",
+  "specs": [],
+  "variants": [],
+  "blurb_en": "50/box",
+  "blurb_tc": "",
+  "brand": "3M",
+  "tags": [
+   "3M",
+   "Autoclave Accessories"
+  ]
+ },
+ {
+  "name_en": "3M 490M 消毒指示劑閱讀器 Biological Indicator Reader",
+  "name_tc": "3M 490M 消毒指示劑閱讀器 Biological Indicator Reader",
+  "category": "Other Consumables",
+  "price": 15800,
+  "ribbon": "",
+  "image": "images/3M_490M_%E6%B6%88%E6%AF%92%E6%8C%87%E7%A4%BA%E5%8A%91%E9%96%B1%E8%AE%80%E5%99%A8_Biological_Indicator_Reader.jpg",
+  "specs": [],
+  "variants": [],
+  "blurb_tc": "*能於24分鐘內快速讀取1492V指示劑，提供準確測試結果",
+  "blurb_en": "",
+  "brand": "3M",
+  "tags": [
+   "3M",
+   "Other Consumables"
+  ]
+ },
+ {
+  "name_en": "TECNO-GAZ 真空高壓消毒爐  Autoclave",
+  "name_tc": "TECNO-GAZ 真空高壓消毒爐  Autoclave",
+  "category": "Other Consumables",
+  "price": 42800,
+  "ribbon": "",
+  "image": "images/TECNO-GAZ_%E7%9C%9F%E7%A9%BA%E9%AB%98%E5%A3%93%E6%B6%88%E6%AF%92%E7%88%90_Autoclave.png",
+  "specs": [],
+  "variants": [],
+  "blurb_tc": "Class B ~ 真空加高壓滅菌，確保完全消毒 *自動預真空操作 *精密微電腦控制消毒及烘乾程序，符合歐州EN13060最高標準及ISO13485:2016認證 *雙水箱設計，排壓時安靜及無蒸氣排出 *內置打印機，列印消毒報告",
+  "blurb_en": "",
+  "brand": "Other",
+  "tags": [
+   "Other Consumables"
+  ]
+ },
+ {
+  "name_en": "BD 採血針管 Vacutainer",
+  "name_tc": "BD 採血針管 Vacutainer",
+  "category": "I.V. Supplies",
+  "price": 650,
+  "ribbon": "",
+  "image": "images/BD_%E6%8E%A1%E8%A1%80%E9%87%9D%E7%AE%A1_Vacutainer.jpg",
+  "specs": [],
+  "variants": [],
+  "blurb_en": "",
+  "blurb_tc": "",
+  "brand": "BD",
+  "tags": [
+   "BD",
+   "I.V. Supplies"
+  ]
+ },
+ {
+  "name_en": "Braun 安全靜脈留置針Introcan Safety",
+  "name_tc": "Braun 安全靜脈留置針Introcan Safety",
+  "category": "I.V. Supplies",
+  "price": 1150,
+  "ribbon": "",
+  "image": "images/Braun_%E5%AE%89%E5%85%A8%E9%9D%9C%E8%84%88%E7%95%99%E7%BD%AE%E9%87%9DIntrocan_Safety.jpg",
+  "specs": [],
+  "variants": [],
+  "blurb_tc": "具有安全裝備，減少針剌傷發生率",
+  "blurb_en": "",
+  "brand": "Braun",
+  "tags": [
+   "Braun",
+   "I.V. Supplies"
+  ]
+ },
+ {
+  "name_en": "BD 靜脈注射管 Angiocath",
+  "name_tc": "BD 靜脈注射管 Angiocath",
+  "category": "Other Consumables",
+  "price": 29,
+  "ribbon": "",
+  "image": "images/BD_%E9%9D%9C%E8%84%88%E6%B3%A8%E5%B0%84%E7%AE%A1_Angiocath.jpg",
+  "specs": [],
+  "variants": [
+   [
+    "22G x 1\"",
+    29
+   ],
+   [
+    "18G x 1.25\"",
+    29
+   ],
+   [
+    "16G x 1.88\"",
+    29
+   ],
+   [
+    "24G x 0.75\"",
+    29
+   ],
+   [
+    "20G x 1.25\"",
+    29
+   ]
+  ],
+  "blurb_en": "",
+  "blurb_tc": "",
+  "brand": "BD",
+  "tags": [
+   "BD",
+   "Other Consumables"
+  ]
+ },
+ {
+  "name_en": "輸液管 Infusion Set",
+  "name_tc": "輸液管 Infusion Set",
+  "category": "I.V. Supplies",
+  "price": 13,
+  "ribbon": "",
+  "image": "images/%E8%BC%B8%E6%B6%B2%E7%AE%A1_Infusion_Set.jpg",
+  "specs": [],
+  "variants": [],
+  "blurb_en": "",
+  "blurb_tc": "",
+  "brand": "Other",
+  "tags": [
+   "I.V. Supplies"
+  ]
+ },
+ {
+  "name_en": "Braun 三通掣",
+  "name_tc": "Braun 三通掣",
+  "category": "I.V. Supplies",
+  "price": 10,
+  "ribbon": "",
+  "image": "images/Braun_%E4%B8%89%E9%80%9A%E6%8E%A3.png",
+  "specs": [],
+  "variants": [],
+  "blurb_en": "",
+  "blurb_tc": "",
+  "brand": "Braun",
+  "tags": [
+   "Braun",
+   "I.V. Supplies"
+  ]
+ },
+ {
+  "name_en": "TERUMO 靜脈留置針 I.V. Catheter",
+  "name_tc": "TERUMO 靜脈留置針 I.V. Catheter",
+  "category": "I.V. Supplies",
+  "price": 18,
+  "ribbon": "",
+  "image": "images/TERUMO_%E9%9D%9C%E8%84%88%E7%95%99%E7%BD%AE%E9%87%9D_I.V._Catheter.jpg",
+  "specs": [],
+  "variants": [
+   [
+    "18G x 1.25\"",
+    18
+   ],
+   [
+    "24G x 0.75\"",
+    18
+   ],
+   [
+    "20G x 1.25\"",
+    18
+   ],
+   [
+    "22G x 1\"",
+    18
+   ]
+  ],
+  "blurb_en": "",
+  "blurb_tc": "",
+  "brand": "TERUMO",
+  "tags": [
+   "TERUMO",
+   "I.V. Supplies"
+  ]
+ },
+ {
+  "name_en": "3M 易撕紙膠布",
+  "name_tc": "3M 易撕紙膠布",
+  "category": "Wound Management",
+  "price": 163,
+  "ribbon": "",
+  "image": "images/3M_%E6%98%93%E6%92%95%E7%B4%99%E8%86%A0%E5%B8%83.jpg",
+  "specs": [],
+  "variants": [],
+  "blurb_en": "",
+  "blurb_tc": "",
+  "brand": "3M",
+  "tags": [
+   "3M",
+   "Wound Management"
+  ]
+ },
+ {
+  "name_en": "3M 石膏軟墊 Cast Padding Bandage",
+  "name_tc": "3M 石膏軟墊 Cast Padding Bandage",
+  "category": "Bandages",
+  "price": 13,
+  "ribbon": "",
+  "image": "images/3M_%E7%9F%B3%E8%86%8F%E8%BB%9F%E5%A2%8A_Cast_Padding_Bandage.jpg",
+  "specs": [],
+  "variants": [
+   [
+    "4\" x 4 yd",
+    13
+   ],
+   [
+    "3\" x 4 yd",
+    13
+   ],
+   [
+    "2\" x 4 yd",
+    13
+   ],
+   [
+    "6\" x 4 yd",
+    13
+   ]
+  ],
+  "blurb_en": "",
+  "blurb_tc": "",
+  "brand": "3M",
+  "tags": [
+   "3M",
+   "Bandages"
+  ]
+ },
+ {
+  "name_en": "Cedium 消炎藥水",
+  "name_tc": "Cedium 消炎藥水",
+  "category": "Disinfectant Solutions",
+  "price": 78,
+  "ribbon": "",
+  "image": "images/Cedium_%E6%B6%88%E7%82%8E%E8%97%A5%E6%B0%B4.jpg",
+  "specs": [],
+  "variants": [],
+  "blurb_tc": "不用稀釋，不含酒精，無氣味，即開即用。 10ml 24/box",
+  "blurb_en": "",
+  "brand": "CEDIUM",
+  "tags": [
+   "CEDIUM",
+   "Disinfectant Solutions"
+  ]
+ },
+ {
+  "name_en": "BD 脊髓 / 絨毛針",
+  "name_tc": "BD 脊髓 / 絨毛針",
+  "category": "Other Consumables",
+  "price": 21,
+  "ribbon": "",
+  "image": "images/BD_%E8%84%8A%E9%AB%93___%E7%B5%A8%E6%AF%9B%E9%87%9D.jpg",
+  "specs": [],
+  "variants": [
+   [
+    "20G x 3.5\"",
+    21
+   ],
+   [
+    "19G x 3.5\" (25/box)",
+    21
+   ],
+   [
+    "23G x 3.5\"",
+    21
+   ],
+   [
+    "20G x 3.5\" (25/box)",
+    21
+   ],
+   [
+    "22G x 3.5\"",
+    21
+   ],
+   [
+    "22G x 3.5\" (25/box)",
+    21
+   ],
+   [
+    "18G x 3.5\"",
+    21
+   ],
+   [
+    "23G x 3.5\" (25/box)",
+    21
+   ],
+   [
+    "25G x 3.5\" (25/box)",
+    21
+   ],
+   [
+    "25G x 3.5\"",
+    21
+   ],
+   [
+    "19G x 3.5\"",
+    21
+   ],
+   [
+    "18G x 3.5\" (25/box)",
+    21
+   ]
+  ],
+  "blurb_en": "",
+  "blurb_tc": "",
+  "brand": "BD",
+  "tags": [
+   "BD",
+   "Other Consumables"
+  ]
+ },
+ {
+  "name_en": "心電圖啫喱 ECG Jelly",
+  "name_tc": "心電圖啫喱 ECG Jelly",
+  "category": "Jelly",
+  "price": 48,
+  "ribbon": "",
+  "image": "images/%E5%BF%83%E9%9B%BB%E5%9C%96%E5%95%AB%E5%96%B1_ECG_Jelly.png",
+  "specs": [],
+  "variants": [],
+  "blurb_en": "250gm",
+  "blurb_tc": "",
+  "brand": "Other",
+  "tags": [
+   "Jelly"
+  ]
+ },
+ {
+  "name_en": "HR 美國潤滑啫喱 4oz",
+  "name_tc": "HR 美國潤滑啫喱 4oz",
+  "category": "Jelly",
+  "price": 50,
+  "ribbon": "",
+  "image": "images/HR_%E7%BE%8E%E5%9C%8B%E6%BD%A4%E6%BB%91%E5%95%AB%E5%96%B1_4oz.png",
+  "specs": [],
+  "variants": [],
+  "blurb_en": "",
+  "blurb_tc": "",
+  "brand": "HR",
+  "tags": [
+   "HR",
+   "Jelly"
+  ]
+ },
+ {
+  "name_en": "HR 美國潤滑啫喱 5gm",
+  "name_tc": "HR 美國潤滑啫喱 5gm",
+  "category": "Jelly",
+  "price": 4,
+  "ribbon": "",
+  "image": "images/HR_%E7%BE%8E%E5%9C%8B%E6%BD%A4%E6%BB%91%E5%95%AB%E5%96%B1_5gm.png",
+  "specs": [],
+  "variants": [],
+  "blurb_en": "",
+  "blurb_tc": "",
+  "brand": "HR",
+  "tags": [
+   "HR",
+   "Jelly"
+  ]
+ },
+ {
+  "name_en": "Optilube 潤滑啫喱 (消毒)",
+  "name_tc": "Optilube 潤滑啫喱 (消毒)",
+  "category": "Jelly",
+  "price": 39,
+  "ribbon": "",
+  "image": "images/Optilube_%E6%BD%A4%E6%BB%91%E5%95%AB%E5%96%B1_%28%E6%B6%88%E6%AF%92%29.png",
+  "specs": [],
+  "variants": [],
+  "blurb_en": "82 gm (2.89 oz)",
+  "blurb_tc": "",
+  "brand": "OPTILUBE",
+  "tags": [
+   "OPTILUBE",
+   "Jelly"
+  ]
+ },
+ {
+  "name_en": "超聲波啫喱 Ultrasound Jelly",
+  "name_tc": "超聲波啫喱 Ultrasound Jelly",
+  "category": "Jelly",
+  "price": 48,
+  "ribbon": "",
+  "image": "images/%E8%B6%85%E8%81%B2%E6%B3%A2%E5%95%AB%E5%96%B1_Ultrasound_Jelly.png",
+  "specs": [],
+  "variants": [
+   [
+    "250 ml x 12 pcs (1 Box)",
+    48
+   ],
+   [
+    "250 ml",
+    48
+   ],
+   [
+    "5 Litre",
+    48
+   ]
+  ],
+  "blurb_tc": "250 ml......$48 *一箱(12支)即享9折 **Bonus terms by box (12 pcs).....10% off 5 L...$400",
+  "blurb_en": "",
+  "brand": "Other",
+  "tags": [
+   "Jelly"
+  ]
+ },
+ {
+  "name_en": "TERUMO 針咀",
+  "name_tc": "TERUMO 針咀",
+  "category": "Syringes & Needles",
+  "price": 50,
+  "ribbon": "",
+  "image": "images/TERUMO_%E9%87%9D%E5%92%80.jpg",
+  "specs": [],
+  "variants": [],
+  "blurb_en": "100/box",
+  "blurb_tc": "",
+  "brand": "TERUMO",
+  "tags": [
+   "TERUMO",
+   "Syringes & Needles"
+  ]
+ },
+ {
+  "name_en": "TERUMO 針筒連針",
+  "name_tc": "TERUMO 針筒連針",
+  "category": "Syringes & Needles",
+  "price": 115,
+  "ribbon": "",
+  "image": "images/TERUMO_%E9%87%9D%E7%AD%92%E9%80%A3%E9%87%9D.jpg",
+  "specs": [],
+  "variants": [
+   [
+    "1cc Insulin w/29G Needle",
+    115
+   ],
+   [
+    "10cc w/21G Needle",
+    115
+   ],
+   [
+    "1cc Tuberculin w/25G Needle",
+    115
+   ],
+   [
+    "3cc w/23G Needle",
+    115
+   ],
+   [
+    "5cc w/23G Needle",
+    115
+   ],
+   [
+    "5cc w/22G Needle",
+    115
+   ],
+   [
+    "3cc w/24G Needle",
+    115
+   ],
+   [
+    "3cc w/25G Needle",
+    115
+   ]
+  ],
+  "blurb_en": "100/box",
+  "blurb_tc": "",
+  "brand": "TERUMO",
+  "tags": [
+   "TERUMO",
+   "Syringes & Needles"
+  ]
+ },
+ {
+  "name_en": "耳探溫度計即棄耳套 (百靈牌適用) Probe Cover",
+  "name_tc": "耳探温度計即棄耳套（百靈牌适用） Probe Cover",
+  "category": "Diagnostic Supplies",
+  "price": 15,
+  "ribbon": "",
+  "image": "images/%E8%80%B3%E6%8E%A2%E6%BA%AB%E5%BA%A6%E8%A8%88%E5%8D%B3%E6%A3%84%E8%80%B3%E5%A5%97_%28%E7%99%BE%E9%9D%88%E7%89%8C%E9%81%A9%E7%94%A8%29_Probe_Cover.jpg",
+  "specs": [],
+  "variants": [],
+  "blurb_tc": "20/1 box (百靈牌適用)",
+  "blurb_en": "",
+  "brand": "Other",
+  "tags": [
+   "Diagnostic Supplies"
+  ]
+ },
+ {
+  "name_en": "Tubular Bandage 手指/四肢繃帶",
+  "name_tc": "Tubular Bandage 手指/四肢繃帶",
+  "category": "Bandages",
+  "price": 38,
+  "ribbon": "",
+  "image": "images/Tubular_Bandage_%E6%89%8B%E6%8C%87_%E5%9B%9B%E8%82%A2%E7%B9%83%E5%B8%B6.png",
+  "specs": [],
+  "variants": [
+   [
+    "2.5 cm for Toe",
+    38
+   ],
+   [
+    "7cm for Arm",
+    38
+   ],
+   [
+    "1.5 cm for Finger",
+    38
+   ],
+   [
+    "9 cm for Leg",
+    38
+   ]
+  ],
+  "blurb_en": "20m/box",
+  "blurb_tc": "",
+  "brand": "Other",
+  "tags": [
+   "Bandages"
+  ]
+ },
+ {
+  "name_en": "3M Tegaderm (Sterile) 透明防水薄膜",
+  "name_tc": "3M Tegaderm (Sterile) 透明防水薄膜",
+  "category": "Wound Management",
+  "price": 415,
+  "ribbon": "",
+  "image": "images/3M_Tegaderm_%28Sterile%29_%E9%80%8F%E6%98%8E%E9%98%B2%E6%B0%B4%E8%96%84%E8%86%9C.png",
+  "specs": [],
+  "variants": [
+   [
+    "1622W 1 pc",
+    415
+   ],
+   [
+    "1627 20 pc/box",
+    415
+   ],
+   [
+    "1626W 50 pc/box",
+    415
+   ],
+   [
+    "1624W 100 pc/box",
+    415
+   ],
+   [
+    "1622W 100 pc/box",
+    415
+   ],
+   [
+    "1627 1 pc",
+    415
+   ],
+   [
+    "1626W 1 pc",
+    415
+   ],
+   [
+    "1624W 1 pc",
+    415
+   ]
+  ],
+  "blurb_en": "1622W 4.4cm x 4.4cm 1624W 6cm x 7cm 1626W 10cm x 12cm 1627 10cm x 25cm",
+  "blurb_tc": "",
+  "brand": "3M",
+  "tags": [
+   "3M",
+   "Wound Management"
+  ]
+ },
+ {
+  "name_en": "(Sterile) 3M Tegaderm + Pad 附墊透明薄膜",
+  "name_tc": "(Sterile) 3M Tegaderm + Pad 附墊透明薄膜",
+  "category": "Wound Management",
+  "price": 285,
+  "ribbon": "",
+  "image": "images/%28Sterile%29_3M_Tegaderm_%2B_Pad_%E9%99%84%E5%A2%8A%E9%80%8F%E6%98%8E%E8%96%84%E8%86%9C.png",
+  "specs": [],
+  "variants": [
+   [
+    "3589 貼膜15cm x 9cm 護墊10cm x 4.5cm 25/box",
+    285
+   ],
+   [
+    "3584 貼膜10cm x 6cm 護墊6cm x 2.5cm 50/box",
+    285
+   ],
+   [
+    "3590 貼膜20cm x 9cm 護墊15cm x 4.5cm 25/box",
+    285
+   ],
+   [
+    "3582 貼膜7cm x 5cm 護墊4cm x 2.5cm 50/box",
+    285
+   ],
+   [
+    "3591 貼膜25cm x 9cm 護墊20cm x 4.5cm 25/box",
+    285
+   ],
+   [
+    "3586 貼膜10cm x 9cm 護墊6cm x 4.5cm 25/box",
+    285
+   ]
+  ],
+  "blurb_tc": "3582 貼膜7cm x 5cm 護墊4cm x 2.5cm 50/box 3584 貼膜10cm x 6cm 護墊6cm x 2.5cm 50/box 3586 貼膜10cm x 9cm 護墊6cm x 4.5cm 25/box 3589 貼膜15cm x 9cm 護墊10cm x 4.5cm 25/box 3590 貼膜20cm x 9cm 護墊15cm x 4.5cm 25/box 3591 貼膜25cm x 9cm 護墊20cm x 4.5cm 25/box",
+  "blurb_en": "",
+  "brand": "3M",
+  "tags": [
+   "3M",
+   "Wound Management"
+  ]
+ },
+ {
+  "name_en": "(Sterile) 3M Medipore + Pad 柔軟護墊貼",
+  "name_tc": "(Sterile) 3M Medipore + Pad 柔軟護墊貼",
+  "category": "Wound Management",
+  "price": 83,
+  "ribbon": "",
+  "image": "images/%28Sterile%29_3M_Medipore_%2B_Pad_%E6%9F%94%E8%BB%9F%E8%AD%B7%E5%A2%8A%E8%B2%BC.png",
+  "specs": [],
+  "variants": [
+   [
+    "3570E 貼布10cm x 20cm 護墊5cm x 15cm 25/box",
+    83
+   ],
+   [
+    "3569E 貼布10cm x 15cm 護墊5cm x 10cm 25/box",
+    83
+   ],
+   [
+    "3564E 貼布6cm x 10cm 護墊3.5cm x 6.5cm 50/box",
+    83
+   ],
+   [
+    "3566E 貼布10cm x 10cm 護墊5cm x 5.5cm 25/box",
+    83
+   ],
+   [
+    "3562E 貼布5cm x 7cm 護墊2.5cm x 3.8cm 50/box",
+    83
+   ]
+  ],
+  "blurb_tc": "3562E 貼布5cm x 7cm 護墊2.5cm x 3.8cm 50/box 3564E 貼布6cm x 10cm 護墊3.5cm x 6.5cm 50/box 3566E 貼布10cm x 10cm 護墊5cm x 5.5cm 25/box 3569E 貼布10cm x 15cm 護墊5cm x 10cm 25/box 3570E 貼布10cm x 20cm 護墊5cm x 15cm 25/box",
+  "blurb_en": "",
+  "brand": "3M",
+  "tags": [
+   "3M",
+   "Wound Management"
+  ]
+ },
+ {
+  "name_en": "3M Coban Bandage 自黏式彈性繃帶",
+  "name_tc": "3M Coban Bandage 自黏式彈性繃帶",
+  "category": "Bandages",
+  "price": 20,
+  "ribbon": "",
+  "image": "images/3M_Coban_Bandage_%E8%87%AA%E9%BB%8F%E5%BC%8F%E5%BD%88%E6%80%A7%E7%B9%83%E5%B8%B6.png",
+  "specs": [],
+  "variants": [
+   [
+    "1582 2\"x5yd",
+    20
+   ],
+   [
+    "1581 1\"x5yd",
+    20
+   ],
+   [
+    "1584 4\"x5yd",
+    20
+   ],
+   [
+    "1583 3\"x5yd",
+    20
+   ],
+   [
+    "1586 6\"x5yd",
+    20
+   ]
+  ],
+  "blurb_en": "",
+  "blurb_tc": "",
+  "brand": "3M",
+  "tags": [
+   "3M",
+   "Bandages"
+  ]
+ },
+ {
+  "name_en": "Micropore w/Dispenser 附座紙膠布",
+  "name_tc": "Micropore w/Dispenser 附座紙膠布",
+  "category": "Wound Management",
+  "price": 275,
+  "ribbon": "",
+  "image": "images/Micropore_w_Dispenser_%E9%99%84%E5%BA%A7%E7%B4%99%E8%86%A0%E5%B8%83.png",
+  "specs": [],
+  "variants": [],
+  "blurb_en": "",
+  "blurb_tc": "",
+  "brand": "Other",
+  "tags": [
+   "Wound Management"
+  ]
+ },
+ {
+  "name_en": "3M Micropore Tape 紙膠布",
+  "name_tc": "3M Micropore Tape 紙膠布",
+  "category": "Wound Management",
+  "price": 98,
+  "ribbon": "",
+  "image": "images/3M_Micropore_Tape_%E7%B4%99%E8%86%A0%E5%B8%83.png",
+  "specs": [],
+  "variants": [
+   [
+    "1530-3 3\"(7.6cm)4/box",
+    98
+   ],
+   [
+    "1530-2 2\"(5cm)6/box",
+    98
+   ],
+   [
+    "1530-0 0.5\"(1.25cm)24/box",
+    98
+   ],
+   [
+    "1530-1 1\"(2.5cm)12/box",
+    98
+   ]
+  ],
+  "blurb_en": "",
+  "blurb_tc": "",
+  "brand": "3M",
+  "tags": [
+   "3M",
+   "Wound Management"
+  ]
+ },
+ {
+  "name_en": "3M Micropore Bandage 敷料固定貼",
+  "name_tc": "3M Micropore Bandage 敷料固定貼",
+  "category": "Bandages",
+  "price": 55,
+  "ribbon": "",
+  "image": "images/3M_Micropore_Bandage_%E6%95%B7%E6%96%99%E5%9B%BA%E5%AE%9A%E8%B2%BC.png",
+  "specs": [],
+  "variants": [
+   [
+    "2991-2 4\"(10cm) x 10 m",
+    55
+   ],
+   [
+    "2991-3 6\"(15cm) x 10m",
+    55
+   ],
+   [
+    "2991-1 2\"(5cm) x 10m",
+    55
+   ]
+  ],
+  "blurb_en": "",
+  "blurb_tc": "",
+  "brand": "3M",
+  "tags": [
+   "3M",
+   "Bandages"
+  ]
+ },
+ {
+  "name_en": "Nasal Oxygen Cannula 氧氣鼻管",
+  "name_tc": "Nasal Oxygen Cannula 氧氣鼻管",
+  "category": "Masks & Gloves",
+  "price": 18,
+  "ribbon": "",
+  "image": "images/Nasal_Oxygen_Cannula_%E6%B0%A7%E6%B0%A3%E9%BC%BB%E7%AE%A1.jpg",
+  "specs": [],
+  "variants": [],
+  "blurb_en": "",
+  "blurb_tc": "",
+  "brand": "Other",
+  "tags": [
+   "Masks & Gloves"
+  ]
+ },
+ {
+  "name_en": "Crepe Elastic Bandage 彈性繃帶",
+  "name_tc": "Crepe Elastic Bandage 彈性繃帶",
+  "category": "Bandages",
+  "price": 48,
+  "ribbon": "",
+  "image": "images/Crepe_Elastic_Bandage_%E5%BD%88%E6%80%A7%E7%B9%83%E5%B8%B6.jpg",
+  "specs": [],
+  "variants": [
+   [
+    "6\"(15cm) x 5 yd",
+    48
+   ],
+   [
+    "3\"(7.5cm) x 5 yd",
+    48
+   ],
+   [
+    "2\"(5cm) x 5 yd",
+    48
+   ],
+   [
+    "4\"(10cm) x 5 yd",
+    48
+   ]
+  ],
+  "blurb_en": "12/pack",
+  "blurb_tc": "",
+  "brand": "Other",
+  "tags": [
+   "Bandages"
+  ]
+ },
+ {
+  "name_en": "Exam Glove 乳膠手套",
+  "name_tc": "Exam Glove 乳膠手套",
+  "category": "Masks & Gloves",
+  "price": 68,
+  "ribbon": "",
+  "image": "images/Exam_Glove_%E4%B9%B3%E8%86%A0%E6%89%8B%E5%A5%97.jpg",
+  "specs": [],
+  "variants": [],
+  "blurb_en": "Latex 100/box, Powder Free",
+  "blurb_tc": "",
+  "brand": "Other",
+  "tags": [
+   "Masks & Gloves"
+  ]
+ },
+ {
+  "name_en": "Nebulizer Mask 噴霧面罩",
+  "name_tc": "雾化面罩 噴霧面罩",
+  "category": "Masks & Gloves",
+  "price": 50,
+  "ribbon": "",
+  "image": "images/Nebulizer_Mask_%E5%99%B4%E9%9C%A7%E9%9D%A2%E7%BD%A9.jpg",
+  "specs": [],
+  "variants": [],
+  "blurb_en": "",
+  "blurb_tc": "",
+  "brand": "Other",
+  "tags": [
+   "Masks & Gloves"
+  ]
+ },
+ {
+  "name_en": "Oxygen Mask 氧氣面罩",
+  "name_tc": "Oxygen Mask 氧气面罩",
+  "category": "Masks & Gloves",
+  "price": 34,
+  "ribbon": "",
+  "image": "images/Oxygen_Mask_%E6%B0%A7%E6%B0%A3%E9%9D%A2%E7%BD%A9.png",
+  "specs": [],
+  "variants": [],
+  "blurb_en": "",
+  "blurb_tc": "",
+  "brand": "Other",
+  "tags": [
+   "Masks & Gloves"
+  ]
+ },
+ {
+  "name_en": "Non-woven Gauze Sponge 無紡布紗布片",
+  "name_tc": "Non-woven Gauze Sponge 無紡布紗布片",
+  "category": "Cotton Wool & Gauze",
+  "price": 8,
+  "ribbon": "",
+  "image": "images/Non-woven_Gauze_Sponge_%E7%84%A1%E7%B4%A1%E5%B8%83%E7%B4%97%E5%B8%83%E7%89%87.png",
+  "specs": [],
+  "variants": [
+   [
+    "2\" x 2\"",
+    8
+   ],
+   [
+    "3\"x 3\"",
+    8
+   ],
+   [
+    "4\" x 4\"",
+    8
+   ]
+  ],
+  "blurb_en": "4-ply, 100/pack",
+  "blurb_tc": "",
+  "brand": "Other",
+  "tags": [
+   "Cotton Wool & Gauze"
+  ]
+ },
+ {
+  "name_en": "Sterile Gauze Sponge 消毒紗布片",
+  "name_tc": "Sterile Gauze Sponge 消毒紗布片",
+  "category": "Cotton Wool & Gauze",
+  "price": 30,
+  "ribbon": "",
+  "image": "images/Sterile_Gauze_Sponge_%E6%B6%88%E6%AF%92%E7%B4%97%E5%B8%83%E7%89%87.jpg",
+  "specs": [],
+  "variants": [
+   [
+    "3\" x 3\"",
+    30
+   ],
+   [
+    "4\" x 4\"",
+    30
+   ],
+   [
+    "2\" x 2\"",
+    30
+   ],
+   [
+    "3\" x 3\"(5pcs)",
+    30
+   ]
+  ],
+  "blurb_en": "2pcs/bag, 25bags/box",
+  "blurb_tc": "",
+  "brand": "Other",
+  "tags": [
+   "Cotton Wool & Gauze"
+  ]
+ },
+ {
+  "name_en": "Gauze Swab 紗布片",
+  "name_tc": "Gauze Swab 紗布片",
+  "category": "Cotton Wool & Gauze",
+  "price": 22,
+  "ribbon": "",
+  "image": "images/Gauze_Swab_%E7%B4%97%E5%B8%83%E7%89%87.jpg",
+  "specs": [],
+  "variants": [
+   [
+    "4\" x 4\"",
+    22
+   ],
+   [
+    "2.5\" x 2.5\"",
+    22
+   ],
+   [
+    "3\"x 3\"",
+    22
+   ],
+   [
+    "2.5\" x 2.5\"(24-ply)",
+    22
+   ],
+   [
+    "2\" x 2\"",
+    22
+   ]
+  ],
+  "blurb_en": "12-ply, 100/pack",
+  "blurb_tc": "",
+  "brand": "Other",
+  "tags": [
+   "Cotton Wool & Gauze"
+  ]
+ },
+ {
+  "name_en": "3M Littmann Stethoscope 聽筒",
+  "name_tc": "3M Littmann Stethoscope 聽筒",
+  "category": "Diagnostic Supplies",
+  "price": 980,
+  "ribbon": "",
+  "image": "images/3M_Littmann_Stethoscope_%E8%81%BD%E7%AD%92.jpg",
+  "specs": [],
+  "variants": [],
+  "blurb_en": "The Littmann® Brand is globally recognised for quality, reliability and innovation. With a legacy of listening and innovating, our industry-leading stethoscopes can help you get clear, accurate, diagnostics whether you are a healthcare professional, student or educator.",
+  "blurb_tc": "",
+  "brand": "3M",
+  "tags": [
+   "3M",
+   "Diagnostic Supplies"
+  ]
+ },
+ {
+  "name_en": "TERUMO Disposable Syringe 淨針筒",
+  "name_tc": "TERUMO Disposable Syringe 淨針筒",
+  "category": "Syringes & Needles",
+  "price": 85,
+  "ribbon": "",
+  "image": "images/TERUMO_Disposable_Syringe_%E6%B7%A8%E9%87%9D%E7%AD%92.jpg",
+  "specs": [],
+  "variants": [
+   [
+    "50cc w/Catheter Tip",
+    85
+   ],
+   [
+    "10cc Luer Lock/Slip Tip",
+    85
+   ],
+   [
+    "3cc Luer Lock/Slip Tip",
+    85
+   ],
+   [
+    "50cc Luer Lock/Slip Tip",
+    85
+   ],
+   [
+    "1cc Slip Tip",
+    85
+   ],
+   [
+    "5cc Luer Lock/Slip Tip",
+    85
+   ],
+   [
+    "20cc Luer Lock/Slip Tip",
+    85
+   ]
+  ],
+  "blurb_en": "1cc Slip Tip 100/box 3cc Luer Lock/Slip Tip 100/box 5cc Luer Lock/Slip Tip 100/box 10cc Luer Lock/Slip Tip 100/box 20cc Luer Lock/Slip Tip 50/box 50cc Luer Lock/Slip Tip 20/box 50cc w/Catheter 20/box",
+  "blurb_tc": "",
+  "brand": "TERUMO",
+  "tags": [
+   "TERUMO",
+   "Syringes & Needles"
+  ]
+ },
+ {
+  "name_en": "Kenz Surgical Mask 日本醫用外科口罩",
+  "name_tc": "Kenz Surgical Mask 日本醫用外科口罩",
+  "category": "Masks & Gloves",
+  "price": 50,
+  "ribbon": "",
+  "image": "images/Kenz_Surgical_Mask_%E6%97%A5%E6%9C%AC%E9%86%AB%E7%94%A8%E5%A4%96%E7%A7%91%E5%8F%A3%E7%BD%A9.png",
+  "specs": [],
+  "variants": [],
+  "blurb_en": "50/box",
+  "blurb_tc": "",
+  "brand": "KENZ",
+  "tags": [
+   "KENZ",
+   "Masks & Gloves"
+  ]
+ },
+ {
+  "name_en": "3M N95 1804S Respirator Mask 防護口罩",
+  "name_tc": "3M N95 1804S Respirator Mask 防護口罩",
+  "category": "Masks & Gloves",
+  "price": 500,
+  "ribbon": "",
+  "image": "images/3M_N95_1804S_Respirator_Mask_%E9%98%B2%E8%AD%B7%E5%8F%A3%E7%BD%A9.png",
+  "specs": [],
+  "variants": [],
+  "blurb_en": "20/box",
+  "blurb_tc": "",
+  "brand": "3M",
+  "tags": [
+   "3M",
+   "Masks & Gloves"
+  ]
+ },
+ {
+  "name_en": "3M N95 1870 Respirator Mask 防護口罩",
+  "name_tc": "3M N95 1870 Respirator Mask 防護口罩",
+  "category": "Masks & Gloves",
+  "price": 400,
+  "ribbon": "",
+  "image": "images/3M_N95_1870_Respirator_Mask_%E9%98%B2%E8%AD%B7%E5%8F%A3%E7%BD%A9.png",
+  "specs": [],
+  "variants": [],
+  "blurb_en": "20/box",
+  "blurb_tc": "",
+  "brand": "3M",
+  "tags": [
+   "3M",
+   "Masks & Gloves"
+  ]
+ },
+ {
+  "name_en": "3M N95 1860 Repirator Mask 防護口罩",
+  "name_tc": "3M N95 1860 Repirator Mask 防護口罩",
+  "category": "Masks & Gloves",
+  "price": 230,
+  "ribbon": "",
+  "image": "images/3M_N95_1860_Repirator_Mask_%E9%98%B2%E8%AD%B7%E5%8F%A3%E7%BD%A9.jpg",
+  "specs": [],
+  "variants": [],
+  "blurb_en": "20/box",
+  "blurb_tc": "",
+  "brand": "3M",
+  "tags": [
+   "3M",
+   "Masks & Gloves"
+  ]
+ },
+ {
+  "name_en": "Gauze Roll 紗布卷",
+  "name_tc": "Gauze Roll 紗布卷",
+  "category": "Cotton Wool & Gauze",
+  "price": 210,
+  "ribbon": "",
+  "image": "images/Gauze_Roll_%E7%B4%97%E5%B8%83%E5%8D%B7.jpg",
+  "specs": [],
+  "variants": [],
+  "blurb_en": "36\" x 100 yd",
+  "blurb_tc": "",
+  "brand": "Other",
+  "tags": [
+   "Cotton Wool & Gauze"
+  ]
+ },
+ {
+  "name_en": "Cotton Wool Roll 棉花卷",
+  "name_tc": "Cotton Wool Roll 棉花卷",
+  "category": "Cotton Wool & Gauze",
+  "price": 36,
+  "ribbon": "",
+  "image": "images/Cotton_Wool_Roll_%E6%A3%89%E8%8A%B1%E5%8D%B7.jpg",
+  "specs": [],
+  "variants": [],
+  "blurb_en": "400G",
+  "blurb_tc": "",
+  "brand": "Other",
+  "tags": [
+   "Cotton Wool & Gauze"
+  ]
+ },
+ {
+  "name_en": "Cotton Applicator 棉花棒",
+  "name_tc": "棉花棒 棉花棒",
+  "category": "Cotton Wool & Gauze",
+  "price": 5,
+  "ribbon": "",
+  "image": "images/Cotton_Applicator_%E6%A3%89%E8%8A%B1%E6%A3%92.jpg",
+  "specs": [],
+  "variants": [
+   [
+    "Wooden Applicator 6\"",
+    5
+   ],
+   [
+    "6\" 5/bag (Sterile)",
+    5
+   ],
+   [
+    "6\" with single tip",
+    5
+   ],
+   [
+    "6\" with large bud",
+    5
+   ],
+   [
+    "3\" with double tips",
+    5
+   ]
+  ],
+  "blurb_en": "",
+  "blurb_tc": "",
+  "brand": "Other",
+  "tags": [
+   "Cotton Wool & Gauze"
+  ]
+ },
+ {
+  "name_en": "TERUMO Scalp Vein Set",
+  "name_tc": "TERUMO Scalp Vein Set",
+  "category": "Refrigeration & Equipment",
+  "price": 6,
+  "ribbon": "",
+  "image": "images/TERUMO_Scalp_Vein_Set.jpg",
+  "specs": [],
+  "variants": [],
+  "blurb_en": "",
+  "blurb_tc": "",
+  "brand": "TERUMO",
+  "tags": [
+   "TERUMO",
+   "Refrigeration & Equipment"
+  ]
+ },
+ {
+  "name_en": "Endometrial Suction Cannula",
+  "name_tc": "子宫内膜吸取套管",
+  "category": "Refrigeration & Equipment",
+  "price": 52,
+  "ribbon": "",
+  "image": "images/Endometrial_Suction_Cannula.jpg",
+  "specs": [],
+  "variants": [],
+  "blurb_en": "Design: Features a patented tip with openings that cut tissue, connected to a syringe or suction source. Procedure: Inserted through the cervix into the uterus; rotated and slowly withdrawn while suction is applied to collect a sample of endometrial lining. Benefits: Minimally invasive, high sensitivity for detecting abnormalities, often doesn't require cervical dilation or anesthesia, suitable for narrow canals.",
+  "blurb_tc": "",
+  "brand": "Other",
+  "tags": [
+   "Refrigeration & Equipment"
+  ]
+ },
+ {
+  "name_en": "Surgical Glove - Powder Free 消毒外科手套",
+  "name_tc": "Surgical Glove - Powder Free 消毒外科手套",
+  "category": "Surgical Instruments",
+  "price": 7,
+  "ribbon": "",
+  "image": "images/Surgical_Glove_-_Powder_Free_%E6%B6%88%E6%AF%92%E5%A4%96%E7%A7%91%E6%89%8B%E5%A5%97.jpg",
+  "specs": [],
+  "variants": [
+   [
+    "Box/50 pairs",
+    7
+   ],
+   [
+    "1 pair",
+    7
+   ]
+  ],
+  "blurb_en": "Allergy Prevention : The removal of powder (typically cornstarch) and additional cleaning processes for some brands significantly reduce the risk of developing Type I latex protein or Type IV chemical allergies. Contamination Control : The absence of powder eliminates the potential for powder-induced complications like wound contamination, adhesions, and granulomas during surgery. Easy Donning : These gloves often feature an internal polymer coating or chlorination to facilitate smooth donning and doffing on both dry and damp hands, without needing powder. Enhanced Grip and Dexterity : They typically have a micro-textured or palm-textured external surface to ensure a secure grip and control when handling surgical instruments in wet or dry conditions. Anatomical Design</str",
+  "blurb_tc": "",
+  "brand": "Other",
+  "tags": [
+   "Surgical Instruments"
+  ]
+ },
+ {
+  "name_en": "棄針膠箱 Sharp Box",
+  "name_tc": "棄針膠箱 Sharp Box",
+  "category": "Accessories",
+  "price": 32,
+  "ribbon": "",
+  "image": "images/%E6%A3%84%E9%87%9D%E8%86%A0%E7%AE%B1_Sharp_Box.png",
+  "specs": [],
+  "variants": [
+   [
+    "13 litre",
+    32
+   ],
+   [
+    "3 litre",
+    32
+   ],
+   [
+    "7.6 litre",
+    32
+   ],
+   [
+    "50 litre",
+    32
+   ]
+  ],
+  "blurb_tc": "*一箱(40個)享有9折優惠 **Bonus terms by box (40pcs) ......10% off",
+  "blurb_en": "",
+  "brand": "Other",
+  "tags": [
+   "Accessories"
+  ]
+ },
+ {
+  "name_en": "Scalpel Blade",
+  "name_tc": "Scalpel Blade",
+  "category": "Surgical Instruments",
+  "price": 3,
+  "ribbon": "",
+  "image": "images/Scalpel_Blade.jpg",
+  "specs": [],
+  "variants": [
+   [
+    "#15",
+    3
+   ],
+   [
+    "#10",
+    3
+   ],
+   [
+    "#12",
+    3
+   ],
+   [
+    "#11",
+    3
+   ],
+   [
+    "#12 x 100 pcs",
+    3
+   ],
+   [
+    "#15 x 100 pcs",
+    3
+   ],
+   [
+    "#10 x 100 pcs",
+    3
+   ],
+   [
+    "#11 x 100 pcs",
+    3
+   ]
+  ],
+  "blurb_en": "",
+  "blurb_tc": "",
+  "brand": "Other",
+  "tags": [
+   "Surgical Instruments"
+  ]
+ },
+ {
+  "name_en": "Braun Probe Cover (原裝百靈牌耳探套)",
+  "name_tc": "Probe Cover",
+  "category": "Accessories",
+  "price": 20,
+  "ribbon": "",
+  "image": "images/Braun_Probe_Cover_%28%E5%8E%9F%E8%A3%9D%E7%99%BE%E9%9D%88%E7%89%8C%E8%80%B3%E6%8E%A2%E5%A5%97%29.jpg",
+  "specs": [],
+  "variants": [],
+  "blurb_en": "Key Functions Infection Control : Prevents the spread of infections between patients and from the environment to the patient. Device Protection : Keeps the probe and its cable clean from contaminants like blood and gel. Patient Comfort : Reduces friction on the skin, especially for ultrasound, and can provide lubrication.",
+  "blurb_tc": "",
+  "brand": "Braun",
+  "tags": [
+   "Braun",
+   "Accessories"
+  ]
+ },
+ {
+  "name_en": "Cotton Wool Ball棉花球",
+  "name_tc": "棉球棉花球",
+  "category": "Surgical Instruments",
+  "price": 52,
+  "ribbon": "",
+  "image": "images/Cotton_Wool_Ball%E6%A3%89%E8%8A%B1%E7%90%83.jpg",
+  "specs": [],
+  "variants": [],
+  "blurb_en": "Personal Care and Cosmetics: Removing makeup and nail polish. Applying toners, cleansers, and moisturizers. Gently cleaning sensitive areas, such as around the outer ear or nose during a cold. Medical and First Aid: Applying ointments, creams, or disinfectants to the skin. Cleaning minor cuts or grazes (avoid using loose cotton on open wounds as fibers can get stuck). Used in medical procedures to absorb fluids or apply pressure to control bleeding. Cleaning the skin before injections or other medical procedures. Baby and Childcare: Cleaning a baby's skin during diaper changes. Used with warm water as a gentle way to clean delicate areas during bath time. Household and Crafting:<",
+  "blurb_tc": "",
+  "brand": "Other",
+  "tags": [
+   "Surgical Instruments"
+  ]
+ },
+ {
+  "name_en": "Wound Dressing Pack",
+  "name_tc": "Wound Dressing Pack",
+  "category": "Other Consumables",
+  "price": 9,
+  "ribbon": "",
+  "image": "images/Wound_Dressing_Pack.jpg",
+  "specs": [],
+  "variants": [],
+  "blurb_en": "Infection Control: Ensures aseptic technique by providing sterile components, reducing bacteria transfer. Convenience: All necessary items are in one place, saving time. Cost-Effective: Often more economical than buying individual components. Versatile: Used for wound cleaning, dressing changes, minor procedures, and clinical examinations.",
+  "blurb_tc": "",
+  "brand": "Other",
+  "tags": [
+   "Other Consumables"
+  ]
+ },
+ {
+  "name_en": "EOS Disposalble Proctoscope",
+  "name_tc": "EOS Disposalble Proctoscope",
+  "category": "Treatment Room Supplies",
+  "price": 17,
+  "ribbon": "",
+  "image": "images/EOS_Disposalble_Proctoscope.jpg",
+  "specs": [],
+  "variants": [],
+  "blurb_en": "Clear Visibility: Constructed from medical-grade transparent plastic (e.g., polystyrene), allowing for a 360-degree view of the rectal wall and tissue beneath the scope. Ergonomic Design: Features include smooth, rounded edges and a tapered \"obturator\" (insertion aid) to minimize patient discomfort. Safety Compliance: Devices are typically ETO (Ethylene Oxide) sterilized and individually sealed to meet international quality standards like ISO 13485.",
+  "blurb_tc": "",
+  "brand": "EOS",
+  "tags": [
+   "EOS",
+   "Treatment Room Supplies"
+  ]
+ },
+ {
+  "name_en": "V-Spec Disposable Vaginal Speculum 膠鴨咀",
+  "name_tc": "V-Spec Disposable Vaginal Speculum 膠鴨咀",
+  "category": "Gynecology",
+  "price": 6,
+  "ribbon": "",
+  "image": "images/V-Spec_Disposable_Vaginal_Speculum_%E8%86%A0%E9%B4%A8%E5%92%80.jpg",
+  "specs": [],
+  "variants": [
+   [
+    "M",
+    6
+   ],
+   [
+    "S",
+    6
+   ],
+   [
+    "L",
+    6
+   ]
+  ],
+  "blurb_en": "Hygiene & Safety: Single-use design prevents cross-contamination and infection. Patient Comfort: Made from smooth, non-toxic, latex-free plastic with rounded edges to prevent pinching or binding tissue. Clear Visualization: Transparent material allows clinicians a complete view of the vaginal canal and cervix. Ease of Use: One-handed adjustment and locking systems (like central pins or color-coded handles) allow quick, secure positioning for various exams (Pap smears, etc.). Efficiency: Reduces time and cost associated with cleaning and reprocessing reusable metal speculums. Variety: Available in different sizes (Small, Medium, Large) to fit different patients, with options including built-in lights.&",
+  "blurb_tc": "",
+  "brand": "V-SPEC",
+  "tags": [
+   "V-SPEC",
+   "Gynecology"
+  ]
+ },
+ {
+  "name_en": "Nitrile Medical Gloves",
+  "name_tc": "Nitrile Medical Gloves",
+  "category": "Accessories",
+  "price": 20,
+  "ribbon": "",
+  "image": "images/Nitrile_Medical_Gloves.jpg",
+  "specs": [],
+  "variants": [],
+  "blurb_en": "High-quality, powder-free nitrile examination gloves offering excellent tactile sensitivity and barrier protection against common hazards.",
+  "blurb_tc": "",
+  "brand": "Other",
+  "tags": [
+   "Accessories"
+  ]
+ },
+ {
+  "name_en": "Isolation Medical Gown",
+  "name_tc": "Isolation Medical Gown",
+  "category": "Other Consumables",
+  "price": 25,
+  "ribbon": "",
+  "image": "images/Isolation_Medical_Gown.jpg",
+  "specs": [],
+  "variants": [],
+  "blurb_en": "Fluid-resistant isolation gowns made from lightweight material, providing protection and coverage with ties and elastic cuffs for secure wear.",
+  "blurb_tc": "",
+  "brand": "Other",
+  "tags": [
+   "Other Consumables"
+  ]
+ },
+ {
+  "name_en": "Disposable Syringe",
+  "name_tc": "Disposable Syringe",
+  "category": "Accessories",
+  "price": 15,
+  "ribbon": "",
+  "image": "images/Disposable_Syringe.jpg",
+  "specs": [],
+  "variants": [],
+  "blurb_en": "A sterile, single-use syringe with a clear barrel for precise measurement, featuring a securely fitting plunger for accurate fluid transfer in medical settings.",
+  "blurb_tc": "",
+  "brand": "Other",
+  "tags": [
+   "Accessories"
+  ]
+ },
+ {
+  "name_en": "Blood Pressure Monitor",
+  "name_tc": "Blood Pressure Monitor",
+  "category": "Other Consumables",
+  "price": 95,
+  "ribbon": "",
+  "image": "images/Blood_Pressure_Monitor.jpg",
+  "specs": [],
+  "variants": [],
+  "blurb_en": "An automatic digital blood pressure monitor for home use, providing easy-to-read systolic, diastolic, and pulse measurements with a comfortable cuff.",
+  "blurb_tc": "",
+  "brand": "Other",
+  "tags": [
+   "Other Consumables"
+  ]
+ },
+ {
+  "name_en": "Sterile Gauze Pads",
+  "name_tc": "無菌紗布垫",
+  "category": "Accessories",
+  "price": 10,
+  "ribbon": "",
+  "image": "images/Sterile_Gauze_Pads.jpg",
+  "specs": [],
+  "variants": [],
+  "blurb_en": "Individually wrapped, sterile cotton gauze pads designed for wound dressing, absorption, and cleaning. Soft and lint-free for optimal patient care.",
+  "blurb_tc": "",
+  "brand": "Other",
+  "tags": [
+   "Accessories"
+  ]
+ },
+ {
+  "name_en": "Safety Goggles",
+  "name_tc": "Safety Goggles",
+  "category": "Other Consumables",
+  "price": 18,
+  "ribbon": "",
+  "image": "images/Safety_Goggles.jpg",
+  "specs": [],
+  "variants": [],
+  "blurb_en": "Clear anti-fog safety goggles with a wide field of vision and adjustable strap, designed to protect eyes from splashes and debris.",
+  "blurb_tc": "",
+  "brand": "Other",
+  "tags": [
+   "Other Consumables"
+  ]
+ },
+ {
+  "name_en": "Acoustic Stethoscope",
+  "name_tc": "聽診器",
+  "category": "Other Consumables",
+  "price": 85,
+  "ribbon": "",
+  "image": "images/Acoustic_Stethoscope.jpg",
+  "specs": [],
+  "variants": [],
+  "blurb_en": "A professional-grade acoustic stethoscope with high sensitivity for accurate auscultation, featuring a durable chestpiece and comfortable eartubes for reliable diagnostics.",
+  "blurb_tc": "",
+  "brand": "Other",
+  "tags": [
+   "Other Consumables"
+  ]
+ },
+ {
+  "name_en": "Disposable Face Mask",
+  "name_tc": "一次性口罩",
+  "category": "Other Consumables",
+  "price": 12,
+  "ribbon": "",
+  "image": "images/Disposable_Face_Mask.jpg",
+  "specs": [],
+  "variants": [],
+  "blurb_en": "Comfortable and breathable disposable face masks offering effective filtration and a secure fit for everyday protection and hygiene.",
+  "blurb_tc": "",
+  "brand": "Other",
+  "tags": [
+   "Other Consumables"
+  ]
+ },
+ {
+  "name_en": "Digital Thermometer",
+  "name_tc": "Digital Thermometer",
+  "category": "Other Consumables",
+  "price": 35,
+  "ribbon": "",
+  "image": "images/Digital_Thermometer.jpg",
+  "specs": [],
+  "variants": [],
+  "blurb_en": "A fast and accurate digital thermometer with a flexible tip for oral, rectal, or underarm use, providing quick and easy temperature readings.",
+  "blurb_tc": "",
+  "brand": "Other",
+  "tags": [
+   "Other Consumables"
+  ]
+ },
+ {
+  "name_en": "Disposable Proctoscope, Small (yellow)",
+  "name_tc": "",
+  "category": "Other Consumables",
+  "price": 17,
+  "ribbon": "",
+  "image": "images/PRJ.jpg",
+  "image_missing": true,
+  "specs": [],
+  "variants": [],
+  "blurb_en": "",
+  "blurb_tc": "",
+  "brand": "EOS",
+  "stock_id": "PRJ",
+  "tags": [
+   "EOS",
+   "Other Consumables"
+  ]
+ },
+ {
+  "name_en": "ECG Electrode, SOFT Cloth, (50 pcs)",
+  "name_tc": "",
+  "category": "Other Consumables",
+  "price": 145,
+  "ribbon": "",
+  "image": "images/ELAFO.jpg",
+  "image_missing": true,
+  "specs": [],
+  "variants": [],
+  "blurb_en": "",
+  "blurb_tc": "",
+  "brand": "3M",
+  "stock_id": "ELAFO",
+  "tags": [
+   "3M",
+   "Other Consumables"
+  ]
+ },
+ {
+  "name_en": "Disposable ECG Electrode, (100 pcs)",
+  "name_tc": "",
+  "category": "Other Consumables",
+  "price": 288,
+  "ribbon": "",
+  "image": "images/ELAH.jpg",
+  "image_missing": true,
+  "specs": [],
+  "variants": [],
+  "blurb_en": "",
+  "blurb_tc": "",
+  "brand": "3M",
+  "stock_id": "ELAH",
+  "tags": [
+   "3M",
+   "Other Consumables"
+  ]
+ },
+ {
+  "name_en": "ECG PAPER, P210 X 48Z FOR C-1210 心電圖紙",
+  "name_tc": "",
+  "category": "Other Consumables",
+  "price": 340,
+  "ribbon": "",
+  "image": "images/PAFK.png",
+  "specs": [],
+  "variants": [],
+  "blurb_en": "",
+  "blurb_tc": "",
+  "brand": "KENZ",
+  "stock_id": "PAFK",
+  "tags": [
+   "KENZ",
+   "Other Consumables"
+  ]
+ },
+ {
+  "name_en": "Normal Saline 生理鹽水 0.9% Sodium Chloride 10ml (注射用",
+  "name_tc": "",
+  "category": "Other Consumables",
+  "price": 90,
+  "ribbon": "",
+  "image": "images/SALA.png",
+  "specs": [],
+  "variants": [],
+  "blurb_en": "",
+  "blurb_tc": "",
+  "brand": "B-BRAUN",
+  "stock_id": "SALA",
+  "tags": [
+   "B-BRAUN",
+   "Other Consumables"
+  ]
+ },
+ {
+  "name_en": "Latex Tubing 乳膠喉管",
+  "name_tc": "",
+  "category": "Other Consumables",
+  "price": 600,
+  "ribbon": "",
+  "image": "images/TUHB.png",
+  "specs": [],
+  "variants": [],
+  "blurb_en": "",
+  "blurb_tc": "",
+  "brand": "KENT ELASTOMER PRODUCTS",
+  "stock_id": "TUHB",
+  "tags": [
+   "KENT ELASTOMER PRODUCTS",
+   "Other Consumables"
+  ]
+ },
+ {
+  "name_en": "Cedium Chlorhexidine 0.05%, 10ML, BOX/24",
+  "name_tc": "",
+  "category": "Other Consumables",
+  "price": 78,
+  "ribbon": "",
+  "image": "images/SOABCB.jpg",
+  "image_missing": true,
+  "specs": [],
+  "variants": [],
+  "blurb_en": "",
+  "blurb_tc": "",
+  "brand": "CEDIUM",
+  "stock_id": "SOABCB",
+  "tags": [
+   "CEDIUM",
+   "Other Consumables"
+  ]
+ },
+ {
+  "name_en": "Probe Cover, Baxter, (20 pcs), Thermoscan",
+  "name_tc": "",
+  "category": "Other Consumables",
+  "price": 20,
+  "ribbon": "",
+  "image": "images/COLA.jpg",
+  "image_missing": true,
+  "specs": [],
+  "variants": [],
+  "blurb_en": "",
+  "blurb_tc": "",
+  "brand": "BAXTER",
+  "stock_id": "COLA",
+  "tags": [
+   "BAXTER",
+   "Other Consumables"
+  ]
+ },
+ {
+  "name_en": "Disposable Underpad 17\"X24\" 床墊紙",
+  "name_tc": "",
+  "category": "Other Consumables",
+  "price": 390,
+  "ribbon": "",
+  "image": "images/PADBB.png",
+  "specs": [],
+  "variants": [],
+  "blurb_en": "",
+  "blurb_tc": "",
+  "brand": "Other",
+  "stock_id": "PADBB",
+  "tags": [
+   "Other Consumables"
+  ]
+ },
+ {
+  "name_en": "Paper Roll 21\" X 125 FT 床紙卷",
+  "name_tc": "",
+  "category": "Other Consumables",
+  "price": 68,
+  "ribbon": "",
+  "image": "images/PAK.png",
+  "specs": [],
+  "variants": [],
+  "blurb_en": "",
+  "blurb_tc": "",
+  "brand": "TIDI PRODUCTS",
+  "stock_id": "PAK",
+  "tags": [
+   "TIDI PRODUCTS",
+   "Other Consumables"
+  ]
+ },
+ {
+  "name_en": "Baxter Solution, 0.05%, Blue, 1 LT",
+  "name_tc": "",
+  "category": "Other Consumables",
+  "price": 58,
+  "ribbon": "",
+  "image": "images/SOABEC.jpg",
+  "image_missing": true,
+  "specs": [],
+  "variants": [],
+  "blurb_en": "",
+  "blurb_tc": "",
+  "brand": "BAXTER",
+  "stock_id": "SOABEC",
+  "tags": [
+   "BAXTER",
+   "Other Consumables"
+  ]
+ },
+ {
+  "name_en": "3M Multi-Enzyme Cleaner 5L 酵素清洗浸液",
+  "name_tc": "",
+  "category": "Other Consumables",
+  "price": 830,
+  "ribbon": "",
+  "image": "images/SOABH.png",
+  "specs": [],
+  "variants": [],
+  "blurb_en": "",
+  "blurb_tc": "",
+  "brand": "3M",
+  "stock_id": "SOABH",
+  "tags": [
+   "3M",
+   "Other Consumables"
+  ]
+ },
+ {
+  "name_en": "Betadine 10% Povidone Iodine 500 ml 必妥碘",
+  "name_tc": "",
+  "category": "Other Consumables",
+  "price": 260,
+  "ribbon": "",
+  "image": "images/SOABEE.png",
+  "specs": [],
+  "variants": [],
+  "blurb_en": "",
+  "blurb_tc": "",
+  "brand": "BETADINE",
+  "stock_id": "SOABEE",
+  "tags": [
+   "BETADINE",
+   "Other Consumables"
+  ]
+ },
+ {
+  "name_en": "Paper Roll with Polythene 18\"X266FT 防滲床紙卷",
+  "name_tc": "",
+  "category": "Other Consumables",
+  "price": 360,
+  "ribbon": "",
+  "image": "images/PAKB.png",
+  "specs": [],
+  "variants": [],
+  "blurb_en": "",
+  "blurb_tc": "",
+  "brand": "Other",
+  "stock_id": "PAKB",
+  "tags": [
+   "Other Consumables"
+  ]
+ },
+ {
+  "name_en": "Surgical Drape 50CMX60CM with Adhesive Aperture 自黏式紙洞巾",
+  "name_tc": "",
+  "category": "Other Consumables",
+  "price": 290,
+  "ribbon": "",
+  "image": "images/DRA.png",
+  "specs": [],
+  "variants": [],
+  "blurb_en": "",
+  "blurb_tc": "",
+  "brand": "Other",
+  "stock_id": "DRA",
+  "tags": [
+   "Other Consumables"
+  ]
+ },
+ {
+  "name_en": "Rubbing Alcohol 75% 消毒火酒 75%",
+  "name_tc": "",
+  "category": "Other Consumables",
+  "price": 150,
+  "ribbon": "",
+  "image": "images/ALCA.png",
+  "specs": [],
+  "variants": [],
+  "blurb_en": "",
+  "blurb_tc": "",
+  "brand": "Other",
+  "stock_id": "ALCA",
+  "tags": [
+   "Other Consumables"
+  ]
+ },
+ {
+  "name_en": "Microfoam Tape 泡棉膠布",
+  "name_tc": "",
+  "category": "Other Consumables",
+  "price": 515,
+  "ribbon": "",
+  "image": "images/TAHEA.png",
+  "specs": [],
+  "variants": [],
+  "blurb_en": "",
+  "blurb_tc": "",
+  "brand": "3M",
+  "stock_id": "TAHEA",
+  "tags": [
+   "3M",
+   "Other Consumables"
+  ]
+ },
+ {
+  "name_en": "Sharps Box, 7.6 Litre",
+  "name_tc": "",
+  "category": "Other Consumables",
+  "price": 32,
+  "ribbon": "",
+  "image": "images/BOD8.jpg",
+  "image_missing": true,
+  "specs": [],
+  "variants": [],
+  "blurb_en": "",
+  "blurb_tc": "",
+  "brand": "Other",
+  "stock_id": "BOD8",
+  "tags": [
+   "Other Consumables"
+  ]
+ },
+ {
+  "name_en": "Micropore Tape, 1\", (12 pcs) -1",
+  "name_tc": "",
+  "category": "Other Consumables",
+  "price": 98,
+  "ribbon": "",
+  "image": "images/TAHC.jpg",
+  "image_missing": true,
+  "specs": [],
+  "variants": [],
+  "blurb_en": "",
+  "blurb_tc": "",
+  "brand": "3M",
+  "stock_id": "TAHC",
+  "tags": [
+   "3M",
+   "Other Consumables"
+  ]
+ },
+ {
+  "name_en": "Covidien Webcol Alcohol Swab 酒精棉片",
+  "name_tc": "",
+  "category": "Other Consumables",
+  "price": 48,
+  "ribbon": "",
+  "image": "images/PAAB.png",
+  "specs": [],
+  "variants": [],
+  "blurb_en": "",
+  "blurb_tc": "",
+  "brand": "COVIDIEN",
+  "stock_id": "PAAB",
+  "tags": [
+   "COVIDIEN",
+   "Other Consumables"
+  ]
+ },
+ {
+  "name_en": "Disposable Proctoscope, Medium (green)",
+  "name_tc": "",
+  "category": "Other Consumables",
+  "price": 17,
+  "ribbon": "",
+  "image": "images/PRL.jpg",
+  "image_missing": true,
+  "specs": [],
+  "variants": [],
+  "blurb_en": "",
+  "blurb_tc": "",
+  "brand": "EOS",
+  "stock_id": "PRL",
+  "tags": [
+   "EOS",
+   "Other Consumables"
+  ]
+ },
+ {
+  "name_en": "Soft-touch Sterile Examination Glove Size 'M' 消毒紙托手套 M碼",
+  "name_tc": "",
+  "category": "Masks & Gloves",
+  "price": 85,
+  "ribbon": "",
+  "image": "images/GLEFHB.png",
+  "specs": [],
+  "variants": [],
+  "blurb_en": "",
+  "blurb_tc": "",
+  "brand": "Soft-Touch",
+  "stock_id": "GLEFHB",
+  "tags": [
+   "Soft-Touch",
+   "Masks & Gloves"
+  ]
+ },
+ {
+  "name_en": "Baxter Solution, 0.05%, Blue, 100ML",
+  "name_tc": "",
+  "category": "Other Consumables",
+  "price": 35,
+  "ribbon": "",
+  "image": "images/SOABEBO.jpg",
+  "image_missing": true,
+  "specs": [],
+  "variants": [],
+  "blurb_en": "",
+  "blurb_tc": "",
+  "brand": "BAXTER",
+  "stock_id": "SOABEBO",
+  "tags": [
+   "BAXTER",
+   "Other Consumables"
+  ]
+ },
+ {
+  "name_en": "Aquasonic U/S Clear Gel, PARKER,5L,03-50",
+  "name_tc": "",
+  "category": "Other Consumables",
+  "price": 400,
+  "ribbon": "",
+  "image": "images/JEGFA.jpg",
+  "image_missing": true,
+  "specs": [],
+  "variants": [],
+  "blurb_en": "",
+  "blurb_tc": "",
+  "brand": "AQUASONIC",
+  "stock_id": "JEGFA",
+  "tags": [
+   "AQUASONIC",
+   "Other Consumables"
+  ]
+ },
+ {
+  "name_en": "Non-woven Swab, 3\"X3\", 4-PLY, (100 pcs)",
+  "name_tc": "",
+  "category": "Other Consumables",
+  "price": 12,
+  "ribbon": "",
+  "image": "images/GADCEI.jpg",
+  "image_missing": true,
+  "specs": [],
+  "variants": [],
+  "blurb_en": "",
+  "blurb_tc": "",
+  "brand": "Surgicon",
+  "stock_id": "GADCEI",
+  "tags": [
+   "Surgicon",
+   "Other Consumables"
+  ]
+ },
+ {
+  "name_en": "Optilube Jelly, 82G, Sterile, UK",
+  "name_tc": "",
+  "category": "Other Consumables",
+  "price": 39,
+  "ribbon": "",
+  "image": "images/JEFAC.jpg",
+  "image_missing": true,
+  "specs": [],
+  "variants": [],
+  "blurb_en": "",
+  "blurb_tc": "",
+  "brand": "OPTILUBE",
+  "stock_id": "JEFAC",
+  "tags": [
+   "OPTILUBE",
+   "Other Consumables"
+  ]
+ },
+ {
+  "name_en": "Normal Saline 生理鹽水 0.9% Sodium Chloride 500ml (輸液用)",
+  "name_tc": "",
+  "category": "Other Consumables",
+  "price": 28,
+  "ribbon": "",
+  "image": "images/SALAD.png",
+  "specs": [],
+  "variants": [],
+  "blurb_en": "",
+  "blurb_tc": "",
+  "brand": "B-BRAUN",
+  "stock_id": "SALAD",
+  "tags": [
+   "B-BRAUN",
+   "Other Consumables"
+  ]
+ },
+ {
+  "name_en": "3CC Syringe W/23G Needle, LOCK",
+  "name_tc": "",
+  "category": "Other Consumables",
+  "price": 115,
+  "ribbon": "",
+  "image": "images/SYAB23.jpg",
+  "image_missing": true,
+  "specs": [],
+  "variants": [],
+  "blurb_en": "",
+  "blurb_tc": "",
+  "brand": "TERUMO",
+  "stock_id": "SYAB23",
+  "tags": [
+   "TERUMO",
+   "Other Consumables"
+  ]
+ },
+ {
+  "name_en": "\"WELCH ALLYN\", EAR SPECULA 4.25MM, 耳窺器",
+  "name_tc": "",
+  "category": "Diagnostic Supplies",
+  "price": 48,
+  "ribbon": "",
+  "image": "images/SPBA1.png",
+  "specs": [],
+  "variants": [],
+  "blurb_en": "",
+  "blurb_tc": "",
+  "brand": "WELCH ALLYN",
+  "stock_id": "SPBA1",
+  "tags": [
+   "WELCH ALLYN",
+   "Diagnostic Supplies"
+  ]
+ },
+ {
+  "name_en": "Cotton WOOL Ball, PACK/10 BAGS OF (100 pcs)",
+  "name_tc": "",
+  "category": "Other Consumables",
+  "price": 52,
+  "ribbon": "",
+  "image": "images/WOA.jpg",
+  "image_missing": true,
+  "specs": [],
+  "variants": [],
+  "blurb_en": "",
+  "blurb_tc": "",
+  "brand": "Other",
+  "stock_id": "WOA",
+  "tags": [
+   "Other Consumables"
+  ]
+ },
+ {
+  "name_en": "ACE BAND SPOT, ROLL TYPE 卷裝圓點膠布",
+  "name_tc": "",
+  "category": "Other Consumables",
+  "price": 28,
+  "ribbon": "",
+  "image": "images/BAJE.png",
+  "specs": [],
+  "variants": [],
+  "blurb_en": "",
+  "blurb_tc": "",
+  "brand": "PLAID",
+  "stock_id": "BAJE",
+  "tags": [
+   "PLAID",
+   "Other Consumables"
+  ]
+ },
+ {
+  "name_en": "MICROSHIELD 4 SURGICAL HANDWASH, 500ML 殺菌洗手梘液",
+  "name_tc": "",
+  "category": "Other Consumables",
+  "price": 160,
+  "ribbon": "",
+  "image": "images/SOABDG.png",
+  "specs": [],
+  "variants": [],
+  "blurb_en": "",
+  "blurb_tc": "",
+  "brand": "MICROSHIELD",
+  "stock_id": "SOABDG",
+  "tags": [
+   "MICROSHIELD",
+   "Other Consumables"
+  ]
+ },
+ {
+  "name_en": "Water for Injection 10ml 注射用無菌水10ml",
+  "name_tc": "",
+  "category": "Other Consumables",
+  "price": 90,
+  "ribbon": "",
+  "image": "images/SALAB.png",
+  "specs": [],
+  "variants": [],
+  "blurb_en": "",
+  "blurb_tc": "",
+  "brand": "B-BRAUN",
+  "stock_id": "SALAB",
+  "tags": [
+   "B-BRAUN",
+   "Other Consumables"
+  ]
+ },
+ {
+  "name_en": "HANDSWITCH OPERATED PENCIL 開刀機操控手柄",
+  "name_tc": "",
+  "category": "O.R. Equipment",
+  "price": 60,
+  "ribbon": "",
+  "image": "images/PEN.png",
+  "specs": [],
+  "variants": [],
+  "blurb_en": "",
+  "blurb_tc": "",
+  "brand": "OBS",
+  "stock_id": "PEN",
+  "tags": [
+   "OBS",
+   "O.R. Equipment"
+  ]
+ },
+ {
+  "name_en": "10CC Syringe W/21G LUER LOCK",
+  "name_tc": "",
+  "category": "Other Consumables",
+  "price": 215,
+  "ribbon": "",
+  "image": "images/SYBD.jpg",
+  "image_missing": true,
+  "specs": [],
+  "variants": [],
+  "blurb_en": "",
+  "blurb_tc": "",
+  "brand": "TERUMO",
+  "stock_id": "SYBD",
+  "tags": [
+   "TERUMO",
+   "Other Consumables"
+  ]
+ },
+ {
+  "name_en": "HR Jelly, 4 Oz., Sterile, USA",
+  "name_tc": "",
+  "category": "Other Consumables",
+  "price": 50,
+  "ribbon": "",
+  "image": "images/JEFAB.jpg",
+  "image_missing": true,
+  "specs": [],
+  "variants": [],
+  "blurb_en": "",
+  "blurb_tc": "",
+  "brand": "HR",
+  "stock_id": "JEFAB",
+  "tags": [
+   "HR",
+   "Other Consumables"
+  ]
+ },
+ {
+  "name_en": "3M NEXCARE WATERPROOF BANDAGE 附墊薄膜膠布片",
+  "name_tc": "",
+  "category": "Other Consumables",
+  "price": 25,
+  "ribbon": "",
+  "image": "images/BAJB2.png",
+  "specs": [],
+  "variants": [],
+  "blurb_en": "",
+  "blurb_tc": "",
+  "brand": "3M",
+  "stock_id": "BAJB2",
+  "tags": [
+   "3M",
+   "Other Consumables"
+  ]
+ },
+ {
+  "name_en": "Sharps Box, 50 Litre",
+  "name_tc": "",
+  "category": "Other Consumables",
+  "price": 300,
+  "ribbon": "",
+  "image": "images/BOD9A.jpg",
+  "image_missing": true,
+  "specs": [],
+  "variants": [],
+  "blurb_en": "",
+  "blurb_tc": "",
+  "brand": "Other",
+  "stock_id": "BOD9A",
+  "tags": [
+   "Other Consumables"
+  ]
+ },
+ {
+  "name_en": "Medicine Cup 30ml 藥杯",
+  "name_tc": "",
+  "category": "Other Consumables",
+  "price": 50,
+  "ribbon": "",
+  "image": "images/CUB.png",
+  "specs": [],
+  "variants": [],
+  "blurb_en": "",
+  "blurb_tc": "",
+  "brand": "Other",
+  "stock_id": "CUB",
+  "tags": [
+   "Other Consumables"
+  ]
+ },
+ {
+  "name_en": "3M Foam Ear Plugs #1100 軟膠耳塞",
+  "name_tc": "",
+  "category": "Other Consumables",
+  "price": 270,
+  "ribbon": "",
+  "image": "images/PLUG.png",
+  "specs": [],
+  "variants": [],
+  "blurb_en": "",
+  "blurb_tc": "",
+  "brand": "3M",
+  "stock_id": "PLUG",
+  "tags": [
+   "3M",
+   "Other Consumables"
+  ]
+ },
+ {
+  "name_en": "Surgical Mask, Adult-white, BOX/50,JAPAN",
+  "name_tc": "",
+  "category": "Masks & Gloves",
+  "price": 50.0,
+  "ribbon": "",
+  "image": "images/MAAAF.jpg",
+  "image_missing": true,
+  "specs": [],
+  "variants": [],
+  "blurb_en": "",
+  "blurb_tc": "",
+  "brand": "KENZ",
+  "stock_id": "MAAAF",
+  "tags": [
+   "KENZ",
+   "Masks & Gloves"
+  ]
+ },
+ {
+  "name_en": "Baxter Solution, 0.05%, Blue, 500ML",
+  "name_tc": "",
+  "category": "Other Consumables",
+  "price": 43,
+  "ribbon": "",
+  "image": "images/SOABEBR.jpg",
+  "image_missing": true,
+  "specs": [],
+  "variants": [],
+  "blurb_en": "",
+  "blurb_tc": "",
+  "brand": "BAXTER",
+  "stock_id": "SOABEBR",
+  "tags": [
+   "BAXTER",
+   "Other Consumables"
+  ]
+ },
+ {
+  "name_en": "20 C.C. Syringe, Slip-tip, (50 pcs),\"TERUMO\"",
+  "name_tc": "",
+  "category": "Other Consumables",
+  "price": 150,
+  "ribbon": "",
+  "image": "images/SYBDD.jpg",
+  "image_missing": true,
+  "specs": [],
+  "variants": [],
+  "blurb_en": "",
+  "blurb_tc": "",
+  "brand": "TERUMO",
+  "stock_id": "SYBDD",
+  "tags": [
+   "TERUMO",
+   "Other Consumables"
+  ]
+ },
+ {
+  "name_en": "1CC Syringe Only-slip Tip, (100 pcs)",
+  "name_tc": "",
+  "category": "Other Consumables",
+  "price": 145,
+  "ribbon": "",
+  "image": "images/SYBEA.jpg",
+  "image_missing": true,
+  "specs": [],
+  "variants": [],
+  "blurb_en": "",
+  "blurb_tc": "",
+  "brand": "TERUMO",
+  "stock_id": "SYBEA",
+  "tags": [
+   "TERUMO",
+   "Other Consumables"
+  ]
+ },
+ {
+  "name_en": "Self Seal Pouch 90X257MM 自封消毒袋",
+  "name_tc": "",
+  "category": "Autoclave Accessories",
+  "price": 130,
+  "ribbon": "",
+  "image": "images/POUC.png",
+  "specs": [],
+  "variants": [],
+  "blurb_en": "",
+  "blurb_tc": "",
+  "brand": "SIGMA",
+  "stock_id": "POUC",
+  "tags": [
+   "SIGMA",
+   "Autoclave Accessories"
+  ]
+ },
+ {
+  "name_en": "Cotton WOOL Ball, Sterile, (5 pcs)",
+  "name_tc": "",
+  "category": "Other Consumables",
+  "price": 2,
+  "ribbon": "",
+  "image": "images/WOB.jpg",
+  "image_missing": true,
+  "specs": [],
+  "variants": [],
+  "blurb_en": "",
+  "blurb_tc": "",
+  "brand": "Other",
+  "stock_id": "WOB",
+  "tags": [
+   "Other Consumables"
+  ]
+ },
+ {
+  "name_en": "20 CC Syringe, LUER Lock, (50 pcs),\"TERUMO\"",
+  "name_tc": "",
+  "category": "Other Consumables",
+  "price": 150,
+  "ribbon": "",
+  "image": "images/SYBDE.jpg",
+  "image_missing": true,
+  "specs": [],
+  "variants": [],
+  "blurb_en": "",
+  "blurb_tc": "",
+  "brand": "TERUMO",
+  "stock_id": "SYBDE",
+  "tags": [
+   "TERUMO",
+   "Other Consumables"
+  ]
+ },
+ {
+  "name_en": "10 C.C. Syringe Only-luer Lock, \"terumo\"",
+  "name_tc": "",
+  "category": "Other Consumables",
+  "price": 205,
+  "ribbon": "",
+  "image": "images/SYBCZ.jpg",
+  "image_missing": true,
+  "specs": [],
+  "variants": [],
+  "blurb_en": "",
+  "blurb_tc": "",
+  "brand": "TERUMO",
+  "stock_id": "SYBCZ",
+  "tags": [
+   "TERUMO",
+   "Other Consumables"
+  ]
+ },
+ {
+  "name_en": "Normal Saline 0.9% 1L 生理鹽水 (輸液用)",
+  "name_tc": "",
+  "category": "Other Consumables",
+  "price": 39,
+  "ribbon": "",
+  "image": "images/SALB.png",
+  "specs": [],
+  "variants": [],
+  "blurb_en": "",
+  "blurb_tc": "",
+  "brand": "B-BRAUN",
+  "stock_id": "SALB",
+  "tags": [
+   "B-BRAUN",
+   "Other Consumables"
+  ]
+ },
+ {
+  "name_en": "Stopcock, 3-WAY, 360 Rotated, B-braun",
+  "name_tc": "",
+  "category": "Other Consumables",
+  "price": 10,
+  "ribbon": "",
+  "image": "images/STJ.jpg",
+  "image_missing": true,
+  "specs": [],
+  "variants": [],
+  "blurb_en": "",
+  "blurb_tc": "",
+  "brand": "B-BRAUN",
+  "stock_id": "STJ",
+  "tags": [
+   "B-BRAUN",
+   "Other Consumables"
+  ]
+ },
+ {
+  "name_en": "Nylon Suture 4/0 with Needle 尼龍縫線連針",
+  "name_tc": "",
+  "category": "Other Consumables",
+  "price": 260,
+  "ribbon": "",
+  "image": "images/NYM4.png",
+  "specs": [],
+  "variants": [],
+  "blurb_en": "",
+  "blurb_tc": "",
+  "brand": "Scimitar",
+  "stock_id": "NYM4",
+  "tags": [
+   "Scimitar",
+   "Other Consumables"
+  ]
+ },
+ {
+  "name_en": "Micropore Tape, 1/2\", (24 pcs), -0",
+  "name_tc": "",
+  "category": "Other Consumables",
+  "price": 98,
+  "ribbon": "",
+  "image": "images/TAHA.jpg",
+  "image_missing": true,
+  "specs": [],
+  "variants": [],
+  "blurb_en": "",
+  "blurb_tc": "",
+  "brand": "3M",
+  "stock_id": "TAHA",
+  "tags": [
+   "3M",
+   "Other Consumables"
+  ]
+ },
+ {
+  "name_en": "Soft-Touch Examination Glove (S) 檢查手套 S碼",
+  "name_tc": "",
+  "category": "Masks & Gloves",
+  "price": 48,
+  "ribbon": "",
+  "image": "images/GLEFGA.png",
+  "specs": [],
+  "variants": [],
+  "blurb_en": "",
+  "blurb_tc": "",
+  "brand": "Soft-Touch",
+  "stock_id": "GLEFGA",
+  "tags": [
+   "Soft-Touch",
+   "Masks & Gloves"
+  ]
+ },
+ {
+  "name_en": "Wooden Tongue Depressor (Adult) 壓舌板 成人",
+  "name_tc": "",
+  "category": "Other Consumables",
+  "price": 15.0,
+  "ribbon": "",
+  "image": "images/DEACB.png",
+  "specs": [],
+  "variants": [],
+  "blurb_en": "",
+  "blurb_tc": "",
+  "brand": "Other",
+  "stock_id": "DEACB",
+  "tags": [
+   "Other Consumables"
+  ]
+ },
+ {
+  "name_en": "5 C.C. Syringe Only, SLIP Tip, \"terumo\"",
+  "name_tc": "",
+  "category": "Other Consumables",
+  "price": 115,
+  "ribbon": "",
+  "image": "images/SYBC1.jpg",
+  "image_missing": true,
+  "specs": [],
+  "variants": [],
+  "blurb_en": "",
+  "blurb_tc": "",
+  "brand": "TERUMO",
+  "stock_id": "SYBC1",
+  "tags": [
+   "TERUMO",
+   "Other Consumables"
+  ]
+ },
+ {
+  "name_en": "Self Seal Pouch 135X283MM 自封消毒袋",
+  "name_tc": "",
+  "category": "Autoclave Accessories",
+  "price": 190,
+  "ribbon": "",
+  "image": "images/POUE.png",
+  "specs": [],
+  "variants": [],
+  "blurb_en": "",
+  "blurb_tc": "",
+  "brand": "SIGMA",
+  "stock_id": "POUE",
+  "tags": [
+   "SIGMA",
+   "Autoclave Accessories"
+  ]
+ },
+ {
+  "name_en": "3M Tegasorb Hydrocolloid Dressing 10X10CM 水膠敷料",
+  "name_tc": "",
+  "category": "Other Consumables",
+  "price": 190,
+  "ribbon": "",
+  "image": "images/TEAS.png",
+  "specs": [],
+  "variants": [],
+  "blurb_en": "",
+  "blurb_tc": "",
+  "brand": "3M",
+  "stock_id": "TEAS",
+  "tags": [
+   "3M",
+   "Other Consumables"
+  ]
+ },
+ {
+  "name_en": "5CC Syringe W/23G LUER Lock, \"terumo\"",
+  "name_tc": "",
+  "category": "Other Consumables",
+  "price": 135,
+  "ribbon": "",
+  "image": "images/SYBC23.jpg",
+  "image_missing": true,
+  "specs": [],
+  "variants": [],
+  "blurb_en": "",
+  "blurb_tc": "",
+  "brand": "TERUMO",
+  "stock_id": "SYBC23",
+  "tags": [
+   "TERUMO",
+   "Other Consumables"
+  ]
+ },
+ {
+  "name_en": "3M Transpore Tape 1\" White 透明膠布",
+  "name_tc": "",
+  "category": "Other Consumables",
+  "price": 163,
+  "ribbon": "",
+  "image": "images/TAJA.png",
+  "specs": [],
+  "variants": [],
+  "blurb_en": "",
+  "blurb_tc": "",
+  "brand": "3M",
+  "stock_id": "TAJA",
+  "tags": [
+   "3M",
+   "Other Consumables"
+  ]
+ },
+ {
+  "name_en": "Normal Saline 0.9% 1L 生理鹽水 (沖洗用)",
+  "name_tc": "",
+  "category": "Other Consumables",
+  "price": 45,
+  "ribbon": "",
+  "image": "images/SAL.png",
+  "specs": [],
+  "variants": [],
+  "blurb_en": "",
+  "blurb_tc": "",
+  "brand": "B-BRAUN",
+  "stock_id": "SAL",
+  "tags": [
+   "B-BRAUN",
+   "Other Consumables"
+  ]
+ },
+ {
+  "name_en": "Disposable Dermal Biopsy Punch, 4MM",
+  "name_tc": "",
+  "category": "Other Consumables",
+  "price": 54,
+  "ribbon": "",
+  "image": "images/PUNC.jpg",
+  "image_missing": true,
+  "specs": [],
+  "variants": [],
+  "blurb_en": "",
+  "blurb_tc": "",
+  "brand": "INTEGRA MILTEX",
+  "stock_id": "PUNC",
+  "tags": [
+   "INTEGRA MILTEX",
+   "Other Consumables"
+  ]
+ },
+ {
+  "name_en": "Universal Split Pad 分離電極墊",
+  "name_tc": "",
+  "category": "O.R. Equipment",
+  "price": 135,
+  "ribbon": "",
+  "image": "images/PAC4.png",
+  "specs": [],
+  "variants": [],
+  "blurb_en": "",
+  "blurb_tc": "",
+  "brand": "3M",
+  "stock_id": "PAC4",
+  "tags": [
+   "3M",
+   "O.R. Equipment"
+  ]
+ },
+ {
+  "name_en": "Protective Gown Yellow 保護衣 黃色",
+  "name_tc": "",
+  "category": "Other Consumables",
+  "price": 70,
+  "ribbon": "",
+  "image": "images/GOWN.png",
+  "specs": [],
+  "variants": [],
+  "blurb_en": "",
+  "blurb_tc": "",
+  "brand": "Other",
+  "stock_id": "GOWN",
+  "tags": [
+   "Other Consumables"
+  ]
+ },
+ {
+  "name_en": "5 C.C. Syringe Only, LUER Lock, \"terumo\"",
+  "name_tc": "",
+  "category": "Other Consumables",
+  "price": 115,
+  "ribbon": "",
+  "image": "images/SYBC.jpg",
+  "image_missing": true,
+  "specs": [],
+  "variants": [],
+  "blurb_en": "",
+  "blurb_tc": "",
+  "brand": "TERUMO",
+  "stock_id": "SYBC",
+  "tags": [
+   "TERUMO",
+   "Other Consumables"
+  ]
+ },
+ {
+  "name_en": "Disposable Dermal Biopsy Punch, 3MM",
+  "name_tc": "",
+  "category": "Other Consumables",
+  "price": 54,
+  "ribbon": "",
+  "image": "images/PUNB.jpg",
+  "image_missing": true,
+  "specs": [],
+  "variants": [],
+  "blurb_en": "",
+  "blurb_tc": "",
+  "brand": "INTEGRA MILTEX",
+  "stock_id": "PUNB",
+  "tags": [
+   "INTEGRA MILTEX",
+   "Other Consumables"
+  ]
+ },
+ {
+  "name_en": "Normasol Irrigation Solution 25ML 沖洗鹽水",
+  "name_tc": "",
+  "category": "Other Consumables",
+  "price": 90,
+  "ribbon": "",
+  "image": "images/SOABC.png",
+  "specs": [],
+  "variants": [],
+  "blurb_en": "",
+  "blurb_tc": "",
+  "brand": "B-BRAUN",
+  "stock_id": "SOABC",
+  "tags": [
+   "B-BRAUN",
+   "Other Consumables"
+  ]
+ },
+ {
+  "name_en": "3M Cold Hot Pack 10CMX25CM 冷熱敷墊",
+  "name_tc": "",
+  "category": "Other Consumables",
+  "price": 65,
+  "ribbon": "",
+  "image": "images/PACK.png",
+  "specs": [],
+  "variants": [],
+  "blurb_en": "",
+  "blurb_tc": "",
+  "brand": "3M",
+  "stock_id": "PACK",
+  "tags": [
+   "3M",
+   "Other Consumables"
+  ]
+ },
+ {
+  "name_en": "Sharps Box, 13 Litre",
+  "name_tc": "",
+  "category": "Other Consumables",
+  "price": 58,
+  "ribbon": "",
+  "image": "images/BOD7.jpg",
+  "image_missing": true,
+  "specs": [],
+  "variants": [],
+  "blurb_en": "",
+  "blurb_tc": "",
+  "brand": "Other",
+  "stock_id": "BOD7",
+  "tags": [
+   "Other Consumables"
+  ]
+ },
+ {
+  "name_en": "Disposable Dermal Biopsy Punch, 5MM",
+  "name_tc": "",
+  "category": "Other Consumables",
+  "price": 54,
+  "ribbon": "",
+  "image": "images/PUND.jpg",
+  "image_missing": true,
+  "specs": [],
+  "variants": [],
+  "blurb_en": "",
+  "blurb_tc": "",
+  "brand": "INTEGRA MILTEX",
+  "stock_id": "PUND",
+  "tags": [
+   "INTEGRA MILTEX",
+   "Other Consumables"
+  ]
+ },
+ {
+  "name_en": "Needle, 30G X 1/2\", (100 pcs), \"b-d\"",
+  "name_tc": "",
+  "category": "Other Consumables",
+  "price": 80,
+  "ribbon": "",
+  "image": "images/NEB30.jpg",
+  "image_missing": true,
+  "specs": [],
+  "variants": [],
+  "blurb_en": "",
+  "blurb_tc": "",
+  "brand": "BD",
+  "stock_id": "NEB30",
+  "tags": [
+   "BD",
+   "Other Consumables"
+  ]
+ },
+ {
+  "name_en": "3 C.C. Syringe Only, LUER Lock, \"terumo\"",
+  "name_tc": "",
+  "category": "Other Consumables",
+  "price": 85,
+  "ribbon": "",
+  "image": "images/SYBAA.jpg",
+  "image_missing": true,
+  "specs": [],
+  "variants": [],
+  "blurb_en": "",
+  "blurb_tc": "",
+  "brand": "TERUMO",
+  "stock_id": "SYBAA",
+  "tags": [
+   "TERUMO",
+   "Other Consumables"
+  ]
+ },
+ {
+  "name_en": "Disposable Dermal Biopsy Punch, 6MM",
+  "name_tc": "",
+  "category": "Other Consumables",
+  "price": 54,
+  "ribbon": "",
+  "image": "images/PUNE.jpg",
+  "image_missing": true,
+  "specs": [],
+  "variants": [],
+  "blurb_en": "",
+  "blurb_tc": "",
+  "brand": "INTEGRA MILTEX",
+  "stock_id": "PUNE",
+  "tags": [
+   "INTEGRA MILTEX",
+   "Other Consumables"
+  ]
+ },
+ {
+  "name_en": "ACE Band Spot Plasters 圓點膠布",
+  "name_tc": "",
+  "category": "Other Consumables",
+  "price": 18,
+  "ribbon": "",
+  "image": "images/BAJD.png",
+  "specs": [],
+  "variants": [],
+  "blurb_en": "",
+  "blurb_tc": "",
+  "brand": "PLAID",
+  "stock_id": "BAJD",
+  "tags": [
+   "PLAID",
+   "Other Consumables"
+  ]
+ },
+ {
+  "name_en": "Synthetic CAST Padding, 4\", CMW04",
+  "name_tc": "",
+  "category": "Other Consumables",
+  "price": 23,
+  "ribbon": "",
+  "image": "images/PADDD.jpg",
+  "image_missing": true,
+  "specs": [],
+  "variants": [],
+  "blurb_en": "",
+  "blurb_tc": "",
+  "brand": "3M",
+  "stock_id": "PADDD",
+  "tags": [
+   "3M",
+   "Other Consumables"
+  ]
+ },
+ {
+  "name_en": "3M Nexcare Comfort Spot 舒適圓點膠布",
+  "name_tc": "",
+  "category": "Other Consumables",
+  "price": "N/A",
+  "ribbon": "",
+  "image": "images/BAJB.jpg",
+  "image_missing": true,
+  "specs": [],
+  "variants": [],
+  "blurb_en": "",
+  "blurb_tc": "",
+  "brand": "3M",
+  "stock_id": "BAJB",
+  "tags": [
+   "3M",
+   "Other Consumables"
+  ]
+ },
+ {
+  "name_en": "Sharps Box, 3 Litre",
+  "name_tc": "",
+  "category": "Other Consumables",
+  "price": 23,
+  "ribbon": "",
+  "image": "images/BOD9.jpg",
+  "image_missing": true,
+  "specs": [],
+  "variants": [],
+  "blurb_en": "",
+  "blurb_tc": "",
+  "brand": "Other",
+  "stock_id": "BOD9",
+  "tags": [
+   "Other Consumables"
+  ]
+ },
+ {
+  "name_en": "Spinal Needle, 25GX3-1/2\", \"bd\"",
+  "name_tc": "",
+  "category": "Other Consumables",
+  "price": 21,
+  "ribbon": "",
+  "image": "images/NELAC.jpg",
+  "image_missing": true,
+  "specs": [],
+  "variants": [],
+  "blurb_en": "",
+  "blurb_tc": "",
+  "brand": "Other",
+  "stock_id": "NELAC",
+  "tags": [
+   "Other Consumables"
+  ]
+ },
+ {
+  "name_en": "Baxter Solution 0.015% Yellow 1L 洗傷口消毒液 黃色",
+  "name_tc": "",
+  "category": "Other Consumables",
+  "price": 58,
+  "ribbon": "",
+  "image": "images/SOABED.png",
+  "specs": [],
+  "variants": [],
+  "blurb_en": "",
+  "blurb_tc": "",
+  "brand": "Other",
+  "stock_id": "SOABED",
+  "tags": [
+   "Other Consumables"
+  ]
+ },
+ {
+  "name_en": "Sterile Gauze, 3\"X3\", PACK/5, BOX/25 PKT",
+  "name_tc": "",
+  "category": "Other Consumables",
+  "price": 78,
+  "ribbon": "",
+  "image": "images/GADCL.jpg",
+  "image_missing": true,
+  "specs": [],
+  "variants": [],
+  "blurb_en": "",
+  "blurb_tc": "",
+  "brand": "Other",
+  "stock_id": "GADCL",
+  "tags": [
+   "Other Consumables"
+  ]
+ },
+ {
+  "name_en": "3 C.C. Syringe Only, SLIP Tip, \"terumo\"",
+  "name_tc": "",
+  "category": "Other Consumables",
+  "price": 85,
+  "ribbon": "",
+  "image": "images/SYBAA1.jpg",
+  "image_missing": true,
+  "specs": [],
+  "variants": [],
+  "blurb_en": "",
+  "blurb_tc": "",
+  "brand": "TERUMO",
+  "stock_id": "SYBAA1",
+  "tags": [
+   "TERUMO",
+   "Other Consumables"
+  ]
+ },
+ {
+  "name_en": "Disposable Dermal Biopsy Punch, 2MM",
+  "name_tc": "",
+  "category": "Other Consumables",
+  "price": 54,
+  "ribbon": "",
+  "image": "images/PUNA.jpg",
+  "image_missing": true,
+  "specs": [],
+  "variants": [],
+  "blurb_en": "",
+  "blurb_tc": "",
+  "brand": "INTEGRA MILTEX",
+  "stock_id": "PUNA",
+  "tags": [
+   "INTEGRA MILTEX",
+   "Other Consumables"
+  ]
+ },
+ {
+  "name_en": "Purell Hand Sanitizer 236ML 免洗消毒搓手液",
+  "name_tc": "",
+  "category": "Other Consumables",
+  "price": 82,
+  "ribbon": "",
+  "image": "images/SAN.png",
+  "specs": [],
+  "variants": [],
+  "blurb_en": "",
+  "blurb_tc": "",
+  "brand": "Other",
+  "stock_id": "SAN",
+  "tags": [
+   "Other Consumables"
+  ]
+ },
+ {
+  "name_en": "Disposable Dermal Biopsy Punch, 2.5MM",
+  "name_tc": "",
+  "category": "Other Consumables",
+  "price": 54,
+  "ribbon": "",
+  "image": "images/PUNAA.jpg",
+  "image_missing": true,
+  "specs": [],
+  "variants": [],
+  "blurb_en": "",
+  "blurb_tc": "",
+  "brand": "INTEGRA MILTEX",
+  "stock_id": "PUNAA",
+  "tags": [
+   "INTEGRA MILTEX",
+   "Other Consumables"
+  ]
+ },
+ {
+  "name_en": "Adson Forceps 5\" Delicate 精細鉗",
+  "name_tc": "",
+  "category": "Surgical Instruments",
+  "price": 90,
+  "ribbon": "",
+  "image": "images/FOBAA.png",
+  "specs": [],
+  "variants": [],
+  "blurb_en": "",
+  "blurb_tc": "",
+  "brand": "Other",
+  "stock_id": "FOBAA",
+  "tags": [
+   "Surgical Instruments"
+  ]
+ },
+ {
+  "name_en": "Angiocath Intravenous Catheter, 22G X 1\"",
+  "name_tc": "",
+  "category": "Other Consumables",
+  "price": 27,
+  "ribbon": "",
+  "image": "images/ANE22.jpg",
+  "image_missing": true,
+  "specs": [],
+  "variants": [],
+  "blurb_en": "",
+  "blurb_tc": "",
+  "brand": "BD",
+  "stock_id": "ANE22",
+  "tags": [
+   "BD",
+   "Other Consumables"
+  ]
+ },
+ {
+  "name_en": "Skin Marker with Ruler (Sterile) 皮膚記號筆連間尺",
+  "name_tc": "",
+  "category": "Other Consumables",
+  "price": 30,
+  "ribbon": "",
+  "image": "images/PENA.png",
+  "specs": [],
+  "variants": [],
+  "blurb_en": "",
+  "blurb_tc": "",
+  "brand": "MEDLINE",
+  "stock_id": "PENA",
+  "tags": [
+   "MEDLINE",
+   "Other Consumables"
+  ]
+ },
+ {
+  "name_en": "Non-woven Swab, 4\"X4\", 4-PLY, (100 pcs)",
+  "name_tc": "",
+  "category": "Other Consumables",
+  "price": 15,
+  "ribbon": "",
+  "image": "images/GADCEJ.jpg",
+  "image_missing": true,
+  "specs": [],
+  "variants": [],
+  "blurb_en": "",
+  "blurb_tc": "",
+  "brand": "Other",
+  "stock_id": "GADCEJ",
+  "tags": [
+   "Other Consumables"
+  ]
+ },
+ {
+  "name_en": "Welch Allyn Ear Specula 2.75MM 耳窺器",
+  "name_tc": "",
+  "category": "Diagnostic Supplies",
+  "price": 48,
+  "ribbon": "",
+  "image": "images/SPBA.png",
+  "specs": [],
+  "variants": [],
+  "blurb_en": "",
+  "blurb_tc": "",
+  "brand": "WELCH ALLYN",
+  "stock_id": "SPBA",
+  "tags": [
+   "WELCH ALLYN",
+   "Diagnostic Supplies"
+  ]
+ },
+ {
+  "name_en": "Medipore W/pad 5X7CM, (50 pcs)",
+  "name_tc": "",
+  "category": "Other Consumables",
+  "price": 83,
+  "ribbon": "",
+  "image": "images/PABMA.jpg",
+  "image_missing": true,
+  "specs": [],
+  "variants": [],
+  "blurb_en": "",
+  "blurb_tc": "",
+  "brand": "3M",
+  "stock_id": "PABMA",
+  "tags": [
+   "3M",
+   "Other Consumables"
+  ]
+ },
+ {
+  "name_en": "Angiocath Intravenous Catheter 18GX1.16\"",
+  "name_tc": "",
+  "category": "Other Consumables",
+  "price": 29,
+  "ribbon": "",
+  "image": "images/ANE16.jpg",
+  "image_missing": true,
+  "specs": [],
+  "variants": [],
+  "blurb_en": "",
+  "blurb_tc": "",
+  "brand": "BD",
+  "stock_id": "ANE16",
+  "tags": [
+   "BD",
+   "Other Consumables"
+  ]
+ },
+ {
+  "name_en": "ACE Band Strip Plasters 長條膠布",
+  "name_tc": "",
+  "category": "Other Consumables",
+  "price": 18,
+  "ribbon": "",
+  "image": "images/BAJC.png",
+  "specs": [],
+  "variants": [],
+  "blurb_en": "",
+  "blurb_tc": "",
+  "brand": "PLAID",
+  "stock_id": "BAJC",
+  "tags": [
+   "PLAID",
+   "Other Consumables"
+  ]
+ },
+ {
+  "name_en": "Angiocath Intravenous Catheter, 24GX3/4\"",
+  "name_tc": "",
+  "category": "Other Consumables",
+  "price": 32,
+  "ribbon": "",
+  "image": "images/ANE24.jpg",
+  "image_missing": true,
+  "specs": [],
+  "variants": [],
+  "blurb_en": "",
+  "blurb_tc": "",
+  "brand": "BD",
+  "stock_id": "ANE24",
+  "tags": [
+   "BD",
+   "Other Consumables"
+  ]
+ },
+ {
+  "name_en": "Disposable Underpad 17\"X24\" 床墊紙",
+  "name_tc": "",
+  "category": "Other Consumables",
+  "price": 15,
+  "ribbon": "",
+  "image": "images/PADBA.png",
+  "specs": [],
+  "variants": [],
+  "blurb_en": "",
+  "blurb_tc": "",
+  "brand": "Other",
+  "stock_id": "PADBA",
+  "tags": [
+   "Other Consumables"
+  ]
+ },
+ {
+  "name_en": "Nebulizer MASK Kit, Child",
+  "name_tc": "",
+  "category": "Masks & Gloves",
+  "price": 50,
+  "ribbon": "",
+  "image": "images/MABC.jpg",
+  "image_missing": true,
+  "specs": [],
+  "variants": [],
+  "blurb_en": "",
+  "blurb_tc": "",
+  "brand": "Other",
+  "stock_id": "MABC",
+  "tags": [
+   "Masks & Gloves"
+  ]
+ },
+ {
+  "name_en": "Alcohol Hand Gel 600ML 酒精搓手液",
+  "name_tc": "",
+  "category": "Other Consumables",
+  "price": 62,
+  "ribbon": "",
+  "image": "images/SANC.png",
+  "specs": [],
+  "variants": [],
+  "blurb_en": "",
+  "blurb_tc": "",
+  "brand": "ULTRA READY",
+  "stock_id": "SANC",
+  "tags": [
+   "ULTRA READY",
+   "Other Consumables"
+  ]
+ },
+ {
+  "name_en": "Extension Tube 140CM Luer Lock 延長喉管",
+  "name_tc": "",
+  "category": "Other Consumables",
+  "price": 27,
+  "ribbon": "",
+  "image": "images/TUBD.png",
+  "specs": [],
+  "variants": [],
+  "blurb_en": "",
+  "blurb_tc": "",
+  "brand": "Other",
+  "stock_id": "TUBD",
+  "tags": [
+   "Other Consumables"
+  ]
+ },
+ {
+  "name_en": "Aquasonic Clear Ultrasound Gel, 250ML",
+  "name_tc": "",
+  "category": "Other Consumables",
+  "price": 48,
+  "ribbon": "",
+  "image": "images/JEGBA.jpg",
+  "image_missing": true,
+  "specs": [],
+  "variants": [],
+  "blurb_en": "",
+  "blurb_tc": "",
+  "brand": "AQUASONIC",
+  "stock_id": "JEGBA",
+  "tags": [
+   "AQUASONIC",
+   "Other Consumables"
+  ]
+ },
+ {
+  "name_en": "Needle, 27G X 1/2\", (100 pcs), \"terumo\"",
+  "name_tc": "",
+  "category": "Other Consumables",
+  "price": 50,
+  "ribbon": "",
+  "image": "images/NEC27.jpg",
+  "image_missing": true,
+  "specs": [],
+  "variants": [],
+  "blurb_en": "",
+  "blurb_tc": "",
+  "brand": "TERUMO",
+  "stock_id": "NEC27",
+  "tags": [
+   "TERUMO",
+   "Other Consumables"
+  ]
+ },
+ {
+  "name_en": "PE Examination Glove (M) 膠手套 M碼",
+  "name_tc": "",
+  "category": "Masks & Gloves",
+  "price": 8,
+  "ribbon": "",
+  "image": "images/GLEEB.png",
+  "specs": [],
+  "variants": [],
+  "blurb_en": "",
+  "blurb_tc": "",
+  "brand": "Other",
+  "stock_id": "GLEEB",
+  "tags": [
+   "Masks & Gloves"
+  ]
+ },
+ {
+  "name_en": "Wooden Applicator 6\" 木棒",
+  "name_tc": "",
+  "category": "Other Consumables",
+  "price": 70,
+  "ribbon": "",
+  "image": "images/APD.png",
+  "specs": [],
+  "variants": [],
+  "blurb_en": "",
+  "blurb_tc": "",
+  "brand": "Other",
+  "stock_id": "APD",
+  "tags": [
+   "Other Consumables"
+  ]
+ },
+ {
+  "name_en": "Medicom Surgical Gown (M) 手術袍 M碼",
+  "name_tc": "",
+  "category": "Other Consumables",
+  "price": 0,
+  "ribbon": "",
+  "image": "images/GOWN1A.jpg",
+  "image_missing": true,
+  "specs": [],
+  "variants": [],
+  "blurb_en": "",
+  "blurb_tc": "",
+  "brand": "MEDICOM",
+  "stock_id": "GOWN1A",
+  "tags": [
+   "MEDICOM",
+   "Other Consumables"
+  ]
+ },
+ {
+  "name_en": "Needle, 23G X 1-1/4\", (100 pcs), \"terumo\"",
+  "name_tc": "",
+  "category": "Other Consumables",
+  "price": 50,
+  "ribbon": "",
+  "image": "images/NEC23.jpg",
+  "image_missing": true,
+  "specs": [],
+  "variants": [],
+  "blurb_en": "",
+  "blurb_tc": "",
+  "brand": "TERUMO",
+  "stock_id": "NEC23",
+  "tags": [
+   "TERUMO",
+   "Other Consumables"
+  ]
+ },
+ {
+  "name_en": "Micropore Silicone Tape, 1\", 2775-1",
+  "name_tc": "",
+  "category": "Other Consumables",
+  "price": 60,
+  "ribbon": "",
+  "image": "images/TAN.jpg",
+  "image_missing": true,
+  "specs": [],
+  "variants": [],
+  "blurb_en": "",
+  "blurb_tc": "",
+  "brand": "3M",
+  "stock_id": "TAN",
+  "tags": [
+   "3M",
+   "Other Consumables"
+  ]
+ },
+ {
+  "name_en": "Thermoscan Probe Cover 探熱器膠套",
+  "name_tc": "",
+  "category": "Other Consumables",
+  "price": 15,
+  "ribbon": "",
+  "image": "images/COLA1.png",
+  "specs": [],
+  "variants": [],
+  "blurb_en": "",
+  "blurb_tc": "",
+  "brand": "BAXTER",
+  "stock_id": "COLA1",
+  "tags": [
+   "BAXTER",
+   "Other Consumables"
+  ]
+ },
+ {
+  "name_en": "Disposable Proctoscope, Large (blue)",
+  "name_tc": "",
+  "category": "Other Consumables",
+  "price": 17,
+  "ribbon": "",
+  "image": "images/PRM.jpg",
+  "image_missing": true,
+  "specs": [],
+  "variants": [],
+  "blurb_en": "",
+  "blurb_tc": "",
+  "brand": "EOS",
+  "stock_id": "PRM",
+  "tags": [
+   "EOS",
+   "Other Consumables"
+  ]
+ },
+ {
+  "name_en": "Synthetic CAST Padding, 3\", CMW03",
+  "name_tc": "",
+  "category": "Other Consumables",
+  "price": 18,
+  "ribbon": "",
+  "image": "images/PADDB.jpg",
+  "image_missing": true,
+  "specs": [],
+  "variants": [],
+  "blurb_en": "",
+  "blurb_tc": "",
+  "brand": "3M",
+  "stock_id": "PADDB",
+  "tags": [
+   "3M",
+   "Other Consumables"
+  ]
+ },
+ {
+  "name_en": "Needle, 18G X 1-1/2\", (100 pcs), \"terumo\"",
+  "name_tc": "",
+  "category": "Other Consumables",
+  "price": 50,
+  "ribbon": "",
+  "image": "images/NEC18.jpg",
+  "image_missing": true,
+  "specs": [],
+  "variants": [],
+  "blurb_en": "",
+  "blurb_tc": "",
+  "brand": "TERUMO",
+  "stock_id": "NEC18",
+  "tags": [
+   "TERUMO",
+   "Other Consumables"
+  ]
+ },
+ {
+  "name_en": "Nebulizer MASK Kit, Adult",
+  "name_tc": "",
+  "category": "Masks & Gloves",
+  "price": 50,
+  "ribbon": "",
+  "image": "images/MABA.jpg",
+  "image_missing": true,
+  "specs": [],
+  "variants": [],
+  "blurb_en": "",
+  "blurb_tc": "",
+  "brand": "Other",
+  "stock_id": "MABA",
+  "tags": [
+   "Masks & Gloves"
+  ]
+ },
+ {
+  "name_en": "Angiocath Intravenous Catheter 20GX1.16\"",
+  "name_tc": "",
+  "category": "Other Consumables",
+  "price": 27,
+  "ribbon": "",
+  "image": "images/ANE20.jpg",
+  "image_missing": true,
+  "specs": [],
+  "variants": [],
+  "blurb_en": "",
+  "blurb_tc": "",
+  "brand": "BD",
+  "stock_id": "ANE20",
+  "tags": [
+   "BD",
+   "Other Consumables"
+  ]
+ },
+ {
+  "name_en": "Synthetic CAST Padding, 6\", CMW06",
+  "name_tc": "",
+  "category": "Other Consumables",
+  "price": 29,
+  "ribbon": "",
+  "image": "images/PADDD0.jpg",
+  "image_missing": true,
+  "specs": [],
+  "variants": [],
+  "blurb_en": "",
+  "blurb_tc": "",
+  "brand": "3M",
+  "stock_id": "PADDD0",
+  "tags": [
+   "3M",
+   "Other Consumables"
+  ]
+ },
+ {
+  "name_en": "Needle, 25G X 5/8\", (100 pcs), \"terumo\"",
+  "name_tc": "",
+  "category": "Other Consumables",
+  "price": 50,
+  "ribbon": "",
+  "image": "images/NEC25.jpg",
+  "image_missing": true,
+  "specs": [],
+  "variants": [],
+  "blurb_en": "",
+  "blurb_tc": "",
+  "brand": "TERUMO",
+  "stock_id": "NEC25",
+  "tags": [
+   "TERUMO",
+   "Other Consumables"
+  ]
+ },
+ {
+  "name_en": "Normal Saline 0.9% 100ML 生理鹽水 (輸液用)",
+  "name_tc": "",
+  "category": "Other Consumables",
+  "price": 36,
+  "ribbon": "",
+  "image": "images/SALABC.png",
+  "specs": [],
+  "variants": [],
+  "blurb_en": "",
+  "blurb_tc": "",
+  "brand": "Other",
+  "stock_id": "SALABC",
+  "tags": [
+   "Other Consumables"
+  ]
+ },
+ {
+  "name_en": "E-Z Lubricating Jelly, 5GM Packet",
+  "name_tc": "",
+  "category": "Other Consumables",
+  "price": 4,
+  "ribbon": "",
+  "image": "images/JEFA1.jpg",
+  "image_missing": true,
+  "specs": [],
+  "variants": [],
+  "blurb_en": "",
+  "blurb_tc": "",
+  "brand": "HR",
+  "stock_id": "JEFA1",
+  "tags": [
+   "HR",
+   "Other Consumables"
+  ]
+ },
+ {
+  "name_en": "Soft-Touch Examination Glove (L) 檢查手套 L碼",
+  "name_tc": "",
+  "category": "Other Consumables",
+  "price": 48,
+  "ribbon": "",
+  "image": "images/GLEFGC.png",
+  "specs": [],
+  "variants": [],
+  "blurb_en": "",
+  "blurb_tc": "",
+  "brand": "Other",
+  "stock_id": "GLEFGC",
+  "tags": [
+   "Other Consumables"
+  ]
+ },
+ {
+  "name_en": "3M Steri-Strip 100MMX12MM 免縫膠布",
+  "name_tc": "",
+  "category": "Other Consumables",
+  "price": 34,
+  "ribbon": "",
+  "image": "images/STESB.png",
+  "specs": [],
+  "variants": [],
+  "blurb_en": "",
+  "blurb_tc": "",
+  "brand": "3M",
+  "stock_id": "STESB",
+  "tags": [
+   "3M",
+   "Other Consumables"
+  ]
+ },
+ {
+  "name_en": "Non-woven Swab, 2\"X2\", 4-PLY, (100 pcs)",
+  "name_tc": "",
+  "category": "Other Consumables",
+  "price": 8,
+  "ribbon": "",
+  "image": "images/GADCEF.jpg",
+  "image_missing": true,
+  "specs": [],
+  "variants": [],
+  "blurb_en": "",
+  "blurb_tc": "",
+  "brand": "Other",
+  "stock_id": "GADCEF",
+  "tags": [
+   "Other Consumables"
+  ]
+ },
+ {
+  "name_en": "Clinical Waste Bag, Red, PACK/10",
+  "name_tc": "",
+  "category": "Other Consumables",
+  "price": 40,
+  "ribbon": "",
+  "image": "images/BAH.jpg",
+  "image_missing": true,
+  "specs": [],
+  "variants": [],
+  "blurb_en": "",
+  "blurb_tc": "",
+  "brand": "Other",
+  "stock_id": "BAH",
+  "tags": [
+   "Other Consumables"
+  ]
+ },
+ {
+  "name_en": "MEDICOM Surgical Gown (L) 手術袍 L碼",
+  "name_tc": "",
+  "category": "Other Consumables",
+  "price": 0,
+  "ribbon": "",
+  "image": "images/GOWNAA.jpg",
+  "image_missing": true,
+  "specs": [],
+  "variants": [],
+  "blurb_en": "",
+  "blurb_tc": "",
+  "brand": "MEDICOM",
+  "stock_id": "GOWNAA",
+  "tags": [
+   "MEDICOM",
+   "Other Consumables"
+  ]
+ },
+ {
+  "name_en": "3M Steri-Strip 75MMX6MM 免縫膠布",
+  "name_tc": "",
+  "category": "Other Consumables",
+  "price": 20,
+  "ribbon": "",
+  "image": "images/STERA.png",
+  "specs": [],
+  "variants": [],
+  "blurb_en": "",
+  "blurb_tc": "",
+  "brand": "3M",
+  "stock_id": "STERA",
+  "tags": [
+   "3M",
+   "Other Consumables"
+  ]
+ },
+ {
+  "name_en": "Universal Ear Specula 4.25MM 耳窺器",
+  "name_tc": "",
+  "category": "Diagnostic Supplies",
+  "price": 35,
+  "ribbon": "",
+  "image": "images/SPBA425.png",
+  "specs": [],
+  "variants": [],
+  "blurb_en": "",
+  "blurb_tc": "",
+  "brand": "Other",
+  "stock_id": "SPBA425",
+  "tags": [
+   "Diagnostic Supplies"
+  ]
+ },
+ {
+  "name_en": "I.V. Catheter, 24G X 3/4\"",
+  "name_tc": "",
+  "category": "Other Consumables",
+  "price": 18,
+  "ribbon": "",
+  "image": "images/ANE.jpg",
+  "image_missing": true,
+  "specs": [],
+  "variants": [],
+  "blurb_en": "",
+  "blurb_tc": "",
+  "brand": "TERUMO",
+  "stock_id": "ANE",
+  "tags": [
+   "TERUMO",
+   "Other Consumables"
+  ]
+ },
+ {
+  "name_en": "Synthetic CAST Padding, 2\", CMW02",
+  "name_tc": "",
+  "category": "Other Consumables",
+  "price": 13,
+  "ribbon": "",
+  "image": "images/PADDA.jpg",
+  "image_missing": true,
+  "specs": [],
+  "variants": [],
+  "blurb_en": "",
+  "blurb_tc": "",
+  "brand": "3M",
+  "stock_id": "PADDA",
+  "tags": [
+   "3M",
+   "Other Consumables"
+  ]
+ },
+ {
+  "name_en": "Disposable Proctoscope, MINI (pink)",
+  "name_tc": "",
+  "category": "Other Consumables",
+  "price": 17,
+  "ribbon": "",
+  "image": "images/PRIM.jpg",
+  "image_missing": true,
+  "specs": [],
+  "variants": [],
+  "blurb_en": "",
+  "blurb_tc": "",
+  "brand": "EOS",
+  "stock_id": "PRIM",
+  "tags": [
+   "EOS",
+   "Other Consumables"
+  ]
+ },
+ {
+  "name_en": "I.V. Catheter, 20G X 1-1/4\"",
+  "name_tc": "",
+  "category": "Other Consumables",
+  "price": 18,
+  "ribbon": "",
+  "image": "images/ANC.jpg",
+  "image_missing": true,
+  "specs": [],
+  "variants": [],
+  "blurb_en": "",
+  "blurb_tc": "",
+  "brand": "TERUMO",
+  "stock_id": "ANC",
+  "tags": [
+   "TERUMO",
+   "Other Consumables"
+  ]
+ },
+ {
+  "name_en": "Spinal Needle, 22GX3-1/2\", \"bd\"",
+  "name_tc": "",
+  "category": "Other Consumables",
+  "price": 21,
+  "ribbon": "",
+  "image": "images/NELB.jpg",
+  "image_missing": true,
+  "specs": [],
+  "variants": [],
+  "blurb_en": "",
+  "blurb_tc": "",
+  "brand": "BD",
+  "stock_id": "NELB",
+  "tags": [
+   "BD",
+   "Other Consumables"
+  ]
+ },
+ {
+  "name_en": "Spinal Needle, 20GX3-1/2\", \"bd\"",
+  "name_tc": "",
+  "category": "Other Consumables",
+  "price": 21,
+  "ribbon": "",
+  "image": "images/NELD.jpg",
+  "image_missing": true,
+  "specs": [],
+  "variants": [],
+  "blurb_en": "",
+  "blurb_tc": "",
+  "brand": "BD",
+  "stock_id": "NELD",
+  "tags": [
+   "BD",
+   "Other Consumables"
+  ]
+ },
+ {
+  "name_en": "PE Examination Glove (S) 膠手套 S碼",
+  "name_tc": "",
+  "category": "Masks & Gloves",
+  "price": 8,
+  "ribbon": "",
+  "image": "images/GLEEA.png",
+  "specs": [],
+  "variants": [],
+  "blurb_en": "",
+  "blurb_tc": "",
+  "brand": "Other",
+  "stock_id": "GLEEA",
+  "tags": [
+   "Masks & Gloves"
+  ]
+ },
+ {
+  "name_en": "Triangular Bandage, Size: 35\"X35\"X52\"",
+  "name_tc": "",
+  "category": "Other Consumables",
+  "price": 7,
+  "ribbon": "",
+  "image": "images/BAN.jpg",
+  "image_missing": true,
+  "specs": [],
+  "variants": [],
+  "blurb_en": "",
+  "blurb_tc": "",
+  "brand": "Bastos Viegas",
+  "stock_id": "BAN",
+  "tags": [
+   "Bastos Viegas",
+   "Other Consumables"
+  ]
+ },
+ {
+  "name_en": "Wooden Tongue Depressor (Child) 壓舌板 兒童",
+  "name_tc": "",
+  "category": "Other Consumables",
+  "price": 15,
+  "ribbon": "",
+  "image": "images/DEAE.png",
+  "specs": [],
+  "variants": [],
+  "blurb_en": "",
+  "blurb_tc": "",
+  "brand": "Other",
+  "stock_id": "DEAE",
+  "tags": [
+   "Other Consumables"
+  ]
+ },
+ {
+  "name_en": "3M Steri-Strip 38MMX6MM 免縫膠布",
+  "name_tc": "",
+  "category": "Other Consumables",
+  "price": 13,
+  "ribbon": "",
+  "image": "images/STERAC.png",
+  "specs": [],
+  "variants": [],
+  "blurb_en": "",
+  "blurb_tc": "",
+  "brand": "3M",
+  "stock_id": "STERAC",
+  "tags": [
+   "3M",
+   "Other Consumables"
+  ]
+ },
+ {
+  "name_en": "Optilube Lubricating Jelly, 5GM Packet",
+  "name_tc": "",
+  "category": "Other Consumables",
+  "price": 4,
+  "ribbon": "",
+  "image": "images/JEFAD.jpg",
+  "image_missing": true,
+  "specs": [],
+  "variants": [],
+  "blurb_en": "",
+  "blurb_tc": "",
+  "brand": "OPTILUBE",
+  "stock_id": "JEFAD",
+  "tags": [
+   "OPTILUBE",
+   "Other Consumables"
+  ]
+ }
+];
+/* ============================================================
+   UI TRANSLATIONS  (en = English, tc = Traditional Chinese)
+   Chinese strings sourced from your live /zh site where available.
+   ============================================================ */
+const T = {
+  tb_tagline:{en:"Hong Kong · Authorized partner for 30+ brands incl. Solventum (previously 3M Healthcare)",
+              tc:"香港 · 超過30個品牌的授權合作夥伴，包括 Solventum（前稱 3M 醫療保健）"},
+  nav_products:{en:"Products", tc:"產品"},
+  nav_brands:{en:"Brands", tc:"品牌"},
+  nav_about:{en:"About Us", tc:"關於我們"},
+  nav_opportunities:{en:"Opportunities", tc:"機會"},
+  nav_contact:{en:"Contact", tc:"聯絡我們"},
+  nav_order:{en:"Order via WhatsApp", tc:"透過 WhatsApp 下單"},
+  hero_eyebrow:{en:"Trusted since 1980", tc:"自1980年值得信賴"},
+  hero_h1:{en:'Reliable medical supplies for <em>Hong Kong\'s</em> healthcare professionals.',
+           tc:'為<em>香港</em>醫護專業人員提供可靠的醫療用品。'},
+  hero_lede:{en:"Clinicon Medical Ltd. is a trusted distributor serving hospitals, clinics, laboratories, universities and government departments — delivering quality products and professional one-stop procurement.",
+             tc:"健力醫療器材有限公司是值得信賴的經銷商，服務醫院、診所、實驗室、大學和政府部門，提供優質產品和專業的一站式採購服務。"},
+  hero_cta1:{en:"Browse products", tc:"瀏覽產品"},
+  hero_cta2:{en:"Request a quote", tc:"索取報價"},
+  hero_s1:{en:"Founded in Hong Kong, serving the healthcare sector for over four decades", tc:"於香港成立，服務醫療界超過四十年"},
+  hero_s2:{en:"Authorized brand partnerships, including Solventum (previously 3M Healthcare)", tc:"授權品牌合作夥伴，包括 Solventum（前稱 3M 醫療保健）"},
+  hero_s3:{en:"Procurement for hospitals, clinics, labs & government", tc:"為醫院、診所、實驗室及政府採購"},
+  hero_badge:{en:"45+ YEARS", tc:"45年以上"},
+  brands_eyebrow:{en:"Our Partners", tc:"合作夥伴"},
+  brands_h2:{en:"Brands we work with", tc:"合作品牌"},
+  brands_p:{en:"As an authorized distributor for 30+ leading healthcare brands, we bring trusted, quality-assured products to Hong Kong's hospitals, clinics, laboratories and government departments.", tc:"作為30多個領先醫療品牌的授權分銷商，我們為香港的醫院、診所、化驗所及政府部門提供值得信賴、品質保證的產品。"},
+  trust_1:{en:"Hospitals", tc:"醫院"},
+  trust_2:{en:"Clinics", tc:"診所"},
+  trust_3:{en:"Laboratories", tc:"實驗室"},
+  trust_4:{en:"Universities", tc:"大學"},
+  trust_5:{en:"Government departments", tc:"政府部門"},
+  prod_eyebrow:{en:"Our Catalogue", tc:"產品目錄"},
+  prod_h2:{en:"High-quality medical products", tc:"高品質醫療器材"},
+  prod_p:{en:"From pharmaceutical refrigeration to diagnostics and consumables. For inquiries or to place an order, message us on WhatsApp at 9320 9650.",
+          tc:"產品種類繁多未能盡錄，如需查詢或下單，請發送 WhatsApp 訊息至 93209650。"},
+  about_eyebrow:{en:"About Clinicon", tc:"關於健力"},
+  about_h2:{en:"Four decades of trusted medical supply", tc:"四十年值得信賴的醫療供應"},
+  about_p1:{en:"Clinicon Medical Limited is a Hong Kong company specializing in supplying high-quality medical products to clinics, elderly homes and hospitals. With 45 years of experience, we are dedicated to providing top-notch products and building lasting partnerships with our clients.",
+            tc:"健力醫療器材有限公司是一家香港公司，專注於為診所、安老院和醫院供應高品質的醫療產品。憑藉45年的經驗，我們致力於提供頂級產品，並與客戶建立長久的合作關係。"},
+  about_p2:{en:"Our commitment to quality, integrity and professionalism — alongside transparency, ethical business practices and continuous improvement — sets us apart in the medical supply sector.",
+            tc:"我們對品質、誠信和專業的承諾，以及透明度、道德商業操守和持續改進，使我們在醫療用品領域脫穎而出。"},
+  val1_t:{en:"Commitment", tc:"承諾"},
+  val1_d:{en:"Ensuring clients have access to reliable, essential medical products with tailored solutions.", tc:"確保客戶能獲得可靠、必需的醫療產品及量身定制的解決方案。"},
+  val2_t:{en:"Integrity", tc:"誠信"},
+  val2_d:{en:"Transparency and ethical business practices in every interaction.", tc:"在每一次互動中保持透明和道德的商業操守。"},
+  val3_t:{en:"Innovation", tc:"創新"},
+  val3_d:{en:"Adaptability that keeps us ahead in an ever-evolving industry.", tc:"靈活適應，使我們在不斷發展的行業中保持領先。"},
+  opp_eyebrow:{en:"Careers & Partnerships", tc:"職業與合作"},
+  opp_h2:{en:"Opportunities at Clinicon", tc:"健力的機會"},
+  opp_p:{en:"We're always looking for passionate, dedicated individuals driven by purpose. If you thrive in a fast-paced environment where your work directly impacts patient care, we want to hear from you.",
+         tc:"我們一直在尋找充滿熱情、盡心盡力、目標明確的人才。如果您能在快節奏的環境中茁壯成長，並希望您的工作直接影響病患護理，我們期待您的加入。"},
+  opp1_t:{en:"Meaningful work", tc:"有意義的工作"},
+  opp1_d:{en:"Your effort helps stock operating rooms, clinics and long-term care facilities.", tc:"您的努力有助於為手術室、診所和長期護理機構提供物資。"},
+  opp2_t:{en:"Compensation", tc:"薪酬福利"},
+  opp2_d:{en:"Retirement plans and opportunities for growth.", tc:"退休計劃和成長機會。"},
+  opp3_t:{en:"Dynamic team", tc:"充滿活力的團隊"},
+  opp3_d:{en:"Initiative and innovation in the essential medical sector.", tc:"在重要的醫療領域中展現主動性和創新精神。"},
+  opp_apply_p:{en:"Ready to apply? Send your resume and a cover letter explaining your interest, with the job title in the subject line.",
+               tc:"準備好申請了嗎？請將您的履歷和求職信（說明您的興趣）發送給我們，並在主旨欄註明職位名稱。"},
+  opp_apply_btn:{en:"Apply now", tc:"立即申請"},
+  contact_eyebrow:{en:"Get in touch", tc:"聯絡我們"},
+  contact_h2:{en:"Let us know", tc:"讓我們知道"},
+  contact_p:{en:"Questions, feedback, or ready to order? Reach out and we'll get back to you as soon as possible.",
+             tc:"有疑問、回饋，或準備下單？請與我們聯絡，我們會盡快回覆您。"},
+  c_address:{en:"Address", tc:"地址"},
+  c_phone:{en:"Phone", tc:"電話"},
+  c_whatsapp:{en:"WhatsApp", tc:"WhatsApp"},
+  c_fax:{en:"Fax", tc:"傳真"},
+  c_email:{en:"Email", tc:"電郵"},
+  c_social:{en:"Social", tc:"社交媒體"},
+  c_addr_val:{en:"Unit 411, Lippo Sun Plaza, 28 Canton Road, Tsimshatsui, Kowloon, Hong Kong",
+              tc:"香港九龍尖沙咀廣東道28號力寶太陽廣場411室"},
+  foot_addr:{en:"Unit 411, Lippo Sun Plaza,<br>28 Canton Road, Tsimshatsui, Kowloon, HK",
+             tc:"香港九龍尖沙咀廣東道28號<br>力寶太陽廣場411室"},
+  form_first:{en:"First Name", tc:"名字"},
+  form_last:{en:"Last Name", tc:"姓氏"},
+  form_phone:{en:"Phone Number", tc:"電話號碼"},
+  form_email:{en:"Email", tc:"電郵"},
+  form_msg:{en:"Message", tc:"訊息"},
+  form_send:{en:"Send message", tc:"傳送訊息"},
+  form_contact_hint:{en:"Please provide an email address or a phone number.", tc:"請提供電郵地址或電話號碼。"},
+  err_contact:{en:"Please enter either a valid email address or a phone number.", tc:"請輸入有效的電郵地址或電話號碼。"},
+  err_phone:{en:"Phone number should contain digits only.", tc:"電話號碼只能包含數字。"},
+  err_email:{en:"Please enter a valid email address.", tc:"請輸入有效的電郵地址。"},
+  err_required:{en:"Please fill in your name and message.", tc:"請填寫您的姓名和訊息。"},
+  form_sending:{en:"Sending…", tc:"傳送中…"},
+  form_success:{en:"Thank you — your message has been sent. We'll be in touch shortly.", tc:"謝謝您 — 訊息已傳送，我們會盡快與您聯絡。"},
+  form_fail:{en:"Sorry, something went wrong. Please email us directly at info@clinicon.com.hk.", tc:"抱歉，發生錯誤。請直接電郵至 info@clinicon.com.hk。"},
+  foot_about:{en:"Founded in 1980. A trusted Hong Kong medical supplies distributor committed to quality and value, serving the healthcare sector for over 45 years.",
+              tc:"成立於1980年。值得信賴的香港醫療用品經銷商，致力於品質與價值，服務醫療界超過45年。"},
+  foot_explore:{en:"Explore", tc:"探索"},
+  nav_terms:{en:"Terms & Conditions", tc:"條款及細則"},
+  foot_contact:{en:"Contact", tc:"聯絡"},
+  foot_rights:{en:"© 2026 Clinicon Medical Ltd. All rights reserved.", tc:"© 2026 健力醫療器材有限公司 版權所有。"},
+  modal_specs:{en:"Key specifications", tc:"主要規格"},
+  modal_models:{en:"Available models", tc:"可選型號"},
+  modal_enquire:{en:"Enquire via WhatsApp", tc:"透過 WhatsApp 查詢"},
+  modal_add:{en:"Add to cart", tc:"加入購物車"},
+  tb_shipping:{en:"🚚 Free shipping with orders over HK$500", tc:"🚚 訂單滿 HK$500 免費送貨"},
+  cart_title:{en:"Your Selection", tc:"您的選擇"},
+  cart_label:{en:"Cart", tc:"購物車"},
+  cart_empty:{en:"Your cart is empty. Browse products and add items to enquire.", tc:"您的購物車是空的。瀏覽產品並加入項目以查詢。"},
+  cart_total:{en:"Total", tc:"總計"},
+  cart_send:{en:"Send enquiry via WhatsApp", tc:"透過 WhatsApp 發送查詢"},
+  cart_clear:{en:"Clear all", tc:"清除全部"},
+  cart_wa_intro:{en:"Hi Clinicon, I'd like to enquire about the following items:", tc:"您好 Clinicon，我想查詢以下產品："},
+  cart_wa_total:{en:"Total", tc:"總計"},
+  cart_added:{en:"Added", tc:"已加入"},
+  filter_all:{en:"All", tc:"全部"},
+  dd_all_brands:{en:"All brands", tc:"所有品牌"},
+  dd_all_cats:{en:"All categories", tc:"所有分類"},
+  img_soon:{en:"Photo coming soon", tc:"圖片即將上載"},
+  price_from:{en:"from", tc:"由"},
+  search_ph:{en:"Search products…", tc:"搜尋產品…"},
+  search_btn:{en:"Search", tc:"搜尋"},
+  no_results:{en:"No products match your search.", tc:"沒有符合搜尋的產品。"},
+  see_more:{en:"See more", tc:"查看更多"}
+};
+
+let LANG = "tc";   // current language
+
+/* product name + blurb in the active language (blurb stays English per Option C) */
+const pname = p => (LANG==="tc" && p.name_tc) ? p.name_tc : p.name_en;
+
+/* ---------- Render filters + grid ---------- */
+const fmt = n => "HK$" + n.toLocaleString("en-HK");
+const grid = document.getElementById("grid");
+const filtersEl = document.getElementById("filters");
+let activeCat = "All";
+let activeBrand = "All";
+let searchQ = "";
+const GRID_INITIAL = 12, GRID_STEP = 12;
+let gridLimit = GRID_INITIAL;
+
+function renderFilters(){
+  const cats = ["All", ...Array.from(new Set(PRODUCTS.map(p=>p.category)))];
+  filtersEl.innerHTML = cats.map(c=>{
+    const label = c==="All" ? T.filter_all[LANG] : c;
+    return `<button class="chip${c===activeCat?' active':''}" data-cat="${c}">${label}</button>`;
+  }).join("");
+}
+
+function priceLabel(p){
+  if(p.variants && p.variants.length){
+    const prices = p.variants.map(v=>v[1]);
+    const min = Math.min(...prices), max = Math.max(...prices);
+    return `<span class="from">${T.price_from[LANG]}</span>${fmt(min)}${max>min?` – ${fmt(max)}`:""}`;
+  }
+  return fmt(p.price);
+}
+
+function matchesSearch(p){
+  if(!searchQ) return true;
+  const hay = ((p.name_en||"")+" "+(p.name_tc||"")+" "+(p.category||"")+" "+(p.brand||"")+" "+((p.tags||[]).join(" "))+" "+(p.blurb_en||"")+" "+(p.blurb_tc||"")).toLowerCase();
+  return hay.includes(searchQ);
+}
+
+function placeholderHTML(){
+  return `<div class="noimg"><svg width="34" height="34" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><rect x="3" y="3" width="18" height="18" rx="2"></rect><circle cx="8.5" cy="8.5" r="1.5"></circle><path d="M21 15l-5-5L5 21"></path></svg><span>${T.img_soon[LANG]}</span></div>`;
+}
+window.imgFail = function(img){ img.outerHTML = placeholderHTML(); };
+
+function ppSlugify(s){return (s||"product").toLowerCase().normalize("NFKD").replace(/[^a-z0-9]+/g,"-").replace(/^-+|-+$/g,"").slice(0,80)||"product";}
+const SLUGS=(()=>{const used={},out=[];for(const p of PRODUCTS){let b=ppSlugify(p.name_en||p.name_tc),sl=b,n=2;while(used[sl])sl=b+"-"+(n++);used[sl]=1;out.push(sl);}return out;})();
+function renderGrid(){
+  const list = PRODUCTS.filter(p=>(activeCat==="All"||p.category===activeCat) && (activeBrand==="All"||p.brand===activeBrand) && matchesSearch(p));
+  const seeMoreBtn = document.getElementById("seeMore");
+  if(!list.length){
+    grid.innerHTML = `<div class="noresults" style="grid-column:1/-1">${T.no_results[LANG]}</div>`;
+    if(seeMoreBtn) seeMoreBtn.hidden = true;
+    return;
+  }
+  const shown = list.slice(0, gridLimit);
+  grid.innerHTML = shown.map((p,i)=>{
+    const idx = PRODUCTS.indexOf(p);
+    const imgInner = p.image_missing
+      ? placeholderHTML()
+      : `<img src="${p.image}" alt="${pname(p)}" loading="lazy" onerror="imgFail(this)">`;
+    const tags = [];
+    if(p.brand && p.brand!=="Other") tags.push(`<span class="tag brand">${p.brand}</span>`);
+    if(p.category) tags.push(`<span class="tag cat">${p.category}</span>`);
+    return `<article class="card reveal" data-idx="${idx}" style="transition-delay:${(i%6)*40}ms">
+      <a class="cardlink" href="/products/${SLUGS[idx]}" target="_blank" rel="noopener">
+      <div class="imgwrap">${p.ribbon?`<span class="ribbon">${p.ribbon}</span>`:""}${imgInner}</div>
+      <div class="body">
+        <div class="tags">${tags.join("")}</div>
+        <h3>${pname(p)}</h3>
+        <div class="price">${priceLabel(p)}</div>
+      </div>
+      </a>
+    </article>`;
+  }).join("");
+  if(seeMoreBtn) seeMoreBtn.hidden = (list.length <= gridLimit);
+  observeReveals();
+}
+
+const searchEl = document.getElementById("search");
+function runSearch(){
+  searchQ = searchEl.value.trim().toLowerCase();
+  gridLimit = GRID_INITIAL;
+  renderGrid();
+  // bring the user to the results
+  document.getElementById("products").scrollIntoView({behavior:"smooth", block:"start"});
+}
+searchEl.addEventListener("input",e=>{
+  searchQ = e.target.value.trim().toLowerCase();
+  gridLimit = GRID_INITIAL;
+  renderGrid();
+});
+searchEl.addEventListener("keydown",e=>{ if(e.key==="Enter") runSearch(); });
+document.getElementById("searchBtn").addEventListener("click", runSearch);
+
+filtersEl.addEventListener("click",e=>{
+  const b = e.target.closest(".chip"); if(!b) return;
+  activeCat = b.dataset.cat;
+  gridLimit = GRID_INITIAL;
+  document.querySelectorAll(".chip").forEach(c=>c.classList.toggle("active",c===b));
+  renderGrid();
+});
+
+document.getElementById("seeMore").addEventListener("click",()=>{
+  gridLimit += GRID_STEP;
+  renderGrid();
+});
+
+/* ---------- Nav dropdowns: Brands + Product categories ---------- */
+const brandsPanel = document.getElementById("brandsPanel");
+const catsPanel   = document.getElementById("catsPanel");
+
+function distinctWithCounts(key){
+  const m = new Map();
+  PRODUCTS.forEach(p=>{ const v=p[key]; if(!v) return; m.set(v,(m.get(v)||0)+1); });
+  let arr = [...m.entries()];
+  // alpha sort, but push "Other" to the end
+  arr.sort((a,b)=> (a[0]==="Other") - (b[0]==="Other") || a[0].localeCompare(b[0]));
+  return arr;
+}
+
+function renderNavDropdowns(){
+  const brandRows = distinctWithCounts("brand");
+  const catRows   = distinctWithCounts("category");
+  brandsPanel.innerHTML =
+    `<button class="dd-all" data-brand="All">${T.dd_all_brands[LANG]}</button>` +
+    brandRows.map(([b,n])=>`<button data-brand="${b}">${b}<span class="cnt">${n}</span></button>`).join("");
+  catsPanel.innerHTML =
+    `<button class="dd-all" data-cat="All">${T.dd_all_cats[LANG]}</button>` +
+    catRows.map(([c,n])=>`<button data-cat="${c}">${c}<span class="cnt">${n}</span></button>`).join("");
+}
+
+function syncChips(){
+  document.querySelectorAll(".chip").forEach(c=>c.classList.toggle("active", c.dataset.cat===activeCat));
+}
+function goToProducts(){
+  gridLimit = GRID_INITIAL;
+  renderGrid();
+  document.getElementById("products").scrollIntoView({behavior:"smooth", block:"start"});
+}
+function closeDrops(){ document.querySelectorAll(".navdrop.open").forEach(d=>d.classList.remove("open")); }
+
+brandsPanel.addEventListener("click",e=>{
+  const b = e.target.closest("button"); if(!b) return;
+  activeBrand = b.dataset.brand;
+  activeCat = "All"; syncChips();           // brand is the primary filter here
+  closeDrops(); goToProducts();
+});
+catsPanel.addEventListener("click",e=>{
+  const b = e.target.closest("button"); if(!b) return;
+  activeCat = b.dataset.cat;
+  activeBrand = "All"; syncChips();
+  closeDrops(); goToProducts();
+});
+
+// tap-to-open on touch / mobile (desktop uses :hover)
+document.querySelectorAll(".navdrop-trigger").forEach(t=>{
+  t.addEventListener("click",e=>{
+    // "Brands" navigates to the on-page logo section instead of toggling the dropdown
+    const nd = t.closest(".navdrop");
+    if(nd && nd.id==="brandsDrop"){ closeDrops(); return; }
+    e.preventDefault();
+    const wasOpen = nd.classList.contains("open");
+    closeDrops();
+    if(!wasOpen) nd.classList.add("open");
+  });
+});
+document.addEventListener("click",e=>{ if(!e.target.closest(".navdrop")) closeDrops(); });
+
+/* ---------- Modal ---------- */
+const modalBg = document.getElementById("modalBg");
+const modal = document.getElementById("modal");
+
+/* Product cards are real links that open the product page in a new tab
+   (target="_blank" in renderGrid). No modal popup on card click. */
+
+function openModal(p){
+  const idx = PRODUCTS.indexOf(p);
+  const waText = encodeURIComponent(`Hi Clinicon, I'd like to enquire about: ${p.name_en}`);
+  const specRows = p.specs && p.specs.length
+    ? `<table class="spectable"><tr><th colspan="2">${T.modal_specs[LANG]}</th></tr>${p.specs.map(s=>`<tr><td>${s[0]}</td><td>${s[1]}</td></tr>`).join("")}</table>`
+    : "";
+  const varRows = p.variants && p.variants.length
+    ? `<div class="variants"><div style="font-weight:700;margin-bottom:6px">${T.modal_models[LANG]}</div>${p.variants.map((v,i)=>`<div class="vrow"><span>${v[0]}</span><b>${fmt(v[1])}</b><button class="add-btn" data-pi="${idx}" data-vi="${i}">+ ${T.modal_add[LANG]}</button></div>`).join("")}</div>`
+    : `<div class="mprice">${fmt(p.price)}</div><button class="add-btn" data-pi="${idx}" data-vi="-1">+ ${T.modal_add[LANG]}</button>`;
+  modal.innerHTML = `
+    <button class="mclose" id="mclose" aria-label="Close">×</button>
+    <div class="mhead">
+      <div class="mimg">${p.image_missing?`<div class="noimg" style="position:relative;min-height:200px"><svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="3" width="18" height="18" rx="2"></rect><circle cx="8.5" cy="8.5" r="1.5"></circle><path d="M21 15l-5-5L5 21"></path></svg><span>${T.img_soon[LANG]}</span></div>`:`<img src="${p.image}" alt="${pname(p)}" onerror="this.style.display='none'">`}</div>
+      <div class="mmeta">
+        <div class="cat">${p.brand && p.brand!=="Other" ? p.brand+" · " : ""}${p.category}</div>
+        <h2>${pname(p)}</h2>
+        ${varRows}
+        <a class="wa-btn" style="margin-top:14px" href="${WA}?text=${waText}" target="_blank" rel="noopener">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2a10 10 0 0 0-8.6 15l-1.3 4.7 4.8-1.3A10 10 0 1 0 12 2zm5.8 14.1c-.2.7-1.4 1.3-2 1.4-.5.1-1.2.1-1.9-.1-.4-.1-1-.3-1.7-.6-3-1.3-4.9-4.3-5.1-4.5-.1-.2-1.2-1.5-1.2-2.9s.7-2 1-2.3c.2-.3.5-.3.7-.3h.5c.2 0 .4 0 .6.5l.8 2c.1.1.1.3 0 .5l-.4.5-.3.3c-.2.2-.3.4-.2.6.2.4.9 1.4 1.9 2.3 1.3 1.1 2.3 1.5 2.6 1.6.2.1.4.1.6-.1l.8-1c.2-.2.4-.2.6-.1l2 .9c.2.1.4.2.4.3.1.2.1.8-.1 1.5z"/></svg>
+          ${T.modal_enquire[LANG]}
+        </a>
+      </div>
+    </div>
+    <div class="mbody">
+      ${(LANG==="tc"?p.blurb_tc:p.blurb_en)?`<p class="blurb">${LANG==="tc"?p.blurb_tc:p.blurb_en}</p>`:""}
+      ${specRows}
+    </div>`;
+  modalBg.classList.add("open");
+  document.body.style.overflow="hidden";
+  document.getElementById("mclose").onclick = closeModal;
+  // wire add-to-cart buttons
+  modal.querySelectorAll(".add-btn").forEach(b=>{
+    b.addEventListener("click",()=>{
+      const pi = +b.dataset.pi, vi = +b.dataset.vi;
+      addToCart(pi, vi);
+      const orig = b.textContent;
+      b.classList.add("added"); b.textContent = "✓ " + T.cart_added[LANG];
+      setTimeout(()=>{ b.classList.remove("added"); b.textContent = orig; }, 1100);
+    });
+  });
+}
+function closeModal(){modalBg.classList.remove("open");document.body.style.overflow=""}
+modalBg.addEventListener("click",e=>{if(e.target===modalBg)closeModal()});
+document.addEventListener("keydown",e=>{if(e.key==="Escape")closeModal()});
+
+/* ---------- Shopping cart ---------- */
+let cart = [];
+try { const saved = localStorage.getItem("clinicon_cart"); if(saved) cart = JSON.parse(saved); } catch(_){}
+
+function saveCart(){ try{ localStorage.setItem("clinicon_cart", JSON.stringify(cart)); }catch(_){} }
+
+function addToCart(pi, vi){
+  const p = PRODUCTS[pi];
+  if(!p) return;
+  const isVar = vi >= 0 && p.variants && p.variants[vi];
+  const key = pi + "_" + vi;
+  const price = isVar ? p.variants[vi][1] : p.price;
+  const vlabel = isVar ? p.variants[vi][0] : "";
+  const existing = cart.find(c=>c.key===key);
+  if(existing){ existing.qty++; }
+  else cart.push({ key, name_en:p.name_en, name_tc:p.name_tc, vlabel, price, qty:1 });
+  saveCart(); renderCart();
+  openCart();
+}
+function changeQty(key, delta){
+  const it = cart.find(c=>c.key===key); if(!it) return;
+  it.qty += delta;
+  if(it.qty <= 0) cart = cart.filter(c=>c.key!==key);
+  saveCart(); renderCart();
+}
+function removeItem(key){ cart = cart.filter(c=>c.key!==key); saveCart(); renderCart(); }
+function clearCart(){ cart = []; saveCart(); renderCart(); }
+
+function cartItemName(it){
+  const base = (LANG==="tc" && it.name_tc) ? it.name_tc : it.name_en;
+  return it.vlabel ? `${base} — ${it.vlabel}` : base;
+}
+function cartTotal(){ return cart.reduce((s,it)=>s + it.price*it.qty, 0); }
+function cartCountTotal(){ return cart.reduce((s,it)=>s + it.qty, 0); }
+
+function renderCart(){
+  const itemsEl = document.getElementById("cartItems");
+  const footEl  = document.getElementById("cartFoot");
+  const countEl = document.getElementById("cartCount");
+  const n = cartCountTotal();
+  countEl.textContent = n;
+  countEl.classList.toggle("zero", n===0);
+
+  if(!cart.length){
+    itemsEl.innerHTML = `<div class="cart-empty">${T.cart_empty[LANG]}</div>`;
+    footEl.innerHTML = "";
+    return;
+  }
+  itemsEl.innerHTML = cart.map(it=>`
+    <div class="cart-item">
+      <div class="ci-info">
+        <div class="ci-name">${cartItemName(it)}</div>
+        <div class="ci-price">${it.noprice ? "NA" : fmt(it.price)}</div>
+        <div class="ci-controls">
+          <button class="qbtn" data-q="minus" data-k="${it.key}">−</button>
+          <span class="qnum">${it.qty}</span>
+          <button class="qbtn" data-q="plus" data-k="${it.key}">+</button>
+          <button class="ci-remove" data-rm="${it.key}">✕</button>
+        </div>
+      </div>
+    </div>`).join("");
+  footEl.innerHTML = `
+    <div class="cart-total-row"><span class="ct-label">${T.cart_total[LANG]}</span><span class="ct-amt">${cartTotal()>0 ? fmt(cartTotal()) : "NA"}</span></div>
+    <a class="cart-send-btn" id="cartSend" href="#">
+      <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2a10 10 0 0 0-8.6 15l-1.3 4.7 4.8-1.3A10 10 0 1 0 12 2zm5.8 14.1c-.2.7-1.4 1.3-2 1.4-.5.1-1.2.1-1.9-.1-.4-.1-1-.3-1.7-.6-3-1.3-4.9-4.3-5.1-4.5-.1-.2-1.2-1.5-1.2-2.9s.7-2 1-2.3c.2-.3.5-.3.7-.3h.5c.2 0 .4 0 .6.5l.8 2c.1.1.1.3 0 .5l-.4.5-.3.3c-.2.2-.3.4-.2.6.2.4.9 1.4 1.9 2.3 1.3 1.1 2.3 1.5 2.6 1.6.2.1.4.1.6-.1l.8-1c.2-.2.4-.2.6-.1l2 .9c.2.1.4.2.4.3.1.2.1.8-.1 1.5z"/></svg>
+      ${T.cart_send[LANG]}
+    </a>
+    <button class="cart-clear-btn" id="cartClear">${T.cart_clear[LANG]}</button>`;
+
+  // wire dynamic controls
+  itemsEl.querySelectorAll(".qbtn").forEach(b=>b.addEventListener("click",()=>changeQty(b.dataset.k, b.dataset.q==="plus"?1:-1)));
+  itemsEl.querySelectorAll(".ci-remove").forEach(b=>b.addEventListener("click",()=>removeItem(b.dataset.rm)));
+  document.getElementById("cartSend").addEventListener("click",e=>{ e.preventDefault(); sendCartWhatsApp(); });
+  document.getElementById("cartClear").addEventListener("click",clearCart);
+}
+
+function sendCartWhatsApp(){
+  if(!cart.length) return;
+  let lines = [T.cart_wa_intro[LANG], ""];
+  cart.forEach(it=>{ lines.push(`• ${cartItemName(it)} ×${it.qty} = ${it.noprice ? "NA" : fmt(it.price*it.qty)}`); });
+  lines.push("");
+  lines.push(`${T.cart_wa_total[LANG]}: ${cartTotal()>0 ? fmt(cartTotal()) : "NA"}`);
+  const msg = encodeURIComponent(lines.join("\n"));
+  window.open(`${WA}?text=${msg}`, "_blank");
+}
+
+/* cart open/close */
+const cartPanel = document.getElementById("cartPanel");
+const cartOverlay = document.getElementById("cartOverlay");
+function openCart(){ cartPanel.classList.add("open"); cartOverlay.classList.add("open"); }
+function closeCart(){ cartPanel.classList.remove("open"); cartOverlay.classList.remove("open"); }
+document.getElementById("cartToggle").addEventListener("click",openCart);
+document.getElementById("cartClose").addEventListener("click",closeCart);
+cartOverlay.addEventListener("click",closeCart);
+
+/* live-update the cart when another tab (e.g. a product page) changes it */
+window.addEventListener("storage",function(e){ if(e.key==="clinicon_cart"){ try{cart=JSON.parse(e.newValue||"[]");}catch(_){cart=[];} renderCart(); } });
+/* open the cart automatically if arriving from a product page "View cart" link */
+if(location.search.indexOf("cart=open")>=0){ try{openCart();}catch(_){} }
+
+/* ---------- Apply UI language ---------- */
+function applyLang(lang){
+  LANG = lang;
+  document.documentElement.lang = (lang==="tc") ? "zh-Hant" : "en";
+  document.querySelectorAll("[data-i18n]").forEach(el=>{
+    const key = el.getAttribute("data-i18n");
+    if(T[key] && T[key][lang]!=null) el.innerHTML = T[key][lang];
+  });
+  document.querySelectorAll("[data-i18n-ph]").forEach(el=>{
+    const key = el.getAttribute("data-i18n-ph");
+    if(T[key] && T[key][lang]!=null) el.placeholder = T[key][lang];
+  });
+  document.querySelectorAll("#langtog button").forEach(b=>b.classList.toggle("active",b.dataset.lang===lang));
+  renderFilters();
+  syncChips();
+  renderNavDropdowns();
+  renderGrid();
+  renderCart();
+}
+document.getElementById("langtog").addEventListener("click",e=>{
+  const b = e.target.closest("button"); if(!b) return;
+  location.href = (b.dataset.lang==="tc") ? "/zh" : "/";
+});
+
+/* ---------- Reveal on scroll ---------- */
+let io;
+function observeReveals(){
+  if(io) io.disconnect();
+  io = new IntersectionObserver(entries=>{
+    entries.forEach(en=>{if(en.isIntersecting){en.target.classList.add("in");io.unobserve(en.target)}});
+  },{threshold:.12});
+  document.querySelectorAll(".reveal:not(.in)").forEach(el=>io.observe(el));
+}
+
+/* ---------- Mobile menu ---------- */
+document.getElementById("burger").addEventListener("click",()=>{
+  document.getElementById("menu").classList.toggle("open");
+});
+document.querySelectorAll(".menu a").forEach(a=>a.addEventListener("click",()=>document.getElementById("menu").classList.remove("open")));
+
+/* ---------- Keep sticky filter bar flush below the (variable-height) header ---------- */
+function setHeadHeight(){
+  const h = document.querySelector("header").offsetHeight;
+  document.documentElement.style.setProperty("--head-h", h + "px");
+}
+window.addEventListener("load", setHeadHeight);
+window.addEventListener("resize", setHeadHeight);
+setHeadHeight();
+
+/* ---------- Contact form: validation + submit ---------- */
+const cForm = document.getElementById("contactForm");
+if(cForm){
+  const errBox = document.getElementById("formError");
+  const okBox  = document.getElementById("formOk");
+  const phoneEl = document.getElementById("f_phone");
+  const emailEl = document.getElementById("f_email");
+  const isEmail = v => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v);
+  const isPhone = v => /^[0-9+\-()\s]+$/.test(v) && /[0-9]/.test(v);
+  const digitsOnly = v => /^[0-9+\-()\s]*$/.test(v);
+
+  function showErr(key){ errBox.textContent = T[key][LANG]; errBox.classList.add("show"); okBox.classList.remove("show"); }
+  function clearErr(){ errBox.classList.remove("show"); [phoneEl,emailEl].forEach(el=>el.classList.remove("invalid")); }
+
+  cForm.addEventListener("submit", async e=>{
+    e.preventDefault();
+    clearErr();
+    const fn = cForm.first_name.value.trim();
+    const msg = cForm.message.value.trim();
+    const phone = phoneEl.value.trim();
+    const email = emailEl.value.trim();
+
+    if(!fn || !msg){ showErr("err_required"); return; }
+    if(phone && !digitsOnly(phone)){ phoneEl.classList.add("invalid"); showErr("err_phone"); return; }
+    if(email && !isEmail(email)){ emailEl.classList.add("invalid"); showErr("err_email"); return; }
+    const hasValidEmail = email && isEmail(email);
+    const hasValidPhone = phone && isPhone(phone);
+    if(!hasValidEmail && !hasValidPhone){
+      emailEl.classList.add("invalid"); phoneEl.classList.add("invalid");
+      showErr("err_contact"); return;
+    }
+
+    const btn = cForm.querySelector("button[type=submit]");
+    const origLabel = btn.textContent;
+    btn.disabled = true; btn.textContent = T.form_sending[LANG];
+    try{
+      const resp = await fetch(cForm.action, {
+        method:"POST",
+        body: new FormData(cForm),
+        headers:{ "Accept":"application/json" }
+      });
+      if(resp.ok){
+        cForm.reset();
+        okBox.textContent = T.form_success[LANG]; okBox.classList.add("show");
+        errBox.classList.remove("show");
+      } else { showErr("form_fail"); }
+    } catch(_){ showErr("form_fail"); }
+    finally { btn.disabled = false; btn.textContent = origLabel; }
+  });
+}
+
+renderFilters();
+renderNavDropdowns();
+renderGrid();
+observeReveals();
+setHeadHeight();
+renderCart();
+</script>
+
+
+</body></html>
