@@ -1,0 +1,36 @@
+name: Build product pages
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'index.html'
+      - 'build-products.js'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: Remove stale product folders
+        run: rm -rf products
+
+      - name: Generate product pages and sitemap
+        run: node build-products.js
+
+      - name: Commit result
+        run: |
+          git config user.name  "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add products sitemap.xml slug-map.json
+          git diff --staged --quiet || git commit -m "Rebuild product pages [automated]"
+          git push
