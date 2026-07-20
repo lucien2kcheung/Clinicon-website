@@ -41,8 +41,8 @@
  },
  {
   "name": "取樣打孔筆",
-  "slug": "product",
-  "url": "/products/product"
+  "slug": "biopsy-punch",
+  "url": "/products/biopsy-punch"
  },
  {
   "name": "Baxter 0.05% Chlorhexidine 傷口清洗消毒藥水 (藍水)",
@@ -156,8 +156,8 @@
  },
  {
   "name": "Braun 三通掣",
-  "slug": "braun",
-  "url": "/products/braun"
+  "slug": "braun-three-way-stopcock",
+  "url": "/products/braun-three-way-stopcock"
  },
  {
   "name": "TERUMO 靜脈留置針 I.V. Catheter",
@@ -166,8 +166,8 @@
  },
  {
   "name": "3M 易撕紙膠布",
-  "slug": "3m",
-  "url": "/products/3m"
+  "slug": "3m-easy-tear-paper-tape",
+  "url": "/products/3m-easy-tear-paper-tape"
  },
  {
   "name": "3M 石膏軟墊 Cast Padding Bandage",
@@ -181,8 +181,8 @@
  },
  {
   "name": "BD 脊髓 / 絨毛針",
-  "slug": "bd",
-  "url": "/products/bd"
+  "slug": "bd-spinal-needle",
+  "url": "/products/bd-spinal-needle"
  },
  {
   "name": "心電圖啫喱 ECG Jelly",
@@ -211,13 +211,13 @@
  },
  {
   "name": "TERUMO 針咀",
-  "slug": "terumo",
-  "url": "/products/terumo"
+  "slug": "terumo-hypodermic-needle",
+  "url": "/products/terumo-hypodermic-needle"
  },
  {
   "name": "TERUMO 針筒連針",
-  "slug": "terumo-2",
-  "url": "/products/terumo-2"
+  "slug": "terumo-syringe-with-needle",
+  "url": "/products/terumo-syringe-with-needle"
  },
  {
   "name": "耳探溫度計即棄耳套 (百靈牌適用) Probe Cover",
