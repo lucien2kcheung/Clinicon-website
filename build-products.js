@@ -27,16 +27,58 @@ function loadProducts() {
 const products = loadProducts();
 
 /* ---- slugs (must match the slug logic in index.html) ---- */
+
+/* Manual slug overrides.
+   Key   = the slug the default rule produces (do not change these).
+   Value = the slug we actually want.
+   These exist because some products have Chinese-only names, which the default
+   rule strips to nothing, leaving a meaningless URL like /products/3m.
+   Every key here also has a 301 in vercel.json (old -> new). Never remove a key
+   without removing its redirect, and never edit a value once it is live without
+   adding a new redirect for the change. */
+const SLUG_OVERRIDES = {
+  "product":  "biopsy-punch",                 // 取樣打孔筆
+  "bd":       "bd-spinal-needle",             // BD 脊髓 / 絨毛針
+  "3m":       "3m-easy-tear-paper-tape",      // 3M 易撕紙膠布
+  "braun":    "braun-three-way-stopcock",     // Braun 三通掣
+  "terumo":   "terumo-hypodermic-needle",     // TERUMO 針咀
+  "terumo-2": "terumo-syringe-with-needle"    // TERUMO 針筒連針
+};
+
+/* Slugs too generic to rank for anything. */
+const WEAK_SLUGS = new Set(["product", "products", "item", "na", ""]);
+
 function slugify(s) {
   return (s || "product").toLowerCase().normalize("NFKD")
     .replace(/[^a-z0-9]+/g, "-").replace(/^-+|-+$/g, "").slice(0, 80) || "product";
 }
+
+/* Default rule, unchanged from the original build so existing URLs stay stable.
+   Overrides are applied on top of the result. */
 const used = {};
 const slugs = products.map(p => {
   let base = slugify(p.name_en || p.name_tc), s = base, n = 2;
   while (used[s]) s = base + "-" + (n++);
-  used[s] = 1; return s;
+  used[s] = 1;
+  return SLUG_OVERRIDES[s] || s;
 });
+
+/* Safety net: flag any URL that still carries no keyword, plus any collision the
+   overrides may have introduced. Fix by adding an entry to SLUG_OVERRIDES and a
+   matching 301 in vercel.json. */
+const weak = slugs.filter(s => WEAK_SLUGS.has(s.replace(/-\d+$/, "")) ||
+                               (s.length < 4 && !/\d/.test(s)));
+if (weak.length) {
+  console.warn("\n!! Weak slugs — these URLs cannot rank. Add SLUG_OVERRIDES entries:");
+  weak.forEach(s => console.warn("     /products/" + s));
+}
+const dupes = slugs.filter((s, i) => slugs.indexOf(s) !== i);
+if (dupes.length) {
+  console.error("\n!! SLUG COLLISION — an override collides with another product:");
+  [...new Set(dupes)].forEach(s => console.error("     /products/" + s));
+  process.exit(1);
+}
+if (!weak.length && !dupes.length) console.log("Slug check: clean.");
 
 /* ---- helpers ---- */
 const esc = s => String(s == null ? "" : s)
@@ -309,15 +351,29 @@ products.forEach((p, i) => {
 });
 
 const today = new Date().toISOString().slice(0, 10);
-const urls = [`${SITE}/`, `${SITE}/terms-and-conditions`, ...slugs.map(s => `${SITE}/products/${s}`)];
+
+/* Homepage is bilingual (/ and /zh), so it carries hreflang. Product pages are
+   English-only URLs today, so they must NOT claim a zh-Hant alternate. If you
+   ever add /zh/products/<slug>, extend this to emit the pair. */
+const HOME_ALT =
+  `<xhtml:link rel="alternate" hreflang="en" href="${SITE}/"/>` +
+  `<xhtml:link rel="alternate" hreflang="zh-Hant" href="${SITE}/zh"/>` +
+  `<xhtml:link rel="alternate" hreflang="x-default" href="${SITE}/"/>`;
+
+const entries = [
+  `  <url><loc>${SITE}/</loc><lastmod>${today}</lastmod>${HOME_ALT}</url>`,
+  `  <url><loc>${SITE}/zh</loc><lastmod>${today}</lastmod>${HOME_ALT}</url>`,
+  `  <url><loc>${SITE}/terms-and-conditions</loc><lastmod>${today}</lastmod></url>`,
+  ...slugs.map(s => `  <url><loc>${SITE}/products/${s}</loc><lastmod>${today}</lastmod></url>`)
+];
+
 fs.writeFileSync(path.join(OUT, "sitemap.xml"),
   `<?xml version="1.0" encoding="UTF-8"?>
-<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
-${urls.map(u => `  <url><loc>${u}</loc><lastmod>${today}</lastmod></url>`).join("\n")}
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:xhtml="http://www.w3.org/1999/xhtml">
+${entries.join("\n")}
 </urlset>\n`);
 
 fs.writeFileSync(path.join(OUT, "slug-map.json"),
   JSON.stringify(products.map((p, i) => ({ name: p.name_en, slug: slugs[i], url: `/products/${slugs[i]}` })), null, 1));
 
-console.log(`Generated ${count} bilingual product pages + sitemap.xml (${urls.length} urls).`);
-console.log(`Pessary -> /products/${slugs[products.findIndex(p => /pessary/i.test(p.name_en))]}`);
+console.log(`Generated ${count} bilingual product pages + sitemap.xml (${entries.length} urls).`);
