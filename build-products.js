@@ -86,7 +86,7 @@ const esc = s => String(s == null ? "" : s)
   .replace(/"/g, "&quot;").replace(/'/g, "&#39;");
 const fmtPrice = n => "HK$" + Number(n || 0).toLocaleString("en-HK");
 const abs = img => img ? ("/" + img.replace(/^\/+/, "")) : "";
-const bi = (en, tc) => `<span class="pp-en">${en}</span><span class="pp-tc">${tc || en}</span>`;
+const bi = (en, tc) => `<span class="pp-en" lang="en">${en}</span><span class="pp-tc" lang="zh-Hant-HK">${tc || en}</span>`;
 
 function priceParts(p) {
   if (p.variants && p.variants.length) {
@@ -202,18 +202,100 @@ function page(p, slug, i) {
   const waEn = `${WA}?text=${encodeURIComponent(`I would like to enquire about: ${p.name_en} (${pr.en}) — ${url}`)}`;
   const waTc = `${WA}?text=${encodeURIComponent(`您好，我想查詢以下產品：${p.name_tc || p.name_en}（${pr.tc}）— ${url}`)}`;
 
-  const ld = {
-    "@context": "https://schema.org/", "@type": "Product",
-    name: p.name_en, alternateName: p.name_tc || undefined,
-    image: imgUrl || undefined, description: desc,
-    brand: { "@type": "Brand", name: p.brand || "Clinicon" },
-    category: p.category || undefined, sku: p.stock_id || undefined,
-    offers: {
-      "@type": "Offer", url, priceCurrency: "HKD",
-      price: pr.num || undefined,
-      availability: "https://schema.org/InStock",
-      seller: { "@type": "Organization", name: "Clinicon Medical Ltd." }
+  /* ---- structured data ----------------------------------------------
+     Product + Offer/AggregateOffer, BreadcrumbList, and a reference back to
+     the Organization node declared once on the homepage (@id keeps the entity
+     single across the whole site rather than redeclaring it 220 times).
+     Shipping and returns values mirror Clauses 8.2 and 9.2 of
+     /terms-and-conditions — update both together if the policy changes. */
+  const ORG_ID = SITE + "/#organization";
+
+  const shipping = {
+    "@type": "OfferShippingDetails",
+    shippingDestination: { "@type": "DefinedRegion", addressCountry: "HK" },
+    shippingRate: {
+      "@type": "MonetaryAmount", value: 0, currency: "HKD",
+      // free delivery applies to orders over HK$500 (Terms, Clause 8.2)
+      eligibleTransactionVolume: {
+        "@type": "PriceSpecification", priceCurrency: "HKD", minPrice: 500
+      }
     }
+  };
+
+  const returnPolicy = {
+    "@type": "MerchantReturnPolicy",
+    applicableCountry: "HK",
+    returnPolicyCategory: "https://schema.org/MerchantReturnFiniteReturnWindow",
+    merchantReturnDays: 7,
+    returnMethod: "https://schema.org/ReturnByMail",
+    returnFees: "https://schema.org/FreeReturn",
+    merchantReturnLink: SITE + "/terms-and-conditions"
+  };
+
+  // Prices are quoted, not time-limited; give Google a rolling 12-month window.
+  const priceValidUntil = new Date(Date.now() + 365 * 864e5).toISOString().slice(0, 10);
+
+  const offerBase = {
+    priceCurrency: "HKD",
+    availability: "https://schema.org/InStock",
+    itemCondition: "https://schema.org/NewCondition",
+    priceValidUntil,
+    seller: { "@id": ORG_ID },
+    shippingDetails: shipping,
+    hasMerchantReturnPolicy: returnPolicy
+  };
+
+  const variantPrices = (p.variants || []).map(v => Number(v[1])).filter(n => n > 0);
+
+  let offers;
+  if (variantPrices.length > 1) {
+    offers = Object.assign({
+      "@type": "AggregateOffer", url, offerCount: variantPrices.length,
+      lowPrice: Math.min(...variantPrices), highPrice: Math.max(...variantPrices)
+    }, offerBase);
+  } else if (pr.num > 0) {
+    offers = Object.assign({ "@type": "Offer", url, price: pr.num }, offerBase);
+  } else {
+    // No published price — omit offers entirely rather than emit an invalid one.
+    offers = undefined;
+  }
+
+  const ld = {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "Product",
+        "@id": url + "#product",
+        name: p.name_en, alternateName: p.name_tc || undefined,
+        image: imgUrl || undefined, description: desc,
+        brand: { "@type": "Brand", name: p.brand || "Clinicon Medical Ltd." },
+        category: p.category || undefined,
+        sku: p.stock_id || undefined,
+        mpn: p.stock_id || undefined,
+        url,
+        offers,
+        manufacturer: p.brand ? { "@type": "Organization", name: p.brand } : undefined,
+        isRelatedTo: undefined
+      },
+      {
+        "@type": "BreadcrumbList",
+        "@id": url + "#breadcrumb",
+        itemListElement: [
+          { "@type": "ListItem", position: 1, name: "Home", item: SITE + "/" },
+          { "@type": "ListItem", position: 2, name: p.category || "Products", item: SITE + "/#products" },
+          { "@type": "ListItem", position: 3, name: p.name_en }
+        ]
+      },
+      {
+        "@type": "WebPage",
+        "@id": url + "#webpage",
+        url, name: title,
+        isPartOf: { "@id": SITE + "/#website" },
+        about: { "@id": url + "#product" },
+        breadcrumb: { "@id": url + "#breadcrumb" },
+        inLanguage: "en-HK"
+      }
+    ]
   };
 
   const figure = p.image_missing
