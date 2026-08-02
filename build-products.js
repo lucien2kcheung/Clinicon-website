@@ -80,10 +80,16 @@ if (dupes.length) {
 }
 if (!weak.length && !dupes.length) console.log("Slug check: clean.");
 
+/* Categories where lead time depends on manufacturer stock rather than our own.
+   Everything else is treated as a stocked consumable (approx. 2 weeks). */
+const EQUIPMENT_CATEGORIES = new Set(["Refrigeration & Equipment", "O.R. Equipment"]);
+
 /* ---- helpers ---- */
 const esc = s => String(s == null ? "" : s)
   .replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;")
   .replace(/"/g, "&quot;").replace(/'/g, "&#39;");
+const stripTags = s => String(s == null ? "" : s)
+  .replace(/<[^>]*>/g, " ").replace(/\s+/g, " ").trim();
 const fmtPrice = n => "HK$" + Number(n || 0).toLocaleString("en-HK");
 const abs = img => img ? ("/" + img.replace(/^\/+/, "")) : "";
 const bi = (en, tc) => `<span class="pp-en" lang="en">${en}</span><span class="pp-tc" lang="zh-Hant-HK">${tc || en}</span>`;
@@ -195,6 +201,9 @@ function relatedBlock(i) {
 function page(p, slug, i) {
   const url = `${SITE}/products/${slug}`;
   const pr = priceParts(p);
+  const isEquipment = EQUIPMENT_CATEGORIES.has(p.category);
+  const packOptions = (p.variants && p.variants.length)
+    ? p.variants.map(v => stripTags(v[0])).filter(Boolean).join(" · ") : "";
   const title = `${p.name_en} | Clinicon Medical Ltd.`;
   const desc = (p.blurb_en || `${p.name_en} — available from Clinicon Medical Ltd., a trusted Hong Kong medical supplies distributor since 1980.`)
     .replace(/\s+/g, " ").trim().slice(0, 300);
@@ -269,13 +278,21 @@ function page(p, slug, i) {
         "@id": url + "#product",
         name: p.name_en, alternateName: p.name_tc || undefined,
         image: imgUrl || undefined, description: desc,
-        brand: { "@type": "Brand", name: p.brand || "Clinicon Medical Ltd." },
+        brand: { "@type": "Brand", name: (p.brand && p.brand !== "Other") ? p.brand : "Clinicon Medical Ltd." },
         category: p.category || undefined,
         sku: p.stock_id || undefined,
         mpn: p.stock_id || undefined,
         url,
         offers,
-        manufacturer: p.brand ? { "@type": "Organization", name: p.brand } : undefined,
+        additionalProperty: [
+          p.stock_id ? { "@type": "PropertyValue", name: "Product code", value: p.stock_id } : null,
+          p.category ? { "@type": "PropertyValue", name: "Category", value: p.category } : null,
+          packOptions ? { "@type": "PropertyValue", name: "Pack options", value: packOptions } : null,
+          { "@type": "PropertyValue", name: "Lead time",
+            value: isEquipment ? "Varies with stock availability" : "Typically within 2 weeks" }
+        ].filter(Boolean),
+        manufacturer: p.brand && p.brand !== "Other"
+          ? { "@type": "Organization", name: p.brand } : undefined,
         isRelatedTo: undefined
       },
       {
@@ -312,8 +329,42 @@ function page(p, slug, i) {
   const addSolo = !(p.variants && p.variants.length)
     ? `<button class="pp-add pp-add-solo" data-vi="-1">${bi("Add to cart", "加入購物車")}</button>` : "";
 
-  const specs = (p.specs && p.specs.length)
-    ? `<ul class="pp-specs">${p.specs.map(s => `<li>${esc(s)}</li>`).join("")}</ul>` : "";
+  /* Some legacy spec entries are nested arrays containing raw HTML; flatten and
+     strip so they render as clean list items rather than escaped markup. */
+  const specLines = (p.specs || []).flat(Infinity)
+    .map(stripTags).filter(Boolean);
+  const specs = specLines.length
+    ? `<ul class="pp-specs">${specLines.map(x => `<li>${esc(x)}</li>`).join("")}</ul>` : "";
+
+  /* ---- product details table ----------------------------------------
+     Built from fields that exist for every product. Gives answer engines a
+     table to extract and buyers a scannable summary. Rows with no data are
+     omitted rather than rendered empty. */
+  const detailRows = [
+    [bi("Brand", "品牌"), p.brand && p.brand !== "Other" ? esc(p.brand) : ""],
+    [bi("Category", "類別"), p.category ? esc(p.category) : ""],
+    [bi("Product code", "產品編號"), p.stock_id ? esc(p.stock_id) : ""],
+    [bi("Pack options", "包裝選項"), packOptions ? esc(packOptions) : ""],
+    [bi("Price", "價格"), pr.num > 0 ? bi(pr.en, pr.tc)
+      : bi("On enquiry", "請查詢")],
+    [bi("Lead time", "交貨期"), isEquipment
+      ? bi("Varies with stock availability — please enquire", "視乎存貨供應情況，請向我們查詢")
+      : bi("Typically within 2 weeks", "一般兩星期內")],
+    [bi("Delivery", "送貨"), bi("Free within Hong Kong on orders over HK$500",
+                                "香港境內訂單滿HK$500免費送貨")],
+    [bi("Returns", "退貨"), bi(
+      'Defective or incorrect goods: notify within 7 days. <a href="/faq">See FAQ</a>',
+      '如貨品有損壞或發錯，請於7天內通知我們。<a href="/faq">查看常見問題</a>')]
+  ].filter(r => r[1]);
+
+  const detailsTable = `<section class="pp-detailtable">
+    <h2>${bi("Product details at a glance", "產品規格一覽")}</h2>
+    <table class="pp-spectable">
+      <tbody>${detailRows.map(([k, v]) =>
+        `<tr><th scope="row">${k}</th><td>${v}</td></tr>`).join("")}</tbody>
+    </table>
+    ${specs}
+  </section>`;
 
   const descBlock = (p.blurb_en || p.blurb_tc) ? `<section class="pp-desc">
     <h2>${bi("Product details", "產品詳情")}</h2>
@@ -366,11 +417,12 @@ ${header()}
         <a class="pp-wa pp-tc" href="${waTc}" target="_blank" rel="noopener">${WA_SVG} 透過 WhatsApp 查詢</a>
         <a class="pp-back" href="/#products">${bi("← All products", "← 所有產品")}</a>
       </div>
-      ${specs}
     </div>
   </div>
 
   ${descBlock}
+
+  ${detailsTable}
 
   ${relatedBlock(i)}
 
