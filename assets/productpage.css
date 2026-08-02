@@ -67,3 +67,17 @@ html[data-pp-lang="tc"] .pp-en{display:none;}
 .pp-rel-noimg{width:100%;height:100%;min-height:120px;background:repeating-linear-gradient(45deg,var(--paper),var(--paper) 10px,#eef3f5 10px,#eef3f5 20px);border-radius:8px;}
 .pp-rel-name{font-size:.9rem;font-weight:600;color:var(--ink);padding:12px 12px 4px;line-height:1.35;flex:1;}
 .pp-rel-price{font-size:.9rem;color:var(--teal-dark);font-weight:700;padding:0 12px 14px;}
+
+/* ---- product details table ---- */
+.pp-detailtable{margin:34px 0 0;}
+.pp-detailtable h2{font-size:1.15rem;margin:0 0 14px;color:var(--ink);}
+.pp-spectable{border-collapse:collapse;width:100%;max-width:640px;font-size:.95rem;}
+.pp-spectable th,.pp-spectable td{text-align:left;padding:10px 12px;border-bottom:1px solid var(--line);vertical-align:top;}
+.pp-spectable th{width:38%;font-weight:600;color:var(--ink-soft);background:var(--paper);white-space:nowrap;}
+.pp-spectable td{color:var(--ink);}
+.pp-spectable tr:last-child th,.pp-spectable tr:last-child td{border-bottom:0;}
+.pp-spectable a{color:var(--teal-dark);text-decoration:underline;}
+@media(max-width:560px){
+  .pp-spectable th{width:44%;white-space:normal;}
+  .pp-spectable th,.pp-spectable td{padding:8px 9px;font-size:.9rem;}
+}
