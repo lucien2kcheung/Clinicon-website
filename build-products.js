@@ -152,6 +152,7 @@ function footer() {
         <a href="/#products">${bi("Products", "產品")}</a>
         <a href="/#about">${bi("About Us", "關於我們")}</a>
         <a href="/#contact">${bi("Contact", "聯絡我們")}</a>
+        <a href="/faq">${bi("FAQ", "常見問題")}</a>
         <a href="/terms-and-conditions">${bi("Terms &amp; Conditions", "條款及細則")}</a>
       </div>
       <div>
@@ -445,6 +446,7 @@ const HOME_ALT =
 const entries = [
   `  <url><loc>${SITE}/</loc><lastmod>${today}</lastmod>${HOME_ALT}</url>`,
   `  <url><loc>${SITE}/zh</loc><lastmod>${today}</lastmod>${HOME_ALT}</url>`,
+  `  <url><loc>${SITE}/faq</loc><lastmod>${today}</lastmod></url>`,
   `  <url><loc>${SITE}/terms-and-conditions</loc><lastmod>${today}</lastmod></url>`,
   ...slugs.map(s => `  <url><loc>${SITE}/products/${s}</loc><lastmod>${today}</lastmod></url>`)
 ];
