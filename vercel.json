@@ -1,6 +1,36 @@
 {
   "redirects": [
     {
+      "source": "/about-us",
+      "destination": "/#about",
+      "permanent": true
+    },
+    {
+      "source": "/zh/about-us",
+      "destination": "/#about",
+      "permanent": true
+    },
+    {
+      "source": "/general-8",
+      "destination": "/#opportunities",
+      "permanent": true
+    },
+    {
+      "source": "/zh/general-8",
+      "destination": "/#opportunities",
+      "permanent": true
+    },
+    {
+      "source": "/shipping-and-returns",
+      "destination": "/terms-and-conditions",
+      "permanent": true
+    },
+    {
+      "source": "/zh/shipping-and-returns",
+      "destination": "/terms-and-conditions",
+      "permanent": true
+    },
+    {
       "source": "/contact-7",
       "destination": "/#contact",
       "permanent": true
@@ -1803,6 +1833,21 @@
     {
       "source": "/products/terumo-2",
       "destination": "/products/terumo-syringe-with-needle",
+      "permanent": true
+    },
+    {
+      "source": "/category/:slug*",
+      "destination": "/#products",
+      "permanent": true
+    },
+    {
+      "source": "/zh/category/:slug*",
+      "destination": "/#products",
+      "permanent": true
+    },
+    {
+      "source": "/showroom/:path*",
+      "destination": "/",
       "permanent": true
     },
     {
