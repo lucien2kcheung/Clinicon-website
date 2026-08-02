@@ -81,7 +81,7 @@ if (dupes.length) {
 if (!weak.length && !dupes.length) console.log("Slug check: clean.");
 
 /* Categories where lead time depends on manufacturer stock rather than our own.
-   Everything else is treated as a stocked consumable (approx. 2 weeks). */
+   Everything else is treated as a stocked consumable (approx. 1 week). */
 const EQUIPMENT_CATEGORIES = new Set(["Refrigeration & Equipment", "O.R. Equipment"]);
 
 /* ---- helpers ---- */
@@ -289,7 +289,7 @@ function page(p, slug, i) {
           p.category ? { "@type": "PropertyValue", name: "Category", value: p.category } : null,
           packOptions ? { "@type": "PropertyValue", name: "Pack options", value: packOptions } : null,
           { "@type": "PropertyValue", name: "Lead time",
-            value: isEquipment ? "Varies with stock availability" : "Typically within 2 weeks" }
+            value: isEquipment ? "Varies with stock availability" : "Typically within 1 week" }
         ].filter(Boolean),
         manufacturer: p.brand && p.brand !== "Other"
           ? { "@type": "Organization", name: p.brand } : undefined,
@@ -349,7 +349,7 @@ function page(p, slug, i) {
       : bi("On enquiry", "請查詢")],
     [bi("Lead time", "交貨期"), isEquipment
       ? bi("Varies with stock availability — please enquire", "視乎存貨供應情況，請向我們查詢")
-      : bi("Typically within 2 weeks", "一般兩星期內")],
+      : bi("Typically within 1 week", "一般一星期內")],
     [bi("Delivery", "送貨"), bi("Free within Hong Kong on orders over HK$500",
                                 "香港境內訂單滿HK$500免費送貨")],
     [bi("Returns", "退貨"), bi(
