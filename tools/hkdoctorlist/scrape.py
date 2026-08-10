@@ -76,7 +76,10 @@ class Field:
 FIELDS: tuple[Field, ...] = (
     Field("name", "姓名 Name", ("姓名", "名稱", "醫生姓名", "中文姓名", "英文姓名", "Name")),
     Field("name_zh", "中文姓名 Name (Chinese)", ()),
-    Field("clinic", "診所名稱 Clinic", ("診所名稱", "診所", "機構名稱", "Clinic", "Practice")),
+    # No clinic-name field: the site does not publish one. Matching "診所" /
+    # "Clinic" loosely only ever produced noise - across all 10,437 records it
+    # caught a single page whose body lists two practice locations, and
+    # concatenated both into one cell.
     Field("address", "地址 Address", ("地址", "診所地址", "辦公地址", "Address")),
     Field("address_zh", "中文地址 Address (Chinese)", ()),
     Field("phone", "電話 Phone", ("電話", "聯絡電話", "診所電話", "Tel", "Telephone", "Phone")),
