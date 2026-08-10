@@ -922,7 +922,15 @@ def write_workbook(data: dict[str, list[Record]], out_path: Path) -> None:
 
     header_font = Font(bold=True, color="FFFFFF")
     header_fill = PatternFill("solid", fgColor="1F4E78")
-    headers = [f.header for f in FIELDS] + EXTRA_HEADERS
+
+    # The site never publishes some fields (clinic name, registration number).
+    # Carrying a permanently blank column just makes the sheet harder to read,
+    # so keep only fields that some record somewhere actually filled in. Judged
+    # across every tab at once so all tabs keep identical columns.
+    used = {key for records in data.values() for rec in records
+            for key in FIELD_KEYS if rec.get(key)}
+    keys = [k for k in FIELD_KEYS if k in used]
+    headers = [f.header for f in FIELDS if f.key in used] + EXTRA_HEADERS
 
     for tab, records in data.items():
         ws = wb.create_sheet(title=tab[:31])
@@ -933,7 +941,7 @@ def write_workbook(data: dict[str, list[Record]], out_path: Path) -> None:
             cell.alignment = Alignment(vertical="center")
 
         for rec in records:
-            ws.append([rec.get(k) for k in FIELD_KEYS] + [rec.url])
+            ws.append([rec.get(k) for k in keys] + [rec.url])
 
         ws.freeze_panes = "A2"
         ws.auto_filter.ref = (
@@ -960,8 +968,24 @@ def write_workbook(data: dict[str, list[Record]], out_path: Path) -> None:
     for tab, records in data.items():
         summary.append([tab, len(records)])
     summary.append(["總計 Total", sum(len(r) for r in data.values())])
-    for cell in (summary["A1"], summary["A4"], summary["B4"]):
+
+    # Email and fax are genuinely sparse on this directory; spelling the
+    # coverage out here saves anyone wondering whether the blanks are a bug.
+    total = sum(len(r) for r in data.values()) or 1
+    summary.append([])
+    summary.append(["欄位 Column", "有資料 Filled", "覆蓋率 Coverage"])
+    coverage_header = summary.max_row
+    for fld in FIELDS:
+        if fld.key not in used:
+            continue
+        filled = sum(1 for records in data.values() for rec in records if rec.get(fld.key))
+        summary.append([fld.header, filled, f"{100 * filled / total:.1f}%"])
+
+    bold_cells = [summary["A1"], summary["A4"], summary["B4"]]
+    bold_cells += [summary.cell(row=coverage_header, column=c) for c in (1, 2, 3)]
+    for cell in bold_cells:
         cell.font = Font(bold=True)
+    summary.column_dimensions["C"].width = 16
     summary.column_dimensions["A"].width = 22
     summary.column_dimensions["B"].width = 42
 
