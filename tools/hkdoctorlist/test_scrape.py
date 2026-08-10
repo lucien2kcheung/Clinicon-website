@@ -138,6 +138,93 @@ class Handler(http.server.BaseHTTPRequestHandler):
         self.wfile.write(payload)
 
 
+# A faithful reduction of a real hkdoctorlist detail page, kept as a regression
+# guard for the things the live site does that the generic parser got wrong:
+# a site-wide Organization JSON-LD block ahead of the practitioner's own node,
+# labels sitting in <h2> headings rather than <dl>/<table> cells, an office
+# hours heading nested one level deeper than its value, an empty Languages
+# block immediately before the next column, and emails the site itself mangles
+# by replacing "tel" with "電話".
+LIVE_MARKUP = """<!DOCTYPE html><html lang="zh-HK"><head>
+<title>Dr. Jain Sandeep — 牙科普通科, 中西區 | hkdoctorlist.com.hk</title>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"Organization",
+"name":"香港醫生資料庫 hkdoctorlist.com.hk","url":"https://www.hkdoctorlist.com.hk"}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList",
+"itemListElement":[{"@type":"ListItem","position":1,"name":"首頁 Home"}]}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"Dentist",
+"name":"Dr. Jain Sandeep","medicalSpecialty":"牙科普通科","address":{"@type":"PostalAddress",
+"streetAddress":"Room 1914, Melbourne Plaza, 33 Queen's Road Central, Hong Kong",
+"addressLocality":"Central & Western","addressRegion":"Hong Kong"},
+"telephone":"25222099","email":"drjain@dies電話andpartners.com"}</script>
+</head><body>
+<div><div class="p-6 border-b"><div class="flex"><div class="flex-1">
+<h1 class="text-2xl">Dr. Jain Sandeep</h1></div>
+<div><span>牙醫 Dentists</span><span>牙科普通科</span></div></div>
+<div class="flex flex-wrap gap-3 mt-4"><span>男醫生 (Male)</span>
+<a href="/district/central-western/">中西區 (Central &amp; Western)</a>
+<span>私人執業</span></div></div>
+<div class="grid md:grid-cols-2">
+<div class="p-6 space-y-5">
+<div><h2>電話 Telephone</h2><a href="tel:25222099">25222099</a></div>
+<div><h2>地址 Address</h2><p>Room 1914, Melbourne Plaza, 33 Queen's Road Central, Hong Kong</p>
+<p>香港中環皇后大道中33號萬邦行1914室</p></div>
+<div><h2>傳真 Fax</h2><p>28685336</p></div>
+<div><h2>電郵 Email</h2><a href="mailto:drjain@dies電話andpartners.com">drjain@dies電話andpartners.com</a></div>
+<div><h2>語言 Languages</h2>  </div>
+<div class="flex flex-wrap gap-2">    </div>
+</div>
+<div class="p-6 space-y-5">
+<div><div class="flex items-center gap-2 mb-2"><h2>診症時間 Office Hours</h2>
+<span id="open-now-badge"></span></div>
+<div class="space-y-1"><div class="flex gap-2"><span>星期一</span><span>0900-1800</span></div>
+<div class="flex gap-2"><span>星期六</span><span>0900-1300</span></div></div></div>
+<div><h2>資歷 Qualifications</h2><p>香港大學牙醫碩士(牙周病學) MDS (Perio)(HK)</p></div>
+</div></div>
+<h2>附近同專科醫護人員 Nearby 牙科普通科 Providers</h2>
+<div><a href="/providers/dentists/central-western/other-99999/">Dr. Someone Else</a>
+<span>女醫生 (Female)</span><span>29998888</span></div>
+</div>
+<script>(function(){const officeHrRaw = "\\u661f\\u671f\\u4e00\\uff1a\\n 0900-1800 \\n\\n \\u661f\\u671f\\u516d\\uff1a\\n 0900-1300";
+const providerPayload = "{\\"id\\":\\"66311\\",\\"nameCN\\":\\"\\u738b\\u5927\\u6587\\",\\"nameEN\\":\\"Dr. Jain Sandeep\\",\\"typeZH\\":\\"\\u7259\\u91ab\\",\\"districtZH\\":\\"\\u4e2d\\u897f\\u5340\\",\\"specialistZH\\":\\"\\u7259\\u79d1\\u666e\\u901a\\u79d1\\",\\"tel\\":\\"25222099\\"}";})();</script>
+</body></html>"""
+
+
+def check_live_markup() -> list[str]:
+    """Parse the real-site fixture and assert every field lands correctly."""
+    rec = scrape.parse_detail(LIVE_MARKUP, "https://example.test/p/1/", "牙醫")
+    expected = {
+        # Must be the practitioner, not the site-wide Organization JSON-LD.
+        "name": "Dr. Jain Sandeep",
+        "name_zh": "王大文",
+        "district": "中西區",
+        "specialty": "牙科普通科",
+        "phone": "25222099",
+        "provider_id": "66311",
+        # "tel" -> 電話 mangling undone.
+        "email": "drjain@diestelandpartners.com",
+        # Label stripped from the value.
+        "fax": "28685336",
+        "address_zh": "香港中環皇后大道中33號萬邦行1914室",
+        "hours": "星期一 0900-1800; 星期六 0900-1300",
+        "qualifications": "香港大學牙醫碩士(牙周病學) MDS (Perio)(HK)",
+        "gender": "男醫生 (Male)",
+        "practice": "私人執業",
+        # Empty on the page: must stay empty, not absorb the next column or
+        # echo its own label back.
+        "languages": "",
+    }
+    failures = [
+        f"live markup {key}: got {rec.get(key)!r}, expected {want!r}"
+        for key, want in expected.items() if rec.get(key) != want
+    ]
+    if "Melbourne Plaza" not in rec.get("address"):
+        failures.append(f"live markup address: got {rec.get('address')!r}")
+    # The nearby-providers list must not leak into this record.
+    if "29998888" in " ".join(rec.values.values()):
+        failures.append("live markup: nearby provider data leaked into record")
+    return failures
+
+
 def main() -> int:
     with socketserver.TCPServer(("127.0.0.1", 0), Handler) as httpd:
         port = httpd.server_address[1]
@@ -155,7 +242,7 @@ def main() -> int:
         for slug, tab in categories.items():
             data[tab] = scrape.scrape_category(fetcher, slug, tab, None, workers=4)
 
-        failures: list[str] = []
+        failures: list[str] = check_live_markup()
 
         for slug, tab in categories.items():
             got, want = len(data[tab]), CATEGORY_SIZES[slug]

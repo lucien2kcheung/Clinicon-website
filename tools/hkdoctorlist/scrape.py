@@ -75,8 +75,10 @@ class Field:
 
 FIELDS: tuple[Field, ...] = (
     Field("name", "姓名 Name", ("姓名", "名稱", "醫生姓名", "中文姓名", "英文姓名", "Name")),
+    Field("name_zh", "中文姓名 Name (Chinese)", ()),
     Field("clinic", "診所名稱 Clinic", ("診所名稱", "診所", "機構名稱", "Clinic", "Practice")),
     Field("address", "地址 Address", ("地址", "診所地址", "辦公地址", "Address")),
+    Field("address_zh", "中文地址 Address (Chinese)", ()),
     Field("phone", "電話 Phone", ("電話", "聯絡電話", "診所電話", "Tel", "Telephone", "Phone")),
     Field("email", "電郵 Email", ("電郵", "電子郵件", "電郵地址", "Email", "E-mail")),
     Field("fax", "傳真 Fax", ("傳真", "傳真號碼", "Fax")),
@@ -89,6 +91,9 @@ FIELDS: tuple[Field, ...] = (
     Field("languages", "語言 Languages", ("語言", "應診語言", "Languages")),
     Field("hours", "應診時間 Office Hours", ("應診時間", "診症時間", "營業時間",
                                              "Office Hours", "Opening Hours", "Consultation Hours")),
+    Field("gender", "性別 Gender", ("性別", "Gender", "Sex")),
+    Field("practice", "執業類別 Practice Type", ("執業類別", "Practice Type")),
+    Field("provider_id", "編號 Provider ID", ()),
 )
 
 FIELD_KEYS = [f.key for f in FIELDS]
@@ -387,9 +392,55 @@ def split_label_value(text: str, labels: tuple[str, ...]) -> tuple[bool, str]:
     return False, ""
 
 
+# Every page embeds a site-wide Organization block and a BreadcrumbList
+# alongside the practitioner's own node. Reading fields out of those yields the
+# website's name instead of the doctor's, so they are skipped on the first pass.
+JSONLD_SKIP_TYPES = {
+    "organization", "website", "webpage", "breadcrumblist", "listitem",
+    "searchaction", "imageobject", "sitenavigationelement", "collectionpage",
+}
+# schema.org types the site uses for an actual practitioner/practice.
+JSONLD_ENTITY_TYPES = {
+    "physician", "dentist", "medicalbusiness", "medicalclinic", "medicalorganization",
+    "hospital", "physiotherapy", "person", "localbusiness", "healthandbeautybusiness",
+}
+
+
+def _node_types(node: dict) -> set[str]:
+    raw = node.get("@type") or ""
+    values = raw if isinstance(raw, list) else [raw]
+    return {str(v).strip().lower() for v in values if isinstance(v, str)}
+
+
+def demangle_email(value: str) -> str:
+    """Repair emails the site itself corrupted.
+
+    hkdoctorlist publishes some addresses with a bad search/replace applied to
+    its own data - `diestelandpartners.com` is served as
+    `dies電話andpartners.com`, i.e. the substring `tel` was swapped for its
+    Chinese label. An email address can never legitimately contain CJK, so
+    undoing the known label substitutions is safe.
+    """
+    if not value:
+        return value
+    for cjk, latin in (("電話", "tel"), ("傳真", "fax"), ("電郵", "email"), ("地址", "address")):
+        value = value.replace(cjk, latin)
+    return value
+
+
 def from_jsonld(soup: BeautifulSoup) -> dict[str, str]:
     """Pull fields out of schema.org JSON-LD when the page provides it."""
+    blocks: list = []
+    for script in soup.find_all("script", type="application/ld+json"):
+        try:
+            blocks.append(json.loads(script.string or ""))
+        except (json.JSONDecodeError, TypeError):
+            continue
+
     found: dict[str, str] = {}
+    # Pass 1 reads only practitioner nodes; pass 2 relaxes to anything that is
+    # not a known site-chrome type, in case the site changes its @type values.
+    entity_only = True
 
     def walk(node) -> None:
         if isinstance(node, list):
@@ -397,6 +448,15 @@ def from_jsonld(soup: BeautifulSoup) -> dict[str, str]:
                 walk(item)
             return
         if not isinstance(node, dict):
+            return
+
+        types = _node_types(node)
+        usable = (types & JSONLD_ENTITY_TYPES) if entity_only else not (types & JSONLD_SKIP_TYPES)
+        if not usable:
+            # Still descend - a practitioner node can be nested inside a WebPage.
+            for value in node.values():
+                if isinstance(value, (dict, list)):
+                    walk(value)
             return
 
         def take(key: str, value) -> None:
@@ -427,11 +487,132 @@ def from_jsonld(soup: BeautifulSoup) -> dict[str, str]:
             if isinstance(value, (dict, list)):
                 walk(value)
 
-    for script in soup.find_all("script", type="application/ld+json"):
+    for entity_only in (True, False):
+        for block in blocks:
+            walk(block)
+        if found:
+            break
+
+    if found.get("email"):
+        found["email"] = demangle_email(found["email"])
+    return found
+
+
+# The detail template embeds a compact JSON payload for its bookmark/share
+# widgets. It is the only place the Chinese name and Chinese district appear as
+# clean values, so it is read before anything else.
+PAYLOAD_RE = re.compile(r'providerPayload\s*=\s*"(.*?)"\s*;', re.S)
+OFFICE_HOURS_RE = re.compile(r'officeHrRaw\s*=\s*"(.*?)"\s*;', re.S)
+
+PAYLOAD_KEYS = {
+    "nameEN": "name",
+    "nameCN": "name_zh",
+    "districtZH": "district",
+    "specialistZH": "specialty",
+    "tel": "phone",
+    "id": "provider_id",
+}
+
+
+def _unescape_js_string(raw: str) -> str:
+    """Decode a JS double-quoted string literal as embedded in the page source."""
+    try:
+        return json.loads('"%s"' % raw)
+    except json.JSONDecodeError:
+        return raw.encode().decode("unicode_escape", errors="replace")
+
+
+def from_payload(html: str) -> dict[str, str]:
+    """Read the detail page's embedded providerPayload / officeHrRaw literals."""
+    found: dict[str, str] = {}
+
+    m = PAYLOAD_RE.search(html)
+    if m:
         try:
-            walk(json.loads(script.string or ""))
-        except (json.JSONDecodeError, TypeError):
+            payload = json.loads(_unescape_js_string(m.group(1)))
+        except json.JSONDecodeError:
+            payload = {}
+        if isinstance(payload, dict):
+            for src, key in PAYLOAD_KEYS.items():
+                value = clean(str(payload.get(src) or ""))
+                if value:
+                    found[key] = value
+
+    m = OFFICE_HOURS_RE.search(html)
+    if m:
+        raw = _unescape_js_string(m.group(1))
+        # "星期一：\n 0900-1800 \n\n 星期二：..." -> "星期一 0900-1800; 星期二 ..."
+        slots = [clean(part).replace("：", " ") for part in raw.split("\n\n")]
+        hours = "; ".join(re.sub(r"\s+", " ", s) for s in slots if s)
+        if hours:
+            found["hours"] = hours
+
+    return found
+
+
+def from_headings(soup: BeautifulSoup) -> dict[str, str]:
+    """Read the detail page's `<h2>label</h2> + sibling value` blocks.
+
+    The generic label/value scan matches these headings but returns the heading
+    text itself, so fax came out as "Fax 28685336" and office hours as the bare
+    label "Office Hours". Reading the heading's own container fixes both.
+    """
+    found: dict[str, str] = {}
+    for heading in soup.find_all(["h2", "h3", "h4"]):
+        label = clean(heading.get_text(" "))
+        # "附近同專科醫護人員 Nearby ... Providers" heads a list of other people.
+        if not label or re.search(r"附近|Nearby", label, re.I):
             continue
+
+        # The value lives among the heading's later siblings, but some headings
+        # sit in their own wrapper (office hours pairs its label with a badge),
+        # so climb until a level actually carries content.
+        #    Sibling content stops at the next heading, so climbing out of a
+        #    field with no value (an empty "Languages" block) cannot absorb the
+        #    fields that follow it.
+        node, value = heading, ""
+        for _ in range(3):
+            parts: list[str] = []
+            for sib in node.find_next_siblings():
+                if sib.name in ("h2", "h3", "h4") or sib.find(["h2", "h3", "h4"]):
+                    break
+                text = clean(sib.get_text(" "))
+                if text:
+                    parts.append(text)
+            value = clean(" ".join(parts))
+            if value or node.parent is None:
+                break
+            node = node.parent
+        if not value:
+            continue
+
+        for fld in FIELDS:
+            if fld.key in found or not fld.labels:
+                continue
+            if not any(re.search(r"(?<!\w)%s(?!\w)" % re.escape(l), label, re.I)
+                       for l in fld.labels):
+                continue
+            found[fld.key] = value
+            # Languages render as one tag per element; comma-separate them
+            # instead of running the tags together.
+            if fld.key == "languages":
+                tags: list[str] = []
+                for sib in heading.find_next_siblings():
+                    spans = sib.find_all("span") or [sib]
+                    tags += [clean(s.get_text(" ")) for s in spans]
+                tags = [t for t in dict.fromkeys(tags) if t]
+                if tags:
+                    found["languages"] = ", ".join(tags)
+            # The address block carries an English line and a Chinese line as
+            # separate <p>s; keep them in their own columns.
+            if fld.key == "address":
+                lines = [clean(p.get_text(" ")) for p in heading.find_next_siblings("p")]
+                lines = [l for l in lines if l]
+                if lines:
+                    found["address"] = lines[0]
+                    if len(lines) > 1:
+                        found["address_zh"] = " ".join(lines[1:])
+            break
     return found
 
 
@@ -450,13 +631,24 @@ def parse_detail(html: str, url: str, category: str) -> Record:
 
     values: dict[str, str] = {}
 
-    # 1. Structured data wins when present - read it before scripts are stripped.
-    values.update({k: v for k, v in from_jsonld(soup).items() if v})
+    def offer(source: dict[str, str]) -> None:
+        for key, value in source.items():
+            if value and not values.get(key):
+                values[key] = value
+
+    # 1. The page's own embedded payload is the cleanest source when present.
+    offer(from_payload(html))
+
+    # 2. Structured data - read it before scripts are stripped.
+    offer(from_jsonld(soup))
 
     for junk in soup.find_all(["script", "style", "noscript"]):
         junk.decompose()
 
-    # 2. Label/value pairs from the DOM.
+    # 3. Heading blocks (this site's detail layout).
+    offer(from_headings(soup))
+
+    # 4. Label/value pairs from the DOM.
     pairs = label_value_pairs(soup)
     for fld in FIELDS:
         if values.get(fld.key):
@@ -471,7 +663,7 @@ def parse_detail(html: str, url: str, category: str) -> Record:
                 values[fld.key] = chosen
                 break
 
-    # 3. Same-line "label: value" text fallback.
+    # 5. Same-line "label: value" text fallback.
     lines = text_lines(soup)
     for fld in FIELDS:
         if values.get(fld.key):
@@ -484,15 +676,17 @@ def parse_detail(html: str, url: str, category: str) -> Record:
                 values[fld.key] = clean(m.group(1))
                 break
 
-    # 4. Direct link / pattern fallbacks.
+    # 6. Direct link / pattern fallbacks.
     if not values.get("email"):
         mailto = soup.select_one('a[href^="mailto:"]')
         if mailto:
             values["email"] = clean(mailto["href"].split(":", 1)[1].split("?")[0])
     if not values.get("email"):
-        m = EMAIL_RE.search(soup.get_text(" "))
+        m = EMAIL_RE.search(demangle_email(soup.get_text(" ")))
         if m:
             values["email"] = m.group(0)
+    if values.get("email"):
+        values["email"] = demangle_email(values["email"])
 
     if not values.get("phone"):
         tel = soup.select_one('a[href^="tel:"]')
@@ -519,6 +713,41 @@ def parse_detail(html: str, url: str, category: str) -> Record:
         crumb = soup.select_one('a[href*="/specialist/"]')
         if crumb:
             values["specialty"] = clean(crumb.get_text(" "))
+
+    # 7. The quick-info bar under the name carries gender and practice type as
+    #    bare spans with no label of their own.
+    #    They sit a few levels above the <h1>, so climb until they come into
+    #    view rather than scanning the page (nearby-provider cards repeat them).
+    head_text = ""
+    node = soup.h1
+    for _ in range(4):
+        if node is None:
+            break
+        text = clean(node.get_text(" "))
+        if re.search(r"\((?:Male|Female)\)|私人執業|公營", text):
+            head_text = text
+            break
+        node = node.parent
+    if not values.get("gender"):
+        m = re.search(r"(男|女)(?:醫生|醫師|牙醫|治療師)?\s*\((?:Male|Female)\)", head_text)
+        if m:
+            values["gender"] = clean(m.group(0))
+    if not values.get("practice"):
+        m = re.search(r"(私人執業|公營|公立|醫院管理局|衞生署)", head_text)
+        if m:
+            values["practice"] = m.group(1)
+
+    # 8. Drop values that are really just the field's own label echoed back -
+    #    an empty block on the page otherwise yields e.g. languages="Languages".
+    for fld in FIELDS:
+        value = values.get(fld.key, "")
+        if not value:
+            continue
+        residue = value
+        for lbl in sorted(fld.labels, key=len, reverse=True):
+            residue = re.sub(re.escape(lbl), " ", residue, flags=re.I)
+        if not re.search(r"[\w一-鿿]", residue):
+            values[fld.key] = ""
 
     return Record(url=url, category=category, values=values)
 
