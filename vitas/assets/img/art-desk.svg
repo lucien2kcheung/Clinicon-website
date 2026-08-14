@@ -1,0 +1,19 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 800" width="1200" height="800" role="img" aria-label="At a desk">
+  <rect width="1200" height="800" fill="#EFE9E0"/>
+  <path d="M0,520 C260,420 420,600 660,470 C860,360 1040,430 1200,360 L1200,800 L0,800 Z" fill="#DFE6DC" opacity="0.85"/>
+<path d="M120,190 H420" stroke="#22372E" stroke-opacity="0.26" stroke-width="2.2" stroke-linecap="round"/>
+  <path d="M120,248 H540" stroke="#22372E" stroke-opacity="0.26" stroke-width="2.2" stroke-linecap="round"/>
+  <path d="M120,306 H660" stroke="#22372E" stroke-opacity="0.26" stroke-width="2.2" stroke-linecap="round"/>
+  <path d="M120,364 H420" stroke="#22372E" stroke-opacity="0.26" stroke-width="2.2" stroke-linecap="round"/>
+  <path d="M120,422 H540" stroke="#22372E" stroke-opacity="0.26" stroke-width="2.2" stroke-linecap="round"/>
+  <path d="M120,480 H660" stroke="#22372E" stroke-opacity="0.26" stroke-width="2.2" stroke-linecap="round"/>
+  <path d="M120,538 H420" stroke="#22372E" stroke-opacity="0.26" stroke-width="2.2" stroke-linecap="round"/>
+  <path d="M120,596 H540" stroke="#22372E" stroke-opacity="0.26" stroke-width="2.2" stroke-linecap="round"/>
+  <path d="M120,654 H660" stroke="#22372E" stroke-opacity="0.26" stroke-width="2.2" stroke-linecap="round"/>
+  <path d="M700,700 C700,470 780,340 930,330 C1080,320 1140,470 1140,700" fill="#8FA38C" fill-opacity="0.5" stroke="#22372E" stroke-opacity="0.5" stroke-width="2.6"/>
+  <path d="M760,560 C830,520 1010,520 1080,560" stroke="#22372E" stroke-opacity="0.3" stroke-width="2" fill="none"/>
+<g transform="translate(220 700) rotate(-22)" opacity="0.75">
+    <path d="M0,0 C52.5,-46 112.5,-46 150,0 C112.5,46 52.5,46 0,0 Z" fill="#8FA38C" stroke="#22372E" stroke-width="1.1" stroke-opacity="0.35"/>
+    <path d="M9,0 L135,0" stroke="#22372E" stroke-width="0.9" stroke-opacity="0.28" fill="none"/>
+  </g>
+</svg>

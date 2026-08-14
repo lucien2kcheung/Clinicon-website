@@ -1,0 +1,16 @@
+{
+  "name": "vitas-website",
+  "private": true,
+  "version": "1.0.0",
+  "description": "Static website for VITAS 紓適寧 — Soothing Cream Gel",
+  "type": "module",
+  "scripts": {
+    "build": "node src/build.mjs",
+    "art": "node src/make-art.mjs",
+    "og": "node src/make-og.mjs",
+    "dev": "node src/build.mjs && npx --yes http-server -p 8123 -c-1 ."
+  },
+  "engines": {
+    "node": ">=18"
+  }
+}

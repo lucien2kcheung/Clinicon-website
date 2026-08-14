@@ -1,0 +1,36 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 520 700" width="520" height="700" role="img" aria-label="VITAS Soothing Cream Gel 100ml">
+  <defs>
+    <linearGradient id="tube" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0" stop-color="#ffffff"/>
+      <stop offset="0.42" stop-color="#EFE9E0"/>
+      <stop offset="1" stop-color="#D9D2C6"/>
+    </linearGradient>
+    <linearGradient id="cap" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0" stop-color="#22372E"/>
+      <stop offset="0.5" stop-color="#31503F"/>
+      <stop offset="1" stop-color="#1A2C24"/>
+    </linearGradient>
+  </defs>
+  <ellipse cx="260" cy="672" rx="185" ry="20" fill="#22372E" opacity="0.12"/>
+  <rect x="120" y="150" width="280" height="520" rx="26" fill="url(#tube)"/>
+  <path d="M120,190 h280" stroke="#22372E" stroke-opacity="0.12" stroke-width="1"/>
+  <rect x="196" y="40" width="128" height="112" rx="14" fill="url(#cap)"/>
+  <rect x="196" y="126" width="128" height="10" fill="#16241D" opacity="0.6"/>
+  <rect x="150" y="270" width="220" height="250" rx="6" fill="#F7F4EF" opacity="0.95"/>
+  <text x="260" y="330" text-anchor="middle" font-family="Georgia, serif" font-size="40" letter-spacing="13" fill="#22372E">VITAS</text>
+  <text x="260" y="366" text-anchor="middle" font-family="serif" font-size="20" letter-spacing="6" fill="#8FA38C">紓適寧</text>
+  <line x1="185" y1="392" x2="335" y2="392" stroke="#8FA38C" stroke-width="1"/>
+  <text x="260" y="424" text-anchor="middle" font-family="Helvetica, Arial, sans-serif" font-size="14.5" letter-spacing="2.4" fill="#22372E" opacity="0.75">SOOTHING</text>
+  <text x="260" y="446" text-anchor="middle" font-family="Helvetica, Arial, sans-serif" font-size="14.5" letter-spacing="2.4" fill="#22372E" opacity="0.75">CREAM GEL</text>
+  <text x="260" y="486" text-anchor="middle" font-family="Helvetica, Arial, sans-serif" font-size="13" letter-spacing="3" fill="#22372E" opacity="0.5">100 ml</text>
+<g transform="translate(196 560) rotate(-18)" opacity="0.95">
+    <path d="M0,0 C27.299999999999997,-26 58.5,-26 78,0 C58.5,26 27.299999999999997,26 0,0 Z" fill="#DFE6DC" stroke="#22372E" stroke-width="1.1" stroke-opacity="0.35"/>
+    <path d="M4.68,0 L70.2,0" stroke="#22372E" stroke-width="0.9" stroke-opacity="0.28" fill="none"/>
+  </g>
+<g transform="translate(258 566) rotate(6)" opacity="0.75">
+    <path d="M0,0 C27.299999999999997,-26 58.5,-26 78,0 C58.5,26 27.299999999999997,26 0,0 Z" fill="#8FA38C" stroke="#22372E" stroke-width="1.1" stroke-opacity="0.35"/>
+    <path d="M4.68,0 L70.2,0" stroke="#22372E" stroke-width="0.9" stroke-opacity="0.28" fill="none"/>
+  </g>
+  <rect x="120" y="150" width="280" height="520" rx="26" fill="none" stroke="#22372E" stroke-opacity="0.18"/>
+  <path d="M156,190 v440" stroke="#ffffff" stroke-opacity="0.75" stroke-width="14" stroke-linecap="round"/>
+</svg>
