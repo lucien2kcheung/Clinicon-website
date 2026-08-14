@@ -1,0 +1,620 @@
+<title>The Hauschka Teardown</title>
+<style>
+  :root {
+    --paper: #f1f3f0;
+    --card: #f8f9f7;
+    --ink: #161a19;
+    --muted: #5d6763;
+    --hair: #d3d8d2;
+    --works: #1f5f4e;
+    --improve: #7a3f55;
+    --rail: #8b948f;
+    --shadow: 0 1px 0 rgba(22, 26, 25, 0.06);
+
+    --display: Georgia, 'Iowan Old Style', 'Times New Roman', serif;
+    --body: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+    --mono: ui-monospace, 'SF Mono', SFMono-Regular, Menlo, Consolas, monospace;
+  }
+
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme='light']) {
+      --paper: #14181a;
+      --card: #1b2022;
+      --ink: #e6eae6;
+      --muted: #9aa5a0;
+      --hair: #2c3336;
+      --works: #6fb99c;
+      --improve: #cb90a5;
+      --rail: #79847f;
+      --shadow: 0 1px 0 rgba(0, 0, 0, 0.4);
+    }
+  }
+
+  :root[data-theme='dark'] {
+    --paper: #14181a;
+    --card: #1b2022;
+    --ink: #e6eae6;
+    --muted: #9aa5a0;
+    --hair: #2c3336;
+    --works: #6fb99c;
+    --improve: #cb90a5;
+    --rail: #79847f;
+    --shadow: 0 1px 0 rgba(0, 0, 0, 0.4);
+  }
+
+  * { box-sizing: border-box; }
+
+  body {
+    margin: 0;
+    background: var(--paper);
+    color: var(--ink);
+    font-family: var(--body);
+    font-size: 16.5px;
+    line-height: 1.62;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  a { color: inherit; text-underline-offset: 0.2em; text-decoration-color: var(--rail); }
+  a:hover { text-decoration-color: currentColor; }
+  :focus-visible { outline: 2px solid var(--works); outline-offset: 3px; }
+
+  .shell {
+    max-width: 1140px;
+    margin-inline: auto;
+    padding: clamp(2rem, 5vw, 4.5rem) clamp(1.1rem, 4vw, 3rem) 6rem;
+    display: grid;
+    grid-template-columns: 200px minmax(0, 1fr);
+    gap: clamp(2rem, 5vw, 4rem);
+    align-items: start;
+  }
+
+  /* ---------------------------------------------------------- rail */
+  .rail { position: sticky; top: 2.5rem; display: grid; gap: 1.4rem; }
+  .rail__mark {
+    font-family: var(--mono);
+    font-size: 0.66rem;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--muted);
+    line-height: 1.7;
+  }
+  .rail__mark strong { display: block; color: var(--ink); letter-spacing: 0.2em; }
+  .rail nav { display: grid; gap: 0.55rem; border-top: 1px solid var(--hair); padding-top: 1.1rem; }
+  .rail nav a {
+    font-family: var(--mono);
+    font-size: 0.72rem;
+    letter-spacing: 0.04em;
+    text-decoration: none;
+    color: var(--muted);
+    display: grid;
+    grid-template-columns: 2.2rem 1fr;
+    gap: 0.3rem;
+  }
+  .rail nav a:hover { color: var(--ink); }
+  .rail nav a span:first-child { color: var(--rail); }
+
+  /* --------------------------------------------------------- header */
+  header.masthead { border-bottom: 2px solid var(--ink); padding-bottom: 1.6rem; }
+  .kicker {
+    font-family: var(--mono);
+    font-size: 0.7rem;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin: 0 0 1.1rem;
+  }
+  h1 {
+    font-family: var(--display);
+    font-weight: 400;
+    font-size: clamp(2.1rem, 1.3rem + 3.2vw, 3.6rem);
+    line-height: 1.04;
+    letter-spacing: -0.02em;
+    text-wrap: balance;
+    margin: 0 0 0.7rem;
+  }
+  .standfirst {
+    font-size: clamp(1.02rem, 0.98rem + 0.3vw, 1.18rem);
+    color: var(--muted);
+    max-width: 60ch;
+    margin: 0;
+  }
+
+  /* ---------------------------------------------------------- blocks */
+  section { margin-top: clamp(2.6rem, 5vw, 4rem); }
+  h2 {
+    font-family: var(--display);
+    font-weight: 400;
+    font-size: clamp(1.5rem, 1.2rem + 1.1vw, 2.05rem);
+    line-height: 1.15;
+    letter-spacing: -0.015em;
+    margin: 0 0 0.4rem;
+    text-wrap: balance;
+  }
+  .section-note { color: var(--muted); max-width: 66ch; margin: 0 0 1.8rem; }
+  p { max-width: 68ch; }
+
+  .caveat {
+    background: var(--card);
+    border: 1px solid var(--hair);
+    border-left: 3px solid var(--improve);
+    padding: 1.2rem 1.4rem;
+    margin-top: 2rem;
+    box-shadow: var(--shadow);
+  }
+  .caveat h2 { font-size: 1.1rem; font-family: var(--body); font-weight: 600; letter-spacing: 0; }
+  .caveat p { margin: 0.5rem 0 0; font-size: 0.94rem; color: var(--muted); }
+
+  /* ---------------------------------------------------------- finding */
+  .findings { display: grid; gap: 1.6rem; }
+  .finding {
+    display: grid;
+    grid-template-columns: 4.6rem minmax(0, 1fr);
+    gap: 1.2rem;
+    padding-top: 1.4rem;
+    border-top: 1px solid var(--hair);
+  }
+  .finding__code {
+    font-family: var(--mono);
+    font-size: 0.72rem;
+    letter-spacing: 0.1em;
+    color: var(--works);
+    padding-top: 0.35rem;
+    font-variant-numeric: tabular-nums;
+  }
+  .finding--improve .finding__code { color: var(--improve); }
+  .finding h3 {
+    font-family: var(--display);
+    font-weight: 400;
+    font-size: 1.32rem;
+    line-height: 1.24;
+    margin: 0 0 0.45rem;
+    letter-spacing: -0.01em;
+  }
+  .finding p { margin: 0 0 0.7rem; }
+  .finding p:last-child { margin-bottom: 0; }
+  .verdict {
+    font-size: 0.95rem;
+    background: var(--card);
+    border: 1px solid var(--hair);
+    padding: 0.75rem 0.95rem;
+    color: var(--ink);
+  }
+  .verdict b {
+    font-family: var(--mono);
+    font-size: 0.68rem;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--works);
+    display: block;
+    margin-bottom: 0.25rem;
+    font-weight: 500;
+  }
+  .finding--improve .verdict b { color: var(--improve); }
+
+  /* ----------------------------------------------------------- table */
+  .scroller { overflow-x: auto; margin-top: 1.2rem; border: 1px solid var(--hair); background: var(--card); }
+  table { border-collapse: collapse; width: 100%; min-width: 560px; font-size: 0.94rem; }
+  th, td { text-align: left; padding: 0.7rem 0.9rem; border-bottom: 1px solid var(--hair); vertical-align: top; }
+  thead th {
+    font-family: var(--mono);
+    font-size: 0.67rem;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--muted);
+    font-weight: 500;
+  }
+  tbody tr:last-child td { border-bottom: 0; }
+  td:first-child { color: var(--muted); }
+  .map td:first-child { color: var(--ink); }
+
+  /* ------------------------------------------------------------ list */
+  ol.actions { counter-reset: act; list-style: none; padding: 0; margin: 1.2rem 0 0; display: grid; gap: 1.1rem; }
+  ol.actions li { counter-increment: act; display: grid; grid-template-columns: 2.4rem 1fr; gap: 1rem; }
+  ol.actions li::before {
+    content: counter(act, decimal-leading-zero);
+    font-family: var(--mono);
+    font-size: 0.78rem;
+    color: var(--works);
+    padding-top: 0.28rem;
+    font-variant-numeric: tabular-nums;
+  }
+  ul.plain { list-style: none; padding: 0; margin: 1rem 0 0; display: grid; gap: 0.8rem; }
+  ul.plain li { padding-left: 1.4rem; position: relative; max-width: 68ch; }
+  ul.plain li::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 0.72em;
+    width: 0.75rem;
+    height: 1px;
+    background: var(--improve);
+  }
+
+  footer {
+    margin-top: 4rem;
+    border-top: 1px solid var(--hair);
+    padding-top: 1.2rem;
+    font-family: var(--mono);
+    font-size: 0.7rem;
+    letter-spacing: 0.08em;
+    color: var(--muted);
+    text-transform: uppercase;
+  }
+
+  @media (max-width: 860px) {
+    .shell { grid-template-columns: minmax(0, 1fr); gap: 2rem; }
+    .rail { position: static; }
+    .rail nav { grid-template-columns: repeat(2, minmax(0, 1fr)); display: grid; gap: 0.4rem 1rem; }
+    .finding { grid-template-columns: minmax(0, 1fr); gap: 0.5rem; }
+    .finding__code { padding-top: 0; }
+  }
+</style>
+
+<div class="shell">
+  <aside class="rail">
+    <p class="rail__mark">
+      <strong>VITAS</strong>
+      Reference-site teardown<br>
+      August 2026
+    </p>
+    <nav aria-label="Sections">
+      <a href="#why"><span>00</span><span>Why this site</span></a>
+      <a href="#works"><span>01</span><span>What works</span></a>
+      <a href="#improve"><span>02</span><span>What doesn't</span></a>
+      <a href="#avoid"><span>03</span><span>Don't copy</span></a>
+      <a href="#map"><span>04</span><span>The build</span></a>
+      <a href="#do"><span>05</span><span>Five things</span></a>
+    </nav>
+  </aside>
+
+  <main>
+    <header class="masthead">
+      <p class="kicker">Dr. Hauschka → VITAS 紓適寧</p>
+      <h1>What to steal from a forty-year-old plant brand</h1>
+      <p class="standfirst">
+        drhauschka.com sells plant-based products at several times the category price without
+        making pharmacological claims. That is precisely the problem VITAS has to solve now that
+        the lymphatic story is off the table. Here is what its site does well, where it falls
+        short, and which parts survive the translation to a one-SKU muscle cream on a Watsons
+        shelf.
+      </p>
+    </header>
+
+    <div class="caveat">
+      <h2>Read this before you quote anything</h2>
+      <p>
+        The build environment blocked outbound traffic to drhauschka.com, vitas.com.hk, Watsons
+        and YouTube — none of them would load. This teardown draws on Dr. Hauschka's documented
+        redesign (the skin-consultation tool, the "Plant Heroes" ingredient section, the
+        responsive rebuild), its long-established positioning, and verifiable patterns in
+        natural-beauty e-commerce. Every observation below is a judgement about that class of
+        site. Open the page and confirm any point before you use it as fact — 30 seconds each.
+        The VITAS recommendations don't depend on any single one being current.
+      </p>
+    </div>
+
+    <section id="why">
+      <h2>Why this is the right site to copy</h2>
+      <p class="section-note">
+        The categories differ; the commercial problem is identical. Both brands ask a customer to
+        pay a large premium for a plant-based product whose functional edge over cheaper rivals is
+        modest.
+      </p>
+      <div class="scroller">
+        <table>
+          <thead>
+            <tr><th></th><th>Dr. Hauschka</th><th>VITAS</th></tr>
+          </thead>
+          <tbody>
+            <tr><td>Product</td><td>Plant-based skincare</td><td>Plant-oil muscle cream gel</td></tr>
+            <tr><td>Price position</td><td>Premium vs. mass market</td><td>HK$250 vs. HK$30–80 rubs</td></tr>
+            <tr><td>What defends the premium</td><td>Provenance, philosophy, ritual</td><td>Today: claims. Needs to be: sensory + provenance</td></tr>
+            <tr><td>Where it sells</td><td>Pharmacies, health stores</td><td>Watsons, Mannings — the real asset</td></tr>
+            <tr><td>Standing risk</td><td>Over-claiming on plant efficacy</td><td>Over-claiming on plant efficacy</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <section id="works">
+      <h2>What Dr. Hauschka does well</h2>
+      <p class="section-note">
+        Eight patterns worth taking, each with the version that survives translation to a
+        single-product brand.
+      </p>
+
+      <div class="findings">
+        <article class="finding">
+          <p class="finding__code">W&nbsp;01</p>
+          <div>
+            <h3>The product is never the first thing you meet</h3>
+            <p>
+              The homepage opens with mood, season and philosophy — not a grid of SKUs and a red
+              discount badge. That single decision does most of the work of justifying the price.
+              A site that opens on a sale competes on price; a site that opens on atmosphere reads
+              as a brand.
+            </p>
+            <p class="verdict"><b>For VITAS</b>One SKU makes a product grid absurd. Opening on the two minutes before training and the ten minutes after makes a single product feel like a considered choice.</p>
+          </div>
+        </article>
+
+        <article class="finding">
+          <p class="finding__code">W&nbsp;02</p>
+          <div>
+            <h3>Ingredients get narrative status</h3>
+            <p>
+              "Plant Heroes" turns the ingredient list — a compliance artefact — into the brand's
+              main body of content. Named plants, botany, sourcing, a reason for being in the
+              formula. It gives customers something concrete to believe without ever claiming a
+              clinical outcome.
+            </p>
+            <p class="verdict"><b>For VITAS</b>The most transferable idea here, and the new site does exactly it: eucalyptus, grape seed and niaouli each get a role and an honest description. Three plants beat thirty when each one earns its place.</p>
+          </div>
+        </article>
+
+        <article class="finding">
+          <p class="finding__code">W&nbsp;03</p>
+          <div>
+            <h3>A guided tool converts browsing into a recommendation</h3>
+            <p>
+              The skin consultation turns "which of these forty products do I need?" into a short
+              conversation. It captures intent, kills choice paralysis, and earns the right to ask
+              for an email.
+            </p>
+            <p class="verdict"><b>For VITAS</b>No recommender needed — there's one product. The equivalent question is <em>how do I use it?</em>, which decides whether the tube gets finished and repurchased. Hence the three-question routine finder.</p>
+          </div>
+        </article>
+
+        <article class="finding">
+          <p class="finding__code">W&nbsp;04</p>
+          <div>
+            <h3>Philosophy is a content pillar, not an About page</h3>
+            <p>
+              Rhythm, biodynamic sourcing, the WALA process — a coherent worldview presented as
+              content. It is why the brand charges a premium without efficacy claims: the customer
+              is buying a way of doing things.
+            </p>
+            <p class="verdict"><b>For VITAS</b>Carefully. Inventing a philosophy repeats the lymphatic mistake. What VITAS actually has — honest claims, three ingredients, no smell and no grease in a city of open-plan offices and packed MTR carriages — is enough, and more credible than borrowed mysticism.</p>
+          </div>
+        </article>
+
+        <article class="finding">
+          <p class="finding__code">W&nbsp;05</p>
+          <div>
+            <h3>Restraint in the visual language</h3>
+            <p>
+              Generous white space, muted natural palette, one typographic voice. Nothing shouts.
+              The design itself argues for the product's gentleness — medium matching message.
+            </p>
+            <p class="verdict"><b>For VITAS</b>Paper-and-forest palette, one serif voice, a lot of air. The design says "this will not smell like a pharmacy" before a word is read.</p>
+          </div>
+        </article>
+
+        <article class="finding">
+          <p class="finding__code">W&nbsp;06</p>
+          <div>
+            <h3>Editorial content with a reason to exist</h3>
+            <p>
+              Advice and seasonal routines that are useful whether or not you buy anything. It
+              builds a search footprint and a kind of trust that claim-led sites cannot.
+            </p>
+            <p class="verdict"><b>For VITAS</b>The journal ships with an article correcting the brand's own lactic-acid claim. Publishing the correction beats quietly deleting it: it is the most searchable, most linkable thing a muscle-cream brand can write, and it inoculates against a "debunked" story later.</p>
+          </div>
+        </article>
+
+        <article class="finding">
+          <p class="finding__code">W&nbsp;07</p>
+          <div>
+            <h3>The retail network is treated as an asset</h3>
+            <p>
+              A clear route from "I read about this" to "I can buy it near me". For a brand whose
+              distribution <em>is</em> the asset, the stockist page is not a utility — it is the
+              conversion path.
+            </p>
+            <p class="verdict"><b>For VITAS</b>Lean harder than they do. Shelf space in Watsons and Mannings is the moat; stockists get their own nav slot and repeated calls to action instead of hiding behind a broken own-store checkout.</p>
+          </div>
+        </article>
+
+        <article class="finding">
+          <p class="finding__code">W&nbsp;08</p>
+          <div>
+            <h3>Certification does the arguing</h3>
+            <p>
+              NATRUE and Demeter marks let a third party make the credibility claim. It is the
+              cheapest trust available, because the brand doesn't have to say anything itself.
+            </p>
+            <p class="verdict"><b>For VITAS</b>"Made in France, EU GMP" is the equivalent — currently asserted with nothing behind it. Get the manufacturer's certificate and origin documentation, then say it with a reference. Unsubstantiated, it is a trade-description risk as well as a wasted asset.</p>
+          </div>
+        </article>
+      </div>
+    </section>
+
+    <section id="improve">
+      <h2>What could be improved</h2>
+      <p class="section-note">
+        Ten weaknesses in this class of site. Each one is an opening for a smaller, faster brand —
+        and each is already handled differently in the VITAS build.
+      </p>
+
+      <div class="findings">
+        <article class="finding finding--improve">
+          <p class="finding__code">I&nbsp;01</p>
+          <div>
+            <h3>Discovery is slow if you already know what you want</h3>
+            <p>
+              Atmosphere-first design taxes the returning customer. A site can hold a mood
+              <em>and</em> give a repeat buyer a two-click path to reorder; most natural-beauty
+              sites make loyal customers walk through the poetry every visit.
+            </p>
+            <p class="verdict"><b>Handled</b>Buy sits permanently in the header. "Where do I get this" is never more than one click from any page.</p>
+          </div>
+        </article>
+
+        <article class="finding finding--improve">
+          <p class="finding__code">I&nbsp;02</p>
+          <div>
+            <h3>Philosophy crowds out the practical answer</h3>
+            <p>
+              Three screens about a plant, and you still don't know how often to apply it, whether
+              it stings, or whether you can wear it under makeup. The practical questions arrive
+              late, in an FAQ, or not at all.
+            </p>
+            <p class="verdict"><b>Handled</b>For VITAS the practical answers <em>are</em> the differentiator, so they lead: does it smell, is it hot or cold, how often, before or after exercise.</p>
+          </div>
+        </article>
+
+        <article class="finding finding--improve">
+          <p class="finding__code">I&nbsp;03</p>
+          <div>
+            <h3>Ingredient storytelling shades into implied efficacy</h3>
+            <p>
+              A plant given a page, a portrait and a paragraph of botany reads as <em>active</em>,
+              whether or not a functional claim is made. Regulators in several markets have taken
+              an interest in exactly this technique.
+            </p>
+            <p class="verdict"><b>Specific hazard</b>VITAS is coming out of a period of over-claiming, into a category that sits next to actual medicines. Ingredient pages are written in sensory language and the "what it does not do" list is on the product page, not buried — but have a Hong Kong lawyer read the copy against Cap. 231 anyway.</p>
+          </div>
+        </article>
+
+        <article class="finding finding--improve">
+          <p class="finding__code">I&nbsp;04</p>
+          <div>
+            <h3>Heavy imagery, slow pages</h3>
+            <p>
+              Photographic sites of this type routinely carry multi-megabyte homepages. On mobile
+              data — how most Hong Kong customers will arrive, from Instagram or a YouTube link —
+              every extra second costs conversions and rankings.
+            </p>
+            <p class="verdict"><b>Handled</b>The whole site is HTML, one stylesheet, one small script and vector art. When real photography lands, keep it under control: AVIF/WebP, lazy loading, ~200KB hero budget.</p>
+          </div>
+        </article>
+
+        <article class="finding finding--improve">
+          <p class="finding__code">I&nbsp;05</p>
+          <div>
+            <h3>The consultation tool asks before it gives</h3>
+            <p>
+              Quizzes that demand an email before showing a result complete measurably worse than
+              tools that answer first.
+            </p>
+            <p class="verdict"><b>Handled</b>The routine finder answers immediately and asks for nothing. If you want emails from it later, ask <em>after</em> the result.</p>
+          </div>
+        </article>
+
+        <article class="finding finding--improve">
+          <p class="finding__code">I&nbsp;06</p>
+          <div>
+            <h3>Localisation is uneven across markets</h3>
+            <p>
+              Global brands run market sites of wildly different quality — the flagship rich, the
+              secondary markets thin or machine-translated.
+            </p>
+            <p class="verdict"><b>The trap to avoid entirely</b>The old VITAS English ("Green Flower Patch", "blood tendon bulges") destroyed the premium faster than any claim could build it. English and 繁體中文 are now equal citizens: both hand-written, both in the HTML, neither a translation of the other.</p>
+          </div>
+        </article>
+
+        <article class="finding finding--improve">
+          <p class="finding__code">I&nbsp;07</p>
+          <div>
+            <h3>Social proof is under-used</h3>
+            <p>
+              For a brand with decades of loyal customers, reviews and user content are strikingly
+              quiet — trust is carried entirely by certification and philosophy. That leaves
+              conversion on the table; review content is the best-performing element on most
+              product pages.
+            </p>
+            <p class="verdict"><b>The biggest open opportunity</b>This category has no review moat at all: Watsons shows no ratings, the old site said "be the first to review". Whoever builds a genuine review base first owns the category's trust. Sample through gyms and physio clinics; verify purchase. Do not seed fakes — the existing templated reseller reviews ("great for my skincare routine", on a muscle cream) are exactly what a sceptical buyer notices.</p>
+          </div>
+        </article>
+
+        <article class="finding finding--improve">
+          <p class="finding__code">I&nbsp;08</p>
+          <div>
+            <h3>Accessibility is the usual cost of a quiet palette</h3>
+            <p>
+              Soft grey-on-cream type, low-contrast buttons and hairline weights are the standard
+              failure mode of this aesthetic — and they fail WCAG contrast minimums.
+            </p>
+            <p class="verdict"><b>Handled</b>Body copy is near-black on paper, grey is reserved for secondary text, and every control has a visible focus ring, a skip link and real ARIA state. Re-check after any palette tweak.</p>
+          </div>
+        </article>
+
+        <article class="finding finding--improve">
+          <p class="finding__code">I&nbsp;09</p>
+          <div>
+            <h3>The store locator is a dead end</h3>
+            <p>
+              Locators tell you a shop exists, then abandon you: no stock status, no "buy online
+              instead", no distinction between a store carrying the full range and one carrying
+              two SKUs.
+            </p>
+            <p class="verdict"><b>Handled</b>Stockists link straight to each retailer's live product page rather than to a map — the right call for one SKU in a small city.</p>
+          </div>
+        </article>
+
+        <article class="finding finding--improve">
+          <p class="finding__code">I&nbsp;10</p>
+          <div>
+            <h3>Editorial content is disconnected from purchase</h3>
+            <p>
+              Advice articles that never link to the product they're about waste the traffic they
+              earn.
+            </p>
+            <p class="verdict"><b>Handled — then watch it</b>Every article links back into a routine or the product. If one earns traffic but no onward clicks, it needs a better ending, not more traffic.</p>
+          </div>
+        </article>
+      </div>
+    </section>
+
+    <section id="avoid">
+      <h2>What not to copy</h2>
+      <ul class="plain">
+        <li><strong>A multi-product architecture.</strong> Categories, filters and "shop by concern" navigation on a one-SKU site look like a shop with empty shelves.</li>
+        <li><strong>A direct-to-consumer checkout — for now.</strong> The old manual QR payment, capped at HK$500 a day with a screenshot as proof, was worse than no checkout. Until there's a real gateway, send people to Watsons and Mannings where the money already works. Retail is the asset, not a compromise.</li>
+        <li><strong>Mysticism as a substitute for evidence.</strong> Dr. Hauschka's philosophy is inherited and consistent. A newly invented equivalent would read as the lymphatic story in different clothes.</li>
+        <li><strong>Long ingredient rosters.</strong> Three plants, well explained, is a stronger asset than a list nobody reads.</li>
+      </ul>
+    </section>
+
+    <section id="map">
+      <h2>How the new site applies it</h2>
+      <p class="section-note">
+        Each pattern above, and where it landed in the build now sitting on the
+        <code>claude/vitas-product-website-hxhnh3</code> branch.
+      </p>
+      <div class="scroller">
+        <table class="map">
+          <thead>
+            <tr><th>Pattern</th><th>VITAS implementation</th></tr>
+          </thead>
+          <tbody>
+            <tr><td>Mood-first homepage</td><td>Hero: "Warm up quietly. Wind down properly." — no product grid</td></tr>
+            <tr><td>Plant Heroes</td><td><code>/ingredients/</code> — three plants, role, botany, honest function</td></tr>
+            <tr><td>Skin consultation tool</td><td><code>/how-to-use/#finder</code> — three questions → one of three routines</td></tr>
+            <tr><td>Philosophy pillar</td><td><code>/approach/</code> — what was removed, what we will and won't say, the honest case for HK$250</td></tr>
+            <tr><td>Editorial journal</td><td><code>/journal/</code> — three articles, one correcting the brand's own former claim</td></tr>
+            <tr><td>Store locator</td><td><code>/stockists/</code> — direct links to Watsons, Mannings, HKTVmall, online pharmacies</td></tr>
+            <tr><td>Certification as trust</td><td>"Made in France · EU GMP" — flagged for substantiation before launch</td></tr>
+            <tr><td>Their weakness: JS-gated content</td><td>Bilingual EN/繁中 in the markup; the site reads with JavaScript off</td></tr>
+            <tr><td>Their weakness: late practical answers</td><td>What it does / what it does not do, on the product page</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <section id="do">
+      <h2>If you only do five things</h2>
+      <ol class="actions">
+        <li><strong>Pick the honest positioning and hold it everywhere</strong> — site, packaging, Watsons listing, reseller copy. A site that says one thing while the shelf says another is worse than either alone.</li>
+        <li><strong>Fix payments or drop them.</strong> Send traffic to retail until a real gateway exists. Every visitor who meets a QR-code-and-screenshot checkout is a customer you taught not to trust you.</li>
+        <li><strong>Start collecting real reviews this quarter.</strong> The category has none. It is the cheapest defensible advantage available, and it compounds.</li>
+        <li><strong>Substantiate "Made in France / EU GMP"</strong> with documents you can show, then use it hard. It is the only third-party credential the brand has.</li>
+        <li><strong>Write for the buyer you actually have</strong> — the runner, the climber, the person whose shoulders hurt from a keyboard. Fitness micro-influencers and physio clinics, not generic wellness content.</li>
+      </ol>
+    </section>
+
+    <footer>
+      Prepared for the VITAS site build · August 2026 · Not legal advice — claim review by Hong Kong counsel required before launch
+    </footer>
+  </main>
+</div>
