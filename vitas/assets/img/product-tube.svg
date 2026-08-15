@@ -1,36 +1,48 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 520 700" width="520" height="700" role="img" aria-label="VITAS Soothing Cream Gel 100ml">
   <defs>
     <linearGradient id="tube" x1="0" y1="0" x2="1" y2="0">
-      <stop offset="0" stop-color="#ffffff"/>
-      <stop offset="0.42" stop-color="#EFE9E0"/>
-      <stop offset="1" stop-color="#D9D2C6"/>
-    </linearGradient>
-    <linearGradient id="cap" x1="0" y1="0" x2="1" y2="0">
-      <stop offset="0" stop-color="#22372E"/>
-      <stop offset="0.5" stop-color="#31503F"/>
-      <stop offset="1" stop-color="#1A2C24"/>
+      <stop offset="0" stop-color="#FFFFFF"/>
+      <stop offset="0.38" stop-color="#FFFFFF"/>
+      <stop offset="0.78" stop-color="#F3EBE6"/>
+      <stop offset="1" stop-color="#E4D9D2"/>
     </linearGradient>
   </defs>
-  <ellipse cx="260" cy="672" rx="185" ry="20" fill="#22372E" opacity="0.12"/>
-  <rect x="120" y="150" width="280" height="520" rx="26" fill="url(#tube)"/>
-  <path d="M120,190 h280" stroke="#22372E" stroke-opacity="0.12" stroke-width="1"/>
-  <rect x="196" y="40" width="128" height="112" rx="14" fill="url(#cap)"/>
-  <rect x="196" y="126" width="128" height="10" fill="#16241D" opacity="0.6"/>
-  <rect x="150" y="270" width="220" height="250" rx="6" fill="#F7F4EF" opacity="0.95"/>
-  <text x="260" y="330" text-anchor="middle" font-family="Georgia, serif" font-size="40" letter-spacing="13" fill="#22372E">VITAS</text>
-  <text x="260" y="366" text-anchor="middle" font-family="serif" font-size="20" letter-spacing="6" fill="#8FA38C">紓適寧</text>
-  <line x1="185" y1="392" x2="335" y2="392" stroke="#8FA38C" stroke-width="1"/>
-  <text x="260" y="424" text-anchor="middle" font-family="Helvetica, Arial, sans-serif" font-size="14.5" letter-spacing="2.4" fill="#22372E" opacity="0.75">SOOTHING</text>
-  <text x="260" y="446" text-anchor="middle" font-family="Helvetica, Arial, sans-serif" font-size="14.5" letter-spacing="2.4" fill="#22372E" opacity="0.75">CREAM GEL</text>
-  <text x="260" y="486" text-anchor="middle" font-family="Helvetica, Arial, sans-serif" font-size="13" letter-spacing="3" fill="#22372E" opacity="0.5">100 ml</text>
-<g transform="translate(196 560) rotate(-18)" opacity="0.95">
-    <path d="M0,0 C27.299999999999997,-26 58.5,-26 78,0 C58.5,26 27.299999999999997,26 0,0 Z" fill="#DFE6DC" stroke="#22372E" stroke-width="1.1" stroke-opacity="0.35"/>
-    <path d="M4.68,0 L70.2,0" stroke="#22372E" stroke-width="0.9" stroke-opacity="0.28" fill="none"/>
+  <ellipse cx="260" cy="676" rx="150" ry="16" fill="#2B1A12" opacity="0.1"/>
+
+  <!-- crimped seal at the top -->
+  <rect x="176" y="52" width="168" height="26" rx="4" fill="#F1E9E4" stroke="#ECDCD1" stroke-width="1.5"/>
+  <g stroke="#ECDCD1" stroke-width="1.4">
+    <path d="M190,56 v18"/>
+    <path d="M204,56 v18"/>
+    <path d="M218,56 v18"/>
+    <path d="M232,56 v18"/>
+    <path d="M246,56 v18"/>
+    <path d="M260,56 v18"/>
+    <path d="M274,56 v18"/>
+    <path d="M288,56 v18"/>
+    <path d="M302,56 v18"/>
+    <path d="M316,56 v18"/>
+    <path d="M330,56 v18"/>
   </g>
-<g transform="translate(258 566) rotate(6)" opacity="0.75">
-    <path d="M0,0 C27.299999999999997,-26 58.5,-26 78,0 C58.5,26 27.299999999999997,26 0,0 Z" fill="#8FA38C" stroke="#22372E" stroke-width="1.1" stroke-opacity="0.35"/>
-    <path d="M4.68,0 L70.2,0" stroke="#22372E" stroke-width="0.9" stroke-opacity="0.28" fill="none"/>
-  </g>
-  <rect x="120" y="150" width="280" height="520" rx="26" fill="none" stroke="#22372E" stroke-opacity="0.18"/>
-  <path d="M156,190 v440" stroke="#ffffff" stroke-opacity="0.75" stroke-width="14" stroke-linecap="round"/>
+
+  <!-- body: shoulders at the top, widening to the cap -->
+  <path d="M186,78 C186,140 150,190 148,300 L146,586 C146,600 158,608 176,608 L344,608
+           C362,608 374,600 374,586 L372,300 C370,190 334,140 334,78 Z"
+        fill="url(#tube)" stroke="#ECDCD1" stroke-width="1.5"/>
+
+  <!-- flip cap -->
+  <path d="M160,610 h200 c8,0 12,5 12,12 v34 c0,8 -6,14 -14,14 H162 c-8,0 -14,-6 -14,-14 v-34 c0,-7 4,-12 12,-12 Z"
+        fill="#FBF7F5" stroke="#ECDCD1" stroke-width="1.5"/>
+  <path d="M148,626 h224" stroke="#ECDCD1" stroke-width="1.2"/>
+
+  <!-- print -->
+  <circle cx="260" cy="150" r="21" fill="#EF6023"/>
+  <text x="260" y="158" text-anchor="middle" font-family="Helvetica, Arial, sans-serif" font-size="22" font-weight="500" fill="#FFFFFF">V</text>
+  <text x="260" y="205" text-anchor="middle" font-family="Helvetica, Arial, sans-serif" font-size="11" letter-spacing="1.9" fill="#EF6023">SOOTHING CREAM GEL</text>
+  <text x="262" y="300" text-anchor="start" transform="rotate(90 262 300)" font-family="Helvetica, Arial, sans-serif" font-size="86" font-weight="300" letter-spacing="10" fill="#EF6023">VITAS</text>
+  <text x="260" y="566" text-anchor="middle" font-family="Helvetica, Arial, sans-serif" font-size="13" letter-spacing="3" fill="#EF6023">MADE IN FRANCE</text>
+  <text x="260" y="592" text-anchor="middle" font-family="Helvetica, Arial, sans-serif" font-size="12" letter-spacing="2" fill="#EF6023" opacity="0.9">100ml</text>
+
+  <!-- highlight -->
+  <path d="M180,150 C176,260 174,420 176,560" stroke="#FFFFFF" stroke-opacity="0.9" stroke-width="16" stroke-linecap="round" fill="none"/>
 </svg>

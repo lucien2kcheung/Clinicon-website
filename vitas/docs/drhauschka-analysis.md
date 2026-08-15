@@ -100,9 +100,11 @@ Generous white space, muted natural palette, botanical photography, one
 typographic voice. Nothing shouts. The design itself is an argument for the
 product's gentleness — the medium matches the message.
 
-**Take it.** The VITAS build uses a paper-and-forest palette, a single serif
-display face, and a lot of air. The design says "this will not smell like a
-pharmacy" before a word is read.
+**Take it.** The VITAS build takes its palette straight from the pack — white
+ground, one orange, warm neutrals — with a single geometric sans and a lot of
+air. Restraint here means using the brand colour as punctuation rather than
+wallpaper: the design says "this will not smell like a pharmacy" before a word is
+read.
 
 ### 2.6 Editorial content with a reason to exist
 Advice, rituals, seasonal routines. Content that is useful whether or not you buy
@@ -198,8 +200,9 @@ machine-translated.
 **For VITAS this is the trap to avoid entirely.** The old site's English
 ("Green Flower Patch", "blood tendon bulges") destroyed the premium positioning
 faster than any claim could build it. This build treats English and 繁體中文 as
-equal citizens — both are hand-written, both live in the HTML, and neither is a
-machine translation of the other. In Hong Kong, bilingual is not a
+equal citizens — each language has its own URLs (`/…` and `/zh/…`) with hreflang
+alternates, both are hand-written, and neither is a machine translation of the
+other. In Hong Kong, bilingual is not a
 nice-to-have.
 
 ### 3.7 Social proof is under-used
@@ -268,14 +271,14 @@ traffic.
 | Dr. Hauschka pattern | VITAS implementation |
 | --- | --- |
 | Mood-first homepage | Hero: "Warm up quietly. Wind down properly." — no product grid |
-| Plant Heroes | `/ingredients/` — three plants, role, botany, honest function |
+| Plant Heroes | `/ingredients/` plus a page per plant — `/ingredients/eucalyptus/`, `/grape-seed/`, `/niaouli/` |
 | Skin consultation tool | `/how-to-use/#finder` — three questions → one of three routines |
 | Philosophy pillar | `/approach/` — what we removed, what we will and will not say, the honest case for the price |
 | Editorial journal | `/journal/` — three articles, one correcting the brand's own former claim |
 | Store locator | `/stockists/` — direct links to Watsons, Mannings, HKTVmall and online pharmacies |
 | Certification as trust | "Made in France · EU GMP" — flagged in README as needing substantiation before launch |
 | Restrained visual language | Paper/forest palette, one serif voice, vector botanical art, generous white space |
-| — (their weakness) | Bilingual EN/繁中 written into the HTML, no JS required to read the site |
+| — (their weakness) | Separate URLs per language (`/…` and `/zh/…`) with hreflang alternates; no JS required to read the site |
 | — (their weakness) | Practical answers early: what it does, what it does not do, does it smell |
 
 ---

@@ -1,10 +1,17 @@
 /**
  * Layout primitives for the VITAS site.
  *
- * Everything is bilingual (English + 繁體中文). Both languages are written into
- * the HTML — the toggle only flips `data-lang` on <html> and CSS hides the other
- * one. That keeps the whole site readable with JavaScript disabled and leaves
- * both languages visible to search engines.
+ * URLs
+ * ----
+ * Every page is a real, separately addressable URL — including each language
+ * and each ingredient. English lives at `/path/`, 繁體中文 at `/zh/path/`, and
+ * each page renders in one language only, with <link rel="alternate" hreflang>
+ * pointing at its counterpart. Nothing is hidden behind an anchor, a tab or a
+ * client-side toggle, so every page can be indexed, linked and shared on its
+ * own.
+ *
+ * Bilingual content is written as `{ en, zh }` pairs; the build sets the
+ * current language once per page and `t()` returns the right side.
  */
 
 export const SITE = {
@@ -15,40 +22,51 @@ export const SITE = {
   youtube: 'https://www.youtube.com/@VITASHK',
   facebook: 'https://www.facebook.com/vitashk/',
   email: 'hello@vitas.com.hk',
-  phone: '+852 0000 0000',
   address: {
     en: 'Hong Kong',
     zh: '香港',
   },
 };
 
+/* ------------------------------------------------------------- language */
+
+let LANG = 'en';
+
+/** Set by the build before rendering each page. */
+export const setLang = (lang) => {
+  LANG = lang;
+};
+export const getLang = () => LANG;
+
+/** Bilingual value → the string for the language being rendered. */
+export function t(value) {
+  if (value == null) return '';
+  return typeof value === 'string' ? value : value[LANG];
+}
+
+/** Block-level bilingual text. */
+export function blk(tag, value, className = '') {
+  const cls = className ? ` class="${className}"` : '';
+  return `<${tag}${cls}>${t(value)}</${tag}>`;
+}
+
+/** Plain text in a specific language, for <title>, meta and JSON-LD. */
+export const plain = (value, lang = LANG) =>
+  typeof value === 'string' ? value : value[lang];
+
 /** Escape text destined for an HTML attribute. */
 export const attr = (s) =>
   String(s).replace(/&/g, '&amp;').replace(/"/g, '&quot;').replace(/</g, '&lt;');
 
-/**
- * Inline bilingual text. Accepts a plain string (same in both languages) or
- * `{ en, zh }`.
- */
-export function t(value) {
-  if (value == null) return '';
-  if (typeof value === 'string') return value;
-  return `<span lang="en">${value.en}</span><span lang="zh-Hant">${value.zh}</span>`;
-}
+/* ------------------------------------------------------------------ urls */
 
-/** Block-level bilingual text: emits one element per language. */
-export function blk(tag, value, className = '') {
-  const cls = className ? ` class="${className}"` : '';
-  if (typeof value === 'string') return `<${tag}${cls}>${value}</${tag}>`;
-  return (
-    `<${tag}${cls} lang="en">${value.en}</${tag}>` +
-    `<${tag}${cls} lang="zh-Hant">${value.zh}</${tag}>`
-  );
-}
+/** Canonical (English) path → the URL for the language being rendered. */
+export const url = (path) => (LANG === 'zh' ? '/zh' + path : path);
 
-/** Plain-text version of a bilingual value, for <title>, meta, JSON-LD. */
-export const plain = (value, lang = 'en') =>
-  typeof value === 'string' ? value : value[lang];
+/** Canonical path → the URL in a named language. */
+export const urlIn = (path, lang) => (lang === 'zh' ? '/zh' + path : path);
+
+/* --------------------------------------------------------------- chrome */
 
 const navItems = [
   { href: '/product/', label: { en: 'The Cream', zh: '產品' } },
@@ -59,32 +77,35 @@ const navItems = [
   { href: '/stockists/', label: { en: 'Where to Buy', zh: '購買地點' } },
 ];
 
-function header(active) {
+function header(active, path) {
   const links = navItems
     .map(
       (item) =>
-        `<a class="nav__link${active === item.href ? ' is-active' : ''}" href="${item.href}"${
+        `<a class="nav__link${active === item.href ? ' is-active' : ''}" href="${url(item.href)}"${
           active === item.href ? ' aria-current="page"' : ''
         }>${t(item.label)}</a>`
     )
     .join('\n          ');
 
+  const other = LANG === 'zh' ? 'en' : 'zh';
+
   return `  <a class="skip-link" href="#main">${t({ en: 'Skip to content', zh: '跳至主要內容' })}</a>
   <header class="site-header" id="site-header">
     <div class="site-header__inner">
-      <a class="wordmark" href="/" aria-label="VITAS 紓適寧">
+      <a class="wordmark" href="${url('/')}" aria-label="VITAS 紓適寧">
+        <span class="wordmark__mark" aria-hidden="true">V</span>
         <span class="wordmark__latin">VITAS</span>
         <span class="wordmark__zh">紓適寧</span>
       </a>
-      <nav class="nav" id="primary-nav" aria-label="${attr('Primary')}">
+      <nav class="nav" id="primary-nav" aria-label="${attr(t({ en: 'Primary', zh: '主要' }))}">
         <div class="nav__links">
           ${links}
         </div>
         <div class="nav__actions">
-          <button class="lang-toggle" type="button" data-lang-toggle aria-live="polite">
-            <span lang="en">中文</span><span lang="zh-Hant">EN</span>
-          </button>
-          <a class="btn btn--sm" href="/stockists/">${t({ en: 'Buy', zh: '購買' })}</a>
+          <a class="lang-toggle" href="${urlIn(path, other)}" hreflang="${
+            other === 'zh' ? 'zh-Hant' : 'en'
+          }" lang="${other === 'zh' ? 'zh-Hant' : 'en'}">${other === 'zh' ? '中文' : 'EN'}</a>
+          <a class="btn btn--sm" href="${url('/stockists/')}">${t({ en: 'Buy', zh: '購買' })}</a>
         </div>
       </nav>
       <button class="nav-toggle" type="button" aria-expanded="false" aria-controls="primary-nav" data-nav-toggle>
@@ -103,7 +124,7 @@ function footer() {
             ${links
               .map(
                 (l) =>
-                  `<li><a href="${l.href}"${
+                  `<li><a href="${l.external ? l.href : url(l.href)}"${
                     l.external ? ' target="_blank" rel="noopener"' : ''
                   }>${t(l.label)}</a></li>`
               )
@@ -115,12 +136,13 @@ function footer() {
     <div class="footer__top">
       <div class="footer__intro">
         <span class="wordmark wordmark--footer">
+          <span class="wordmark__mark" aria-hidden="true">V</span>
           <span class="wordmark__latin">VITAS</span>
           <span class="wordmark__zh">紓適寧</span>
         </span>
         ${blk('p', {
-          en: 'A low-odour, non-greasy plant-oil cream gel for warming up before training and easing tired muscles after it. Made in France. Sold in Hong Kong since 2013.',
-          zh: '低氣味、不油膩的植物油啫喱膏，運動前熱身、運動後放鬆疲勞肌肉。法國製造，2013 年起於香港發售。',
+          en: 'A low-odour, non-greasy plant-oil cream gel for warming up before training and easing tired muscles after it. Made in France.',
+          zh: '低氣味、不油膩的植物油啫喱膏，運動前熱身、運動後放鬆疲勞肌肉。法國製造。',
         })}
         <div class="footer__social">
           <a href="${SITE.youtube}" target="_blank" rel="noopener">YouTube</a>
@@ -148,10 +170,14 @@ function footer() {
       </div>
     </div>
     <div class="footer__bottom">
-      ${blk('p', {
-        en: 'VITAS Soothing Cream Gel is a cosmetic massage product. It is not a medicine and is not intended to diagnose, treat or cure any disease. If pain is severe, persistent or follows an injury, please see a doctor or physiotherapist.',
-        zh: 'VITAS 舒緩啫喱膏屬按摩護理產品，並非藥物，不用於診斷、治療或預防任何疾病。如疼痛劇烈、持續或由受傷引起，請諮詢醫生或物理治療師。',
-        }, 'footer__disclaimer')}
+      ${blk(
+        'p',
+        {
+          en: 'VITAS Soothing Cream Gel is a cosmetic massage product. It is not a medicine and is not intended to diagnose, treat or cure any disease. If pain is severe, persistent or follows an injury, please see a doctor or physiotherapist.',
+          zh: 'VITAS 舒緩啫喱膏屬按摩護理產品，並非藥物，不用於診斷、治療或預防任何疾病。如疼痛劇烈、持續或由受傷引起，請諮詢醫生或物理治療師。',
+        },
+        'footer__disclaimer'
+      )}
       <p class="footer__copy">© ${new Date().getFullYear()} VITAS 紓適寧. ${t({
         en: 'All rights reserved.',
         zh: '版權所有。',
@@ -164,51 +190,53 @@ function footer() {
  * Full page shell.
  *
  * @param {object} opts
- * @param {{en:string,zh:string}} opts.title      – <title>, English used as canonical title
+ * @param {{en:string,zh:string}} opts.title
  * @param {{en:string,zh:string}} opts.description
- * @param {string} opts.path       – site path, e.g. "/product/"
- * @param {string} opts.body       – page markup
+ * @param {string} opts.path       – canonical (English) path, e.g. "/product/"
+ * @param {string} opts.body
  * @param {string} [opts.active]   – nav path to highlight
- * @param {object[]} [opts.jsonLd] – structured data objects
+ * @param {object[]} [opts.jsonLd]
  * @param {string} [opts.bodyClass]
  */
 export function page({ title, description, path, body, active, jsonLd = [], bodyClass = '' }) {
-  const canonical = SITE.url + path;
-  const titleEn = plain(title);
-  const titleZh = plain(title, 'zh');
-  const descEn = plain(description);
+  const isZh = LANG === 'zh';
+  const canonical = SITE.url + url(path);
+  const htmlLang = isZh ? 'zh-Hant-HK' : 'en-HK';
   const structured = jsonLd
     .map((data) => `  <script type="application/ld+json">${JSON.stringify(data)}</script>`)
     .join('\n');
 
   return `<!doctype html>
-<html lang="en" data-lang="en">
+<html lang="${htmlLang}">
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>${attr(titleEn)} — ${attr(titleZh)} | VITAS 紓適寧</title>
-  <meta name="description" content="${attr(descEn)}">
+  <title>${attr(t(title))} | VITAS 紓適寧</title>
+  <meta name="description" content="${attr(t(description))}">
   <link rel="canonical" href="${canonical}">
+  <link rel="alternate" hreflang="en-HK" href="${SITE.url + urlIn(path, 'en')}">
+  <link rel="alternate" hreflang="zh-Hant-HK" href="${SITE.url + urlIn(path, 'zh')}">
+  <link rel="alternate" hreflang="x-default" href="${SITE.url + urlIn(path, 'en')}">
   <meta property="og:type" content="website">
   <meta property="og:site_name" content="VITAS 紓適寧">
-  <meta property="og:title" content="${attr(titleEn)} | VITAS 紓適寧">
-  <meta property="og:description" content="${attr(descEn)}">
+  <meta property="og:title" content="${attr(t(title))} | VITAS 紓適寧">
+  <meta property="og:description" content="${attr(t(description))}">
   <meta property="og:url" content="${canonical}">
   <meta property="og:image" content="${SITE.url}/assets/img/og-cover.png">
-  <meta property="og:locale" content="en_HK">
-  <meta property="og:locale:alternate" content="zh_HK">
+  <meta property="og:locale" content="${isZh ? 'zh_HK' : 'en_HK'}">
+  <meta property="og:locale:alternate" content="${isZh ? 'en_HK' : 'zh_HK'}">
   <meta name="twitter:card" content="summary_large_image">
-  <meta name="theme-color" content="#F7F4EF">
+  <meta name="theme-color" content="#EF6023">
   <link rel="icon" href="/assets/img/favicon.svg" type="image/svg+xml">
   <link rel="apple-touch-icon" href="/assets/img/favicon.svg">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300&family=Jost:wght@300;400;500&family=Noto+Serif+HK:wght@300;400;500&display=swap">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Jost:wght@300;400;500;600&family=Noto+Sans+HK:wght@300;400;500;700&display=swap">
   <link rel="stylesheet" href="/assets/css/site.css">
 ${structured}
 </head>
-<body class="${bodyClass}">
-${header(active)}
+<body class="${bodyClass}${isZh ? ' lang-zh' : ''}">
+${header(active, path)}
   <main id="main">
 ${body}
   </main>
@@ -219,7 +247,7 @@ ${footer()}
 `;
 }
 
-/* ---------------------------------------------------------------- sections */
+/* ---------------------------------------------------------------- pieces */
 
 /** Eyebrow + heading + optional lede, used at the top of most sections. */
 export function sectionHead({ eyebrow, heading, lede, align = 'left' }) {
@@ -230,16 +258,21 @@ export function sectionHead({ eyebrow, heading, lede, align = 'left' }) {
       </div>`;
 }
 
-/** Primary / secondary call to action. */
+/** Call to action. Internal paths are language-prefixed automatically. */
 export function cta(href, label, variant = '') {
   const external = /^https?:/.test(href);
-  return `<a class="btn${variant ? ' ' + variant : ''}" href="${href}"${
+  return `<a class="btn${variant ? ' ' + variant : ''}" href="${external ? href : url(href)}"${
     external ? ' target="_blank" rel="noopener"' : ''
   }>${t(label)}</a>`;
 }
 
-/** Illustrated media panel — SVG art with a soft tinted ground. */
-export function figure(src, alt, tone = 'sage', { caption, w = 1200, h = 800 } = {}) {
+/** Inline text link with an arrow. Internal paths are language-prefixed. */
+export function arrow(href, label) {
+  return `<a class="link-arrow" href="${url(href)}">${t(label)}</a>`;
+}
+
+/** Illustrated media panel — SVG art on a tinted ground. */
+export function figure(src, alt, tone = 'tint', { caption, w = 1200, h = 800 } = {}) {
   return `<figure class="figure figure--${tone}">
           <img src="${src}" alt="${attr(plain(alt))}" loading="lazy" decoding="async" width="${w}" height="${h}">
           ${caption ? blk('figcaption', caption) : ''}

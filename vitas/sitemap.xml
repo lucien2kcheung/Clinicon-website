@@ -1,86 +1,309 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
+        xmlns:xhtml="http://www.w3.org/1999/xhtml">
   <url>
     <loc>https://www.vitas.com.hk/</loc>
-    <lastmod>2026-08-14</lastmod>
+    <xhtml:link rel="alternate" hreflang="en-HK" href="https://www.vitas.com.hk/"/>
+    <xhtml:link rel="alternate" hreflang="zh-Hant-HK" href="https://www.vitas.com.hk/zh/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.vitas.com.hk/"/>
+    <lastmod>2026-08-15</lastmod>
     <changefreq>weekly</changefreq>
     <priority>1.0</priority>
   </url>
   <url>
     <loc>https://www.vitas.com.hk/product/</loc>
-    <lastmod>2026-08-14</lastmod>
+    <xhtml:link rel="alternate" hreflang="en-HK" href="https://www.vitas.com.hk/product/"/>
+    <xhtml:link rel="alternate" hreflang="zh-Hant-HK" href="https://www.vitas.com.hk/zh/product/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.vitas.com.hk/product/"/>
+    <lastmod>2026-08-15</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.9</priority>
   </url>
   <url>
     <loc>https://www.vitas.com.hk/how-to-use/</loc>
-    <lastmod>2026-08-14</lastmod>
+    <xhtml:link rel="alternate" hreflang="en-HK" href="https://www.vitas.com.hk/how-to-use/"/>
+    <xhtml:link rel="alternate" hreflang="zh-Hant-HK" href="https://www.vitas.com.hk/zh/how-to-use/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.vitas.com.hk/how-to-use/"/>
+    <lastmod>2026-08-15</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>https://www.vitas.com.hk/ingredients/</loc>
-    <lastmod>2026-08-14</lastmod>
+    <xhtml:link rel="alternate" hreflang="en-HK" href="https://www.vitas.com.hk/ingredients/"/>
+    <xhtml:link rel="alternate" hreflang="zh-Hant-HK" href="https://www.vitas.com.hk/zh/ingredients/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.vitas.com.hk/ingredients/"/>
+    <lastmod>2026-08-15</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://www.vitas.com.hk/ingredients/eucalyptus/</loc>
+    <xhtml:link rel="alternate" hreflang="en-HK" href="https://www.vitas.com.hk/ingredients/eucalyptus/"/>
+    <xhtml:link rel="alternate" hreflang="zh-Hant-HK" href="https://www.vitas.com.hk/zh/ingredients/eucalyptus/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.vitas.com.hk/ingredients/eucalyptus/"/>
+    <lastmod>2026-08-15</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://www.vitas.com.hk/ingredients/grape-seed/</loc>
+    <xhtml:link rel="alternate" hreflang="en-HK" href="https://www.vitas.com.hk/ingredients/grape-seed/"/>
+    <xhtml:link rel="alternate" hreflang="zh-Hant-HK" href="https://www.vitas.com.hk/zh/ingredients/grape-seed/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.vitas.com.hk/ingredients/grape-seed/"/>
+    <lastmod>2026-08-15</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://www.vitas.com.hk/ingredients/niaouli/</loc>
+    <xhtml:link rel="alternate" hreflang="en-HK" href="https://www.vitas.com.hk/ingredients/niaouli/"/>
+    <xhtml:link rel="alternate" hreflang="zh-Hant-HK" href="https://www.vitas.com.hk/zh/ingredients/niaouli/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.vitas.com.hk/ingredients/niaouli/"/>
+    <lastmod>2026-08-15</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>https://www.vitas.com.hk/approach/</loc>
-    <lastmod>2026-08-14</lastmod>
+    <xhtml:link rel="alternate" hreflang="en-HK" href="https://www.vitas.com.hk/approach/"/>
+    <xhtml:link rel="alternate" hreflang="zh-Hant-HK" href="https://www.vitas.com.hk/zh/approach/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.vitas.com.hk/approach/"/>
+    <lastmod>2026-08-15</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>https://www.vitas.com.hk/stockists/</loc>
-    <lastmod>2026-08-14</lastmod>
+    <xhtml:link rel="alternate" hreflang="en-HK" href="https://www.vitas.com.hk/stockists/"/>
+    <xhtml:link rel="alternate" hreflang="zh-Hant-HK" href="https://www.vitas.com.hk/zh/stockists/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.vitas.com.hk/stockists/"/>
+    <lastmod>2026-08-15</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>https://www.vitas.com.hk/journal/</loc>
-    <lastmod>2026-08-14</lastmod>
+    <xhtml:link rel="alternate" hreflang="en-HK" href="https://www.vitas.com.hk/journal/"/>
+    <xhtml:link rel="alternate" hreflang="zh-Hant-HK" href="https://www.vitas.com.hk/zh/journal/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.vitas.com.hk/journal/"/>
+    <lastmod>2026-08-15</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>https://www.vitas.com.hk/journal/lactic-acid-myth/</loc>
-    <lastmod>2026-08-14</lastmod>
+    <xhtml:link rel="alternate" hreflang="en-HK" href="https://www.vitas.com.hk/journal/lactic-acid-myth/"/>
+    <xhtml:link rel="alternate" hreflang="zh-Hant-HK" href="https://www.vitas.com.hk/zh/journal/lactic-acid-myth/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.vitas.com.hk/journal/lactic-acid-myth/"/>
+    <lastmod>2026-08-15</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>https://www.vitas.com.hk/journal/warm-up-rub/</loc>
-    <lastmod>2026-08-14</lastmod>
+    <xhtml:link rel="alternate" hreflang="en-HK" href="https://www.vitas.com.hk/journal/warm-up-rub/"/>
+    <xhtml:link rel="alternate" hreflang="zh-Hant-HK" href="https://www.vitas.com.hk/zh/journal/warm-up-rub/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.vitas.com.hk/journal/warm-up-rub/"/>
+    <lastmod>2026-08-15</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>https://www.vitas.com.hk/journal/desk-neck/</loc>
-    <lastmod>2026-08-14</lastmod>
+    <xhtml:link rel="alternate" hreflang="en-HK" href="https://www.vitas.com.hk/journal/desk-neck/"/>
+    <xhtml:link rel="alternate" hreflang="zh-Hant-HK" href="https://www.vitas.com.hk/zh/journal/desk-neck/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.vitas.com.hk/journal/desk-neck/"/>
+    <lastmod>2026-08-15</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>https://www.vitas.com.hk/faq/</loc>
-    <lastmod>2026-08-14</lastmod>
+    <xhtml:link rel="alternate" hreflang="en-HK" href="https://www.vitas.com.hk/faq/"/>
+    <xhtml:link rel="alternate" hreflang="zh-Hant-HK" href="https://www.vitas.com.hk/zh/faq/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.vitas.com.hk/faq/"/>
+    <lastmod>2026-08-15</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>https://www.vitas.com.hk/contact/</loc>
-    <lastmod>2026-08-14</lastmod>
+    <xhtml:link rel="alternate" hreflang="en-HK" href="https://www.vitas.com.hk/contact/"/>
+    <xhtml:link rel="alternate" hreflang="zh-Hant-HK" href="https://www.vitas.com.hk/zh/contact/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.vitas.com.hk/contact/"/>
+    <lastmod>2026-08-15</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>https://www.vitas.com.hk/legal/privacy/</loc>
-    <lastmod>2026-08-14</lastmod>
+    <xhtml:link rel="alternate" hreflang="en-HK" href="https://www.vitas.com.hk/legal/privacy/"/>
+    <xhtml:link rel="alternate" hreflang="zh-Hant-HK" href="https://www.vitas.com.hk/zh/legal/privacy/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.vitas.com.hk/legal/privacy/"/>
+    <lastmod>2026-08-15</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>https://www.vitas.com.hk/legal/terms/</loc>
-    <lastmod>2026-08-14</lastmod>
+    <xhtml:link rel="alternate" hreflang="en-HK" href="https://www.vitas.com.hk/legal/terms/"/>
+    <xhtml:link rel="alternate" hreflang="zh-Hant-HK" href="https://www.vitas.com.hk/zh/legal/terms/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.vitas.com.hk/legal/terms/"/>
+    <lastmod>2026-08-15</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://www.vitas.com.hk/zh/</loc>
+    <xhtml:link rel="alternate" hreflang="en-HK" href="https://www.vitas.com.hk/"/>
+    <xhtml:link rel="alternate" hreflang="zh-Hant-HK" href="https://www.vitas.com.hk/zh/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.vitas.com.hk/"/>
+    <lastmod>2026-08-15</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>1.0</priority>
+  </url>
+  <url>
+    <loc>https://www.vitas.com.hk/zh/product/</loc>
+    <xhtml:link rel="alternate" hreflang="en-HK" href="https://www.vitas.com.hk/product/"/>
+    <xhtml:link rel="alternate" hreflang="zh-Hant-HK" href="https://www.vitas.com.hk/zh/product/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.vitas.com.hk/product/"/>
+    <lastmod>2026-08-15</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.9</priority>
+  </url>
+  <url>
+    <loc>https://www.vitas.com.hk/zh/how-to-use/</loc>
+    <xhtml:link rel="alternate" hreflang="en-HK" href="https://www.vitas.com.hk/how-to-use/"/>
+    <xhtml:link rel="alternate" hreflang="zh-Hant-HK" href="https://www.vitas.com.hk/zh/how-to-use/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.vitas.com.hk/how-to-use/"/>
+    <lastmod>2026-08-15</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://www.vitas.com.hk/zh/ingredients/</loc>
+    <xhtml:link rel="alternate" hreflang="en-HK" href="https://www.vitas.com.hk/ingredients/"/>
+    <xhtml:link rel="alternate" hreflang="zh-Hant-HK" href="https://www.vitas.com.hk/zh/ingredients/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.vitas.com.hk/ingredients/"/>
+    <lastmod>2026-08-15</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://www.vitas.com.hk/zh/ingredients/eucalyptus/</loc>
+    <xhtml:link rel="alternate" hreflang="en-HK" href="https://www.vitas.com.hk/ingredients/eucalyptus/"/>
+    <xhtml:link rel="alternate" hreflang="zh-Hant-HK" href="https://www.vitas.com.hk/zh/ingredients/eucalyptus/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.vitas.com.hk/ingredients/eucalyptus/"/>
+    <lastmod>2026-08-15</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://www.vitas.com.hk/zh/ingredients/grape-seed/</loc>
+    <xhtml:link rel="alternate" hreflang="en-HK" href="https://www.vitas.com.hk/ingredients/grape-seed/"/>
+    <xhtml:link rel="alternate" hreflang="zh-Hant-HK" href="https://www.vitas.com.hk/zh/ingredients/grape-seed/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.vitas.com.hk/ingredients/grape-seed/"/>
+    <lastmod>2026-08-15</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://www.vitas.com.hk/zh/ingredients/niaouli/</loc>
+    <xhtml:link rel="alternate" hreflang="en-HK" href="https://www.vitas.com.hk/ingredients/niaouli/"/>
+    <xhtml:link rel="alternate" hreflang="zh-Hant-HK" href="https://www.vitas.com.hk/zh/ingredients/niaouli/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.vitas.com.hk/ingredients/niaouli/"/>
+    <lastmod>2026-08-15</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://www.vitas.com.hk/zh/approach/</loc>
+    <xhtml:link rel="alternate" hreflang="en-HK" href="https://www.vitas.com.hk/approach/"/>
+    <xhtml:link rel="alternate" hreflang="zh-Hant-HK" href="https://www.vitas.com.hk/zh/approach/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.vitas.com.hk/approach/"/>
+    <lastmod>2026-08-15</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://www.vitas.com.hk/zh/stockists/</loc>
+    <xhtml:link rel="alternate" hreflang="en-HK" href="https://www.vitas.com.hk/stockists/"/>
+    <xhtml:link rel="alternate" hreflang="zh-Hant-HK" href="https://www.vitas.com.hk/zh/stockists/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.vitas.com.hk/stockists/"/>
+    <lastmod>2026-08-15</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://www.vitas.com.hk/zh/journal/</loc>
+    <xhtml:link rel="alternate" hreflang="en-HK" href="https://www.vitas.com.hk/journal/"/>
+    <xhtml:link rel="alternate" hreflang="zh-Hant-HK" href="https://www.vitas.com.hk/zh/journal/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.vitas.com.hk/journal/"/>
+    <lastmod>2026-08-15</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://www.vitas.com.hk/zh/journal/lactic-acid-myth/</loc>
+    <xhtml:link rel="alternate" hreflang="en-HK" href="https://www.vitas.com.hk/journal/lactic-acid-myth/"/>
+    <xhtml:link rel="alternate" hreflang="zh-Hant-HK" href="https://www.vitas.com.hk/zh/journal/lactic-acid-myth/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.vitas.com.hk/journal/lactic-acid-myth/"/>
+    <lastmod>2026-08-15</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://www.vitas.com.hk/zh/journal/warm-up-rub/</loc>
+    <xhtml:link rel="alternate" hreflang="en-HK" href="https://www.vitas.com.hk/journal/warm-up-rub/"/>
+    <xhtml:link rel="alternate" hreflang="zh-Hant-HK" href="https://www.vitas.com.hk/zh/journal/warm-up-rub/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.vitas.com.hk/journal/warm-up-rub/"/>
+    <lastmod>2026-08-15</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://www.vitas.com.hk/zh/journal/desk-neck/</loc>
+    <xhtml:link rel="alternate" hreflang="en-HK" href="https://www.vitas.com.hk/journal/desk-neck/"/>
+    <xhtml:link rel="alternate" hreflang="zh-Hant-HK" href="https://www.vitas.com.hk/zh/journal/desk-neck/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.vitas.com.hk/journal/desk-neck/"/>
+    <lastmod>2026-08-15</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://www.vitas.com.hk/zh/faq/</loc>
+    <xhtml:link rel="alternate" hreflang="en-HK" href="https://www.vitas.com.hk/faq/"/>
+    <xhtml:link rel="alternate" hreflang="zh-Hant-HK" href="https://www.vitas.com.hk/zh/faq/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.vitas.com.hk/faq/"/>
+    <lastmod>2026-08-15</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://www.vitas.com.hk/zh/contact/</loc>
+    <xhtml:link rel="alternate" hreflang="en-HK" href="https://www.vitas.com.hk/contact/"/>
+    <xhtml:link rel="alternate" hreflang="zh-Hant-HK" href="https://www.vitas.com.hk/zh/contact/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.vitas.com.hk/contact/"/>
+    <lastmod>2026-08-15</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://www.vitas.com.hk/zh/legal/privacy/</loc>
+    <xhtml:link rel="alternate" hreflang="en-HK" href="https://www.vitas.com.hk/legal/privacy/"/>
+    <xhtml:link rel="alternate" hreflang="zh-Hant-HK" href="https://www.vitas.com.hk/zh/legal/privacy/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.vitas.com.hk/legal/privacy/"/>
+    <lastmod>2026-08-15</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://www.vitas.com.hk/zh/legal/terms/</loc>
+    <xhtml:link rel="alternate" hreflang="en-HK" href="https://www.vitas.com.hk/legal/terms/"/>
+    <xhtml:link rel="alternate" hreflang="zh-Hant-HK" href="https://www.vitas.com.hk/zh/legal/terms/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.vitas.com.hk/legal/terms/"/>
+    <lastmod>2026-08-15</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>

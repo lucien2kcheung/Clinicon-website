@@ -4,26 +4,34 @@
  *
  *   node src/build.mjs
  *
- * Writes plain HTML into this folder (index.html, product/index.html, …) plus
- * sitemap.xml. There is no framework and no runtime dependency: commit the
- * output and Vercel serves it as-is.
+ * Writes plain HTML into this folder — one file per page, per language:
+ *
+ *   /index.html              /zh/index.html
+ *   /product/index.html      /zh/product/index.html
+ *   /ingredients/eucalyptus/index.html …
+ *
+ * Every page is its own URL. There is no framework and no runtime dependency:
+ * commit the output and Vercel serves it as-is.
  */
 
 import { mkdir, writeFile } from 'node:fs/promises';
 import { dirname, join, resolve } from 'node:path';
 import { fileURLToPath } from 'node:url';
 
-import { page, SITE } from './layout.mjs';
-import { ARTICLES } from './data.mjs';
+import { page, setLang, urlIn, SITE } from './layout.mjs';
+import { ARTICLES, PLANTS } from './data.mjs';
 import * as pages from './pages.mjs';
 
 const root = resolve(dirname(fileURLToPath(import.meta.url)), '..');
+const LANGS = ['en', 'zh'];
 
-const specs = [
+/** Build the page list for whichever language is currently set. */
+const buildSpecs = () => [
   pages.home(),
   pages.product(),
   pages.howToUse(),
   pages.ingredients(),
+  ...PLANTS.map((p) => pages.ingredient(p)),
   pages.approach(),
   pages.stockists(),
   pages.journalIndex(),
@@ -40,39 +48,47 @@ const fileFor = (path) =>
   path.endsWith('.html') ? path.replace(/^\//, '') : join(path.replace(/^\//, ''), 'index.html');
 
 const written = [];
+const canonicalPaths = [];
 
-for (const spec of specs) {
-  const file = join(root, fileFor(spec.path));
-  await mkdir(dirname(file), { recursive: true });
-  await writeFile(file, page(spec), 'utf8');
-  written.push(spec.path);
+for (const lang of LANGS) {
+  setLang(lang);
+  for (const spec of buildSpecs()) {
+    const path = urlIn(spec.path, lang);
+    const file = join(root, fileFor(path));
+    await mkdir(dirname(file), { recursive: true });
+    await writeFile(file, page(spec), 'utf8');
+    written.push(path);
+    if (lang === 'en' && !spec.path.endsWith('.html')) canonicalPaths.push(spec.path);
+  }
 }
 
 /* -------------------------------------------------------------- sitemap.xml */
 
 const today = new Date().toISOString().slice(0, 10);
-const urls = specs
-  .filter((s) => !s.path.endsWith('.html'))
-  .map(
-    (s) => `  <url>
-    <loc>${SITE.url}${s.path}</loc>
+
+const entry = (path, lang) => `  <url>
+    <loc>${SITE.url}${urlIn(path, lang)}</loc>
+    <xhtml:link rel="alternate" hreflang="en-HK" href="${SITE.url}${urlIn(path, 'en')}"/>
+    <xhtml:link rel="alternate" hreflang="zh-Hant-HK" href="${SITE.url}${urlIn(path, 'zh')}"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="${SITE.url}${urlIn(path, 'en')}"/>
     <lastmod>${today}</lastmod>
-    <changefreq>${s.path === '/' ? 'weekly' : 'monthly'}</changefreq>
-    <priority>${s.path === '/' ? '1.0' : s.path === '/product/' ? '0.9' : '0.7'}</priority>
-  </url>`
-  )
-  .join('\n');
+    <changefreq>${path === '/' ? 'weekly' : 'monthly'}</changefreq>
+    <priority>${path === '/' ? '1.0' : path === '/product/' ? '0.9' : '0.7'}</priority>
+  </url>`;
+
+const urls = LANGS.flatMap((lang) => canonicalPaths.map((path) => entry(path, lang))).join('\n');
 
 await writeFile(
   join(root, 'sitemap.xml'),
   `<?xml version="1.0" encoding="UTF-8"?>
-<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
+        xmlns:xhtml="http://www.w3.org/1999/xhtml">
 ${urls}
 </urlset>
 `,
   'utf8'
 );
 
-console.log(`Built ${written.length} pages:`);
+console.log(`Built ${written.length} pages (${canonicalPaths.length} × ${LANGS.length} languages + 404):`);
 for (const p of written) console.log('  ' + p);
 console.log('Wrote sitemap.xml');

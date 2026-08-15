@@ -1,15 +1,17 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 630" width="1200" height="630" role="img">
-  <rect width="1200" height="630" fill="#F7F4EF"/>
-  <path d="M0,430 C240,340 420,500 660,390 C860,300 1040,360 1200,300 L1200,630 L0,630 Z" fill="#DFE6DC"/>
-  <text x="80" y="250" font-family="Georgia, serif" font-size="72" letter-spacing="22" fill="#22372E">VITAS</text>
-  <text x="80" y="310" font-family="serif" font-size="34" letter-spacing="10" fill="#8FA38C">紓適寧</text>
-  <text x="80" y="392" font-family="Helvetica, Arial, sans-serif" font-size="26" letter-spacing="2" fill="#22372E" opacity="0.8">Low-odour plant-oil cream gel · 100ml</text>
-<g transform="translate(880 180) rotate(24)" opacity="0.85">
-    <path d="M0,0 C77,-70 165,-70 220,0 C165,70 77,70 0,0 Z" fill="#8FA38C" stroke="#22372E" stroke-width="1.1" stroke-opacity="0.35"/>
-    <path d="M13.2,0 L198,0" stroke="#22372E" stroke-width="0.9" stroke-opacity="0.28" fill="none"/>
+  <rect width="1200" height="630" fill="#FFFFFF"/>
+  <path d="M0,430 C240,340 420,500 660,390 C860,300 1040,360 1200,300 L1200,630 L0,630 Z" fill="#FDF1EA"/>
+  <circle cx="104" cy="176" r="26" fill="#EF6023"/>
+  <text x="104" y="186" text-anchor="middle" font-family="Helvetica, Arial, sans-serif" font-size="28" font-weight="500" fill="#FFFFFF">V</text>
+  <text x="152" y="196" font-family="Helvetica, Arial, sans-serif" font-size="76" font-weight="300" letter-spacing="20" fill="#EF6023">VITAS</text>
+  <text x="80" y="270" font-family="'Noto Sans HK', sans-serif" font-size="36" letter-spacing="10" fill="#EF6023">紓適寧</text>
+  <text x="80" y="360" font-family="Helvetica, Arial, sans-serif" font-size="26" letter-spacing="2" fill="#2B1A12" opacity="0.85">Low-odour plant-oil cream gel · 100ml</text>
+<g transform="translate(880 180) rotate(24)" opacity="0.95">
+    <path d="M0,0 C77,-70 165,-70 220,0 C165,70 77,70 0,0 Z" fill="#FBDCC9" stroke="#C2440E" stroke-width="5.5" stroke-opacity="0.5"/>
+    <path d="M13.2,0 L198,0" stroke="#C2440E" stroke-width="3.9599999999999995" stroke-opacity="0.4" fill="none"/>
   </g>
 <g transform="translate(860 240) rotate(160)" opacity="0.9">
-    <path d="M0,0 C66.5,-60 142.5,-60 190,0 C142.5,60 66.5,60 0,0 Z" fill="#DFE6DC" stroke="#22372E" stroke-width="1.1" stroke-opacity="0.35"/>
-    <path d="M11.4,0 L171,0" stroke="#22372E" stroke-width="0.9" stroke-opacity="0.28" fill="none"/>
+    <path d="M0,0 C66.5,-60 142.5,-60 190,0 C142.5,60 66.5,60 0,0 Z" fill="#F6BE9C" stroke="#C2440E" stroke-width="4.75" stroke-opacity="0.5"/>
+    <path d="M11.4,0 L171,0" stroke="#C2440E" stroke-width="3.42" stroke-opacity="0.4" fill="none"/>
   </g>
 </svg>

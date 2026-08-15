@@ -1,19 +1,39 @@
-/** Page bodies. Each export returns { title, description, path, body, ... } for layout.page(). */
+/**
+ * Page bodies. Each export returns a spec for layout.page().
+ *
+ * `path` is always the canonical English path — the build renders each spec
+ * once per language and prefixes the Chinese one with /zh.
+ */
 
-import { SITE, t, blk, plain, attr, sectionHead, cta, figure } from './layout.mjs';
+import {
+  SITE,
+  t,
+  blk,
+  plain,
+  attr,
+  url,
+  urlIn,
+  getLang,
+  sectionHead,
+  cta,
+  arrow,
+  figure,
+} from './layout.mjs';
 import { PRODUCT, PLANTS, STOCKISTS, ARTICLES, FAQS } from './data.mjs';
 
 /* --------------------------------------------------------- shared partials */
 
-const productJsonLd = {
+const productJsonLd = () => ({
   '@context': 'https://schema.org',
   '@type': 'Product',
   name: 'VITAS Soothing Cream Gel 100ml',
   alternateName: 'VITAS 紓適寧 舒緩啫喱膏 100毫升',
   sku: PRODUCT.sku,
   brand: { '@type': 'Brand', name: 'VITAS 紓適寧' },
-  description:
-    'A low-odour, non-greasy plant-oil cream gel with eucalyptus, grape seed and niaouli. For warming up before training and massaging tired muscles afterwards. Made in France.',
+  description: plain({
+    en: 'A low-odour, non-greasy plant-oil cream gel with eucalyptus, grape seed and niaouli. For warming up before training and massaging tired muscles afterwards. Made in France.',
+    zh: '含尤加利、葡萄籽與綠花白千層的低氣味、不油膩植物油啫喱膏。適合訓練前熱身及訓練後按摩疲勞肌肉。法國製造。',
+  }),
   image: [SITE.url + '/assets/img/product-tube.svg'],
   countryOfOrigin: 'FR',
   offers: {
@@ -21,10 +41,10 @@ const productJsonLd = {
     price: String(PRODUCT.price),
     priceCurrency: PRODUCT.currency,
     availability: 'https://schema.org/InStock',
-    url: SITE.url + PRODUCT.slug,
+    url: SITE.url + url(PRODUCT.slug),
     seller: { '@type': 'Organization', name: 'VITAS 紓適寧' },
   },
-};
+});
 
 const orgJsonLd = {
   '@context': 'https://schema.org',
@@ -48,15 +68,31 @@ const breadcrumb = (trail) => ({
   itemListElement: trail.map((item, i) => ({
     '@type': 'ListItem',
     position: i + 1,
-    name: item.name,
-    item: SITE.url + item.path,
+    name: t(item.name),
+    item: SITE.url + url(item.path),
   })),
 });
 
+const HOME_CRUMB = { name: { en: 'Home', zh: '首頁' }, path: '/' };
+
+/** Breadcrumb trail shown above a page title. */
+function crumbs(trail) {
+  return `        <nav class="crumbs" aria-label="${attr(t({ en: 'Breadcrumb', zh: '路徑' }))}">
+          ${trail
+            .map((c, i) =>
+              i === trail.length - 1
+                ? `<span aria-current="page">${t(c.name)}</span>`
+                : `<a href="${url(c.path)}">${t(c.name)}</a><span aria-hidden="true">/</span>`
+            )
+            .join('\n          ')}
+        </nav>`;
+}
+
 /** Slim page header used by every page except the homepage. */
-function pageHero({ eyebrow, title, lede, tone = 'paper' }) {
-  return `    <section class="page-hero page-hero--${tone}">
+function pageHero({ eyebrow, title, lede, trail }) {
+  return `    <section class="page-hero">
       <div class="wrap">
+${trail ? crumbs(trail) : ''}
         ${blk('p', eyebrow, 'eyebrow')}
         ${blk('h1', title, 'page-hero__title')}
         ${lede ? blk('p', lede, 'page-hero__lede') : ''}
@@ -64,9 +100,9 @@ function pageHero({ eyebrow, title, lede, tone = 'paper' }) {
     </section>`;
 }
 
-/** Dark green band listing what is deliberately absent from the formula. */
+/** Orange band listing what is deliberately absent from the formula. */
 function freeFromBand() {
-  return `    <section class="band band--forest reveal">
+  return `    <section class="band band--brand reveal">
       <div class="wrap band__inner">
         <div class="band__head">
           ${blk('p', { en: 'Formulation', zh: '配方' }, 'eyebrow eyebrow--light')}
@@ -93,8 +129,11 @@ function buyStrip() {
       <div class="wrap buy__inner">
         <div class="buy__art">
           <img src="/assets/img/product-tube.svg" alt="${attr(
-            'VITAS Soothing Cream Gel 100ml tube'
-          )}" width="420" height="560" loading="lazy" decoding="async">
+            t({
+              en: 'VITAS Soothing Cream Gel 100ml tube',
+              zh: 'VITAS 舒緩啫喱膏 100毫升',
+            })
+          )}" width="520" height="700" loading="lazy" decoding="async">
         </div>
         <div class="buy__body">
           ${blk('p', { en: 'One product, one job', zh: '一支產品，一個用途' }, 'eyebrow')}
@@ -114,10 +153,10 @@ function buyStrip() {
             ${cta(STOCKISTS[0].url, { en: 'Buy at Watsons', zh: '於屈臣氏選購' })}
             ${cta(STOCKISTS[1].url, { en: 'Buy at Mannings', zh: '於萬寧選購' }, 'btn--ghost')}
           </div>
-          <p class="buy__all"><a href="/stockists/">${t({
-            en: 'See all stockists →',
-            zh: '查看所有銷售點 →',
-          })}</a></p>
+          <p class="buy__all">${arrow('/stockists/', {
+            en: 'See all stockists',
+            zh: '查看所有銷售點',
+          })}</p>
         </div>
       </div>
     </section>`;
@@ -142,7 +181,7 @@ function newsletter() {
           <label class="sr-only" for="email">${t({ en: 'Email address', zh: '電郵地址' })}</label>
           <input id="email" name="email" type="email" required autocomplete="email"
                  placeholder="you@example.com">
-          <button class="btn" type="submit">${t({ en: 'Sign up', zh: '訂閱' })}</button>
+          <button class="btn btn--light" type="submit">${t({ en: 'Sign up', zh: '訂閱' })}</button>
           <p class="signup__note" data-newsletter-note hidden></p>
         </form>
       </div>
@@ -151,14 +190,26 @@ function newsletter() {
 
 function journalCard(article) {
   return `<article class="card card--journal">
-            <a class="card__link" href="/journal/${article.slug}/">
-              <span class="card__art"><img src="${article.art}" alt="" width="480" height="320" loading="lazy" decoding="async"></span>
+            <a class="card__link" href="${url('/journal/' + article.slug + '/')}">
+              <span class="card__art"><img src="${article.art}" alt="" width="1200" height="800" loading="lazy" decoding="async"></span>
               <span class="card__meta">${t(article.tag)} · ${t({
                 en: article.readEn,
                 zh: article.readZh,
               })}</span>
               ${blk('span', article.title, 'card__title')}
               ${blk('span', article.lede, 'card__lede')}
+            </a>
+          </article>`;
+}
+
+function plantCard(p, { role = true } = {}) {
+  return `<article class="card card--plant">
+            <a class="card__link" href="${url('/ingredients/' + p.id + '/')}">
+              <span class="card__art card__art--tint"><img src="${p.art}" alt="" width="1000" height="1000" loading="lazy" decoding="async"></span>
+              ${role ? `<span class="card__meta">${t(p.role)}</span>` : ''}
+              ${blk('span', { en: p.nameEn, zh: p.nameZh }, 'card__title')}
+              <span class="card__latin">${p.latin}</span>
+              ${blk('span', p.short, 'card__lede')}
             </a>
           </article>`;
 }
@@ -189,7 +240,7 @@ export function home() {
           )}
           <div class="hero__actions">
             ${cta('/product/', { en: 'Meet the cream', zh: '認識產品' })}
-            ${cta('/how-to-use/#finder', { en: 'Find your routine', zh: '找出你的用法' }, 'btn--ghost')}
+            ${cta('/how-to-use/', { en: 'Find your routine', zh: '找出你的用法' }, 'btn--ghost')}
           </div>
           <p class="hero__meta">${t({
             en: '100ml · HK$250 · At Watsons & Mannings',
@@ -198,7 +249,10 @@ export function home() {
         </div>
         <div class="hero__art">
           <img src="/assets/img/product-tube.svg" alt="${attr(
-            'VITAS Soothing Cream Gel, 100ml tube'
+            t({
+              en: 'VITAS Soothing Cream Gel, 100ml tube',
+              zh: 'VITAS 舒緩啫喱膏 100毫升',
+            })
           )}" width="520" height="700" fetchpriority="high" decoding="async">
         </div>
       </div>
@@ -210,29 +264,19 @@ ${sectionHead({
   eyebrow: { en: 'Three plants', zh: '三種植物' },
   heading: { en: 'A short ingredient list, on purpose', zh: '刻意簡短的成分表' },
   lede: {
-    en: 'Grape seed carries it, eucalyptus cools it, niaouli keeps it from smelling like a pharmacy. Everything else in the tube is there to hold those three together.',
-    zh: '葡萄籽承載，尤加利清涼，綠花白千層讓氣味不像藥房。其餘成分，只為把這三者穩定地結合起來。',
+    en: 'Grape seed carries it, eucalyptus cools it, niaouli keeps it from smelling like a pharmacy. Each one has its own page.',
+    zh: '葡萄籽承載，尤加利清涼，綠花白千層讓氣味不像藥房。每一種都有獨立頁面。',
   },
 })}
         <div class="grid grid--3">
-          ${PLANTS.map(
-            (p) => `<article class="card card--plant">
-            <a class="card__link" href="/ingredients/#${p.id}">
-              <span class="card__art card__art--tint"><img src="${p.art}" alt="" width="360" height="360" loading="lazy" decoding="async"></span>
-              <span class="card__meta">${t(p.role)}</span>
-              ${blk('span', { en: p.nameEn, zh: p.nameZh }, 'card__title')}
-              <span class="card__latin">${p.latin}</span>
-              ${blk('span', p.short, 'card__lede')}
-            </a>
-          </article>`
-          ).join('\n          ')}
+          ${PLANTS.map((p) => plantCard(p)).join('\n          ')}
         </div>
       </div>
     </section>
 
     <section class="section split reveal">
       <div class="wrap split__inner">
-        ${figure('/assets/img/art-training.svg', { en: 'Before training', zh: '訓練前' }, 'sage')}
+        ${figure('/assets/img/art-training.svg', { en: 'Before training', zh: '訓練前' }, 'tint')}
         <div class="split__body">
           ${blk('p', { en: 'Before', zh: '運動前' }, 'eyebrow')}
           ${blk('h2', { en: 'Two minutes, paying attention', zh: '兩分鐘，專注地檢查' }, 'split__title')}
@@ -244,14 +288,11 @@ ${sectionHead({
             },
             'split__text'
           )}
-          <p><a class="link-arrow" href="/how-to-use/">${t({
-            en: 'The full routine',
-            zh: '完整用法',
-          })}</a></p>
+          <p>${arrow('/how-to-use/', { en: 'The full routine', zh: '完整用法' })}</p>
         </div>
       </div>
       <div class="wrap split__inner split__inner--reverse">
-        ${figure('/assets/img/art-recovery.svg', { en: 'After training', zh: '訓練後' }, 'sand')}
+        ${figure('/assets/img/art-recovery.svg', { en: 'After training', zh: '訓練後' }, 'wash')}
         <div class="split__body">
           ${blk('p', { en: 'After', zh: '運動後' }, 'eyebrow')}
           ${blk('h2', { en: 'Ten minutes with your hands', zh: '用雙手的十分鐘' }, 'split__title')}
@@ -263,10 +304,10 @@ ${sectionHead({
             },
             'split__text'
           )}
-          <p><a class="link-arrow" href="/journal/lactic-acid-myth/">${t({
+          <p>${arrow('/journal/lactic-acid-myth/', {
             en: 'What recovery actually is',
             zh: '恢復到底是甚麼',
-          })}</a></p>
+          })}</p>
         </div>
       </div>
     </section>
@@ -277,11 +318,7 @@ ${freeFromBand()}
       <div class="wrap finder-teaser__inner">
         <div>
           ${blk('p', { en: 'Guided', zh: '引導' }, 'eyebrow')}
-          ${blk(
-            'h2',
-            { en: 'Not sure how to use it?', zh: '不確定該怎樣用？' },
-            'finder-teaser__title'
-          )}
+          ${blk('h2', { en: 'Not sure how to use it?', zh: '不確定該怎樣用？' }, 'finder-teaser__title')}
           ${blk(
             'p',
             {
@@ -292,7 +329,7 @@ ${freeFromBand()}
           )}
           ${cta('/how-to-use/#finder', { en: 'Start the three questions', zh: '開始三條問題' })}
         </div>
-        <img class="finder-teaser__art" src="/assets/img/art-desk.svg" alt="" width="420" height="420" loading="lazy" decoding="async">
+        <img class="finder-teaser__art" src="/assets/img/art-desk.svg" alt="" width="1200" height="800" loading="lazy" decoding="async">
       </div>
     </section>
 
@@ -317,12 +354,14 @@ ${newsletter()}`;
       en: 'Low-odour muscle cream for before and after training',
       zh: '運動前後適用的低氣味肌肉按摩膏',
     },
-    description:
-      'VITAS 紓適寧 Soothing Cream Gel: a low-odour, non-greasy plant-oil cream gel with eucalyptus, grape seed and niaouli. 100ml, HK$250, at Watsons and Mannings in Hong Kong.',
+    description: {
+      en: 'VITAS 紓適寧 Soothing Cream Gel: a low-odour, non-greasy plant-oil cream gel with eucalyptus, grape seed and niaouli. 100ml, HK$250, at Watsons and Mannings in Hong Kong.',
+      zh: 'VITAS 紓適寧舒緩啫喱膏：含尤加利、葡萄籽及綠花白千層的低氣味、不油膩植物油啫喱膏。100毫升，HK$250，香港屈臣氏及萬寧有售。',
+    },
     path: '/',
     active: '/',
     body,
-    jsonLd: [orgJsonLd, productJsonLd],
+    jsonLd: [orgJsonLd, productJsonLd()],
     bodyClass: 'page-home',
   };
 }
@@ -335,13 +374,14 @@ export function product() {
       en: 'One tube, three plants, two moments in the day. 100ml, HK$250.',
       zh: '一支軟管，三種植物，一天中的兩個時刻。100毫升，HK$250。',
     },
+    trail: [HOME_CRUMB, { name: { en: 'The Cream', zh: '產品' }, path: '/product/' }],
   })}
 
     <section class="section product-main">
       <div class="wrap product-main__inner">
         <div class="product-main__art">
           <img src="/assets/img/product-tube.svg" alt="${attr(
-            'VITAS Soothing Cream Gel 100ml'
+            t({ en: 'VITAS Soothing Cream Gel 100ml', zh: 'VITAS 舒緩啫喱膏 100毫升' })
           )}" width="520" height="700" decoding="async">
         </div>
         <div class="product-main__body">
@@ -424,10 +464,7 @@ export function product() {
               .map((i) => `<li>${t(i)}</li>`)
               .join('\n            ')}
           </ul>
-          <p><a class="link-arrow" href="/approach/">${t({
-            en: 'Why we cut the claims',
-            zh: '我們為何刪走那些宣稱',
-          })}</a></p>
+          <p>${arrow('/approach/', { en: 'Why we cut the claims', zh: '我們為何刪走那些宣稱' })}</p>
         </div>
       </div>
     </section>
@@ -441,16 +478,7 @@ ${sectionHead({
   heading: { en: 'The three that matter', zh: '關鍵的三種成分' },
 })}
         <div class="grid grid--3">
-          ${PLANTS.map(
-            (p) => `<article class="card card--plant">
-            <a class="card__link" href="/ingredients/#${p.id}">
-              <span class="card__art card__art--tint"><img src="${p.art}" alt="" width="360" height="360" loading="lazy" decoding="async"></span>
-              ${blk('span', { en: p.nameEn, zh: p.nameZh }, 'card__title')}
-              <span class="card__latin">${p.latin}</span>
-              ${blk('span', p.short, 'card__lede')}
-            </a>
-          </article>`
-          ).join('\n          ')}
+          ${PLANTS.map((p) => plantCard(p, { role: false })).join('\n          ')}
         </div>
         ${blk(
           'p',
@@ -467,17 +495,16 @@ ${newsletter()}`;
 
   return {
     title: { en: 'Soothing Cream Gel 100ml', zh: '舒緩啫喱膏 100毫升' },
-    description:
-      'VITAS Soothing Cream Gel 100ml (HK$250): eucalyptus, grape seed and niaouli in a light, non-greasy cream gel. What it does, what it does not do, and where to buy it.',
+    description: {
+      en: 'VITAS Soothing Cream Gel 100ml (HK$250): eucalyptus, grape seed and niaouli in a light, non-greasy cream gel. What it does, what it does not do, and where to buy it.',
+      zh: 'VITAS 舒緩啫喱膏 100毫升（HK$250）：尤加利、葡萄籽與綠花白千層，輕盈不油膩。它會做到甚麼、不會做到甚麼，以及在哪裡購買。',
+    },
     path: '/product/',
     active: '/product/',
     body,
     jsonLd: [
-      productJsonLd,
-      breadcrumb([
-        { name: 'Home', path: '/' },
-        { name: 'Soothing Cream Gel', path: '/product/' },
-      ]),
+      productJsonLd(),
+      breadcrumb([HOME_CRUMB, { name: { en: 'Soothing Cream Gel', zh: '舒緩啫喱膏' }, path: '/product/' }]),
     ],
   };
 }
@@ -555,6 +582,9 @@ export function howToUse() {
     },
   ];
 
+  const opt = (name, v, label) =>
+    `<label class="opt"><input type="radio" name="${name}" value="${v}"><span>${t(label)}</span></label>`;
+
   const body = `${pageHero({
     eyebrow: { en: 'How to use', zh: '使用方法' },
     title: { en: 'Three routines, none of them complicated', zh: '三套用法，都不複雜' },
@@ -562,6 +592,7 @@ export function howToUse() {
       en: 'Apply once or twice a day to clean, unbroken skin. Avoid the eyes and face. That is the whole instruction — the rest is how to make it a habit.',
       zh: '每日一至兩次，塗於清潔、無破損的皮膚，避開眼睛及面部。說明就這麼多——其餘的，是如何養成習慣。',
     },
+    trail: [HOME_CRUMB, { name: { en: 'How to Use', zh: '使用方法' }, path: '/how-to-use/' }],
   })}
 
     <section class="section routines">
@@ -590,56 +621,32 @@ ${sectionHead({
   heading: { en: 'Find the routine you will actually keep', zh: '找出你真的會持續的用法' },
   align: 'center',
 })}
-        <form class="finder__form" data-finder>
-          <fieldset class="finder__step" data-step="1">
+        <form class="finder__form" data-finder data-lang="${getLang()}">
+          <fieldset class="finder__step">
             <legend>${t({ en: '1. What are you doing?', zh: '1. 你在做甚麼？' })}</legend>
             <div class="finder__options">
-              ${[
-                { v: 'run', l: { en: 'Running, cycling, hiking', zh: '跑步、單車、行山' } },
-                { v: 'gym', l: { en: 'Gym, lifting, climbing', zh: '健身、負重、攀岩' } },
-                { v: 'desk', l: { en: 'Mostly sitting at a desk', zh: '大部分時間坐在辦公桌前' } },
-              ]
-                .map(
-                  (o) =>
-                    `<label class="opt"><input type="radio" name="q1" value="${o.v}"><span>${t(
-                      o.l
-                    )}</span></label>`
-                )
-                .join('\n              ')}
+              ${opt('q1', 'run', { en: 'Running, cycling, hiking', zh: '跑步、單車、行山' })}
+              ${opt('q1', 'gym', { en: 'Gym, lifting, climbing', zh: '健身、負重、攀岩' })}
+              ${opt('q1', 'desk', { en: 'Mostly sitting at a desk', zh: '大部分時間坐在辦公桌前' })}
             </div>
           </fieldset>
-          <fieldset class="finder__step" data-step="2">
+          <fieldset class="finder__step">
             <legend>${t({ en: '2. When does it bother you?', zh: '2. 甚麼時候最不舒服？' })}</legend>
             <div class="finder__options">
-              ${[
-                { v: 'before', l: { en: 'Stiff before I start', zh: '開始前就已經僵硬' } },
-                { v: 'after', l: { en: 'Sore the next day', zh: '第二天痠痛' } },
-                { v: 'always', l: { en: 'A constant background ache', zh: '長期隱隱作痛' } },
-              ]
-                .map(
-                  (o) =>
-                    `<label class="opt"><input type="radio" name="q2" value="${o.v}"><span>${t(
-                      o.l
-                    )}</span></label>`
-                )
-                .join('\n              ')}
+              ${opt('q2', 'before', { en: 'Stiff before I start', zh: '開始前就已經僵硬' })}
+              ${opt('q2', 'after', { en: 'Sore the next day', zh: '第二天痠痛' })}
+              ${opt('q2', 'always', { en: 'A constant background ache', zh: '長期隱隱作痛' })}
             </div>
           </fieldset>
-          <fieldset class="finder__step" data-step="3">
-            <legend>${t({ en: '3. How much time will you give it?', zh: '3. 你願意花多少時間？' })}</legend>
+          <fieldset class="finder__step">
+            <legend>${t({
+              en: '3. How much time will you give it?',
+              zh: '3. 你願意花多少時間？',
+            })}</legend>
             <div class="finder__options">
-              ${[
-                { v: 'two', l: { en: 'Two minutes, honestly', zh: '老實說，兩分鐘' } },
-                { v: 'ten', l: { en: 'Ten minutes in the evening', zh: '晚上十分鐘' } },
-                { v: 'split', l: { en: 'A little, twice a day', zh: '每天兩次，每次少少' } },
-              ]
-                .map(
-                  (o) =>
-                    `<label class="opt"><input type="radio" name="q3" value="${o.v}"><span>${t(
-                      o.l
-                    )}</span></label>`
-                )
-                .join('\n              ')}
+              ${opt('q3', 'two', { en: 'Two minutes, honestly', zh: '老實說，兩分鐘' })}
+              ${opt('q3', 'ten', { en: 'Ten minutes in the evening', zh: '晚上十分鐘' })}
+              ${opt('q3', 'split', { en: 'A little, twice a day', zh: '每天兩次，每次少少' })}
             </div>
           </fieldset>
           <div class="finder__result" data-finder-result hidden aria-live="polite"></div>
@@ -652,12 +659,24 @@ ${sectionHead({
         ${blk('h2', { en: 'Sensible cautions', zh: '使用注意' }, 'safety__title')}
         <ul class="safety__list">
           ${[
-            { en: 'External use only. Keep away from eyes, mouth and broken skin.', zh: '只供外用。避免接觸眼睛、口腔及破損皮膚。' },
+            {
+              en: 'External use only. Keep away from eyes, mouth and broken skin.',
+              zh: '只供外用。避免接觸眼睛、口腔及破損皮膚。',
+            },
             { en: 'Not recommended for children under 6.', zh: '不建議 6 歲以下兒童使用。' },
-            { en: 'If pregnant or breastfeeding, ask your doctor before use.', zh: '懷孕或哺乳期間，請先諮詢醫生。' },
-            { en: 'Patch test on the inner forearm if you have sensitive skin.', zh: '皮膚敏感者請先於前臂內側試用。' },
+            {
+              en: 'If pregnant or breastfeeding, ask your doctor before use.',
+              zh: '懷孕或哺乳期間，請先諮詢醫生。',
+            },
+            {
+              en: 'Patch test on the inner forearm if you have sensitive skin.',
+              zh: '皮膚敏感者請先於前臂內側試用。',
+            },
             { en: 'Stop if the skin becomes red or irritated.', zh: '如皮膚出現泛紅或不適，請停止使用。' },
-            { en: 'Severe, sudden or post-injury pain needs a doctor, not a cream.', zh: '劇烈、突發或受傷後的疼痛，請求醫，而非依賴按摩膏。' },
+            {
+              en: 'Severe, sudden or post-injury pain needs a doctor, not a cream.',
+              zh: '劇烈、突發或受傷後的疼痛，請求醫，而非依賴按摩膏。',
+            },
           ]
             .map((i) => `<li>${t(i)}</li>`)
             .join('\n          ')}
@@ -667,16 +686,15 @@ ${sectionHead({
 
   return {
     title: { en: 'How to use', zh: '使用方法' },
-    description:
-      'Three simple routines for VITAS Soothing Cream Gel: a two-minute pre-training check-in, a ten-minute post-training wind-down, and a three-minute desk reset.',
+    description: {
+      en: 'Three simple routines for VITAS Soothing Cream Gel: a two-minute pre-training check-in, a ten-minute post-training wind-down, and a three-minute desk reset.',
+      zh: 'VITAS 舒緩啫喱膏的三套用法：訓練前兩分鐘自我檢查、訓練後十分鐘放鬆，以及辦公桌前三分鐘重設。',
+    },
     path: '/how-to-use/',
     active: '/how-to-use/',
     body,
     jsonLd: [
-      breadcrumb([
-        { name: 'Home', path: '/' },
-        { name: 'How to use', path: '/how-to-use/' },
-      ]),
+      breadcrumb([HOME_CRUMB, { name: { en: 'How to use', zh: '使用方法' }, path: '/how-to-use/' }]),
     ],
   };
 }
@@ -686,27 +704,17 @@ export function ingredients() {
     eyebrow: { en: 'Ingredients', zh: '成分' },
     title: { en: 'Three plants, and why each one is there', zh: '三種植物，各有其理由' },
     lede: {
-      en: 'Every ingredient in this cream has a job you can feel. None of them has been asked to do anything a plant oil cannot do.',
-      zh: '這支啫喱膏中的每一種成分，都有你感覺得到的作用；我們亦沒有要求它們做植物油做不到的事。',
+      en: 'Every ingredient in this cream has a job you can feel. None of them has been asked to do anything a plant oil cannot do. Each has its own page.',
+      zh: '這支啫喱膏中的每一種成分，都有你感覺得到的作用；我們亦沒有要求它們做植物油做不到的事。每一種成分都有獨立頁面。',
     },
+    trail: [HOME_CRUMB, { name: { en: 'Ingredients', zh: '成分' }, path: '/ingredients/' }],
   })}
 
-    <section class="section plant-detail">
+    <section class="section">
       <div class="wrap">
-        ${PLANTS.map(
-          (p, i) => `<article class="plant reveal${i % 2 ? ' plant--reverse' : ''}" id="${p.id}">
-          ${figure(p.art, { en: p.nameEn, zh: p.nameZh }, i % 2 ? 'sand' : 'sage', {
-            w: 1000,
-            h: 1000,
-          })}
-          <div class="plant__body">
-            ${blk('p', p.role, 'eyebrow')}
-            ${blk('h2', { en: p.nameEn, zh: p.nameZh }, 'plant__title')}
-            <p class="plant__latin">${p.latin}</p>
-            ${blk('p', p.long, 'plant__text')}
-          </div>
-        </article>`
-        ).join('\n        ')}
+        <div class="grid grid--3">
+          ${PLANTS.map((p) => plantCard(p)).join('\n          ')}
+        </div>
       </div>
     </section>
 
@@ -731,15 +739,86 @@ ${buyStrip()}`;
 
   return {
     title: { en: 'Ingredients', zh: '成分' },
-    description:
-      'Eucalyptus globulus, Vitis vinifera grape seed and Melaleuca viridiflora niaouli — the three plants in VITAS Soothing Cream Gel, and what each one actually does.',
+    description: {
+      en: 'Eucalyptus globulus, Vitis vinifera grape seed and Melaleuca viridiflora niaouli — the three plants in VITAS Soothing Cream Gel, and what each one actually does.',
+      zh: '尤加利、葡萄籽與綠花白千層——VITAS 舒緩啫喱膏中的三種植物，以及它們各自的實際作用。',
+    },
     path: '/ingredients/',
+    active: '/ingredients/',
+    body,
+    jsonLd: [breadcrumb([HOME_CRUMB, { name: { en: 'Ingredients', zh: '成分' }, path: '/ingredients/' }])],
+  };
+}
+
+/** One page per plant, each on its own URL. */
+export function ingredient(p) {
+  const others = PLANTS.filter((x) => x.id !== p.id);
+  const path = `/ingredients/${p.id}/`;
+
+  const body = `${pageHero({
+    eyebrow: p.role,
+    title: { en: p.nameEn, zh: p.nameZh },
+    lede: p.short,
+    trail: [
+      HOME_CRUMB,
+      { name: { en: 'Ingredients', zh: '成分' }, path: '/ingredients/' },
+      { name: { en: p.nameEn, zh: p.nameZh }, path },
+    ],
+  })}
+
+    <section class="section">
+      <div class="wrap plant">
+        ${figure(p.art, { en: p.nameEn, zh: p.nameZh }, 'tint', { w: 1000, h: 1000 })}
+        <div class="plant__body">
+          <p class="plant__latin">${p.latin}</p>
+          ${blk('p', p.long, 'plant__text')}
+        </div>
+      </div>
+    </section>
+
+    <section class="section reveal">
+      <div class="wrap grid grid--3">
+        ${p.facts
+          .map(
+            (f) => `<div class="fact">
+          ${blk('h2', f.h, 'fact__title')}
+          ${blk('p', f.p, 'fact__text')}
+        </div>`
+          )
+          .join('\n        ')}
+      </div>
+    </section>
+
+${freeFromBand()}
+
+    <section class="section reveal">
+      <div class="wrap">
+${sectionHead({
+  eyebrow: { en: 'The other two', zh: '另外兩種' },
+  heading: { en: 'What else is in the tube', zh: '軟管裡還有甚麼' },
+})}
+        <div class="grid grid--2">
+          ${others.map((o) => plantCard(o)).join('\n          ')}
+        </div>
+      </div>
+    </section>
+
+${buyStrip()}`;
+
+  return {
+    title: { en: `${p.nameEn} — ingredient`, zh: `${p.nameZh}——成分` },
+    description: {
+      en: `${p.nameEn} (${p.latin}) in VITAS Soothing Cream Gel: what it contributes, what it feels like, and what we do not claim for it.`,
+      zh: `VITAS 舒緩啫喱膏中的${p.nameZh}（${p.latin}）：它的作用、實際感受，以及我們不會宣稱的事。`,
+    },
+    path,
     active: '/ingredients/',
     body,
     jsonLd: [
       breadcrumb([
-        { name: 'Home', path: '/' },
-        { name: 'Ingredients', path: '/ingredients/' },
+        HOME_CRUMB,
+        { name: { en: 'Ingredients', zh: '成分' }, path: '/ingredients/' },
+        { name: { en: p.nameEn, zh: p.nameZh }, path },
       ]),
     ],
   };
@@ -753,6 +832,7 @@ export function approach() {
       en: 'This brand spent years being sold as something it is not. This page is the correction, written down, so you can hold us to it.',
       zh: '這個品牌曾多年以「並非事實」的方式被推銷。這一頁是我們的更正，白紙黑字寫下來，讓你可以監督我們。',
     },
+    trail: [HOME_CRUMB, { name: { en: 'Our Approach', zh: '我們的取態' }, path: '/approach/' }],
   })}
 
     <section class="section reveal">
@@ -785,30 +865,31 @@ export function approach() {
       </div>
     </section>
 
-    <section class="band band--sand reveal">
+    <section class="band band--wash reveal">
       <div class="wrap band__inner band__inner--stack">
         ${blk('h2', { en: 'If we get it wrong, tell us', zh: '如果我們說錯了，請告訴我們' }, 'band__title')}
-        ${blk('p', {
-          en: 'If you find a claim on a shelf talker, a reseller listing or an old advert that contradicts this page, send it to us. Grey-market listings of this product still carry the old copy, and we are working through them.',
-          zh: '如果你在貨架標示、經銷商網頁或舊廣告上，看到與本頁不符的宣稱，請告訴我們。市面上仍有沿用舊文案的平行進口資料，我們正在逐一處理。',
-        }, 'band__lede')}
-        ${cta('/contact/', { en: 'Contact us', zh: '聯絡我們' }, 'btn--light')}
+        ${blk(
+          'p',
+          {
+            en: 'If you find a claim on a shelf talker, a reseller listing or an old advert that contradicts this page, send it to us. Grey-market listings of this product still carry the old copy, and we are working through them.',
+            zh: '如果你在貨架標示、經銷商網頁或舊廣告上，看到與本頁不符的宣稱，請告訴我們。市面上仍有沿用舊文案的平行進口資料，我們正在逐一處理。',
+          },
+          'band__lede'
+        )}
+        ${cta('/contact/', { en: 'Contact us', zh: '聯絡我們' })}
       </div>
     </section>`;
 
   return {
     title: { en: 'Our approach', zh: '我們的取態' },
-    description:
-      'Why VITAS removed its lymphatic, detox and lactic-acid claims, what it will and will not say about the cream, and the honest case for a HK$250 price.',
+    description: {
+      en: 'Why VITAS removed its lymphatic, detox and lactic-acid claims, what it will and will not say about the cream, and the honest case for a HK$250 price.',
+      zh: 'VITAS 為何刪除淋巴、排毒與乳酸相關宣稱，我們會說與不會說甚麼，以及 HK$250 定價的誠實理由。',
+    },
     path: '/approach/',
     active: '/approach/',
     body,
-    jsonLd: [
-      breadcrumb([
-        { name: 'Home', path: '/' },
-        { name: 'Our approach', path: '/approach/' },
-      ]),
-    ],
+    jsonLd: [breadcrumb([HOME_CRUMB, { name: { en: 'Our approach', zh: '我們的取態' }, path: '/approach/' }])],
   };
 }
 
@@ -820,6 +901,7 @@ export function stockists() {
       en: 'VITAS Soothing Cream Gel 100ml, HK$250. Sold through Hong Kong pharmacy chains and a small number of online stores.',
       zh: 'VITAS 舒緩啫喱膏 100毫升，HK$250。於香港連鎖藥房及少數網店發售。',
     },
+    trail: [HOME_CRUMB, { name: { en: 'Where to Buy', zh: '購買地點' }, path: '/stockists/' }],
   })}
 
     <section class="section stockists">
@@ -847,7 +929,7 @@ export function stockists() {
       </div>
     </section>
 
-    <section class="band band--forest reveal">
+    <section class="band band--brand reveal">
       <div class="wrap band__inner band__inner--stack">
         ${blk('p', { en: 'Trade', zh: '批發' }, 'eyebrow eyebrow--light')}
         ${blk('h2', { en: 'Stocking VITAS', zh: '成為銷售點' }, 'band__title')}
@@ -865,17 +947,14 @@ export function stockists() {
 
   return {
     title: { en: 'Where to buy', zh: '購買地點' },
-    description:
-      'Buy VITAS Soothing Cream Gel 100ml (HK$250) at Watsons and Mannings across Hong Kong, or online through HKTVmall, Gogo Herbs and HK Medical Store.',
+    description: {
+      en: 'Buy VITAS Soothing Cream Gel 100ml (HK$250) at Watsons and Mannings across Hong Kong, or online through HKTVmall, Gogo Herbs and HK Medical Store.',
+      zh: '於全港屈臣氏及萬寧選購 VITAS 舒緩啫喱膏 100毫升（HK$250），或經 HKTVmall、Gogo Herbs 及網上藥房購買。',
+    },
     path: '/stockists/',
     active: '/stockists/',
     body,
-    jsonLd: [
-      breadcrumb([
-        { name: 'Home', path: '/' },
-        { name: 'Where to buy', path: '/stockists/' },
-      ]),
-    ],
+    jsonLd: [breadcrumb([HOME_CRUMB, { name: { en: 'Where to buy', zh: '購買地點' }, path: '/stockists/' }])],
   };
 }
 
@@ -887,6 +966,7 @@ export function journalIndex() {
       en: 'Short pieces about what helps tired muscles, including the parts that have nothing to do with buying a cream.',
       zh: '關於疲勞肌肉的短文，包括那些與買不買一支膏完全無關的部分。',
     },
+    trail: [HOME_CRUMB, { name: { en: 'Journal', zh: '專欄' }, path: '/journal/' }],
   })}
 
     <section class="section">
@@ -901,25 +981,25 @@ ${newsletter()}`;
 
   return {
     title: { en: 'Journal', zh: '專欄' },
-    description:
-      'Short, useful writing from VITAS on warming up, recovery, desk-bound necks and the lactic acid myth.',
+    description: {
+      en: 'Short, useful writing from VITAS on warming up, recovery, desk-bound necks and the lactic acid myth.',
+      zh: 'VITAS 專欄：熱身、恢復、辦公室頸肩，以及乳酸迷思。',
+    },
     path: '/journal/',
     active: '/journal/',
     body,
-    jsonLd: [
-      breadcrumb([
-        { name: 'Home', path: '/' },
-        { name: 'Journal', path: '/journal/' },
-      ]),
-    ],
+    jsonLd: [breadcrumb([HOME_CRUMB, { name: { en: 'Journal', zh: '專欄' }, path: '/journal/' }])],
   };
 }
 
 export function article(a) {
   const others = ARTICLES.filter((x) => x.slug !== a.slug);
+  const path = `/journal/${a.slug}/`;
+
   const body = `    <article class="article">
       <header class="article__head">
         <div class="wrap">
+${crumbs([HOME_CRUMB, { name: { en: 'Journal', zh: '專欄' }, path: '/journal/' }, { name: a.title, path }])}
           <p class="eyebrow">${t(a.tag)} · <time datetime="${a.date}">${a.date}</time> · ${t({
             en: a.readEn,
             zh: a.readZh,
@@ -932,7 +1012,9 @@ export function article(a) {
         <img class="article__art" src="${a.art}" alt="" width="1200" height="800" decoding="async">
         <div class="prose">
           ${a.body
-            .map((s) => `${blk('h2', s.h)}\n          ${s.p.map((p) => blk('p', p)).join('\n          ')}`)
+            .map(
+              (s) => `${blk('h2', s.h)}\n          ${s.p.map((p) => blk('p', p)).join('\n          ')}`
+            )
             .join('\n          ')}
         </div>
       </div>
@@ -940,7 +1022,10 @@ export function article(a) {
 
     <section class="section reveal">
       <div class="wrap">
-${sectionHead({ eyebrow: { en: 'Keep reading', zh: '繼續閱讀' }, heading: { en: 'More from the journal', zh: '更多專欄文章' } })}
+${sectionHead({
+  eyebrow: { en: 'Keep reading', zh: '繼續閱讀' },
+  heading: { en: 'More from the journal', zh: '更多專欄文章' },
+})}
         <div class="grid grid--2">
           ${others.map(journalCard).join('\n          ')}
         </div>
@@ -951,26 +1036,26 @@ ${newsletter()}`;
 
   return {
     title: a.title,
-    description: plain(a.lede),
-    path: `/journal/${a.slug}/`,
+    description: a.lede,
+    path,
     active: '/journal/',
     body,
     jsonLd: [
       {
         '@context': 'https://schema.org',
         '@type': 'Article',
-        headline: plain(a.title),
-        description: plain(a.lede),
+        headline: t(a.title),
+        description: t(a.lede),
         datePublished: a.date,
-        inLanguage: ['en', 'zh-Hant'],
+        inLanguage: getLang() === 'zh' ? 'zh-Hant-HK' : 'en-HK',
         author: { '@type': 'Organization', name: 'VITAS 紓適寧' },
         publisher: { '@type': 'Organization', name: 'VITAS 紓適寧' },
-        mainEntityOfPage: SITE.url + `/journal/${a.slug}/`,
+        mainEntityOfPage: SITE.url + url(path),
       },
       breadcrumb([
-        { name: 'Home', path: '/' },
-        { name: 'Journal', path: '/journal/' },
-        { name: plain(a.title), path: `/journal/${a.slug}/` },
+        HOME_CRUMB,
+        { name: { en: 'Journal', zh: '專欄' }, path: '/journal/' },
+        { name: a.title, path },
       ]),
     ],
   };
@@ -980,6 +1065,7 @@ export function faq() {
   const body = `${pageHero({
     eyebrow: { en: 'FAQ', zh: '常見問題' },
     title: { en: 'Questions people actually ask', zh: '大家真正會問的問題' },
+    trail: [HOME_CRUMB, { name: { en: 'FAQ', zh: '常見問題' }, path: '/faq/' }],
   })}
 
     <section class="section">
@@ -1005,17 +1091,16 @@ export function faq() {
           },
           'note'
         )}
-        <p class="note"><a class="link-arrow" href="/contact/">${t({
-          en: 'Contact us',
-          zh: '聯絡我們',
-        })}</a></p>
+        <p class="note">${arrow('/contact/', { en: 'Contact us', zh: '聯絡我們' })}</p>
       </div>
     </section>`;
 
   return {
     title: { en: 'FAQ', zh: '常見問題' },
-    description:
-      'Does it smell? Is it hot or cold? Can I use it before exercise? Straight answers about VITAS Soothing Cream Gel.',
+    description: {
+      en: 'Does it smell? Is it hot or cold? Can I use it before exercise? Straight answers about VITAS Soothing Cream Gel.',
+      zh: '有氣味嗎？是熱還是涼？運動前可以用嗎？關於 VITAS 舒緩啫喱膏的直接答案。',
+    },
     path: '/faq/',
     active: '/faq/',
     body,
@@ -1023,16 +1108,14 @@ export function faq() {
       {
         '@context': 'https://schema.org',
         '@type': 'FAQPage',
+        inLanguage: getLang() === 'zh' ? 'zh-Hant-HK' : 'en-HK',
         mainEntity: FAQS.map((f) => ({
           '@type': 'Question',
-          name: plain(f.q),
-          acceptedAnswer: { '@type': 'Answer', text: plain(f.a) },
+          name: t(f.q),
+          acceptedAnswer: { '@type': 'Answer', text: t(f.a) },
         })),
       },
-      breadcrumb([
-        { name: 'Home', path: '/' },
-        { name: 'FAQ', path: '/faq/' },
-      ]),
+      breadcrumb([HOME_CRUMB, { name: { en: 'FAQ', zh: '常見問題' }, path: '/faq/' }]),
     ],
   };
 }
@@ -1045,6 +1128,7 @@ export function contact() {
       en: 'Product questions, trade enquiries, or a claim you have seen somewhere that we should know about.',
       zh: '產品查詢、批發合作，或你在某處看到、值得我們知道的宣稱。',
     },
+    trail: [HOME_CRUMB, { name: { en: 'Contact', zh: '聯絡我們' }, path: '/contact/' }],
   })}
 
     <section class="section">
@@ -1091,24 +1175,26 @@ export function contact() {
 
   return {
     title: { en: 'Contact', zh: '聯絡我們' },
-    description: 'Contact VITAS 紓適寧 — product questions, trade enquiries and press.',
+    description: {
+      en: 'Contact VITAS 紓適寧 — product questions, trade enquiries and press.',
+      zh: '聯絡 VITAS 紓適寧——產品查詢、批發合作及傳媒。',
+    },
     path: '/contact/',
     active: '/contact/',
     body,
-    jsonLd: [
-      breadcrumb([
-        { name: 'Home', path: '/' },
-        { name: 'Contact', path: '/contact/' },
-      ]),
-    ],
+    jsonLd: [breadcrumb([HOME_CRUMB, { name: { en: 'Contact', zh: '聯絡我們' }, path: '/contact/' }])],
   };
 }
 
 export function legal(kind) {
   const isPrivacy = kind === 'privacy';
+  const path = isPrivacy ? '/legal/privacy/' : '/legal/terms/';
+  const title = isPrivacy ? { en: 'Privacy', zh: '私隱政策' } : { en: 'Terms of use', zh: '使用條款' };
+
   const body = `${pageHero({
     eyebrow: { en: 'Legal', zh: '條款' },
-    title: isPrivacy ? { en: 'Privacy', zh: '私隱政策' } : { en: 'Terms of use', zh: '使用條款' },
+    title,
+    trail: [HOME_CRUMB, { name: title, path }],
   })}
     <section class="section">
       <div class="wrap prose">
@@ -1135,17 +1221,17 @@ export function legal(kind) {
     </section>`;
 
   return {
-    title: isPrivacy ? { en: 'Privacy', zh: '私隱政策' } : { en: 'Terms of use', zh: '使用條款' },
+    title,
     description: isPrivacy
-      ? 'How VITAS handles the information you send us.'
-      : 'Terms of use for the VITAS website.',
-    path: isPrivacy ? '/legal/privacy/' : '/legal/terms/',
+      ? { en: 'How VITAS handles the information you send us.', zh: 'VITAS 如何處理你提供的資料。' }
+      : { en: 'Terms of use for the VITAS website.', zh: 'VITAS 網站使用條款。' },
+    path,
     body,
   };
 }
 
 export function notFound() {
-  const body = `    <section class="page-hero page-hero--paper">
+  const body = `    <section class="page-hero">
       <div class="wrap">
         <p class="eyebrow">404</p>
         ${blk('h1', { en: 'That page has moved on', zh: '此頁面不存在' }, 'page-hero__title')}
@@ -1162,7 +1248,7 @@ export function notFound() {
     </section>`;
   return {
     title: { en: 'Page not found', zh: '找不到頁面' },
-    description: 'Page not found.',
+    description: { en: 'Page not found.', zh: '找不到頁面。' },
     path: '/404.html',
     body,
   };

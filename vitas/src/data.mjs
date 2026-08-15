@@ -49,6 +49,29 @@ export const PLANTS = [
       en: 'Eucalyptus globulus leaf oil is rich in 1,8-cineole, the compound behind its clean, faintly camphoraceous scent and the cool feeling it leaves behind. In VITAS it is dosed for comfort rather than shock: enough to register as you rub it in, not enough to announce itself to the person sitting next to you.',
       zh: '尤加利葉油富含 1,8-桉葉素，帶來清新氣息與塗抹後的清涼感。在 VITAS 配方中，它的比例以「舒適」為準：搓揉時感覺得到，卻不會讓身旁的人聞到。',
     },
+    facts: [
+      {
+        h: { en: 'What you feel', zh: '你會感覺到' },
+        p: {
+          en: 'A cool note that arrives a few seconds after you rub it in and fades over the next few minutes. It is a sensation on the skin, not a change in the temperature of the muscle underneath.',
+          zh: '搓揉後數秒出現的清涼感，並在數分鐘內散去。這是皮膚表面的感覺，並非下層肌肉溫度的改變。',
+        },
+      },
+      {
+        h: { en: 'Why not menthol or camphor', zh: '為何不用薄荷腦或樟腦' },
+        p: {
+          en: 'Both are stronger, cheaper and carry a medicated smell across a room. Eucalyptus gives a gentler version of the same cool sensation, which is the whole point of a cream you can use at your desk.',
+          zh: '兩者都更強烈、更便宜，但氣味會傳遍整個房間。尤加利提供較溫和的同類清涼感——而這正是一支可以在辦公桌前使用的按摩膏的意義。',
+        },
+      },
+      {
+        h: { en: 'Where it comes from', zh: '來源' },
+        p: {
+          en: 'Steam-distilled from the leaves of the blue gum tree. In the finished cream it appears on the INCI list as Eucalyptus Globulus Leaf Oil.',
+          zh: '以蒸餾法自藍桉樹葉萃取。在成品的 INCI 成分表上，標示為 Eucalyptus Globulus Leaf Oil。',
+        },
+      },
+    ],
   },
   {
     id: 'grape-seed',
@@ -65,6 +88,29 @@ export const PLANTS = [
       en: 'Grape seed oil is one of the lightest cosmetic carrier oils there is — high in linoleic acid, low in tack. It gives your hands enough glide to work a muscle properly, then sinks in fast enough that you can put a shirt back on straight away. It is also, unglamorously, why the cream feels expensive.',
       zh: '葡萄籽油是最輕盈的化妝品基底油之一，亞油酸含量高、黏膩感低。它讓雙手有足夠的滑度按摩肌肉，又吸收得夠快，讓你可以立即穿回衣服；同時也是這支啫喱膏膚感細緻的原因。',
     },
+    facts: [
+      {
+        h: { en: 'What it does here', zh: '它在配方中的角色' },
+        p: {
+          en: 'Carries the two essential oils and gives your hands glide. Without a good carrier you cannot work a muscle for ten minutes — the cream drags, and you stop after two.',
+          zh: '承載兩種精油，並為雙手提供滑度。沒有好的基底油，就無法持續按摩十分鐘——膏體會拉扯皮膚，兩分鐘就會停下來。',
+        },
+      },
+      {
+        h: { en: 'Why it does not feel greasy', zh: '為何不油膩' },
+        p: {
+          en: 'Grape seed oil is high in linoleic acid and light in texture, so it absorbs rather than sitting on the surface. You can dress within a minute of using it.',
+          zh: '葡萄籽油亞油酸含量高、質地輕盈，會被吸收而非停留在表面。使用後約一分鐘即可穿衣。',
+        },
+      },
+      {
+        h: { en: 'An honest note', zh: '誠實的補充' },
+        p: {
+          en: 'Grape seed extract is often sold on its antioxidant content. That evidence is for oral and cosmetic-skin use — we make no claim that it does anything for circulation or recovery from the outside.',
+          zh: '葡萄籽萃取常以抗氧化作賣點，但相關證據多來自口服或護膚用途。我們不會宣稱它由外用途徑改善循環或恢復。',
+        },
+      },
+    ],
   },
   {
     id: 'niaouli',
@@ -81,6 +127,29 @@ export const PLANTS = [
       en: 'Niaouli essential oil sits between eucalyptus and tea tree — fresh, slightly sweet, far less sharp than either. Its job in this formula is aromatic balance. Remove it and the cream smells clinical; with it, the scent fades to almost nothing within a few minutes of application.',
       zh: '綠花白千層精油的氣味介乎尤加利與茶樹之間：清新、微甜，比兩者都柔和。它在配方中的角色是平衡香氣——沒有它，膏體聞起來會很「醫療」；有了它，塗抹數分鐘後氣味幾乎完全散去。',
     },
+    facts: [
+      {
+        h: { en: 'The smallest of the three', zh: '三者中比例最小' },
+        p: {
+          en: 'Niaouli is present in a small proportion. Its job is the finish of the scent rather than the feel of the cream.',
+          zh: '綠花白千層的比例最小，作用在於氣味的收尾，而非膏體的膚感。',
+        },
+      },
+      {
+        h: { en: 'Family resemblance', zh: '同科植物' },
+        p: {
+          en: 'Melaleuca viridiflora is a relative of tea tree and cajeput, native to New Caledonia and northern Australia.',
+          zh: '綠花白千層與茶樹、白千層同屬，原產於新喀里多尼亞及澳洲北部。',
+        },
+      },
+      {
+        h: { en: 'If you are sensitive', zh: '如你屬敏感肌' },
+        p: {
+          en: 'Essential oils are the part of any natural formula most likely to irritate sensitive skin. Patch test on the inner forearm before using it over a large area.',
+          zh: '在天然配方中，精油是最可能引起敏感的成分。大面積使用前，請先於前臂內側試用。',
+        },
+      },
+    ],
   },
 ];
 
