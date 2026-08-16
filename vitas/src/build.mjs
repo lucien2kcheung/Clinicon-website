@@ -28,6 +28,10 @@ const LANGS = ['en', 'zh'];
 /** Build the page list for whichever language is currently set. */
 const buildSpecs = () => [
   pages.home(),
+  pages.shop(),
+  pages.cart(),
+  pages.checkoutResult('success'),
+  pages.checkoutResult('cancelled'),
   pages.product(),
   pages.howToUse(),
   pages.ingredients(),
@@ -36,6 +40,7 @@ const buildSpecs = () => [
   pages.stockists(),
   pages.journalIndex(),
   ...ARTICLES.map((a) => pages.article(a)),
+  pages.about(),
   pages.faq(),
   pages.contact(),
   pages.legal('privacy'),
@@ -58,7 +63,8 @@ for (const lang of LANGS) {
     await mkdir(dirname(file), { recursive: true });
     await writeFile(file, page(spec), 'utf8');
     written.push(path);
-    if (lang === 'en' && !spec.path.endsWith('.html')) canonicalPaths.push(spec.path);
+    const indexable = !spec.path.endsWith('.html') && !spec.path.startsWith('/checkout/');
+    if (lang === 'en' && indexable) canonicalPaths.push(spec.path);
   }
 }
 

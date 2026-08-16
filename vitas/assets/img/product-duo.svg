@@ -1,0 +1,31 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 700" width="600" height="700" role="img" aria-label="VITAS Recovery Duo — two 100ml tubes">
+  <ellipse cx="300" cy="676" rx="215" ry="18" fill="#17181A" opacity="0.1"/>
+  <g transform="translate(-70 40) scale(0.86)" opacity="0.85">
+    <rect x="176" y="52" width="168" height="26" rx="4" fill="#F1E9E4" stroke="#E7E0D4" stroke-width="1.5"/>
+    <path d="M186,78 C186,140 150,190 148,300 L146,586 C146,600 158,608 176,608 L344,608
+             C362,608 374,600 374,586 L372,300 C370,190 334,140 334,78 Z"
+          fill="#FFFFFF" stroke="#E7E0D4" stroke-width="1.5"/>
+    <path d="M160,610 h200 c8,0 12,5 12,12 v34 c0,8 -6,14 -14,14 H162 c-8,0 -14,-6 -14,-14 v-34 c0,-7 4,-12 12,-12 Z"
+          fill="#FBF7F5" stroke="#E7E0D4" stroke-width="1.5"/>
+    <circle cx="260" cy="150" r="21" fill="#F47920"/>
+    <text x="260" y="158" text-anchor="middle" font-family="Helvetica, Arial, sans-serif" font-size="22" font-weight="500" fill="#FFFFFF">V</text>
+    <text x="260" y="205" text-anchor="middle" font-family="Helvetica, Arial, sans-serif" font-size="11" letter-spacing="1.9" fill="#F47920">SOOTHING CREAM GEL</text>
+    <text x="262" y="300" text-anchor="start" transform="rotate(90 262 300)" font-family="Helvetica, Arial, sans-serif" font-size="86" font-weight="300" letter-spacing="10" fill="#F47920">VITAS</text>
+    <text x="260" y="566" text-anchor="middle" font-family="Helvetica, Arial, sans-serif" font-size="13" letter-spacing="3" fill="#F47920">MADE IN FRANCE</text>
+    <path d="M180,150 C176,260 174,420 176,560" stroke="#FFFFFF" stroke-opacity="0.9" stroke-width="16" stroke-linecap="round" fill="none"/>
+  </g>
+  <g transform="translate(90 0) scale(1)" opacity="1">
+    <rect x="176" y="52" width="168" height="26" rx="4" fill="#F1E9E4" stroke="#E7E0D4" stroke-width="1.5"/>
+    <path d="M186,78 C186,140 150,190 148,300 L146,586 C146,600 158,608 176,608 L344,608
+             C362,608 374,600 374,586 L372,300 C370,190 334,140 334,78 Z"
+          fill="#FFFFFF" stroke="#E7E0D4" stroke-width="1.5"/>
+    <path d="M160,610 h200 c8,0 12,5 12,12 v34 c0,8 -6,14 -14,14 H162 c-8,0 -14,-6 -14,-14 v-34 c0,-7 4,-12 12,-12 Z"
+          fill="#FBF7F5" stroke="#E7E0D4" stroke-width="1.5"/>
+    <circle cx="260" cy="150" r="21" fill="#F47920"/>
+    <text x="260" y="158" text-anchor="middle" font-family="Helvetica, Arial, sans-serif" font-size="22" font-weight="500" fill="#FFFFFF">V</text>
+    <text x="260" y="205" text-anchor="middle" font-family="Helvetica, Arial, sans-serif" font-size="11" letter-spacing="1.9" fill="#F47920">SOOTHING CREAM GEL</text>
+    <text x="262" y="300" text-anchor="start" transform="rotate(90 262 300)" font-family="Helvetica, Arial, sans-serif" font-size="86" font-weight="300" letter-spacing="10" fill="#F47920">VITAS</text>
+    <text x="260" y="566" text-anchor="middle" font-family="Helvetica, Arial, sans-serif" font-size="13" letter-spacing="3" fill="#F47920">MADE IN FRANCE</text>
+    <path d="M180,150 C176,260 174,420 176,560" stroke="#FFFFFF" stroke-opacity="0.9" stroke-width="16" stroke-linecap="round" fill="none"/>
+  </g>
+</svg>

@@ -1,19 +1,19 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 800" width="1200" height="800" role="img" aria-label="At a desk">
-  <rect width="1200" height="800" fill="#FFFDFC"/>
-  <path d="M0,520 C260,420 420,600 660,470 C860,360 1040,430 1200,360 L1200,800 L0,800 Z" fill="#FDF1EA"/>
-<path d="M120,190 H420" stroke="#C2440E" stroke-opacity="0.32" stroke-width="9" stroke-linecap="round"/>
-  <path d="M120,248 H540" stroke="#C2440E" stroke-opacity="0.32" stroke-width="9" stroke-linecap="round"/>
-  <path d="M120,306 H660" stroke="#C2440E" stroke-opacity="0.32" stroke-width="9" stroke-linecap="round"/>
-  <path d="M120,364 H420" stroke="#C2440E" stroke-opacity="0.32" stroke-width="9" stroke-linecap="round"/>
-  <path d="M120,422 H540" stroke="#C2440E" stroke-opacity="0.32" stroke-width="9" stroke-linecap="round"/>
-  <path d="M120,480 H660" stroke="#C2440E" stroke-opacity="0.32" stroke-width="9" stroke-linecap="round"/>
-  <path d="M120,538 H420" stroke="#C2440E" stroke-opacity="0.32" stroke-width="9" stroke-linecap="round"/>
-  <path d="M120,596 H540" stroke="#C2440E" stroke-opacity="0.32" stroke-width="9" stroke-linecap="round"/>
-  <path d="M120,654 H660" stroke="#C2440E" stroke-opacity="0.32" stroke-width="9" stroke-linecap="round"/>
-  <path d="M700,700 C700,470 780,340 930,330 C1080,320 1140,470 1140,700" fill="#FBDCC9" stroke="#C2440E" stroke-opacity="0.6" stroke-width="9"/>
-  <path d="M760,560 C830,520 1010,520 1080,560" stroke="#C2440E" stroke-opacity="0.45" stroke-width="8" fill="none"/>
+  <rect width="1200" height="800" fill="#FBF6EE"/>
+  <path d="M0,520 C260,420 420,600 660,470 C860,360 1040,430 1200,360 L1200,800 L0,800 Z" fill="#FEF6EF"/>
+<path d="M120,190 H420" stroke="#C6531A" stroke-opacity="0.32" stroke-width="9" stroke-linecap="round"/>
+  <path d="M120,248 H540" stroke="#C6531A" stroke-opacity="0.32" stroke-width="9" stroke-linecap="round"/>
+  <path d="M120,306 H660" stroke="#C6531A" stroke-opacity="0.32" stroke-width="9" stroke-linecap="round"/>
+  <path d="M120,364 H420" stroke="#C6531A" stroke-opacity="0.32" stroke-width="9" stroke-linecap="round"/>
+  <path d="M120,422 H540" stroke="#C6531A" stroke-opacity="0.32" stroke-width="9" stroke-linecap="round"/>
+  <path d="M120,480 H660" stroke="#C6531A" stroke-opacity="0.32" stroke-width="9" stroke-linecap="round"/>
+  <path d="M120,538 H420" stroke="#C6531A" stroke-opacity="0.32" stroke-width="9" stroke-linecap="round"/>
+  <path d="M120,596 H540" stroke="#C6531A" stroke-opacity="0.32" stroke-width="9" stroke-linecap="round"/>
+  <path d="M120,654 H660" stroke="#C6531A" stroke-opacity="0.32" stroke-width="9" stroke-linecap="round"/>
+  <path d="M700,700 C700,470 780,340 930,330 C1080,320 1140,470 1140,700" fill="#FBCEA9" stroke="#C6531A" stroke-opacity="0.6" stroke-width="9"/>
+  <path d="M760,560 C830,520 1010,520 1080,560" stroke="#C6531A" stroke-opacity="0.45" stroke-width="8" fill="none"/>
 <g transform="translate(220 700) rotate(-22)" opacity="0.9">
-    <path d="M0,0 C52.5,-46 112.5,-46 150,0 C112.5,46 52.5,46 0,0 Z" fill="#F6BE9C" stroke="#C2440E" stroke-width="3.75" stroke-opacity="0.5"/>
-    <path d="M9,0 L135,0" stroke="#C2440E" stroke-width="2.6999999999999997" stroke-opacity="0.4" fill="none"/>
+    <path d="M0,0 C52.5,-46 112.5,-46 150,0 C112.5,46 52.5,46 0,0 Z" fill="#F9B078" stroke="#C6531A" stroke-width="3.75" stroke-opacity="0.5"/>
+    <path d="M9,0 L135,0" stroke="#C6531A" stroke-width="2.6999999999999997" stroke-opacity="0.4" fill="none"/>
   </g>
 </svg>

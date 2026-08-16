@@ -18,16 +18,19 @@ import { fileURLToPath } from 'node:url';
 const out = resolve(dirname(fileURLToPath(import.meta.url)), '..', 'assets', 'img');
 await mkdir(out, { recursive: true });
 
+/* Brand Guidelines v1.0 — heritage orange, mint, chalk, carbon. */
 const C = {
   white: '#FFFFFF',
-  paper: '#FFFDFC',
-  wash: '#FDF1EA',
-  tint: '#FBDCC9',
-  mid: '#F6BE9C',
-  brand: '#EF6023',
-  deep: '#C2440E',
-  ink: '#2B1A12',
-  line: '#ECDCD1',
+  paper: '#FBF6EE',   /* Chalk */
+  wash: '#FEF6EF',    /* orange-50 */
+  tint: '#FBCEA9',    /* orange-200 */
+  mid: '#F9B078',     /* orange-300 */
+  brand: '#F47920',   /* VITAS Orange */
+  deep: '#C6531A',    /* Ember */
+  mint: '#17B39A',    /* Cooling Mint */
+  mintWash: '#D3F1EC',
+  ink: '#17181A',     /* Carbon */
+  line: '#E7E0D4',
 };
 
 const svg = (w, h, inner, extra = '') =>
@@ -277,6 +280,47 @@ ${leaf(220, 700, 150, 46, -22, C.mid, 0.9)}`
       ' aria-label="At a desk"'
     )
   );
+}
+
+
+/* ------------------------------------------------- the duo (two packs) */
+
+{
+  /* Two tubes, one behind the other — the Recovery Duo on the shop page. */
+  const tube = (x, y, scale, shade) => `  <g transform="translate(${x} ${y}) scale(${scale})" opacity="${shade}">
+    <rect x="176" y="52" width="168" height="26" rx="4" fill="#F1E9E4" stroke="${C.line}" stroke-width="1.5"/>
+    <path d="M186,78 C186,140 150,190 148,300 L146,586 C146,600 158,608 176,608 L344,608
+             C362,608 374,600 374,586 L372,300 C370,190 334,140 334,78 Z"
+          fill="#FFFFFF" stroke="${C.line}" stroke-width="1.5"/>
+    <path d="M160,610 h200 c8,0 12,5 12,12 v34 c0,8 -6,14 -14,14 H162 c-8,0 -14,-6 -14,-14 v-34 c0,-7 4,-12 12,-12 Z"
+          fill="#FBF7F5" stroke="${C.line}" stroke-width="1.5"/>
+    <circle cx="260" cy="150" r="21" fill="${C.brand}"/>
+    <text x="260" y="158" text-anchor="middle" font-family="Helvetica, Arial, sans-serif" font-size="22" font-weight="500" fill="#FFFFFF">V</text>
+    <text x="260" y="205" text-anchor="middle" font-family="Helvetica, Arial, sans-serif" font-size="11" letter-spacing="1.9" fill="${C.brand}">SOOTHING CREAM GEL</text>
+    <text x="262" y="300" text-anchor="start" transform="rotate(90 262 300)" font-family="Helvetica, Arial, sans-serif" font-size="86" font-weight="300" letter-spacing="10" fill="${C.brand}">VITAS</text>
+    <text x="260" y="566" text-anchor="middle" font-family="Helvetica, Arial, sans-serif" font-size="13" letter-spacing="3" fill="${C.brand}">MADE IN FRANCE</text>
+    <path d="M180,150 C176,260 174,420 176,560" stroke="#FFFFFF" stroke-opacity="0.9" stroke-width="16" stroke-linecap="round" fill="none"/>
+  </g>`;
+
+  const art = `  <ellipse cx="300" cy="676" rx="215" ry="18" fill="${C.ink}" opacity="0.1"/>
+${tube(-70, 40, 0.86, 0.85)}
+${tube(90, 0, 1, 1)}`;
+  await write('product-duo.svg', svg(600, 700, art, ' aria-label="VITAS Recovery Duo — two 100ml tubes"'));
+}
+
+/* ----------------------------------------------------- founder portrait */
+
+{
+  /* A portrait frame rather than a fake photograph: swap in the real one. */
+  const art = `  <rect width="1000" height="1000" fill="${C.wash}"/>
+  <circle cx="500" cy="470" r="300" fill="${C.tint}"/>
+  <path d="M500,300 a115,115 0 1,0 0.1,0 Z" fill="${C.white}" stroke="${C.deep}" stroke-width="4" stroke-opacity="0.5"/>
+  <path d="M320,760 C320,620 400,545 500,545 C600,545 680,620 680,760 Z" fill="${C.white}" stroke="${C.deep}" stroke-width="4" stroke-opacity="0.5"/>
+  <path d="M250,830 H750" stroke="${C.deep}" stroke-width="5" stroke-opacity="0.35" stroke-linecap="round"/>
+${leaf(700, 260, 190, 58, 28, C.mid, 0.95)}
+${leaf(680, 320, 160, 48, 158, C.tint, 0.95)}
+  <circle cx="286" cy="250" r="26" fill="${C.brand}"/>`;
+  await write('art-founder.svg', svg(1000, 1000, art, ' aria-label="Founder portrait placeholder"'));
 }
 
 /* ----------------------------------------------------- favicon & cover */

@@ -19,7 +19,7 @@ import {
   arrow,
   figure,
 } from './layout.mjs';
-import { PRODUCT, PLANTS, STOCKISTS, ARTICLES, FAQS } from './data.mjs';
+import { PRODUCT, PRODUCTS, SHOP, PLANTS, STOCKISTS, ARTICLES, FAQS, ABOUT } from './data.mjs';
 
 /* --------------------------------------------------------- shared partials */
 
@@ -214,6 +214,69 @@ function plantCard(p, { role = true } = {}) {
           </article>`;
 }
 
+
+/** Product card used on the shop page and the homepage shop strip. */
+function shopCard(p) {
+  return `<article class="shop-card reveal" data-product="${p.id}">
+          <div class="shop-card__art">
+            <img src="${p.art}" alt="${attr(t(p.name))}" width="520" height="700" loading="lazy" decoding="async">
+            ${p.badge ? `<span class="shop-card__badge">${t(p.badge)}</span>` : ''}
+          </div>
+          <div class="shop-card__body">
+            ${blk('h2', p.name, 'shop-card__title')}
+            <p class="shop-card__variant">${t(p.variant)}</p>
+            ${blk('p', p.blurb, 'shop-card__blurb')}
+            <ul class="shop-card__points">
+              ${p.points.map((pt) => `<li>${t(pt)}</li>`).join('\n              ')}
+            </ul>
+            <p class="shop-card__price">${p.priceLabel}</p>
+            <div class="shop-card__actions">
+              <button class="btn" type="button" data-add-to-cart="${p.id}"
+                      data-name="${attr(t(p.name))}" data-variant="${attr(t(p.variant))}"
+                      data-price="${p.price}" data-art="${p.art}">
+                ${t({ en: 'Add to cart', zh: '加入購物車' })}
+              </button>
+              ${arrow(p.slug, { en: 'Read about it', zh: '了解更多' })}
+            </div>
+          </div>
+        </article>`;
+}
+
+/** Retail partners — names only, no outbound links. */
+function retailPartners() {
+  const partner = (name, zh, note) => `<div class="partner">
+            <span class="partner__name">${name}</span>
+            <span class="partner__zh">${zh}</span>
+            <span class="partner__note">${t(note)}</span>
+          </div>`;
+
+  return `    <section class="section partners reveal">
+      <div class="wrap">
+${sectionHead({
+  eyebrow: { en: 'Retail partners', zh: '零售夥伴' },
+  heading: { en: 'On the shelf across Hong Kong', zh: '全港門市有售' },
+  lede: {
+    en: 'You can pick up a tube in person, read the carton and decide for yourself — no website in between.',
+    zh: '你可以親自到門市拿起產品、看清楚外盒再決定——中間不需要一個網站。',
+  },
+  align: 'center',
+})}
+        <div class="partners__row">
+          ${partner('Watsons', '屈臣氏', { en: '600+ stores', zh: '600 多間分店' })}
+          ${partner('Mannings', '萬寧', { en: 'Stores citywide', zh: '全港分店' })}
+        </div>
+        ${blk(
+          'p',
+          {
+            en: 'Retail partner names are used to show where the product is stocked. Prices and availability are set by each retailer.',
+            zh: '零售夥伴名稱僅用以說明產品的銷售點。售價及供應情況由各零售商決定。',
+          },
+          'partners__note'
+        )}
+      </div>
+    </section>`;
+}
+
 /* ------------------------------------------------------------------- pages */
 
 export function home() {
@@ -239,8 +302,8 @@ export function home() {
             'hero__lede'
           )}
           <div class="hero__actions">
-            ${cta('/product/', { en: 'Meet the cream', zh: '認識產品' })}
-            ${cta('/how-to-use/', { en: 'Find your routine', zh: '找出你的用法' }, 'btn--ghost')}
+            ${cta('/shop/', { en: 'Shop now', zh: '立即選購' })}
+            ${cta('/product/', { en: 'Meet the cream', zh: '認識產品' }, 'btn--ghost')}
           </div>
           <p class="hero__meta">${t({
             en: '100ml · HK$250 · At Watsons & Mannings',
@@ -332,6 +395,8 @@ ${freeFromBand()}
         <img class="finder-teaser__art" src="/assets/img/art-desk.svg" alt="" width="1200" height="800" loading="lazy" decoding="async">
       </div>
     </section>
+
+${retailPartners()}
 
 ${buyStrip()}
 
@@ -1057,6 +1122,309 @@ ${newsletter()}`;
         { name: { en: 'Journal', zh: '專欄' }, path: '/journal/' },
         { name: a.title, path },
       ]),
+    ],
+  };
+}
+
+
+/* ------------------------------------------------------------ shop & cart */
+
+export function shop() {
+  const body = `${pageHero({
+    eyebrow: { en: 'Shop', zh: '網上商店' },
+    title: { en: 'Two ways to buy it', zh: '兩種購買方式' },
+    lede: {
+      en: 'One tube, or two at a better price. Delivered anywhere in Hong Kong, free over HK$300. Card, Apple Pay and Google Pay, handled by Stripe.',
+      zh: '一支，或以更好的價錢買兩支。全港送遞，滿 HK$300 免運費。支援信用卡、Apple Pay 及 Google Pay，由 Stripe 處理付款。',
+    },
+    trail: [HOME_CRUMB, { name: { en: 'Shop', zh: '網上商店' }, path: '/shop/' }],
+  })}
+
+    <section class="section shop">
+      <div class="wrap">
+        <div class="shop__grid">
+          ${PRODUCTS.map(shopCard).join('\n          ')}
+        </div>
+        <div class="shop__assurances">
+          ${[
+            {
+              h: { en: 'Free local delivery over HK$300', zh: '滿 HK$300 免本地運費' },
+              p: { en: 'Otherwise HK$30. Usually 2–4 working days.', zh: '否則 HK$30，一般 2–4 個工作天送達。' },
+            },
+            {
+              h: { en: 'Secure checkout', zh: '安全結帳' },
+              p: {
+                en: 'Payment is handled by Stripe. We never see your card details.',
+                zh: '付款由 Stripe 處理，我們不會接觸你的卡片資料。',
+              },
+            },
+            {
+              h: { en: '14-day returns', zh: '14 天退貨' },
+              p: {
+                en: 'Unopened tubes, returned within 14 days, refunded in full.',
+                zh: '未開封產品可於 14 天內退回並全額退款。',
+              },
+            },
+          ]
+            .map(
+              (a) => `<div class="assurance">
+            ${blk('h3', a.h, 'assurance__title')}
+            ${blk('p', a.p, 'assurance__text')}
+          </div>`
+            )
+            .join('\n          ')}
+        </div>
+      </div>
+    </section>
+
+${freeFromBand()}
+
+    <section class="section reveal">
+      <div class="wrap prose">
+        ${blk('h2', { en: 'Prefer to buy in person?', zh: '想親自選購？' })}
+        ${blk('p', {
+          en: 'The same tube is on the shelf at Watsons and Mannings across Hong Kong, at the same price. We would rather you bought it wherever is easiest.',
+          zh: '同一支產品，以同一價錢於全港屈臣氏及萬寧有售。哪裡方便，就在哪裡買。',
+        })}
+        <p>${arrow('/stockists/', { en: 'See all stockists', zh: '查看所有銷售點' })}</p>
+      </div>
+    </section>`;
+
+  return {
+    title: { en: 'Shop', zh: '網上商店' },
+    description: {
+      en: 'Buy VITAS Soothing Cream Gel online — one 100ml tube at HK$250 or the Recovery Duo at HK$450. Free Hong Kong delivery over HK$300, secure Stripe checkout.',
+      zh: '網上選購 VITAS 舒緩啫喱膏——100毫升 HK$250，雙支裝 HK$450。滿 HK$300 免香港運費，Stripe 安全結帳。',
+    },
+    path: '/shop/',
+    active: '/shop/',
+    body,
+    jsonLd: [
+      {
+        '@context': 'https://schema.org',
+        '@type': 'ItemList',
+        itemListElement: PRODUCTS.map((p, i) => ({
+          '@type': 'ListItem',
+          position: i + 1,
+          item: {
+            '@type': 'Product',
+            name: t(p.name),
+            image: SITE.url + p.art,
+            offers: {
+              '@type': 'Offer',
+              price: (p.price / 100).toFixed(2),
+              priceCurrency: 'HKD',
+              availability: 'https://schema.org/InStock',
+              url: SITE.url + url('/shop/'),
+            },
+          },
+        })),
+      },
+      breadcrumb([HOME_CRUMB, { name: { en: 'Shop', zh: '網上商店' }, path: '/shop/' }]),
+    ],
+  };
+}
+
+export function cart() {
+  const body = `${pageHero({
+    eyebrow: { en: 'Cart', zh: '購物車' },
+    title: { en: 'Your cart', zh: '你的購物車' },
+    trail: [HOME_CRUMB, { name: { en: 'Cart', zh: '購物車' }, path: '/cart/' }],
+  })}
+
+    <section class="section">
+      <div class="wrap cart">
+        <div class="cart__items" data-cart-items>
+          <p class="cart__empty" data-cart-empty>
+            ${t({ en: 'Your cart is empty.', zh: '購物車是空的。' })}
+            <a href="${url('/shop/')}">${t({ en: 'Go to the shop', zh: '前往商店' })}</a>
+          </p>
+        </div>
+        <aside class="cart__summary" data-cart-summary>
+          ${blk('h2', { en: 'Summary', zh: '訂單摘要' }, 'cart__summary-title')}
+          <dl class="cart__totals">
+            <div class="cart__row"><dt>${t({ en: 'Subtotal', zh: '小計' })}</dt><dd data-cart-subtotal>HK$0</dd></div>
+            <div class="cart__row" data-cart-discount-row hidden><dt>${t({
+              en: 'Welcome offer',
+              zh: '迎新優惠',
+            })}</dt><dd data-cart-discount>−HK$50</dd></div>
+            <div class="cart__row"><dt>${t({ en: 'Delivery', zh: '運費' })}</dt><dd data-cart-shipping>—</dd></div>
+            <div class="cart__row cart__row--total"><dt>${t({ en: 'Total', zh: '總計' })}</dt><dd data-cart-total>HK$0</dd></div>
+          </dl>
+
+          <div class="cart__promo">
+            <label for="promo">${t({ en: 'Discount code', zh: '優惠碼' })}</label>
+            <div class="cart__promo-row">
+              <input id="promo" type="text" data-promo-input placeholder="WELCOME50" autocomplete="off">
+              <button class="btn btn--ghost btn--sm" type="button" data-promo-apply>${t({
+                en: 'Apply',
+                zh: '套用',
+              })}</button>
+            </div>
+            <p class="cart__promo-note" data-promo-note hidden></p>
+          </div>
+
+          <button class="btn btn--full" type="button" data-checkout disabled>
+            ${t({ en: 'Checkout', zh: '前往結帳' })}
+          </button>
+          <p class="cart__note" data-checkout-note hidden></p>
+          ${blk(
+            'p',
+            {
+              en: 'Payment is handled by Stripe — card, Apple Pay and Google Pay. You will be taken to Stripe to pay and returned here afterwards.',
+              zh: '付款由 Stripe 處理，支援信用卡、Apple Pay 及 Google Pay。你會被帶到 Stripe 完成付款，然後返回本網站。',
+            },
+            'cart__small'
+          )}
+        </aside>
+      </div>
+    </section>`;
+
+  return {
+    title: { en: 'Cart', zh: '購物車' },
+    description: {
+      en: 'Your VITAS cart. Secure checkout by Stripe, free Hong Kong delivery over HK$300.',
+      zh: '你的 VITAS 購物車。Stripe 安全結帳，滿 HK$300 免香港運費。',
+    },
+    path: '/cart/',
+    body,
+    bodyClass: 'page-cart',
+  };
+}
+
+export function checkoutResult(kind) {
+  const ok = kind === 'success';
+  const path = ok ? '/checkout/success/' : '/checkout/cancelled/';
+
+  const body = `${pageHero({
+    eyebrow: ok ? { en: 'Order received', zh: '已收到訂單' } : { en: 'Checkout', zh: '結帳' },
+    title: ok
+      ? { en: 'Thank you — your order is in', zh: '多謝你——訂單已確認' }
+      : { en: 'Your cart is still here', zh: '你的購物車仍然保留' },
+    lede: ok
+      ? {
+          en: 'A confirmation email is on its way. Local orders usually arrive within 2–4 working days; we will email tracking as soon as it ships.',
+          zh: '確認電郵將於稍後寄出。本地訂單一般 2–4 個工作天送達，發貨後我們會以電郵提供追蹤資料。',
+        }
+      : {
+          en: 'Nothing was charged, and nothing was lost. Pick up where you left off whenever you are ready.',
+          zh: '沒有任何扣款，購物車內容亦已保留。你可以隨時繼續。',
+        },
+    trail: [HOME_CRUMB, { name: ok ? { en: 'Order received', zh: '已收到訂單' } : { en: 'Checkout', zh: '結帳' }, path }],
+  })}
+
+    <section class="section">
+      <div class="wrap prose">
+        ${
+          ok
+            ? blk('p', {
+                en: 'While you wait: the two minutes before training matter more than the ten minutes after. Read the routines so the first tube actually gets used.',
+                zh: '等待期間：訓練前的兩分鐘，其實比訓練後的十分鐘更重要。看看使用方法，讓第一支產品真正被用起來。',
+              }) +
+              `<p>${arrow('/how-to-use/', { en: 'Read the routines', zh: '閱讀使用方法' })}</p>` +
+              blk(
+                'p',
+                {
+                  en: 'Questions about your order? Email hello@vitas.com.hk and a person will answer.',
+                  zh: '對訂單有疑問？請電郵 hello@vitas.com.hk，會有真人回覆。',
+                },
+                'note'
+              )
+            : blk('p', {
+                en: 'If something went wrong at checkout — a card declined, a code that would not apply — tell us and we will sort it out.',
+                zh: '如結帳時遇到問題——卡片被拒、優惠碼無法套用——請告訴我們，我們會處理。',
+              }) +
+              `<p>${arrow('/cart/', { en: 'Back to the cart', zh: '返回購物車' })}</p>` +
+              `<p>${arrow('/contact/', { en: 'Contact us', zh: '聯絡我們' })}</p>`
+        }
+      </div>
+    </section>`;
+
+  return {
+    title: ok ? { en: 'Order received', zh: '已收到訂單' } : { en: 'Checkout cancelled', zh: '結帳已取消' },
+    description: ok
+      ? { en: 'Thank you for your VITAS order.', zh: '多謝你的 VITAS 訂單。' }
+      : { en: 'Checkout cancelled. Your cart is still here.', zh: '結帳已取消，購物車內容已保留。' },
+    path,
+    body,
+    bodyClass: ok ? 'page-checkout page-checkout--success' : 'page-checkout',
+  };
+}
+
+/* ------------------------------------------------------------------ about */
+
+export function about() {
+  const body = `${pageHero({
+    eyebrow: { en: 'About VITAS', zh: '關於 VITAS' },
+    title: { en: 'A small brand with one product', zh: '一個只有一支產品的小品牌' },
+    lede: {
+      en: 'Why VITAS exists, where it is made, and what changed when we stopped saying things we could not prove.',
+      zh: 'VITAS 為何存在、在哪裡生產，以及當我們停止說無法證明的話之後，改變了甚麼。',
+    },
+    trail: [HOME_CRUMB, { name: { en: 'About VITAS', zh: '關於 VITAS' }, path: '/about/' }],
+  })}
+
+    <section class="section">
+      <div class="wrap prose">
+        ${ABOUT.chapters
+          .map((c) => `${blk('h2', c.h)}\n        ${c.p.map((para) => blk('p', para)).join('\n        ')}`)
+          .join('\n        ')}
+      </div>
+    </section>
+
+    <section class="section founder reveal">
+      <div class="wrap founder__inner">
+        ${figure('/assets/img/art-founder.svg', { en: 'Rosana Li, founder', zh: '創辦人 Rosana Li' }, 'tint', {
+          w: 1000,
+          h: 1000,
+        })}
+        <div class="founder__body">
+          ${blk('p', { en: 'The founder', zh: '創辦人' }, 'eyebrow')}
+          ${blk('h2', ABOUT.founderNote.h, 'founder__title')}
+          ${ABOUT.founderNote.p.map((para) => blk('p', para, 'founder__text')).join('\n          ')}
+          <p class="founder__sign">${t(ABOUT.founder)}</p>
+        </div>
+      </div>
+    </section>
+
+${freeFromBand()}
+
+    <section class="section reveal">
+      <div class="wrap prose">
+        ${blk('h2', { en: 'What we will not do', zh: '我們不會做的事' })}
+        ${blk('p', {
+          en: 'We will not buy reviews, invent studies, or describe this cream as a medicine. If you find a claim on a shelf talker or a reseller listing that contradicts what is written here, send it to us — some grey-market listings still carry the old copy, and we are working through them.',
+          zh: '我們不會購買評價、捏造研究，也不會把這支膏描述成藥物。如果你在貨架標示或經銷商網頁上看到與本頁不符的宣稱，請告訴我們——部分平行進口資料仍沿用舊文案，我們正在逐一處理。',
+        })}
+        <p>${arrow('/approach/', { en: 'Read our approach in full', zh: '閱讀完整的取態說明' })}</p>
+      </div>
+    </section>
+
+${buyStrip()}`;
+
+  return {
+    title: { en: 'About VITAS', zh: '關於 VITAS' },
+    description: {
+      en: 'The story behind VITAS 紓適寧: why it was created in Hong Kong, why the cream is made in France, and a note from founder Rosana Li.',
+      zh: 'VITAS 紓適寧的故事：為何在香港創立、為何於法國生產，以及創辦人 Rosana Li 的話。',
+    },
+    path: '/about/',
+    active: '/about/',
+    body,
+    jsonLd: [
+      breadcrumb([HOME_CRUMB, { name: { en: 'About VITAS', zh: '關於 VITAS' }, path: '/about/' }]),
+      {
+        '@context': 'https://schema.org',
+        '@type': 'AboutPage',
+        name: t({ en: 'About VITAS', zh: '關於 VITAS' }),
+        inLanguage: getLang() === 'zh' ? 'zh-Hant-HK' : 'en-HK',
+        mainEntity: {
+          '@type': 'Organization',
+          name: 'VITAS 紓適寧',
+          founder: { '@type': 'Person', name: 'Rosana Li' },
+          url: SITE.url,
+        },
+      },
     ],
   };
 }

@@ -1,0 +1,16 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 1000" width="1000" height="1000" role="img" aria-label="Founder portrait placeholder">
+  <rect width="1000" height="1000" fill="#FEF6EF"/>
+  <circle cx="500" cy="470" r="300" fill="#FBCEA9"/>
+  <path d="M500,300 a115,115 0 1,0 0.1,0 Z" fill="#FFFFFF" stroke="#C6531A" stroke-width="4" stroke-opacity="0.5"/>
+  <path d="M320,760 C320,620 400,545 500,545 C600,545 680,620 680,760 Z" fill="#FFFFFF" stroke="#C6531A" stroke-width="4" stroke-opacity="0.5"/>
+  <path d="M250,830 H750" stroke="#C6531A" stroke-width="5" stroke-opacity="0.35" stroke-linecap="round"/>
+<g transform="translate(700 260) rotate(28)" opacity="0.95">
+    <path d="M0,0 C66.5,-58 142.5,-58 190,0 C142.5,58 66.5,58 0,0 Z" fill="#F9B078" stroke="#C6531A" stroke-width="4.75" stroke-opacity="0.5"/>
+    <path d="M11.4,0 L171,0" stroke="#C6531A" stroke-width="3.42" stroke-opacity="0.4" fill="none"/>
+  </g>
+<g transform="translate(680 320) rotate(158)" opacity="0.95">
+    <path d="M0,0 C56,-48 120,-48 160,0 C120,48 56,48 0,0 Z" fill="#FBCEA9" stroke="#C6531A" stroke-width="4" stroke-opacity="0.5"/>
+    <path d="M9.6,0 L144,0" stroke="#C6531A" stroke-width="2.88" stroke-opacity="0.4" fill="none"/>
+  </g>
+  <circle cx="286" cy="250" r="26" fill="#F47920"/>
+</svg>

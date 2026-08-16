@@ -69,12 +69,12 @@ export const urlIn = (path, lang) => (lang === 'zh' ? '/zh' + path : path);
 /* --------------------------------------------------------------- chrome */
 
 const navItems = [
+  { href: '/shop/', label: { en: 'Shop', zh: '網上商店' } },
   { href: '/product/', label: { en: 'The Cream', zh: '產品' } },
-  { href: '/how-to-use/', label: { en: 'How to Use', zh: '使用方法' } },
   { href: '/ingredients/', label: { en: 'Ingredients', zh: '成分' } },
-  { href: '/approach/', label: { en: 'Our Approach', zh: '我們的取態' } },
-  { href: '/journal/', label: { en: 'Journal', zh: '專欄' } },
-  { href: '/stockists/', label: { en: 'Where to Buy', zh: '購買地點' } },
+  { href: '/how-to-use/', label: { en: 'How to Use', zh: '使用方法' } },
+  { href: '/about/', label: { en: 'About VITAS', zh: '關於 VITAS' } },
+  { href: '/faq/', label: { en: 'FAQ', zh: '常見問題' } },
 ];
 
 function header(active, path) {
@@ -93,8 +93,7 @@ function header(active, path) {
   <header class="site-header" id="site-header">
     <div class="site-header__inner">
       <a class="wordmark" href="${url('/')}" aria-label="VITAS 紓適寧">
-        <span class="wordmark__mark" aria-hidden="true">V</span>
-        <span class="wordmark__latin">VITAS</span>
+        <img src="/assets/img/logo/logo_horizontal.svg" alt="VITAS" width="180" height="50">
         <span class="wordmark__zh">紓適寧</span>
       </a>
       <nav class="nav" id="primary-nav" aria-label="${attr(t({ en: 'Primary', zh: '主要' }))}">
@@ -105,9 +104,17 @@ function header(active, path) {
           <a class="lang-toggle" href="${urlIn(path, other)}" hreflang="${
             other === 'zh' ? 'zh-Hant' : 'en'
           }" lang="${other === 'zh' ? 'zh-Hant' : 'en'}">${other === 'zh' ? '中文' : 'EN'}</a>
-          <a class="btn btn--sm" href="${url('/stockists/')}">${t({ en: 'Buy', zh: '購買' })}</a>
+          <a class="btn btn--sm" href="${url('/shop/')}">${t({ en: 'Shop', zh: '選購' })}</a>
         </div>
       </nav>
+      <a class="cart-button" href="${url('/cart/')}" data-cart-link>
+        <svg viewBox="0 0 24 24" width="20" height="20" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M6 7h12l-1.2 11.2a2 2 0 0 1-2 1.8H9.2a2 2 0 0 1-2-1.8Z"/>
+          <path d="M9 9V6.5a3 3 0 0 1 6 0V9"/>
+        </svg>
+        <span class="cart-button__count" data-cart-count hidden>0</span>
+        <span class="sr-only">${t({ en: 'Cart', zh: '購物車' })}</span>
+      </a>
       <button class="nav-toggle" type="button" aria-expanded="false" aria-controls="primary-nav" data-nav-toggle>
         <span class="nav-toggle__bar"></span>
         <span class="sr-only">${t({ en: 'Menu', zh: '選單' })}</span>
@@ -136,8 +143,7 @@ function footer() {
     <div class="footer__top">
       <div class="footer__intro">
         <span class="wordmark wordmark--footer">
-          <span class="wordmark__mark" aria-hidden="true">V</span>
-          <span class="wordmark__latin">VITAS</span>
+          <img src="/assets/img/logo/logo_horizontal.svg" alt="VITAS" width="200" height="56">
           <span class="wordmark__zh">紓適寧</span>
         </span>
         ${blk('p', {
@@ -151,14 +157,17 @@ function footer() {
         </div>
       </div>
       <div class="footer__cols">
-        ${col({ en: 'Product', zh: '產品' }, [
+        ${col({ en: 'Shop', zh: '購買' }, [
+          { href: '/shop/', label: { en: 'Shop now', zh: '網上商店' } },
           { href: '/product/', label: { en: 'Soothing Cream Gel 100ml', zh: '舒緩啫喱膏 100毫升' } },
-          { href: '/ingredients/', label: { en: 'Ingredients', zh: '成分' } },
-          { href: '/how-to-use/', label: { en: 'How to use', zh: '使用方法' } },
+          { href: '/cart/', label: { en: 'Cart', zh: '購物車' } },
           { href: '/stockists/', label: { en: 'Where to buy', zh: '購買地點' } },
         ])}
         ${col({ en: 'Brand', zh: '品牌' }, [
+          { href: '/about/', label: { en: 'About VITAS', zh: '關於 VITAS' } },
           { href: '/approach/', label: { en: 'Our approach', zh: '我們的取態' } },
+          { href: '/ingredients/', label: { en: 'Ingredients', zh: '成分' } },
+          { href: '/how-to-use/', label: { en: 'How to use', zh: '使用方法' } },
           { href: '/journal/', label: { en: 'Journal', zh: '專欄' } },
           { href: '/faq/', label: { en: 'FAQ', zh: '常見問題' } },
           { href: '/contact/', label: { en: 'Contact', zh: '聯絡我們' } },
@@ -184,6 +193,62 @@ function footer() {
       })}</p>
     </div>
   </footer>`;
+}
+
+
+/**
+ * Welcome offer. Shown once per visitor (a localStorage flag suppresses it
+ * afterwards), never on the checkout pages. The email goes to the same endpoint
+ * as the newsletter — see README, "Forms".
+ */
+function welcomeModal() {
+  return `  <div class="welcome" data-welcome hidden>
+    <div class="welcome__scrim" data-welcome-close></div>
+    <div class="welcome__panel" role="dialog" aria-modal="true" aria-labelledby="welcome-title" aria-describedby="welcome-text">
+      <button class="welcome__close" type="button" data-welcome-close aria-label="${attr(
+        t({ en: 'Close', zh: '關閉' })
+      )}">&times;</button>
+      <p class="welcome__eyebrow">${t({ en: 'Welcome offer', zh: '迎新優惠' })}</p>
+      ${blk('h2', { en: 'HK$50 off your first order', zh: '首次訂購減 HK$50' }, 'welcome__title')
+        .replace('<h2', '<h2 id="welcome-title"')}
+      ${blk(
+        'p',
+        {
+          en: 'Leave your email and we will send the code — and, once a month or so, a note on training and recovery. No spam, unsubscribe in one click.',
+          zh: '留下你的電郵，我們會把優惠碼寄給你；並約每月一次分享訓練與恢復的內容。不發垃圾郵件，一鍵取消訂閱。',
+        },
+        'welcome__text'
+      ).replace('<p class', '<p id="welcome-text" class')}
+      <form class="welcome__form" data-welcome-form novalidate>
+        <label class="sr-only" for="welcome-email">${t({
+          en: 'Email address',
+          zh: '電郵地址',
+        })}</label>
+        <input id="welcome-email" name="email" type="email" required autocomplete="email" placeholder="you@example.com">
+        <button class="btn" type="submit">${t({ en: 'Get the code', zh: '取得優惠碼' })}</button>
+      </form>
+      <div class="welcome__done" data-welcome-done hidden>
+        <p class="welcome__code" data-welcome-code>WELCOME50</p>
+        ${blk(
+          'p',
+          {
+            en: 'Use it at checkout for HK$50 off. It is saved to this browser, so the cart will remind you.',
+            zh: '結帳時輸入即減 HK$50。優惠碼已儲存於此瀏覽器，購物車會提醒你。',
+          },
+          'welcome__small'
+        )}
+        <a class="btn" href="${url('/shop/')}">${t({ en: 'Start shopping', zh: '開始選購' })}</a>
+      </div>
+      ${blk(
+        'p',
+        {
+          en: 'One use per customer, on orders from this website. Not valid at Watsons, Mannings or other retailers.',
+          zh: '每位顧客限用一次，只適用於本網站訂單，不適用於屈臣氏、萬寧或其他零售商。',
+        },
+        'welcome__terms'
+      )}
+    </div>
+  </div>`;
 }
 
 /**
@@ -226,22 +291,24 @@ export function page({ title, description, path, body, active, jsonLd = [], body
   <meta property="og:locale" content="${isZh ? 'zh_HK' : 'en_HK'}">
   <meta property="og:locale:alternate" content="${isZh ? 'en_HK' : 'zh_HK'}">
   <meta name="twitter:card" content="summary_large_image">
-  <meta name="theme-color" content="#EF6023">
-  <link rel="icon" href="/assets/img/favicon.svg" type="image/svg+xml">
-  <link rel="apple-touch-icon" href="/assets/img/favicon.svg">
+  <meta name="theme-color" content="#F47920">
+  <link rel="icon" href="/assets/img/logo/mark_app_icon.svg" type="image/svg+xml">
+  <link rel="apple-touch-icon" href="/assets/img/logo/mark_app_icon.svg">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Jost:wght@300;400;500;600&family=Noto+Sans+HK:wght@300;400;500;700&display=swap">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Sora:wght@400;500;600;700;800&family=Inter:wght@400;500;600&family=Space+Mono:wght@400;700&family=Noto+Sans+TC:wght@400;500;700&display=swap">
   <link rel="stylesheet" href="/assets/css/site.css">
 ${structured}
 </head>
-<body class="${bodyClass}${isZh ? ' lang-zh' : ''}">
+<body class="${bodyClass}${isZh ? ' lang-zh' : ''}" data-lang="${isZh ? 'zh' : 'en'}">
 ${header(active, path)}
   <main id="main">
 ${body}
   </main>
 ${footer()}
+${welcomeModal()}
   <script src="/assets/js/site.js" defer></script>
+  <script src="/assets/js/shop.js" defer></script>
 </body>
 </html>
 `;

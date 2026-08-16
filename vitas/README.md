@@ -4,9 +4,13 @@ A complete, bilingual (EN / 繁體中文) static website for the VITAS Soothing 
 built to be uploaded to GitHub and hosted on Vercel. No framework, no dependencies,
 no database — plain HTML, one stylesheet, one small JavaScript file.
 
-Colour comes from the pack: white ground, one orange (`#EF6023`), with a darker
-orange (`#C2440E`) for buttons and links so text keeps a WCAG-AA contrast ratio
-on white. Type is Jost / Noto Sans HK, matching the geometric sans on the tube.
+Design follows **VITAS Brand Guidelines v1.0 (2026)**: heritage orange
+`#F47920` leads, Ember `#C6531A` carries small text and buttons (orange is a
+brand colour, not a text colour), Cooling Mint `#17B39A` supports, on Chalk
+`#FBF6EE` and Carbon `#17181A` — roughly the 60/30/7/3 ratio the guidelines
+specify. Type is Sora (display), Inter (body), Space Mono (specs and labels)
+and Noto Sans TC for 繁體中文. Logos come from the supplied kit, unmodified, in
+`assets/img/logo/` (see `docs/logo-kit-README.txt`).
 
 The structure and pacing are modelled on [drhauschka.com](https://www.drhauschka.com/)
 (botanical editorial layout, ingredient stories, guided "find your routine" tool,
@@ -77,12 +81,17 @@ separate HTML file at a separate address, in both languages:
 
 ```
 /                         /zh/
+/shop/                    /zh/shop/
+/cart/                    /zh/cart/
+/checkout/success/        /zh/checkout/success/
+/checkout/cancelled/      /zh/checkout/cancelled/
 /product/                 /zh/product/
 /how-to-use/              /zh/how-to-use/
 /ingredients/             /zh/ingredients/
 /ingredients/eucalyptus/  /zh/ingredients/eucalyptus/
 /ingredients/grape-seed/  /zh/ingredients/grape-seed/
 /ingredients/niaouli/     /zh/ingredients/niaouli/
+/about/                   /zh/about/
 /approach/                /zh/approach/
 /stockists/               /zh/stockists/
 /journal/                 /zh/journal/
@@ -122,7 +131,80 @@ panels, and a tall transparent PNG for the pack shot.
 `og-cover.svg` by `node src/make-og.mjs` (needs Playwright installed locally).
 Regenerate it if you change the cover art.
 
-## 4. Forms
+## 4. Shop, cart and Stripe checkout
+
+The shop is two products (`src/data.mjs` → `PRODUCTS`), a cart held in the
+browser's `localStorage`, and a Stripe Checkout session created by a serverless
+function.
+
+```
+/shop/                     the two products, add to cart
+/cart/                     quantities, discount code, totals
+POST /api/checkout         creates the Stripe session   (api/checkout.js)
+/checkout/success/         return page after payment
+/checkout/cancelled/       return page if they back out
+```
+
+**Security note:** the browser sends only product ids and quantities.
+`api/checkout.js` re-reads every price from `src/data.mjs`, so editing the cart
+in devtools cannot change what is charged. Keep it that way.
+
+### Turning it on
+
+1. Create a Stripe account and get the secret key
+   (Developers → API keys). Use `sk_test_…` first.
+2. In Vercel → Project → Settings → **Environment Variables**, add:
+   - `STRIPE_SECRET_KEY` = `sk_test_…` (then `sk_live_…` when you go live)
+   - `SITE_URL` = `https://www.vitas.com.hk`
+3. Redeploy. `npm install` runs automatically and installs the `stripe`
+   package listed in `package.json`.
+4. Test with Stripe's test card `4242 4242 4242 4242`, any future expiry, any CVC.
+
+Until the key is set, the Checkout button shows "Checkout is not connected yet"
+rather than failing silently. Nothing else on the site depends on it.
+
+### The HK$50 welcome offer
+
+The pop-up (see below) hands out the code **`WELCOME50`**. Create it once in
+Stripe so the discount is actually applied at payment:
+
+1. Stripe → Products → **Coupons** → New: amount off **HK$50.00**, currency HKD,
+   duration "once".
+2. On that coupon, **Add promotion code** → code `WELCOME50` → set
+   "Limit to first-time customers" and any expiry you want.
+
+`api/checkout.js` looks the code up by name at checkout time and applies it if
+it is active — the browser never decides the discount. The cart page also shows
+the HK$50 in its totals so the number the customer sees matches the one Stripe
+charges. Change the amount in **three** places if you change the offer:
+the Stripe coupon, `SHOP.welcomeValue` in `src/data.mjs`, and `WELCOME_VALUE`
+in `assets/js/shop.js`.
+
+### Shipping and returns
+
+Local delivery is HK$30, free over HK$300 — set in `SHOP.freeShippingOver`
+(`src/data.mjs`) and mirrored in `api/checkout.js` as Stripe shipping options,
+and in `assets/js/shop.js` for the cart display. The 14-day returns line on the
+shop page and in the FAQ is a policy statement: confirm it is the policy you
+actually want to operate before launch.
+
+## 5. The welcome pop-up
+
+`src/layout.mjs` → `welcomeModal()` renders it on every page; `assets/js/shop.js`
+decides when to show it:
+
+- appears 2.5 seconds after the first page view,
+- never on `/cart/` or `/checkout/…`,
+- never again once dismissed or completed (`vitas-welcome-seen` in
+  localStorage),
+- closes on Escape, on the scrim, or on the × button, and keeps keyboard focus
+  inside itself while open.
+
+Submitting the form reveals the code and stores it so the cart pre-fills it.
+**It does not yet send the address anywhere** — wire the form to your email
+provider (see Forms, below) or the addresses are lost.
+
+## 6. Forms
 
 The newsletter and contact forms are wired up in the markup but **submit
 nowhere** — they show a note saying so. Before launch, point them at a real
@@ -134,7 +216,7 @@ endpoint. The simplest options, in order of effort:
   post to `/api/subscribe`.
 - **Your email provider's embed** (Mailchimp, Brevo) — replace the form markup.
 
-## 5. Things to verify before launch
+## 7. Things to verify before launch
 
 These need a human with access to the business; they are marked here so they do
 not get missed:
@@ -158,8 +240,25 @@ not get missed:
       ones (see the analysis doc, "what VITAS should copy").
 - [ ] **YouTube** — the footer links to @VITASHK. If you want video embedded on
       the site, add the specific video IDs; nothing is embedded blind.
+- [ ] **About page facts** — `ABOUT` in `src/data.mjs` follows the brand's own
+      account and the public retail record. The founding dates, the founder's
+      biography and the "two decades of formulation" line are **not**
+      independently verified here. Rosana Li should read and correct that page
+      before it goes live, and the quotation attributed to her must be approved
+      by her (it was written as a draft, not transcribed from an interview).
+- [ ] **Second product** — `cream-duo` is a two-pack of the same SKU, priced at
+      HK$450. If a genuine second product exists, replace it in `PRODUCTS`.
+- [ ] **Retail partner logos** — the Retail Partners section on the homepage uses
+      the retailers' names set in type, not their logos, and links nowhere.
+      Using the actual Watsons / Mannings marks needs each retailer's written
+      permission and their brand files; drop them into `assets/img/logo/` and
+      swap the markup in `retailPartners()` once you have it.
+- [ ] **Stripe** — coupon and promotion code created, live key set, a real test
+      order placed and refunded, and receipts/emails configured in Stripe.
+- [ ] **Delivery and returns** — confirm HK$30 / free over HK$300 and the 14-day
+      returns window are the policies you will actually honour.
 
-## 6. File map
+## 8. File map
 
 ```
 vitas/
@@ -170,7 +269,11 @@ vitas/
 ├── assets/
 │   ├── css/site.css        one stylesheet
 │   ├── js/site.js          nav, accordion, routine finder (no language logic)
+│   ├── js/shop.js          cart, welcome offer, Stripe checkout call
+│   ├── img/logo/*          supplied logo kit, unmodified
 │   └── img/*.svg|png       generated illustrations
+├── api/checkout.js         Vercel function → Stripe Checkout session
+├── .env.example            the two environment variables Vercel needs
 ├── src/
 │   ├── build.mjs           generator entry point
 │   ├── data.mjs            product / plants / stockists / articles / FAQ

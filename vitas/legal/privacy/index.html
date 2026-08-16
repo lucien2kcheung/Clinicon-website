@@ -18,38 +18,45 @@
   <meta property="og:locale" content="en_HK">
   <meta property="og:locale:alternate" content="zh_HK">
   <meta name="twitter:card" content="summary_large_image">
-  <meta name="theme-color" content="#EF6023">
-  <link rel="icon" href="/assets/img/favicon.svg" type="image/svg+xml">
-  <link rel="apple-touch-icon" href="/assets/img/favicon.svg">
+  <meta name="theme-color" content="#F47920">
+  <link rel="icon" href="/assets/img/logo/mark_app_icon.svg" type="image/svg+xml">
+  <link rel="apple-touch-icon" href="/assets/img/logo/mark_app_icon.svg">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Jost:wght@300;400;500;600&family=Noto+Sans+HK:wght@300;400;500;700&display=swap">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Sora:wght@400;500;600;700;800&family=Inter:wght@400;500;600&family=Space+Mono:wght@400;700&family=Noto+Sans+TC:wght@400;500;700&display=swap">
   <link rel="stylesheet" href="/assets/css/site.css">
 
 </head>
-<body class="">
+<body class="" data-lang="en">
   <a class="skip-link" href="#main">Skip to content</a>
   <header class="site-header" id="site-header">
     <div class="site-header__inner">
       <a class="wordmark" href="/" aria-label="VITAS 紓適寧">
-        <span class="wordmark__mark" aria-hidden="true">V</span>
-        <span class="wordmark__latin">VITAS</span>
+        <img src="/assets/img/logo/logo_horizontal.svg" alt="VITAS" width="180" height="50">
         <span class="wordmark__zh">紓適寧</span>
       </a>
       <nav class="nav" id="primary-nav" aria-label="Primary">
         <div class="nav__links">
+          <a class="nav__link" href="/shop/">Shop</a>
           <a class="nav__link" href="/product/">The Cream</a>
-          <a class="nav__link" href="/how-to-use/">How to Use</a>
           <a class="nav__link" href="/ingredients/">Ingredients</a>
-          <a class="nav__link" href="/approach/">Our Approach</a>
-          <a class="nav__link" href="/journal/">Journal</a>
-          <a class="nav__link" href="/stockists/">Where to Buy</a>
+          <a class="nav__link" href="/how-to-use/">How to Use</a>
+          <a class="nav__link" href="/about/">About VITAS</a>
+          <a class="nav__link" href="/faq/">FAQ</a>
         </div>
         <div class="nav__actions">
           <a class="lang-toggle" href="/zh/legal/privacy/" hreflang="zh-Hant" lang="zh-Hant">中文</a>
-          <a class="btn btn--sm" href="/stockists/">Buy</a>
+          <a class="btn btn--sm" href="/shop/">Shop</a>
         </div>
       </nav>
+      <a class="cart-button" href="/cart/" data-cart-link>
+        <svg viewBox="0 0 24 24" width="20" height="20" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M6 7h12l-1.2 11.2a2 2 0 0 1-2 1.8H9.2a2 2 0 0 1-2-1.8Z"/>
+          <path d="M9 9V6.5a3 3 0 0 1 6 0V9"/>
+        </svg>
+        <span class="cart-button__count" data-cart-count hidden>0</span>
+        <span class="sr-only">Cart</span>
+      </a>
       <button class="nav-toggle" type="button" aria-expanded="false" aria-controls="primary-nav" data-nav-toggle>
         <span class="nav-toggle__bar"></span>
         <span class="sr-only">Menu</span>
@@ -78,8 +85,7 @@
     <div class="footer__top">
       <div class="footer__intro">
         <span class="wordmark wordmark--footer">
-          <span class="wordmark__mark" aria-hidden="true">V</span>
-          <span class="wordmark__latin">VITAS</span>
+          <img src="/assets/img/logo/logo_horizontal.svg" alt="VITAS" width="200" height="56">
           <span class="wordmark__zh">紓適寧</span>
         </span>
         <p>A low-odour, non-greasy plant-oil cream gel for warming up before training and easing tired muscles after it. Made in France.</p>
@@ -92,11 +98,11 @@
       <div class="footer__cols">
         
         <div class="footer__col">
-          <h3 class="footer__heading">Product</h3>
+          <h3 class="footer__heading">Shop</h3>
           <ul class="footer__list">
+            <li><a href="/shop/">Shop now</a></li>
             <li><a href="/product/">Soothing Cream Gel 100ml</a></li>
-            <li><a href="/ingredients/">Ingredients</a></li>
-            <li><a href="/how-to-use/">How to use</a></li>
+            <li><a href="/cart/">Cart</a></li>
             <li><a href="/stockists/">Where to buy</a></li>
           </ul>
         </div>
@@ -104,7 +110,10 @@
         <div class="footer__col">
           <h3 class="footer__heading">Brand</h3>
           <ul class="footer__list">
+            <li><a href="/about/">About VITAS</a></li>
             <li><a href="/approach/">Our approach</a></li>
+            <li><a href="/ingredients/">Ingredients</a></li>
+            <li><a href="/how-to-use/">How to use</a></li>
             <li><a href="/journal/">Journal</a></li>
             <li><a href="/faq/">FAQ</a></li>
             <li><a href="/contact/">Contact</a></li>
@@ -125,6 +134,27 @@
       <p class="footer__copy">© 2026 VITAS 紓適寧. All rights reserved.</p>
     </div>
   </footer>
+  <div class="welcome" data-welcome hidden>
+    <div class="welcome__scrim" data-welcome-close></div>
+    <div class="welcome__panel" role="dialog" aria-modal="true" aria-labelledby="welcome-title" aria-describedby="welcome-text">
+      <button class="welcome__close" type="button" data-welcome-close aria-label="Close">&times;</button>
+      <p class="welcome__eyebrow">Welcome offer</p>
+      <h2 id="welcome-title" class="welcome__title">HK$50 off your first order</h2>
+      <p id="welcome-text" class="welcome__text">Leave your email and we will send the code — and, once a month or so, a note on training and recovery. No spam, unsubscribe in one click.</p>
+      <form class="welcome__form" data-welcome-form novalidate>
+        <label class="sr-only" for="welcome-email">Email address</label>
+        <input id="welcome-email" name="email" type="email" required autocomplete="email" placeholder="you@example.com">
+        <button class="btn" type="submit">Get the code</button>
+      </form>
+      <div class="welcome__done" data-welcome-done hidden>
+        <p class="welcome__code" data-welcome-code>WELCOME50</p>
+        <p class="welcome__small">Use it at checkout for HK$50 off. It is saved to this browser, so the cart will remind you.</p>
+        <a class="btn" href="/shop/">Start shopping</a>
+      </div>
+      <p class="welcome__terms">One use per customer, on orders from this website. Not valid at Watsons, Mannings or other retailers.</p>
+    </div>
+  </div>
   <script src="/assets/js/site.js" defer></script>
+  <script src="/assets/js/shop.js" defer></script>
 </body>
 </html>

@@ -53,6 +53,23 @@ Dropped deliberately, and not to be reintroduced:
   machine-translate either direction. The two languages are written, not
   converted.
 
+## Two places the brand documents and this site disagree
+
+The VITAS Brand Guidelines v1.0 (2026) are followed here for identity — colour,
+type, logo, tone, the "Recovery, by nature" line. Two claims inside them are
+**not** carried onto the site, because they are the ones the acquisition review
+flagged as indefensible:
+
+| Brand guidelines say | This site says |
+| --- | --- |
+| "Massage in after effort to help drain lactic acid" | Nothing about lactic acid, except a journal article explaining why the claim is wrong |
+| "Pre- and post-workout, plus lymphatic care" | Pre- and post-workout, and desk-bound neck and shoulders |
+
+The retail SKU is still *named* 淋巴管理啫喱膏 on some listings and on packaging.
+The FAQ answers that directly rather than pretending otherwise: the name is
+acknowledged, the claim is not repeated. When packaging is next reprinted, the
+name is the thing to change.
+
 ## Legal
 
 The site describes a cosmetic massage product. Before launch, have a Hong Kong

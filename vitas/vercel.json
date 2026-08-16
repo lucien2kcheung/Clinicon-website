@@ -4,34 +4,109 @@
   "trailingSlash": true,
   "headers": [
     {
+      "source": "/api/(.*)",
+      "headers": [
+        {
+          "key": "Cache-Control",
+          "value": "no-store"
+        }
+      ]
+    },
+    {
       "source": "/assets/(.*)",
-      "headers": [{ "key": "Cache-Control", "value": "public, max-age=31536000, immutable" }]
+      "headers": [
+        {
+          "key": "Cache-Control",
+          "value": "public, max-age=31536000, immutable"
+        }
+      ]
     },
     {
       "source": "/(.*)",
       "headers": [
-        { "key": "X-Content-Type-Options", "value": "nosniff" },
-        { "key": "Referrer-Policy", "value": "strict-origin-when-cross-origin" },
-        { "key": "X-Frame-Options", "value": "SAMEORIGIN" },
-        { "key": "Permissions-Policy", "value": "geolocation=(), microphone=(), camera=()" },
-        { "key": "Strict-Transport-Security", "value": "max-age=63072000; includeSubDomains" }
+        {
+          "key": "X-Content-Type-Options",
+          "value": "nosniff"
+        },
+        {
+          "key": "Referrer-Policy",
+          "value": "strict-origin-when-cross-origin"
+        },
+        {
+          "key": "X-Frame-Options",
+          "value": "SAMEORIGIN"
+        },
+        {
+          "key": "Permissions-Policy",
+          "value": "geolocation=(), microphone=(), camera=()"
+        },
+        {
+          "key": "Strict-Transport-Security",
+          "value": "max-age=63072000; includeSubDomains"
+        }
       ]
     }
   ],
   "redirects": [
-    { "source": "/products/vitas-soothing-cream-gel-100ml", "destination": "/product/", "permanent": true },
-    { "source": "/products/:slug", "destination": "/product/", "permanent": true },
-    { "source": "/shop", "destination": "/stockists/", "permanent": true },
-    { "source": "/shop/:path*", "destination": "/stockists/", "permanent": true },
-    { "source": "/cart", "destination": "/stockists/", "permanent": true },
-    { "source": "/checkout", "destination": "/stockists/", "permanent": true },
-    { "source": "/product-page/:slug", "destination": "/product/", "permanent": true },
-    { "source": "/about", "destination": "/approach/", "permanent": true },
-    { "source": "/about-us", "destination": "/approach/", "permanent": true },
-    { "source": "/blog", "destination": "/journal/", "permanent": true },
-    { "source": "/blog/:slug", "destination": "/journal/", "permanent": true },
-    { "source": "/en", "destination": "/", "permanent": true },
-    { "source": "/zh", "destination": "/", "permanent": true },
-    { "source": "/index.php", "destination": "/", "permanent": true }
+    {
+      "source": "/shop-now",
+      "destination": "/shop/",
+      "permanent": true
+    },
+    {
+      "source": "/about-vitas",
+      "destination": "/about/",
+      "permanent": true
+    },
+    {
+      "source": "/basket",
+      "destination": "/cart/",
+      "permanent": true
+    },
+    {
+      "source": "/products/vitas-soothing-cream-gel-100ml",
+      "destination": "/product/",
+      "permanent": true
+    },
+    {
+      "source": "/products/:slug",
+      "destination": "/product/",
+      "permanent": true
+    },
+    {
+      "source": "/product-page/:slug",
+      "destination": "/product/",
+      "permanent": true
+    },
+    {
+      "source": "/blog",
+      "destination": "/journal/",
+      "permanent": true
+    },
+    {
+      "source": "/blog/:slug",
+      "destination": "/journal/",
+      "permanent": true
+    },
+    {
+      "source": "/index.php",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/about",
+      "destination": "/about/",
+      "permanent": true
+    },
+    {
+      "source": "/about-us",
+      "destination": "/about/",
+      "permanent": true
+    },
+    {
+      "source": "/shop",
+      "destination": "/shop/",
+      "permanent": true
+    }
   ]
 }
