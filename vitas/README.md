@@ -12,6 +12,14 @@ specify. Type is Sora (display), Inter (body), Space Mono (specs and labels)
 and Noto Sans TC for 繁體中文. Logos come from the supplied kit, unmodified, in
 `assets/img/logo/` (see `docs/logo-kit-README.txt`).
 
+**Positioning: Option A** from the VITAS Brand Repositioning Proposal v3.0 —
+*Activate Circulation. Accelerate Recovery.* (「激活循環，加速重生。」), with
+*Prime · Perform · Recover* as the supporting triptych, aimed at Hyrox athletes,
+padel players and running clubs aged 25–45. The slogan is a brand promise, not a
+medical claim: it always renders beside the sensory sub-copy, and the deck's
+disclaimer sits in the footer of every page. Both strings live in `BRAND`
+(`src/data.mjs`) — see `docs/positioning.md` before writing any new copy.
+
 The structure and pacing are modelled on [drhauschka.com](https://www.drhauschka.com/)
 (botanical editorial layout, ingredient stories, guided "find your routine" tool,
 calm natural palette), rebuilt from scratch for a single-product muscle-care brand.
@@ -92,6 +100,10 @@ separate HTML file at a separate address, in both languages:
 /ingredients/grape-seed/  /zh/ingredients/grape-seed/
 /ingredients/niaouli/     /zh/ingredients/niaouli/
 /about/                   /zh/about/
+/for/                     /zh/for/
+/for/hyrox/               /zh/for/hyrox/
+/for/padel/               /zh/for/padel/
+/for/running/             /zh/for/running/
 /approach/                /zh/approach/
 /stockists/               /zh/stockists/
 /journal/                 /zh/journal/
@@ -121,11 +133,26 @@ npm run dev             # builds, then serves on http://localhost:8123
 white, taken from the pack, so the site is complete without any photography.
 `product-tube.svg` is a drawing of the tube, not a photo of it.
 
-**They are placeholders.** When you have real photography (product on a plain
-ground, hands massaging a calf, a gym bag, a desk), drop the files into
-`assets/img/` and update the paths in `src/data.mjs` and `src/pages.mjs`. Keep
-the aspect ratios: `1000×1000` for the plant images, `1200×800` for the editorial
-panels, and a tall transparent PNG for the pack shot.
+**They are placeholders.** The sport modules (`sport-hyrox.svg`,
+`sport-padel.svg`, `sport-running.svg`) use the angled speed bands and outlined
+figures from the IG demo deck, warm orange for the pre-session half and mint for
+the post-session half. They are holding the space for commissioned photography.
+
+Shot list, per the repositioning deck (§04 Visual Direction):
+
+| Slot | File | Ratio | Brief |
+| --- | --- | --- | --- |
+| Sport modules | `sport-*.svg` | 3:2 | Athletes mid-action, not posing. Real HK locations — Hyrox floor, padel court, harbourfront |
+| Editorial panels | `art-*.svg` | 3:2 | Gel texture on skin, hands working a calf, a gym bag |
+| Ingredients | `plant-*.svg` | 1:1 | Ingredient hero shots: grape seeds, niaouli, eucalyptus |
+| Pack | `product-tube.svg` | tall | Product on a plain ground; a tall transparent PNG works best |
+| Founder | `art-founder.svg` | 1:1 | Portrait of Rosana Li |
+
+Drop replacements into `assets/img/` under the same filenames, or update the
+paths in `src/data.mjs`. **Do not use the AI-generated images from the IG demo
+PDF on the live site** — they carry a generator watermark, the text in them is
+garbled, and several of the claims printed on them ("lymphatic wellness",
+"muscle repair", "anti-inflammatory") are on the deck's own forbidden list.
 
 `assets/img/og-cover.png` is the social-share image, rasterised from
 `og-cover.svg` by `node src/make-og.mjs` (needs Playwright installed locally).
@@ -257,6 +284,18 @@ not get missed:
       order placed and refunded, and receipts/emails configured in Stripe.
 - [ ] **Delivery and returns** — confirm HK$30 / free over HK$300 and the 14-day
       returns window are the policies you will actually honour.
+- [ ] **Legal sign-off on the slogan** — "Activate Circulation. Accelerate
+      Recovery." is used with the deck's sensory sub-copy and footer disclaimer
+      exactly as §08 specifies. Have HK counsel confirm that pairing before
+      launch; it is the one line on the site that needs it.
+- [ ] **"22 years" / "since 2003"** — used throughout because the brand
+      documents assert it. Get the incorporation or first-formulation date on
+      paper so the number can be defended.
+- [ ] **Sport photography** — the sport pages are the ones a KOL or a club will
+      link to. They need real images before any campaign spend.
+- [ ] **Social proof** — the deck's homepage architecture calls for athlete
+      testimonials (§09 ⑤). Nothing is published because nothing is verified;
+      collect real ones and they can slot in under the sport modules.
 
 ## 8. File map
 

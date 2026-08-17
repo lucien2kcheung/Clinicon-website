@@ -16,6 +16,9 @@
   --brand-tint: #fbcea9;   /* orange-200 */
   --brand-wash: #fef6ef;   /* orange-50 */
 
+  --green: #2e8b57;        /* New Green — purity accent (Repositioning v3.0) */
+  --green-deep: #226b42;   /* text-safe green */
+  --green-wash: #eaf4ee;
   --mint: #17b39a;         /* Cooling Mint — the cool-down counterpart */
   --mint-deep: #0c6e5f;    /* text-safe mint */
   --mint-wash: #d3f1ec;
@@ -776,6 +779,118 @@ body.welcome-open { overflow: hidden; }
   .cart-line__body { grid-area: body; }
   .cart-line__qty { grid-area: qty; justify-self: start; }
   .cart-line__price { grid-area: price; justify-self: end; }
+}
+
+
+/* =====================================================================
+   Option A — "Activate Circulation. Accelerate Recovery."
+   Slogan, triptych, sport modules, warm/cool moments, purity block
+   ===================================================================== */
+
+.slogan {
+  display: grid; gap: 0.1em;
+  font-size: clamp(2.1rem, 1.3rem + 3.4vw, 4.1rem);
+  font-weight: 800; line-height: 1.02; letter-spacing: -0.03em;
+  text-transform: none; margin: 0 0 1.2rem;
+}
+.slogan span:first-child { color: var(--brand-deep); }
+.lang-zh .slogan { letter-spacing: 0.02em; line-height: 1.2; font-weight: 700; }
+
+.hero__slogan { margin-bottom: 1.1rem; }
+.hero__sensory {
+  font-size: 0.8rem; color: var(--steel); max-width: 78ch;
+  border-top: 1px solid var(--line); padding-top: 1rem; margin: clamp(2rem, 4vw, 3rem) 0 0;
+}
+.sensory-note { font-size: 0.85rem; color: var(--steel); max-width: 68ch; }
+
+.triptych {
+  list-style: none; display: flex; flex-wrap: wrap; gap: clamp(1rem, 3vw, 2.25rem);
+  margin: 0 0 1.75rem; padding: 0;
+}
+.triptych__step {
+  font-family: var(--font-mono); font-size: 0.78rem; letter-spacing: 0.16em;
+  text-transform: uppercase; color: var(--ink);
+  display: flex; align-items: baseline; gap: 0.5rem;
+}
+.triptych__num { color: var(--brand); font-size: 0.7rem; }
+
+/* --------------------------------------------------- sport modules */
+.sport-card {
+  background: var(--paper-warm); border: 1px solid var(--line); border-radius: var(--radius);
+  overflow: hidden; transition: border-color 0.25s var(--ease), box-shadow 0.25s var(--ease);
+}
+.sport-card:hover { border-color: var(--brand-tint); box-shadow: var(--shadow-soft); }
+.sport-card__link {
+  display: flex; flex-direction: column; gap: 0.4rem; height: 100%;
+  text-decoration: none; color: inherit;
+}
+.sport-card__art { display: block; overflow: hidden; }
+.sport-card__art img { width: 100%; transition: transform 0.7s var(--ease); }
+.sport-card:hover .sport-card__art img { transform: scale(1.04); }
+.sport-card__who {
+  font-family: var(--font-mono); font-size: 0.68rem; letter-spacing: 0.18em;
+  text-transform: uppercase; color: var(--brand-deep); padding: 1.25rem 1.4rem 0;
+}
+.sport-card__name { font-family: var(--font-display); font-weight: 600; font-size: 1.6rem; padding: 0 1.4rem; }
+.sport-card__hook { color: var(--muted); font-size: 0.95rem; padding: 0 1.4rem; }
+.sport-card__go {
+  font-family: var(--font-mono); font-size: 0.72rem; letter-spacing: 0.14em;
+  text-transform: uppercase; color: var(--brand-deep);
+  padding: 0.5rem 1.4rem 1.4rem; margin-top: auto;
+}
+
+.sport-hero { display: grid; grid-template-columns: 1.1fr 0.9fr; gap: clamp(2rem, 5vw, 4rem); align-items: center; }
+.sport-hero__slogan { font-size: clamp(1.8rem, 1.3rem + 2vw, 2.8rem); }
+
+/* ------------------------------------------- warm / cool moments */
+.moments__inner { display: grid; grid-template-columns: 1fr 1fr; gap: clamp(1.5rem, 3vw, 2.5rem); }
+.moment { border-radius: var(--radius); padding: clamp(1.75rem, 4vw, 2.75rem); }
+.moment--warm { background: linear-gradient(160deg, var(--brand-wash), var(--brand-tint)); }
+.moment--cool { background: linear-gradient(160deg, var(--mint-wash), var(--green-wash)); }
+.moment__tag {
+  font-family: var(--font-mono); font-size: 0.7rem; letter-spacing: 0.18em;
+  text-transform: uppercase; display: block; margin-bottom: 0.9rem;
+}
+.moment--warm .moment__tag { color: var(--brand-deep); }
+.moment--cool .moment__tag { color: var(--green-deep); }
+.moment__title { font-size: clamp(1.4rem, 1.2rem + 0.9vw, 2rem); margin-bottom: 0.6rem; }
+.moment__text { color: var(--muted); margin-bottom: 1rem; }
+.moment--cool .link-arrow { color: var(--green-deep); border-color: color-mix(in srgb, var(--green) 45%, transparent); }
+
+/* ---------------------------------------------------- purity block */
+.purity { background: var(--paper-deep); }
+.purity__grid { display: grid; grid-template-columns: 1fr 1fr; gap: clamp(1.5rem, 3vw, 2.5rem); }
+.purity__col { background: var(--paper-warm); border-radius: var(--radius); padding: clamp(1.5rem, 3vw, 2.25rem); }
+.purity__col--out { border-top: 3px solid var(--steel); }
+.purity__col--in { border-top: 3px solid var(--green); }
+.purity__title { font-size: 1.15rem; margin-bottom: 1rem; }
+.purity__list { list-style: none; margin: 0; padding: 0; display: grid; gap: 0.8rem; color: var(--muted); font-size: 0.95rem; }
+.purity__list li { position: relative; padding-left: 1.9rem; }
+.purity__list--out li { color: var(--steel); }
+.purity__list--out li::before {
+  content: '✕'; position: absolute; left: 0; top: 0; color: var(--steel); font-size: 0.9rem;
+}
+.purity__list--in li::before {
+  content: ''; position: absolute; left: 0; top: 0.55em; width: 0.8rem; height: 0.42rem;
+  border-left: 2px solid var(--green); border-bottom: 2px solid var(--green); transform: rotate(-45deg);
+}
+
+.marks { list-style: none; display: flex; flex-wrap: wrap; gap: 0.75rem; margin: 2rem 0 0; padding: 0; }
+.mark {
+  font-family: var(--font-mono); font-size: 0.72rem; letter-spacing: 0.14em; text-transform: uppercase;
+  color: var(--green-deep); background: var(--green-wash);
+  border: 1px solid color-mix(in srgb, var(--green) 35%, transparent);
+  border-radius: 999px; padding: 0.5rem 1.1rem;
+}
+.mark::before { content: '✓ '; }
+
+.footer__slogan {
+  font-family: var(--font-display); font-weight: 700; font-size: 1.25rem;
+  line-height: 1.15; letter-spacing: -0.02em; color: var(--brand-deep); margin: 0 0 0.75rem;
+}
+
+@media (max-width: 1080px) {
+  .moments__inner, .purity__grid, .sport-hero { grid-template-columns: 1fr; }
 }
 
 /* -------------------------------------------------------------- print */

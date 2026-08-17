@@ -29,6 +29,7 @@ const C = {
   deep: '#C6531A',    /* Ember */
   mint: '#17B39A',    /* Cooling Mint */
   mintWash: '#D3F1EC',
+  green: '#2E8B57',   /* New Green — purity accent (Repositioning v3.0) */
   ink: '#17181A',     /* Carbon */
   line: '#E7E0D4',
 };
@@ -323,6 +324,62 @@ ${leaf(680, 320, 160, 48, 158, C.tint, 0.95)}
   await write('art-founder.svg', svg(1000, 1000, art, ' aria-label="Founder portrait placeholder"'));
 }
 
+
+/* -------------------------------------------------- sport modules (IG language)
+   Angled speed bands and outlined figures, taken from the IG demo deck:
+   warm orange for the pre-session half, cool mint for the post-session half.
+   PLACEHOLDER for commissioned action photography — see README. */
+
+const band = (x, y, w, h, angle, fill, opacity = 1) =>
+  `<rect x="${x}" y="${y}" width="${w}" height="${h}" rx="${h / 2}" transform="rotate(${angle} ${
+    x + w / 2
+  } ${y + h / 2})" fill="${fill}" opacity="${opacity}"/>`;
+
+/** Outlined athlete, drawn as a single running stroke. */
+const runner = (x, y, scale, stroke) => `  <g transform="translate(${x} ${y}) scale(${scale})" fill="none"
+     stroke="${stroke}" stroke-width="9" stroke-linecap="round" stroke-linejoin="round">
+    <circle cx="104" cy="24" r="21"/>
+    <path d="M100,48 L72,124"/>
+    <path d="M72,124 L118,164 L104,220"/>
+    <path d="M72,124 L26,152 L40,206"/>
+    <path d="M92,70 L140,44"/>
+    <path d="M90,80 L38,102"/>
+  </g>`;
+
+for (const [name, tone, label] of [
+  ['sport-hyrox', 'warm', 'Hyrox'],
+  ['sport-padel', 'split', 'Padel'],
+  ['sport-running', 'cool', 'Running'],
+]) {
+  const lead = tone === 'cool' ? C.mint : C.brand;
+  const secondary = tone === 'split' ? C.mint : tone === 'cool' ? C.green : C.tint;
+  const ground = tone === 'cool' ? C.mintWash : C.wash;
+
+  const bands = [
+    band(-120, 90, 900, 150, -18, lead, 0.9),
+    band(320, 430, 1000, 130, -18, secondary, tone === 'warm' ? 0.55 : 0.8),
+    band(120, 640, 620, 70, -18, lead, 0.35),
+  ].join('\n  ');
+
+  const art = `  <rect width="1200" height="800" fill="${ground}"/>
+  ${bands}
+${runner(260, 210, 2.0, '#FFFFFF')}
+${runner(770, 330, 1.25, tone === 'cool' ? C.green : C.deep)}
+  <circle cx="1010" cy="180" r="58" fill="${tone === 'cool' ? C.green : C.brand}"/>`;
+
+  await write(`${name}.svg`, svg(1200, 800, art, ` aria-label="${label}"`));
+}
+
+/* --------------------------------------------------- zero-toxins badge */
+
+{
+  const art = `  <circle cx="100" cy="100" r="96" fill="${C.green}"/>
+  <circle cx="100" cy="100" r="82" fill="none" stroke="#FFFFFF" stroke-opacity="0.5" stroke-width="2"/>
+  <path d="M62,100 l24,26 l52,-56" fill="none" stroke="#FFFFFF" stroke-width="12" stroke-linecap="round" stroke-linejoin="round"/>
+  <text x="100" y="150" text-anchor="middle" font-family="Helvetica, Arial, sans-serif" font-size="17" letter-spacing="2.4" fill="#FFFFFF">ZERO TOXINS</text>`;
+  await write('badge-zero-toxins.svg', svg(200, 200, art, ' aria-label="Zero toxins"'));
+}
+
 /* ----------------------------------------------------- favicon & cover */
 
 await write(
@@ -346,7 +403,9 @@ await write(
   <text x="104" y="186" text-anchor="middle" font-family="Helvetica, Arial, sans-serif" font-size="28" font-weight="500" fill="#FFFFFF">V</text>
   <text x="152" y="196" font-family="Helvetica, Arial, sans-serif" font-size="76" font-weight="300" letter-spacing="20" fill="${C.brand}">VITAS</text>
   <text x="80" y="270" font-family="'Noto Sans HK', sans-serif" font-size="36" letter-spacing="10" fill="${C.brand}">紓適寧</text>
-  <text x="80" y="360" font-family="Helvetica, Arial, sans-serif" font-size="26" letter-spacing="2" fill="${C.ink}" opacity="0.85">Low-odour plant-oil cream gel · 100ml</text>
+  <text x="80" y="352" font-family="Helvetica, Arial, sans-serif" font-size="34" font-weight="600" fill="${C.ink}">Activate Circulation.</text>
+  <text x="80" y="398" font-family="Helvetica, Arial, sans-serif" font-size="34" font-weight="600" fill="${C.ink}">Accelerate Recovery.</text>
+  <text x="80" y="452" font-family="Helvetica, Arial, sans-serif" font-size="21" letter-spacing="1.6" fill="${C.deep}">French-made · Zero toxins · Trusted since 2003</text>
 ${leaf(880, 180, 220, 70, 24, C.tint, 0.95)}
 ${leaf(860, 240, 190, 60, 160, C.mid, 0.9)}`
   )

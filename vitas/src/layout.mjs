@@ -14,6 +14,8 @@
  * current language once per page and `t()` returns the right side.
  */
 
+import { BRAND } from './data.mjs';
+
 export const SITE = {
   url: 'https://www.vitas.com.hk',
   name: 'VITAS 紓適寧',
@@ -73,6 +75,7 @@ const navItems = [
   { href: '/product/', label: { en: 'The Cream', zh: '產品' } },
   { href: '/ingredients/', label: { en: 'Ingredients', zh: '成分' } },
   { href: '/how-to-use/', label: { en: 'How to Use', zh: '使用方法' } },
+  { href: '/for/', label: { en: 'Your Sport', zh: '你的運動' } },
   { href: '/about/', label: { en: 'About VITAS', zh: '關於 VITAS' } },
   { href: '/faq/', label: { en: 'FAQ', zh: '常見問題' } },
 ];
@@ -146,9 +149,10 @@ function footer() {
           <img src="/assets/img/logo/logo_horizontal.svg" alt="VITAS" width="200" height="56">
           <span class="wordmark__zh">紓適寧</span>
         </span>
+        <p class="footer__slogan">${t(BRAND.slogan)[0]}<br>${t(BRAND.slogan)[1]}</p>
         ${blk('p', {
-          en: 'A low-odour, non-greasy plant-oil cream gel for warming up before training and easing tired muscles after it. Made in France.',
-          zh: '低氣味、不油膩的植物油啫喱膏，運動前熱身、運動後放鬆疲勞肌肉。法國製造。',
+          en: 'The clean performance gel — grape seed, niaouli and eucalyptus, formulated in France. Zero toxins, trusted in Hong Kong since 2003.',
+          zh: '純淨表現凝膠——葡萄籽、綠花白千層與尤加利，法國研製。零毒素，2003 年起獲香港信賴。',
         })}
         <div class="footer__social">
           <a href="${SITE.youtube}" target="_blank" rel="noopener">YouTube</a>
@@ -179,14 +183,7 @@ function footer() {
       </div>
     </div>
     <div class="footer__bottom">
-      ${blk(
-        'p',
-        {
-          en: 'VITAS Soothing Cream Gel is a cosmetic massage product. It is not a medicine and is not intended to diagnose, treat or cure any disease. If pain is severe, persistent or follows an injury, please see a doctor or physiotherapist.',
-          zh: 'VITAS 舒緩啫喱膏屬按摩護理產品，並非藥物，不用於診斷、治療或預防任何疾病。如疼痛劇烈、持續或由受傷引起，請諮詢醫生或物理治療師。',
-        },
-        'footer__disclaimer'
-      )}
+      ${blk('p', BRAND.disclaimer, 'footer__disclaimer')}
       <p class="footer__copy">© ${new Date().getFullYear()} VITAS 紓適寧. ${t({
         en: 'All rights reserved.',
         zh: '版權所有。',

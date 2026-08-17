@@ -9,6 +9,118 @@
  * /approach/ and docs/positioning.md.
  */
 
+
+/**
+ * Master positioning — Option A, per VITAS Brand Repositioning Proposal v3.0.
+ *
+ * COMPLIANCE: the slogan is a brand promise, not a medical claim, and the deck
+ * requires it to travel with `sensory` sub-copy wherever it appears, plus the
+ * `disclaimer` in the footer of every page. Do not use one without the other.
+ * Red-light claims (cures, eliminates lactic acid, speeds lymphatic drainage,
+ * treats inflammation) are listed in docs/positioning.md and must stay off the
+ * site.
+ */
+export const BRAND = {
+  slogan: {
+    en: ['Activate Circulation.', 'Accelerate Recovery.'],
+    zh: ['激活循環，', '加速重生。'],
+  },
+  triptych: [
+    { en: 'Prime', zh: '啟動' },
+    { en: 'Perform', zh: '發揮' },
+    { en: 'Recover', zh: '恢復' },
+  ],
+  heroLede: {
+    en: 'The clean performance gel for athletes who care about what goes on their body. Warm up. Cool down. One French-made formula. Zero toxins.',
+    zh: '為在意「塗在身上的是甚麼」的運動員而設的純淨表現凝膠。賽前熱身，賽後放鬆。一支法國配方，零毒素。',
+  },
+  proof: {
+    en: 'French-made · Zero toxins · Trusted since 2003',
+    zh: '法國製造 · 純淨配方 · 2003 年起信賴',
+  },
+  sensory: {
+    en: 'VITAS provides a warming sensation when massaged into muscles before training, and a cooling sensation afterwards. These sensory experiences are part of your active warm-up and wind-down routine.',
+    zh: 'VITAS 於按摩時帶來溫熱觸感（賽前）與清涼觸感（賽後），融入你的熱身與放鬆步驟。',
+  },
+  disclaimer: {
+    en: 'Disclaimer: VITAS is a cosmetic product for external massage use. Statements regarding circulation and recovery refer to the sensory experience during and after massage routines, not medical outcomes. This product is not a medicine and makes no medical claims. If you experience persistent pain, consult a healthcare professional.',
+    zh: '免責聲明：VITAS 為外用按摩用途化妝品。「循環」及「恢復」等陳述僅指按摩期間及之後的感受，並非醫療效果。本產品非藥物，不作醫療聲稱。如持續不適，請諮詢醫生。',
+  },
+};
+
+/**
+ * Sport modules. Each is its own URL so it can be linked from a club, a KOL
+ * post or a shelf talker without landing people on a generic homepage.
+ */
+export const SPORTS = [
+  {
+    id: 'hyrox',
+    art: '/assets/img/sport-hyrox.svg',
+    name: { en: 'Hyrox', zh: 'Hyrox' },
+    who: { en: 'For Hyrox athletes', zh: '給 Hyrox 選手' },
+    hook: {
+      en: 'From burpees to broad jumps — keep your legs feeling light.',
+      zh: '從波比跳到立定跳遠，讓雙腿保持輕盈。',
+    },
+    lede: {
+      en: 'Eight workouts, eight kilometres, and a sled that does not care how you feel. The work between stations is where the session is won — and the two minutes before and ten minutes after are the part you control.',
+      zh: '八個項目、八公里，還有一台不理會你感受的雪橇。真正決定表現的，是站與站之間的處理——而賽前兩分鐘與賽後十分鐘，是你能控制的部分。',
+    },
+    before: {
+      en: 'Ten minutes before the first station, massage into quads, calves and shoulders. The warming sensation is your cue that the muscle has had attention — then go and do the dynamic warm-up properly.',
+      zh: '第一站前十分鐘，按摩股四頭肌、小腿與肩膊。溫熱觸感提醒你這組肌肉已被照顧——然後認真完成動態熱身。',
+    },
+    after: {
+      en: 'After the last sled push, shower, then work upward along the legs in long slow strokes. Cooling, non-greasy, absorbed before you put your kit back on.',
+      zh: '最後一次推雪橇後先洗澡，再以長而緩慢的手勢沿雙腿向上按摩。清涼、不油膩，穿回衣服前已吸收。',
+    },
+  },
+  {
+    id: 'padel',
+    art: '/assets/img/sport-padel.svg',
+    name: { en: 'Padel', zh: '板式網球' },
+    who: { en: 'For padel players', zh: '給板式網球員' },
+    hook: {
+      en: 'Stay quick on your feet through the third set.',
+      zh: '到第三盤，腳步依然靈活。',
+    },
+    lede: {
+      en: 'Padel is played in short, explosive bursts — and the bill arrives the next morning in your calves, forearms and lower back. A weekend sport deserves a weekday routine.',
+      zh: '板式網球由短促而爆發的動作組成，而代價會在第二天早上出現在小腿、前臂與下背。週末運動，值得一套平日的照顧習慣。',
+    },
+    before: {
+      en: 'Before you step on court: calves, forearms and shoulders. Two minutes, both sides, paying attention to whichever one is complaining.',
+      zh: '上場前：小腿、前臂與肩膊。兩分鐘，兩側都做，特別留意比較不適的一邊。',
+    },
+    after: {
+      en: 'After the match — before the drinks, ideally — a cooling massage through the legs and forearms. It is a small ritual, and it is the one padel players skip most.',
+      zh: '賽後——最好在喝東西之前——為雙腿與前臂做一次清涼按摩。這是很小的步驟，也是板式網球員最常略過的一步。',
+    },
+  },
+  {
+    id: 'running',
+    art: '/assets/img/sport-running.svg',
+    name: { en: 'Running', zh: '跑步' },
+    who: { en: 'For running clubs', zh: '給跑團' },
+    hook: {
+      en: 'For the legs that feel like cement after intervals.',
+      zh: '給間歇跑後像水泥一樣的雙腿。',
+    },
+    lede: {
+      en: 'Three to five runs a week, one of them hard. Whether you run Happy Valley loops or the harbourfront, the routine that keeps you consistent is the one that takes two minutes and does not smell.',
+      zh: '每週三至五課，其中一課是硬課。無論你跑跑馬地圈還是海濱長廊，能讓你持續的，是那個只花兩分鐘、又沒有氣味的習慣。',
+    },
+    before: {
+      en: 'Calves, hamstrings and hip flexors before you start — especially on interval days, and especially on the side that always tightens first.',
+      zh: '起跑前處理小腿、膕繩肌與髖屈肌——間歇日尤其重要，尤其是那條總是先繃緊的腿。',
+    },
+    after: {
+      en: 'After the cool-down jog: long upward strokes on the calves and quads while your heart rate settles. It travels well in a running belt or a club bag.',
+      zh: '緩跑放鬆後：趁心率回落，於小腿與股四頭肌以長而向上的手勢按摩。放在跑步腰包或跑團袋中都方便。',
+    },
+  },
+];
+
 export const PRODUCT = {
   slug: '/product/',
   nameEn: 'Soothing Cream Gel',
@@ -81,6 +193,26 @@ export const PRODUCTS = [
     ],
   },
 ];
+
+export const PURITY = {
+  out: [
+    { en: 'Methyl salicylate — synthetic, skin irritant', zh: '水楊酸甲酯——合成物，可刺激皮膚' },
+    { en: 'Camphor — neurotoxic in high doses', zh: '樟腦——高劑量具神經毒性' },
+    { en: 'Synthetic steroids — long-term health risk', zh: '合成類固醇——長期健康風險' },
+    { en: 'Artificial fragrance — hidden allergens', zh: '人造香料——隱藏致敏原' },
+  ],
+  in: [
+    { en: 'Grape seed extract — the light, fast carrier', zh: '葡萄籽萃取——輕盈快吸的基底' },
+    { en: 'Niaouli oil — the gentle warming note', zh: '綠花白千層油——溫和的暖感' },
+    { en: 'Eucalyptus oil — the cooling note', zh: '尤加利油——清涼感' },
+    { en: 'Water-based gel — fast absorption, no residue', zh: '水基啫喱——快速吸收，不留殘膜' },
+  ],
+  marks: [
+    { en: 'Clean', zh: '純淨' },
+    { en: 'Transparent', zh: '透明' },
+    { en: 'Trusted since 2003', zh: '2003 年起信賴' },
+  ],
+};
 
 export const SHOP = {
   freeShippingOver: 30000,

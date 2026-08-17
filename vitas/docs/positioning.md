@@ -3,16 +3,35 @@
 This is the rule set the website copy follows. It exists so that anyone writing
 future copy — packaging, retail listings, ads, social — writes the same product.
 
-## The one-line positioning
+Source of truth: **VITAS Brand Repositioning Proposal v3.0, Option A**
+(selected), plus the HK compliance framework in §08 of that deck.
 
-> A premium, low-odour, non-greasy plant-oil cream gel for warming up before
-> training and easing tired muscles afterwards — including the muscles that get
-> tired at a desk.
+## The master positioning
 
-Everything else is downstream of that sentence. It was chosen because it is the
-only claim set that is simultaneously **true**, **defensible in front of a
-regulator**, and **matched to the product's actual advantage** (sensory: no
-medicinal smell, no grease, fast absorption).
+> **Activate Circulation. Accelerate Recovery.**
+> 「激活循環，加速重生。」
+>
+> Supporting triptych: **Prime. Perform. Recover.**
+
+Audience: active people 25–45 in Hong Kong — Hyrox competitors, padel players,
+running clubs. The product earns its place in the gym bag, not the medicine
+cabinet. Ingredient purity is the proof, not a side note: three plant actives,
+zero toxins, French formulation since 2003.
+
+### The slogan never travels alone
+
+Every placement of the slogan carries the sensory sub-copy:
+
+> VITAS provides a warming sensation when massaged into muscles before training,
+> and a cooling sensation afterwards. These sensory experiences are part of your
+> active warm-up and wind-down routine.
+>
+> 「VITAS 於按摩時帶來溫熱觸感（賽前）與清涼觸感（賽後），融入你的熱身與放鬆步驟。」
+
+Both strings live in `BRAND` in `src/data.mjs`, and the full disclaimer renders
+in the footer of every page. If you move the slogan somewhere new, move the
+sub-copy with it — that pairing is what keeps "circulation" on the right side of
+the line.
 
 ## What we say
 
@@ -27,6 +46,25 @@ medicinal smell, no grease, fast absorption).
   substantiated** — see README launch checklist.
 - Habit framing: the value is in doing it consistently, not in a single
   application.
+
+## Red light / green light (deck §08)
+
+**Forbidden — never publish these**
+
+✗ "Cures muscle pain" · ✗ "Eliminates lactic acid" · ✗ "Treats inflammation" ·
+✗ "Medical-grade recovery" · ✗ "Clinically proven to heal" · ✗ "100% effective
+/ guaranteed" · ✗ "Speeds up lymphatic drainage"
+
+Engages the Pharmacy & Poisons Ordinance (Cap. 138), the Undesirable Medical
+Advertisements Ordinance (Cap. 231) and the Trade Descriptions Ordinance
+(Cap. 362).
+
+**Approved — these describe sensory experience and formulation facts**
+
+✓ "Warming sensation during massage" · ✓ "Cooling sensation after application" ·
+✓ "Light, non-greasy gel texture" · ✓ "Part of your warm-up routine" ·
+✓ "Soothing relief you can feel" · ✓ "Natural grape seed & eucalyptus" ·
+✓ "No toxins. No harsh chemicals."
 
 ## What we do not say
 

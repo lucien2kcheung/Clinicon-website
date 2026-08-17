@@ -19,7 +19,19 @@ import {
   arrow,
   figure,
 } from './layout.mjs';
-import { PRODUCT, PRODUCTS, SHOP, PLANTS, STOCKISTS, ARTICLES, FAQS, ABOUT } from './data.mjs';
+import {
+  BRAND,
+  SPORTS,
+  PURITY,
+  PRODUCT,
+  PRODUCTS,
+  SHOP,
+  PLANTS,
+  STOCKISTS,
+  ARTICLES,
+  FAQS,
+  ABOUT,
+} from './data.mjs';
 
 /* --------------------------------------------------------- shared partials */
 
@@ -215,6 +227,76 @@ function plantCard(p, { role = true } = {}) {
 }
 
 
+
+/** The master slogan, always paired with its compliance sub-copy. */
+function sloganBlock(className = '') {
+  const [line1, line2] = t(BRAND.slogan);
+  return `<h1 class="slogan ${className}"><span>${line1}</span><span>${line2}</span></h1>`;
+}
+
+/** Prime · Perform · Recover. */
+function triptych() {
+  return `<ol class="triptych">
+            ${BRAND.triptych
+              .map(
+                (step, i) =>
+                  `<li class="triptych__step"><span class="triptych__num">0${i + 1}</span>${t(step)}</li>`
+              )
+              .join('\n            ')}
+          </ol>`;
+}
+
+/** Sport module card — links to the sport's own page. */
+function sportCard(sport) {
+  return `<article class="sport-card">
+            <a class="sport-card__link" href="${url('/for/' + sport.id + '/')}">
+              <span class="sport-card__art"><img src="${sport.art}" alt="" width="1200" height="800" loading="lazy" decoding="async"></span>
+              <span class="sport-card__who">${t(sport.who)}</span>
+              ${blk('span', sport.name, 'sport-card__name')}
+              ${blk('span', sport.hook, 'sport-card__hook')}
+              <span class="sport-card__go">${t({ en: 'The routine', zh: '這個運動的用法' })} →</span>
+            </a>
+          </article>`;
+}
+
+/** Ingredient purity: what is out, what is in, and the three marks. */
+function puritySection() {
+  return `    <section class="section purity reveal" id="purity">
+      <div class="wrap">
+${sectionHead({
+  eyebrow: { en: 'Ingredient purity', zh: '成分純淨' },
+  heading: { en: "What's inside matters.", zh: '成分，才是重點。' },
+  lede: {
+    en: 'Grape seed. Niaouli. Eucalyptus. Three plant-based actives, formulated in France over 22 years — and a list of things we left out.',
+    zh: '葡萄籽、綠花白千層、尤加利：三種植物成分，法國 22 年研製——以及一張我們選擇不加入的清單。',
+  },
+})}
+        <div class="purity__grid">
+          <div class="purity__col purity__col--out">
+            <h3 class="purity__title">${t({ en: 'What competitors use', zh: '同類產品常用' })}</h3>
+            <ul class="purity__list purity__list--out">
+              ${PURITY.out.map((i) => `<li>${t(i)}</li>`).join('\n              ')}
+            </ul>
+          </div>
+          <div class="purity__col purity__col--in">
+            <h3 class="purity__title">${t({ en: 'What VITAS uses instead', zh: 'VITAS 用的是' })}</h3>
+            <ul class="purity__list purity__list--in">
+              ${PURITY.in.map((i) => `<li>${t(i)}</li>`).join('\n              ')}
+            </ul>
+          </div>
+        </div>
+        <ul class="marks">
+          ${PURITY.marks.map((m) => `<li class="mark">${t(m)}</li>`).join('\n          ')}
+        </ul>
+      </div>
+    </section>`;
+}
+
+/** The sensory sub-copy the compliance framework requires beside the slogan. */
+function sensoryNote(className = 'sensory-note') {
+  return blk('p', BRAND.sensory, className);
+}
+
 /** Product card used on the shop page and the homepage shop strip. */
 function shopCard(p) {
   return `<article class="shop-card reveal" data-product="${p.id}">
@@ -284,31 +366,15 @@ export function home() {
       <div class="hero__bg" aria-hidden="true"></div>
       <div class="wrap hero__inner">
         <div class="hero__copy">
-          ${blk('p', { en: 'Since 2013 · Made in France', zh: '2013 年起 · 法國製造' }, 'eyebrow')}
-          ${blk(
-            'h1',
-            {
-              en: 'Warm up quietly.<br>Wind down properly.',
-              zh: '安靜地熱身。<br>好好地放鬆。',
-            },
-            'hero__title'
-          )}
-          ${blk(
-            'p',
-            {
-              en: 'A plant-oil cream gel for the two minutes before training and the ten minutes after — cool on the skin, absorbed in under a minute, and quiet enough to wear to work.',
-              zh: '為訓練前兩分鐘與訓練後十分鐘而設的植物油啫喱膏——皮膚清涼，一分鐘內吸收，氣味淡得可以穿著它去上班。',
-            },
-            'hero__lede'
-          )}
+          ${blk('p', { en: 'Since 2003 · Made in France', zh: '2003 年起 · 法國製造' }, 'eyebrow')}
+${sloganBlock('hero__slogan')}
+          ${blk('p', BRAND.heroLede, 'hero__lede')}
+          ${triptych()}
           <div class="hero__actions">
-            ${cta('/shop/', { en: 'Shop now', zh: '立即選購' })}
-            ${cta('/product/', { en: 'Meet the cream', zh: '認識產品' }, 'btn--ghost')}
+            ${cta('/shop/', { en: 'Shop performance', zh: '選購' })}
+            ${cta('/for/', { en: 'Find your sport', zh: '找你的運動' }, 'btn--ghost')}
           </div>
-          <p class="hero__meta">${t({
-            en: '100ml · HK$250 · At Watsons & Mannings',
-            zh: '100毫升 · HK$250 · 屈臣氏及萬寧有售',
-          })}</p>
+          <p class="hero__meta">${t(BRAND.proof)}</p>
         </div>
         <div class="hero__art">
           <img src="/assets/img/product-tube.svg" alt="${attr(
@@ -319,6 +385,56 @@ export function home() {
           )}" width="520" height="700" fetchpriority="high" decoding="async">
         </div>
       </div>
+      <div class="wrap">
+        ${sensoryNote('hero__sensory')}
+      </div>
+    </section>
+
+    <section class="section sports reveal" id="sports">
+      <div class="wrap">
+${sectionHead({
+  eyebrow: { en: 'Your sport', zh: '你的運動' },
+  heading: { en: 'Built into the session, not the medicine cabinet', zh: '屬於訓練，而不是藥箱' },
+  lede: {
+    en: 'The routine changes with the sport. Three of them, written for how people actually train in Hong Kong.',
+    zh: '不同運動，用法也不同。以下三種，按香港人真正的訓練方式而寫。',
+  },
+})}
+        <div class="grid grid--3">
+          ${SPORTS.map(sportCard).join('\n          ')}
+        </div>
+      </div>
+    </section>
+
+    <section class="section moments reveal">
+      <div class="wrap moments__inner">
+        <article class="moment moment--warm">
+          <span class="moment__tag">${t({ en: 'Before · Activate', zh: '賽前 · 激活' })}</span>
+          ${blk('h2', { en: 'The pre-session ritual', zh: '賽前儀式' }, 'moment__title')}
+          ${blk(
+            'p',
+            {
+              en: 'Apply VITAS 10 minutes before training. The warming sensation helps your muscles feel ready — part of a proper dynamic warm-up for Hyrox, padel, or your run club session.',
+              zh: '訓練前 10 分鐘塗抹 VITAS。溫熱觸感讓肌肉感覺準備就緒——作為 Hyrox、板式網球或跑團課前動態熱身的一部分。',
+            },
+            'moment__text'
+          )}
+          <p>${arrow('/how-to-use/#before', { en: 'The full warm-up', zh: '完整熱身步驟' })}</p>
+        </article>
+        <article class="moment moment--cool">
+          <span class="moment__tag">${t({ en: 'After · Accelerate', zh: '賽後 · 加速' })}</span>
+          ${blk('h2', { en: 'The post-session wind-down', zh: '賽後放鬆' }, 'moment__title')}
+          ${blk(
+            'p',
+            {
+              en: 'Massage VITAS into tired muscles after effort. The cooling sensation provides soothing relief as you stretch and recover.',
+              zh: '運動後按摩疲勞肌肉，清涼觸感在你伸展與放鬆時帶來舒緩感受。',
+            },
+            'moment__text'
+          )}
+          <p>${arrow('/how-to-use/#after', { en: 'The full wind-down', zh: '完整放鬆步驟' })}</p>
+        </article>
+      </div>
     </section>
 
     <section class="section plants reveal">
@@ -327,8 +443,8 @@ ${sectionHead({
   eyebrow: { en: 'Three plants', zh: '三種植物' },
   heading: { en: 'A short ingredient list, on purpose', zh: '刻意簡短的成分表' },
   lede: {
-    en: 'Grape seed carries it, eucalyptus cools it, niaouli keeps it from smelling like a pharmacy. Each one has its own page.',
-    zh: '葡萄籽承載，尤加利清涼，綠花白千層讓氣味不像藥房。每一種都有獨立頁面。',
+    en: 'Grape seed carries it, niaouli warms it, eucalyptus cools it. Each one has its own page.',
+    zh: '葡萄籽承載，綠花白千層帶來暖感，尤加利帶來清涼。每一種都有獨立頁面。',
   },
 })}
         <div class="grid grid--3">
@@ -337,43 +453,7 @@ ${sectionHead({
       </div>
     </section>
 
-    <section class="section split reveal">
-      <div class="wrap split__inner">
-        ${figure('/assets/img/art-training.svg', { en: 'Before training', zh: '訓練前' }, 'tint')}
-        <div class="split__body">
-          ${blk('p', { en: 'Before', zh: '運動前' }, 'eyebrow')}
-          ${blk('h2', { en: 'Two minutes, paying attention', zh: '兩分鐘，專注地檢查' }, 'split__title')}
-          ${blk(
-            'p',
-            {
-              en: 'Work a thin layer into the muscles you are about to load — calves before a run, shoulders before the wall, quads and hips before the bar. The cream does not warm the muscle up; the noticing does. You will find out which side is tight before the session tells you the hard way.',
-              zh: '把薄薄一層推開於即將發力的肌群——跑步前小腿、攀岩前肩背、負重前股四頭肌與髖部。真正令肌肉熱起來的不是膏，而是動作與專注。你會在訓練用更痛的方式提醒你之前，先發現哪一邊比較緊。',
-            },
-            'split__text'
-          )}
-          <p>${arrow('/how-to-use/', { en: 'The full routine', zh: '完整用法' })}</p>
-        </div>
-      </div>
-      <div class="wrap split__inner split__inner--reverse">
-        ${figure('/assets/img/art-recovery.svg', { en: 'After training', zh: '訓練後' }, 'wash')}
-        <div class="split__body">
-          ${blk('p', { en: 'After', zh: '運動後' }, 'eyebrow')}
-          ${blk('h2', { en: 'Ten minutes with your hands', zh: '用雙手的十分鐘' }, 'split__title')}
-          ${blk(
-            'p',
-            {
-              en: 'Tired legs and shoulders respond to being worked on. Grape seed oil gives your hands enough glide to do that properly, then disappears fast enough that you can dress and go. No slick, no shine, no smell trailing you into dinner.',
-              zh: '疲勞的雙腿與肩膊，需要被好好按揉。葡萄籽油提供足夠滑度讓雙手工作，又吸收得夠快，讓你可以立即穿衣外出。不黏、不油光，也不會把氣味帶到餐桌上。',
-            },
-            'split__text'
-          )}
-          <p>${arrow('/journal/lactic-acid-myth/', {
-            en: 'What recovery actually is',
-            zh: '恢復到底是甚麼',
-          })}</p>
-        </div>
-      </div>
-    </section>
+${puritySection()}
 
 ${freeFromBand()}
 
@@ -534,7 +614,37 @@ export function product() {
       </div>
     </section>
 
-${freeFromBand()}
+    <section class="section moments reveal">
+      <div class="wrap moments__inner">
+        <article class="moment moment--warm">
+          <span class="moment__tag">${t({ en: 'Before · Activate', zh: '賽前 · 激活' })}</span>
+          ${blk('h2', { en: 'The pre-session ritual', zh: '賽前儀式' }, 'moment__title')}
+          ${blk(
+            'p',
+            {
+              en: 'Apply VITAS 10 minutes before training. The warming sensation helps your muscles feel ready — part of a proper dynamic warm-up for Hyrox, padel, or your run club session.',
+              zh: '訓練前 10 分鐘塗抹 VITAS。溫熱觸感讓肌肉感覺準備就緒——作為 Hyrox、板式網球或跑團課前動態熱身的一部分。',
+            },
+            'moment__text'
+          )}
+        </article>
+        <article class="moment moment--cool">
+          <span class="moment__tag">${t({ en: 'After · Accelerate', zh: '賽後 · 加速' })}</span>
+          ${blk('h2', { en: 'The post-session wind-down', zh: '賽後放鬆' }, 'moment__title')}
+          ${blk(
+            'p',
+            {
+              en: 'Massage VITAS into tired muscles after effort. The cooling sensation provides soothing relief as you stretch and recover.',
+              zh: '運動後按摩疲勞肌肉，清涼觸感在你伸展與放鬆時帶來舒緩感受。',
+            },
+            'moment__text'
+          )}
+        </article>
+      </div>
+      <div class="wrap">${sensoryNote('note')}</div>
+    </section>
+
+${puritySection()}
 
     <section class="section ingredients-list reveal">
       <div class="wrap">
@@ -1126,6 +1236,125 @@ ${newsletter()}`;
   };
 }
 
+
+
+/* ------------------------------------------------------------ your sport */
+
+export function sportsIndex() {
+  const body = `${pageHero({
+    eyebrow: { en: 'Your sport', zh: '你的運動' },
+    title: { en: 'Three sports, three routines', zh: '三種運動，三套用法' },
+    lede: {
+      en: 'Hyrox, padel and running load the body differently — so the two minutes before and the ten minutes after look different too. Pick yours.',
+      zh: 'Hyrox、板式網球與跑步對身體的負荷各異，賽前兩分鐘與賽後十分鐘的做法也不同。選擇你的運動。',
+    },
+    trail: [HOME_CRUMB, { name: { en: 'Your Sport', zh: '你的運動' }, path: '/for/' }],
+  })}
+
+    <section class="section">
+      <div class="wrap">
+        <div class="grid grid--3">
+          ${SPORTS.map(sportCard).join('\n          ')}
+        </div>
+        ${sensoryNote('note')}
+      </div>
+    </section>
+
+${puritySection()}
+
+${buyStrip()}`;
+
+  return {
+    title: { en: 'Your sport', zh: '你的運動' },
+    description: {
+      en: 'VITAS routines for Hyrox athletes, padel players and running clubs in Hong Kong — what to do in the two minutes before and the ten minutes after.',
+      zh: 'VITAS 為 Hyrox 選手、板式網球員及香港跑團而設的用法——賽前兩分鐘與賽後十分鐘該做甚麼。',
+    },
+    path: '/for/',
+    active: '/for/',
+    body,
+    jsonLd: [breadcrumb([HOME_CRUMB, { name: { en: 'Your sport', zh: '你的運動' }, path: '/for/' }])],
+  };
+}
+
+export function sport(sp) {
+  const path = `/for/${sp.id}/`;
+  const others = SPORTS.filter((x) => x.id !== sp.id);
+
+  const body = `${pageHero({
+    eyebrow: sp.who,
+    title: sp.hook,
+    lede: sp.lede,
+    trail: [
+      HOME_CRUMB,
+      { name: { en: 'Your Sport', zh: '你的運動' }, path: '/for/' },
+      { name: sp.name, path },
+    ],
+  })}
+
+    <section class="section">
+      <div class="wrap sport-hero">
+        ${figure(sp.art, sp.name, 'tint')}
+        <div class="sport-hero__body">
+${sloganBlock('sport-hero__slogan')}
+          ${sensoryNote('sensory-note')}
+          <div class="hero__actions">
+            ${cta('/shop/', { en: 'Shop performance', zh: '選購' })}
+            ${cta('/how-to-use/', { en: 'How to use it', zh: '使用方法' }, 'btn--ghost')}
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section moments reveal">
+      <div class="wrap moments__inner">
+        <article class="moment moment--warm">
+          <span class="moment__tag">${t({ en: 'Before · Activate', zh: '賽前 · 激活' })}</span>
+          ${blk('h2', { en: 'Warm up', zh: '熱身' }, 'moment__title')}
+          ${blk('p', sp.before, 'moment__text')}
+        </article>
+        <article class="moment moment--cool">
+          <span class="moment__tag">${t({ en: 'After · Accelerate', zh: '賽後 · 加速' })}</span>
+          ${blk('h2', { en: 'Cool down', zh: '放鬆' }, 'moment__title')}
+          ${blk('p', sp.after, 'moment__text')}
+        </article>
+      </div>
+    </section>
+
+${puritySection()}
+
+    <section class="section reveal">
+      <div class="wrap">
+${sectionHead({
+  eyebrow: { en: 'Other sports', zh: '其他運動' },
+  heading: { en: 'Not your sport?', zh: '不是你的運動？' },
+})}
+        <div class="grid grid--2">
+          ${others.map(sportCard).join('\n          ')}
+        </div>
+      </div>
+    </section>
+
+${buyStrip()}`;
+
+  return {
+    title: { en: `VITAS for ${sp.name.en}`, zh: `VITAS × ${sp.name.zh}` },
+    description: {
+      en: `${sp.hook.en} How Hong Kong ${sp.name.en.toLowerCase()} athletes use VITAS before and after a session.`,
+      zh: `${sp.hook.zh} 香港${sp.name.zh}運動者在訓練前後如何使用 VITAS。`,
+    },
+    path,
+    active: '/for/',
+    body,
+    jsonLd: [
+      breadcrumb([
+        HOME_CRUMB,
+        { name: { en: 'Your sport', zh: '你的運動' }, path: '/for/' },
+        { name: sp.name, path },
+      ]),
+    ],
+  };
+}
 
 /* ------------------------------------------------------------ shop & cart */
 
