@@ -606,9 +606,10 @@ html[lang^="zh"] .faq summary h3{font-family:'Noto Sans HK',sans-serif;font-weig
         <div class="navdrop-panel" id="brandsPanel"></div>
       </div>
       <div class="navdrop" id="catsDrop">
-        <a href="#products" class="navdrop-trigger" data-i18n="nav_products">Products<svg class="caret" width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"></polyline></svg></a>
+        <a href="#products" class="navdrop-trigger" data-i18n="nav_categories">Categories<svg class="caret" width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"></polyline></svg></a>
         <div class="navdrop-panel" id="catsPanel"></div>
       </div>
+      <a href="#products" data-i18n="nav_products" id="productsLink">Products</a>
       <a href="#about" data-i18n="nav_about">About Us</a>
       <a href="#opportunities" data-i18n="nav_opportunities">Opportunities</a>
       <a href="#faq" data-i18n="nav_faq">FAQ</a>
@@ -5522,6 +5523,7 @@ const T = {
   tb_tagline:{en:"Hong Kong · Authorized partner for 30+ brands incl. Solventum (previously 3M Healthcare)",
               tc:"香港 · 超過30個品牌的授權合作夥伴，包括 Solventum（前稱 3M 醫療保健）"},
   nav_products:{en:"Products", tc:"產品"},
+  nav_categories:{en:"Categories", tc:"產品分類"},
   nav_brands:{en:"Brands", tc:"品牌"},
   nav_about:{en:"About Us", tc:"關於我們"},
   nav_opportunities:{en:"Opportunities", tc:"機會"},
@@ -5780,6 +5782,23 @@ document.getElementById("seeMore").addEventListener("click",()=>{
 const brandsPanel = document.getElementById("brandsPanel");
 const catsPanel   = document.getElementById("catsPanel");
 
+/* Curated top-level product categories for the "Categories" nav menu.
+   `val` MUST match a product's `category` field so the grid filter works.
+   Categories with no products yet simply show an empty grid. */
+const NAV_CATEGORIES = [
+  { val:"Gynecology",            en:"Gynecology",            tc:"婦科" },
+  { val:"Masks & Gloves",        en:"Masks & Gloves",        tc:"口罩及手套" },
+  { val:"Autoclave Accessories", en:"Autoclave Accessories", tc:"滅菌爐配件" },
+  { val:"Diagnostic Supplies",   en:"Diagnostic Supplies",   tc:"診斷用品" },
+  { val:"O.R. Equipment",        en:"O.R. Equipment",        tc:"手術室設備" },
+  { val:"Surgical Instruments",  en:"Surgical Instruments",  tc:"手術器械" },
+  { val:"Stainless Steel Wares", en:"Stainless Steel Wares", tc:"不銹鋼器皿" },
+  { val:"Medical Furniture",     en:"Medical Furniture",     tc:"醫療傢俬" },
+  { val:"Home Care Products",    en:"Home Care Products",    tc:"家居護理產品" },
+  { val:"Other Consumables",     en:"Other Consumables",     tc:"其他消耗品" },
+  { val:"Electrical Appliances", en:"Electrical Appliances", tc:"電器產品" },
+];
+
 function distinctWithCounts(key){
   const m = new Map();
   PRODUCTS.forEach(p=>{ const v=p[key]; if(!v) return; m.set(v,(m.get(v)||0)+1); });
@@ -5791,13 +5810,15 @@ function distinctWithCounts(key){
 
 function renderNavDropdowns(){
   const brandRows = distinctWithCounts("brand");
-  const catRows   = distinctWithCounts("category");
   brandsPanel.innerHTML =
     `<button class="dd-all" data-brand="All">${T.dd_all_brands[LANG]}</button>` +
     brandRows.map(([b,n])=>`<button data-brand="${b}">${b}<span class="cnt">${n}</span></button>`).join("");
   catsPanel.innerHTML =
-    `<button class="dd-all" data-cat="All">${T.dd_all_cats[LANG]}</button>` +
-    catRows.map(([c,n])=>`<button data-cat="${c}">${c}<span class="cnt">${n}</span></button>`).join("");
+    NAV_CATEGORIES.map(c=>{
+      const n = PRODUCTS.reduce((k,p)=>k+(p.category===c.val?1:0),0);
+      const label = (LANG==="tc" && c.tc) ? c.tc : c.en;
+      return `<button data-cat="${c.val}">${label}${n?`<span class="cnt">${n}</span>`:""}</button>`;
+    }).join("");
 }
 
 function syncChips(){
@@ -5822,6 +5843,18 @@ catsPanel.addEventListener("click",e=>{
   activeBrand = "All"; syncChips();
   closeDrops(); goToProducts();
 });
+
+/* Plain "Products" nav link → show the full grid (reset all filters) */
+const productsLink = document.getElementById("productsLink");
+if(productsLink){
+  productsLink.addEventListener("click",e=>{
+    e.preventDefault();
+    activeCat = "All"; activeBrand = "All";
+    renderFilters();
+    closeDrops();
+    goToProducts();
+  });
+}
 
 // tap-to-open on touch / mobile (desktop uses :hover)
 document.querySelectorAll(".navdrop-trigger").forEach(t=>{
