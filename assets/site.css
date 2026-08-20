@@ -33,14 +33,14 @@ img{display:block;max-width:100%}
 
 /* ---------- Header ---------- */
 header{position:sticky;top:0;z-index:50;background:rgba(247,249,250,.88);backdrop-filter:blur(10px);border-bottom:1px solid var(--line)}
-.nav{display:flex;align-items:center;justify-content:space-between;gap:24px;padding:14px 24px;max-width:var(--maxw);margin:0 auto}
-.brand{display:flex;align-items:center;gap:12px}
-.brand img{height:88px;width:auto}
+.nav{display:flex;align-items:center;justify-content:space-between;gap:14px;padding:14px 24px;max-width:var(--maxw);margin:0 auto}
+.brand{display:flex;align-items:center;gap:10px;flex:none}
+.brand img{height:76px;width:auto}
 .brand .bt{display:flex;flex-direction:column;line-height:1.05}
-.brand .bt b{font-family:'Fraunces';font-size:1.18rem;color:var(--ink);font-weight:600}
-.brand .bt span{font-size:.72rem;color:var(--ink-soft);letter-spacing:.04em}
-.menu{display:flex;gap:26px;align-items:center;font-size:.92rem;font-weight:500}
-.menu a{padding:6px 2px;position:relative;color:var(--ink)}
+.brand .bt b{font-family:'Fraunces';font-size:1.1rem;color:var(--ink);font-weight:600}
+.brand .bt span{font-size:.68rem;color:var(--ink-soft);letter-spacing:.03em}
+.menu{display:flex;gap:15px;align-items:center;font-size:.875rem;font-weight:500}
+.menu a{padding:6px 1px;position:relative;color:var(--ink);white-space:nowrap}
 .menu a::after{content:"";position:absolute;left:0;bottom:-2px;width:0;height:2px;background:var(--teal);transition:width .25s ease}
 .menu a:hover::after{width:100%}
 .menu a:hover{color:var(--teal-dark)}
@@ -266,10 +266,8 @@ footer .fbtm{padding-top:22px;font-size:.84rem;display:flex;justify-content:spac
 .reveal.in{opacity:1;transform:none}
 
 /* ---------- Responsive ---------- */
-@media(max-width:860px){
-  .hero .wrap{grid-template-columns:1fr;gap:40px}
-  .split,.contact-grid{grid-template-columns:1fr;gap:32px}
-  .modal .mhead{grid-template-columns:1fr}
+/* Nav collapses to a menu button below 1180px, where the full horizontal nav no longer fits */
+@media(max-width:1180px){
   .menu{display:none;position:absolute;top:100%;left:0;right:0;background:var(--white);flex-direction:column;padding:18px 24px;gap:6px;border-bottom:1px solid var(--line);box-shadow:var(--shadow)}
   .menu.open{display:flex}
   .navdrop{width:100%}
@@ -278,7 +276,12 @@ footer .fbtm{padding-top:22px;font-size:.84rem;display:flex;justify-content:spac
     border-radius:0;padding:0 0 6px 12px;min-width:0;max-width:none;max-height:260px;display:block}
   .navdrop:not(.open) .navdrop-panel{display:none}
   .navdrop .navdrop-panel button{white-space:normal}
-  .menu a{padding:10px 0}
+  .menu a{padding:10px 0;white-space:normal}
   .burger{display:flex}
+}
+@media(max-width:860px){
+  .hero .wrap{grid-template-columns:1fr;gap:40px}
+  .split,.contact-grid{grid-template-columns:1fr;gap:32px}
+  .modal .mhead{grid-template-columns:1fr}
   footer .fgrid{grid-template-columns:1fr;gap:28px}
 }
