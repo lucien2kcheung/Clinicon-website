@@ -79,12 +79,19 @@ header{position:sticky;top:0;z-index:50;background:rgba(247,249,250,.88);backdro
 .navdrop{position:relative}
 .navdrop-trigger{display:inline-flex;align-items:center;gap:5px;cursor:pointer}
 .navdrop .caret{transition:transform .2s;opacity:.65}
-.navdrop:hover .caret,.navdrop.open .caret{transform:rotate(180deg)}
+.navdrop.open .caret{transform:rotate(180deg)}
 .navdrop-panel{position:absolute;top:calc(100% + 10px);left:0;min-width:230px;max-width:340px;
   background:var(--white);border:1px solid var(--line);border-radius:14px;box-shadow:var(--shadow);
   padding:8px;opacity:0;visibility:hidden;transform:translateY(-6px);transition:.18s ease;z-index:60;
   max-height:min(70vh,440px);overflow-y:auto;display:grid;grid-template-columns:1fr 1fr;gap:2px}
-.navdrop:hover .navdrop-panel,.navdrop.open .navdrop-panel{opacity:1;visibility:visible;transform:translateY(0)}
+.navdrop.open .navdrop-panel{opacity:1;visibility:visible;transform:translateY(0)}
+/* Hover-to-open is for mouse/trackpad only — on touch devices (no true hover), a CSS :hover rule
+   here would force a "ghost tap" before the real click registers, making the button feel unresponsive
+   on the first tap. Taps always work via the JS click handler + .open class above, on every device. */
+@media (hover:hover) and (pointer:fine){
+  .navdrop:hover .caret{transform:rotate(180deg)}
+  .navdrop:hover .navdrop-panel{opacity:1;visibility:visible;transform:translateY(0)}
+}
 .navdrop-panel::before{content:"";position:absolute;top:-10px;left:0;right:0;height:10px}
 .navdrop-panel button{grid-column:auto;text-align:left;border:0;background:none;font-family:inherit;
   font-size:.84rem;font-weight:500;color:var(--ink);padding:8px 11px;border-radius:8px;cursor:pointer;
@@ -507,11 +514,11 @@ html[lang^="zh"] .faq summary h3{font-family:'Noto Sans HK',sans-serif;font-weig
         <a href="#products" class="navdrop-trigger" data-i18n="nav_categories">Categories<svg class="caret" width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"></polyline></svg></a>
         <div class="navdrop-panel" id="catsPanel"></div>
       </div>
-      <a href="/services" data-i18n="nav_services">Services</a>
-      <a href="/how-to-order" data-i18n="nav_howto">How to order</a>
+      <a href="/services?lang=en" data-i18n="nav_services">Services</a>
+      <a href="/how-to-order?lang=en" data-i18n="nav_howto">How to order</a>
       <a href="#about" data-i18n="nav_about">About Us</a>
       <a href="#opportunities" data-i18n="nav_opportunities">Opportunities</a>
-      <a href="/faq" data-i18n="nav_faq">FAQ</a>
+      <a href="/faq?lang=en" data-i18n="nav_faq">FAQ</a>
       <a href="#contact" data-i18n="nav_contact">Contact</a>
       <a class="wa-btn" href="https://wa.me/85293209650" target="_blank" rel="noopener">
         <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2a10 10 0 0 0-8.6 15l-1.3 4.7 4.8-1.3A10 10 0 1 0 12 2zm5.8 14.1c-.2.7-1.4 1.3-2 1.4-.5.1-1.2.1-1.9-.1-.4-.1-1-.3-1.7-.6-3-1.3-4.9-4.3-5.1-4.5-.1-.2-1.2-1.5-1.2-2.9s.7-2 1-2.3c.2-.3.5-.3.7-.3h.5c.2 0 .4 0 .6.5l.8 2c.1.1.1.3 0 .5l-.4.5-.3.3c-.2.2-.3.4-.2.6.2.4.9 1.4 1.9 2.3 1.3 1.1 2.3 1.5 2.6 1.6.2.1.4.1.6-.1l.8-1c.2-.2.4-.2.6-.1l2 .9c.2.1.4.2.4.3.1.2.1.8-.1 1.5z"/></svg>
@@ -580,17 +587,17 @@ html[lang^="zh"] .faq summary h3{font-family:'Noto Sans HK',sans-serif;font-weig
   <div class="wrap">
     <div class="pcar" id="pcar">
       <div class="pcar-track" id="pcarTrack">
-        <a class="pslide pslide-promo" href="/promotions">
+        <a class="pslide pslide-promo" href="/promotions?lang=en">
           <span class="plabel">Promotions</span>
           <div><h3>Sales &amp; Promotions</h3><p>See our latest offers and bulk deals.</p></div>
           <span class="parr">View offers →</span>
         </a>
-        <a class="pslide pslide-svc" href="/services">
+        <a class="pslide pslide-svc" href="/services?lang=en">
           <span class="plabel">Services</span>
           <div><h3>Equipment Servicing &amp; Maintenance</h3><p>Department of Health-aligned validation, calibration &amp; repair.</p></div>
           <span class="parr">Explore services →</span>
         </a>
-        <a class="pslide pslide-pkg" href="/clinic-packages">
+        <a class="pslide pslide-pkg" href="/clinic-packages?lang=en">
           <span class="plabel">For new clinics</span>
           <div><h3>New Clinic Setup Packages</h3><p>One-stop equipment to open your clinic.</p></div>
           <span class="parr">Learn more →</span>
@@ -794,13 +801,13 @@ html[lang^="zh"] .faq summary h3{font-family:'Noto Sans HK',sans-serif;font-weig
       <div>
         <h4 data-i18n="foot_explore">Explore</h4>
         <a href="#products" data-i18n="nav_products">Products</a>
-        <a href="/services" data-i18n="nav_services">Services</a>
-        <a href="/how-to-order" data-i18n="nav_howto">How to order</a>
+        <a href="/services?lang=en" data-i18n="nav_services">Services</a>
+        <a href="/how-to-order?lang=en" data-i18n="nav_howto">How to order</a>
         <a href="#about" data-i18n="nav_about">About Us</a>
         <a href="#opportunities" data-i18n="nav_opportunities">Opportunities</a>
-        <a href="/faq" data-i18n="nav_faq">FAQ</a>
+        <a href="/faq?lang=en" data-i18n="nav_faq">FAQ</a>
         <a href="#contact" data-i18n="nav_contact">Contact</a>
-        <a href="/terms-and-conditions" data-i18n="nav_terms">Terms &amp; Conditions</a>
+        <a href="/terms-and-conditions?lang=en" data-i18n="nav_terms">Terms &amp; Conditions</a>
       </div>
       <div>
         <h4 data-i18n="foot_contact">Contact</h4>
@@ -5484,7 +5491,7 @@ const T = {
   faq_eyebrow:{en:"Questions & Answers", tc:"常見問題"},
   faq_h2:{en:"Frequently asked questions", tc:"採購常見問題"},
   faq_p:{en:"The questions Hong Kong healthcare buyers ask us most often. If yours is not answered here, message us on WhatsApp at 9320 9650 or email info@clinicon.com.hk.", tc:"以下是香港醫護機構向我們查詢最多的問題。如未能解答您的疑問，請透過 WhatsApp 9320 9650 或電郵 info@clinicon.com.hk 與我們聯絡。"},
-  faq_more:{en:'Full terms are set out in our <a href="/terms-and-conditions">Terms &amp; Conditions</a>.', tc:'完整條款請參閱我們的<a href="/terms-and-conditions">條款及細則</a>。'},
+  faq_more:{en:'Full terms are set out in our <a href="/terms-and-conditions?lang=en">Terms &amp; Conditions</a>.', tc:'完整條款請參閱我們的<a href="/terms-and-conditions?lang=en">條款及細則</a>。'},
   nav_faq:{en:"FAQ", tc:"常見問題"},
   q_order_q:{en:"How do I place an order with Clinicon?", tc:"如何向健力下單？"},
   q_order_a:{en:"Send us the product name and quantity by WhatsApp on 9320 9650, by email to info@clinicon.com.hk, or call +852 2730 1883. We confirm availability and pricing, then issue a written confirmation. Your order is accepted once we confirm in writing or dispatch the goods, whichever happens first.", tc:"請透過 WhatsApp 9320 9650、電郵 info@clinicon.com.hk 或致電 +852 2730 1883，提供產品名稱及數量。我們會確認供應情況及價格，並發出書面確認。訂單於我們發出書面確認或發貨時（以較早者為準）正式成立。"},
@@ -5735,13 +5742,13 @@ brandsPanel.addEventListener("click",e=>{
   const b = e.target.closest("button"); if(!b) return;
   activeBrand = b.dataset.brand;
   activeCat = "All"; syncChips();           // brand is the primary filter here
-  closeDrops(); goToProducts();
+  closeDrops(); document.getElementById("menu").classList.remove("open"); goToProducts();
 });
 catsPanel.addEventListener("click",e=>{
   const b = e.target.closest("button"); if(!b) return;
   activeCat = b.dataset.cat;
   activeBrand = "All"; syncChips();
-  closeDrops(); goToProducts();
+  closeDrops(); document.getElementById("menu").classList.remove("open"); goToProducts();
 });
 
 /* Plain "Products" nav link → show the full grid (reset all filters) */
@@ -5960,7 +5967,9 @@ function observeReveals(){
 document.getElementById("burger").addEventListener("click",()=>{
   document.getElementById("menu").classList.toggle("open");
 });
-document.querySelectorAll(".menu a").forEach(a=>a.addEventListener("click",()=>document.getElementById("menu").classList.remove("open")));
+/* Only real navigation links close the mobile menu — dropdown triggers (Brands/Categories)
+   toggle their own panel instead and must NOT collapse the whole menu on tap. */
+document.querySelectorAll(".menu a:not(.navdrop-trigger)").forEach(a=>a.addEventListener("click",()=>document.getElementById("menu").classList.remove("open")));
 
 /* ---------- Keep sticky filter bar flush below the (variable-height) header ---------- */
 function setHeadHeight(){
