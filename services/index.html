@@ -264,12 +264,30 @@
 <script>
 (function(){
   var K="clinicon-lang";
+  function syncHomeLinks(l){
+    var prefix = l==="tc" ? "/zh" : "/";
+    document.querySelectorAll('a[href^="/#"], a[href^="/zh#"]').forEach(function(a){
+      var h=a.getAttribute("href"), i=h.indexOf("#");
+      a.setAttribute("href", prefix + h.slice(i));
+    });
+    document.querySelectorAll('a.brand[href="/"], a.brand[href="/zh"]').forEach(function(a){
+      a.setAttribute("href", l==="tc" ? "/zh" : "/");
+    });
+  }
   function set(l){document.documentElement.setAttribute("data-pp-lang",l);
     document.documentElement.setAttribute("lang",l==="tc"?"zh-Hant":"en");
     try{localStorage.setItem(K,l)}catch(e){}
-    document.querySelectorAll(".langtog button").forEach(function(b){b.classList.toggle("active",b.getAttribute("data-pp-lang")===l)});}
-  var init="en";try{init=localStorage.getItem(K)||"en"}catch(e){}
+    document.querySelectorAll(".langtog button").forEach(function(b){b.classList.toggle("active",b.getAttribute("data-pp-lang")===l)});
+    syncHomeLinks(l);}
+  var urlLang=null;
+  try{var q=new URLSearchParams(window.location.search).get("lang"); if(q==="en"||q==="tc") urlLang=q;}catch(e){}
+  var init=urlLang;
+  if(!init){try{init=localStorage.getItem(K)||"en"}catch(e){init="en"}}
   set(init);
+  if(urlLang){
+    try{var u=new URL(window.location.href);u.searchParams.delete("lang");
+      window.history.replaceState({},"",u.pathname+(u.search||"")+u.hash);}catch(e){}
+  }
   document.querySelectorAll(".langtog button").forEach(function(b){b.addEventListener("click",function(){set(b.getAttribute("data-pp-lang"))})});
   var bg=document.getElementById("burger"),m=document.getElementById("menu");
   if(bg&&m)bg.addEventListener("click",function(){m.classList.toggle("open")});
