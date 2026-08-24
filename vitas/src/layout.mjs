@@ -23,6 +23,7 @@ export const SITE = {
   brandZh: '紓適寧',
   youtube: 'https://www.youtube.com/@VITASHK',
   facebook: 'https://www.facebook.com/vitashk/',
+  instagram: 'https://www.instagram.com/vitashk/',
   email: 'hello@vitas.com.hk',
   address: {
     en: 'Hong Kong',
@@ -71,11 +72,9 @@ export const urlIn = (path, lang) => (lang === 'zh' ? '/zh' + path : path);
 /* --------------------------------------------------------------- chrome */
 
 const navItems = [
-  { href: '/shop/', label: { en: 'Shop', zh: '網上商店' } },
-  { href: '/product/', label: { en: 'The Cream', zh: '產品' } },
+  { href: '/product/', label: { en: 'What is VITAS', zh: '甚麼是 VITAS' } },
   { href: '/ingredients/', label: { en: 'Ingredients', zh: '成分' } },
   { href: '/how-to-use/', label: { en: 'How to Use', zh: '使用方法' } },
-  { href: '/for/', label: { en: 'Your Sport', zh: '你的運動' } },
   { href: '/about/', label: { en: 'About VITAS', zh: '關於 VITAS' } },
   { href: '/faq/', label: { en: 'FAQ', zh: '常見問題' } },
 ];
@@ -155,10 +154,17 @@ function footer() {
           zh: '純淨表現凝膠——葡萄籽、綠花白千層與尤加利，法國研製。零毒素，2003 年起獲香港信賴。',
         })}
         <div class="footer__social">
-          <a href="${SITE.youtube}" target="_blank" rel="noopener">YouTube</a>
-          <a href="${SITE.facebook}" target="_blank" rel="noopener">Facebook</a>
-          <a href="mailto:${SITE.email}">${SITE.email}</a>
+          <a class="social-icon" href="${SITE.facebook}" target="_blank" rel="noopener" aria-label="Facebook">
+            <img src="/assets/img/social/facebook.svg" alt="" width="30" height="30" loading="lazy">
+          </a>
+          <a class="social-icon" href="${SITE.instagram}" target="_blank" rel="noopener" aria-label="Instagram">
+            <img src="/assets/img/social/instagram.svg" alt="" width="30" height="30" loading="lazy">
+          </a>
+          <a class="social-icon" href="${SITE.youtube}" target="_blank" rel="noopener" aria-label="YouTube">
+            <img src="/assets/img/social/youtube.svg" alt="" width="30" height="30" loading="lazy">
+          </a>
         </div>
+        <p class="footer__email"><a href="mailto:${SITE.email}">${SITE.email}</a></p>
       </div>
       <div class="footer__cols">
         ${col({ en: 'Shop', zh: '購買' }, [

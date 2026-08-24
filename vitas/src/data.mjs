@@ -121,6 +121,79 @@ export const SPORTS = [
   },
 ];
 
+/**
+ * "Why VITAS" — the case for choosing this over the crowded shelf, shown as a
+ * sub-section on the "What is VITAS" page. Sensory and formulation facts only.
+ */
+export const WHY_VITAS = [
+  {
+    h: { en: 'It does not follow you around', zh: '氣味不會跟著你' },
+    p: {
+      en: 'No methyl salicylate, no camphor — the two things that give a traditional medicated rub its carrying smell. You can use VITAS at 3pm in an open-plan office, between meetings, or on the MTR, and the person next to you will not know.',
+      zh: '不含水楊酸甲酯與樟腦——傳統藥膏氣味濃烈的兩大來源。你可以在下午三時的開放式辦公室、會議之間，或在港鐵上使用 VITAS，鄰座的人也不會察覺。',
+    },
+  },
+  {
+    h: { en: 'It absorbs before you dress', zh: '穿衣前已吸收' },
+    p: {
+      en: 'A light grape-seed base sinks in within a minute and leaves no shine, so you can put a shirt back on and get on with your day. Most recovery rubs leave you greasy; this one does not.',
+      zh: '輕盈的葡萄籽基底一分鐘內吸收、不留油光，讓你可以立即穿回衣服、繼續一天的行程。大部分恢復類產品會讓皮膚油膩，而這一支不會。',
+    },
+  },
+  {
+    h: { en: 'Clean by formulation, not by accident', zh: '純淨源於配方，而非偶然' },
+    p: {
+      en: 'Three plant actives — grape seed, niaouli and eucalyptus — with no hormones, no steroids and no artificial fragrance. Made in France to EU cosmetic GMP, the same specification for over twenty years.',
+      zh: '三種植物成分——葡萄籽、綠花白千層與尤加利——不含激素、類固醇及人造香料。於法國按歐盟化妝品 GMP 生產，二十多年來同一規格。',
+    },
+  },
+  {
+    h: { en: 'Honest about what it is', zh: '對自己的定位誠實' },
+    p: {
+      en: 'A cosmetic massage gel that feels warming before effort and cooling after it. Not a medicine, not a miracle. We would rather earn you with the truth than sell you a story — see Our Approach.',
+      zh: '一支按摩護理凝膠，運動前帶來溫熱感、運動後帶來清涼感。它不是藥物，也不是奇蹟。我們寧願以事實贏得你的信任，也不想用故事把產品賣給你——詳見「我們的取態」。',
+    },
+  },
+];
+
+/**
+ * "Lymph 101" — plain-language background on the lymphatic system, shown as a
+ * sub-section on the "What is VITAS" page.
+ *
+ * COMPLIANCE: this is general education about the body, not a product claim. It
+ * must never state or imply that VITAS drains, flushes, boosts or manages the
+ * lymphatic system — the closing note says so explicitly. See docs/positioning.md.
+ */
+export const LYMPH_101 = {
+  intro: {
+    en: 'The product used to be sold as a "lymphatic management" gel. We have dropped that claim — but the questions about the lymphatic system are fair ones, so here is a plain answer, separate from anything we sell.',
+    zh: '這支產品過去以「淋巴管理」凝膠作宣傳。我們已刪去這個說法——但關於淋巴系統的疑問是合理的，因此在此提供一個與銷售無關的簡單解釋。',
+  },
+  points: [
+    {
+      h: { en: 'What the lymphatic system is', zh: '淋巴系統是甚麼' },
+      p: {
+        en: 'A network of thin vessels and nodes that runs alongside your blood vessels. It carries a clear fluid called lymph, helps balance the body’s fluids, and is part of the immune system. Unlike blood, it has no pump of its own — it moves mainly when your muscles move.',
+        zh: '一個與血管並行的細管與淋巴結網絡。它輸送一種名為「淋巴液」的透明液體，協助平衡體液，並是免疫系統的一部分。與血液不同，它沒有自己的泵——主要靠肌肉活動來推動。',
+      },
+    },
+    {
+      h: { en: 'What actually moves it', zh: '真正推動它的是甚麼' },
+      p: {
+        en: 'Movement. Walking, training, calf contractions and deep breathing all help lymph circulate. This is why staying active matters, and why a long day sitting still can leave the legs feeling heavy. It is physiology, not a product.',
+        zh: '活動。步行、訓練、小腿收縮與深呼吸都有助淋巴流動。這正是保持活躍重要的原因，也解釋了為何久坐一整天後雙腿會感覺沉重。這是生理學，而非產品。',
+      },
+    },
+    {
+      h: { en: 'Where a massage cream fits', zh: '按摩膏的位置在哪裡' },
+      p: {
+        en: 'Massage itself is a hands-on ritual many active people enjoy, and a gel that glides and absorbs cleanly makes it more pleasant to do. That is the honest role of VITAS — a medium for massage. It does not act on your lymphatic system, and we no longer claim it does.',
+        zh: '按摩本身是許多活躍人士喜愛的親手儀式，而一款好推開、吸收乾淨的凝膠，會讓按摩更舒適。這就是 VITAS 誠實的角色——一種按摩介質。它不會對你的淋巴系統產生作用，我們亦不再作此宣稱。',
+      },
+    },
+  ],
+};
+
 export const PRODUCT = {
   slug: '/product/',
   nameEn: 'Soothing Cream Gel',
@@ -391,8 +464,8 @@ export const ARTICLES = [
       zh: '乳酸迷思——真正令你痠痛的是甚麼',
     },
     lede: {
-      en: 'For years this product was sold on "flushing out lactic acid". That claim is wrong, so we stopped making it. Here is the honest version.',
-      zh: '多年來，這支產品以「排走乳酸」作賣點。這個說法並不正確，所以我們不再這樣說。以下是誠實的版本。',
+      en: 'Lactate clears on its own within about an hour of stopping exercise. The soreness that shows up two days later is something else entirely.',
+      zh: '運動停止後約一小時內，乳酸便會自行代謝。兩天後才出現的痠痛，其實是另一回事。',
     },
     art: '/assets/img/art-recovery.svg',
     body: [
@@ -411,15 +484,6 @@ export const ARTICLES = [
           {
             en: 'Delayed onset muscle soreness — the stiffness that peaks 24 to 72 hours after unfamiliar or eccentric work — is an inflammatory response to microscopic damage in the muscle fibres. It arrives long after lactate has gone. Treating one by naming the other was always a category error.',
             zh: '延遲性肌肉痠痛（DOMS）在不熟悉或離心運動後 24 至 72 小時達到高峰，是肌纖維微細損傷引起的發炎反應。它出現時，乳酸早已消失。用乳酸來解釋 DOMS，本身就是概念錯置。',
-          },
-        ],
-      },
-      {
-        h: { en: 'So what is a massage cream for?', zh: '那麼按摩膏的作用是甚麼？' },
-        p: [
-          {
-            en: 'Two honest things. It makes hands-on massage possible without dragging on dry skin, and it feels cool and pleasant while you do it. Massage after training is well liked by the people who do it, and a medium that absorbs cleanly makes it more likely you will bother. That is a modest claim, and it is one we can stand behind.',
-            zh: '兩件誠實的事：它讓雙手能順暢按摩而不拉扯乾燥皮膚；塗抹時清涼舒適。運動後按摩之所以受歡迎，往往因為感覺良好；而一款吸收乾淨的介質，會令你更願意去做。這是一個克制的說法，也是我們能夠站得住腳的說法。',
           },
         ],
       },

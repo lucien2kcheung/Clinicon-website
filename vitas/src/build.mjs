@@ -36,7 +36,6 @@ const buildSpecs = () => [
   pages.howToUse(),
   pages.ingredients(),
   ...PLANTS.map((p) => pages.ingredient(p)),
-  pages.sportsIndex(),
   ...SPORTS.map((sp) => pages.sport(sp)),
   pages.approach(),
   pages.stockists(),

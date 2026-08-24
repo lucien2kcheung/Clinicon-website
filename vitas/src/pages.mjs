@@ -31,6 +31,8 @@ import {
   ARTICLES,
   FAQS,
   ABOUT,
+  WHY_VITAS,
+  LYMPH_101,
 } from './data.mjs';
 
 /* --------------------------------------------------------- shared partials */
@@ -513,13 +515,13 @@ ${newsletter()}`;
 
 export function product() {
   const body = `${pageHero({
-    eyebrow: { en: 'The product', zh: '產品' },
-    title: { en: 'Soothing Cream Gel', zh: '舒緩啫喱膏' },
+    eyebrow: { en: 'What is VITAS', zh: '甚麼是 VITAS' },
+    title: { en: 'One tube, three plants, two moments', zh: '一支軟管，三種植物，兩個時刻' },
     lede: {
-      en: 'One tube, three plants, two moments in the day. 100ml, HK$250.',
-      zh: '一支軟管，三種植物，一天中的兩個時刻。100毫升，HK$250。',
+      en: 'A clean, French-made cream gel for warming up before effort and cooling down after it. 100ml, HK$250. Here is what it is, why it exists, and the lymph question answered honestly.',
+      zh: '一支純淨、法國製造的啫喱膏，運動前熱身、運動後放鬆。100毫升，HK$250。以下說明它是甚麼、為何存在，以及對「淋巴」問題的誠實解答。',
     },
-    trail: [HOME_CRUMB, { name: { en: 'The Cream', zh: '產品' }, path: '/product/' }],
+    trail: [HOME_CRUMB, { name: { en: 'What is VITAS', zh: '甚麼是 VITAS' }, path: '/product/' }],
   })}
 
     <section class="section product-main">
@@ -614,6 +616,53 @@ export function product() {
       </div>
     </section>
 
+    <section class="section why-vitas reveal" id="why-vitas">
+      <div class="wrap">
+${sectionHead({
+  eyebrow: { en: 'Why VITAS', zh: '為甚麼選 VITAS' },
+  heading: { en: 'Four reasons, none of them magic', zh: '四個理由，沒有一個是奇蹟' },
+  lede: {
+    en: 'The shelf is crowded and cheap. Here is the honest case for paying a little more for this one.',
+    zh: '貨架上產品既多且便宜。以下是「多付一點選擇這一支」的誠實理由。',
+  },
+})}
+        <div class="grid grid--2">
+          ${WHY_VITAS.map(
+            (r) => `<div class="reason">
+            ${blk('h3', r.h, 'reason__title')}
+            ${blk('p', r.p, 'reason__text')}
+          </div>`
+          ).join('\n          ')}
+        </div>
+      </div>
+    </section>
+
+    <section class="section lymph reveal" id="lymph-101">
+      <div class="wrap">
+${sectionHead({
+  eyebrow: { en: 'Lymph 101', zh: '淋巴入門' },
+  heading: { en: 'The lymphatic system, explained plainly', zh: '簡單說明淋巴系統' },
+  lede: LYMPH_101.intro,
+})}
+        <div class="grid grid--3">
+          ${LYMPH_101.points.map(
+            (r) => `<div class="lymph__card">
+            ${blk('h3', r.h, 'lymph__title')}
+            ${blk('p', r.p, 'lymph__text')}
+          </div>`
+          ).join('\n          ')}
+        </div>
+        ${blk(
+          'p',
+          {
+            en: 'To be clear: VITAS does not drain, flush or "manage" your lymphatic system. It is a massage gel. Movement moves lymph — a cream cannot.',
+            zh: '必須說明：VITAS 不會排走、沖走或「管理」你的淋巴系統。它是一款按摩凝膠。推動淋巴的是活動，而非膏體。',
+          },
+          'note'
+        )}
+      </div>
+    </section>
+
     <section class="section moments reveal">
       <div class="wrap moments__inner">
         <article class="moment moment--warm">
@@ -669,17 +718,17 @@ ${sectionHead({
 ${newsletter()}`;
 
   return {
-    title: { en: 'Soothing Cream Gel 100ml', zh: '舒緩啫喱膏 100毫升' },
+    title: { en: 'What is VITAS', zh: '甚麼是 VITAS' },
     description: {
-      en: 'VITAS Soothing Cream Gel 100ml (HK$250): eucalyptus, grape seed and niaouli in a light, non-greasy cream gel. What it does, what it does not do, and where to buy it.',
-      zh: 'VITAS 舒緩啫喱膏 100毫升（HK$250）：尤加利、葡萄籽與綠花白千層，輕盈不油膩。它會做到甚麼、不會做到甚麼，以及在哪裡購買。',
+      en: 'What VITAS Soothing Cream Gel is (100ml, HK$250), why to choose it, and a plain-language "Lymph 101" — the lymphatic system explained honestly, without the old claims.',
+      zh: 'VITAS 舒緩啫喱膏是甚麼（100毫升，HK$250）、為何選擇它，以及「淋巴入門」——以誠實、不含舊宣稱的方式說明淋巴系統。',
     },
     path: '/product/',
     active: '/product/',
     body,
     jsonLd: [
       productJsonLd(),
-      breadcrumb([HOME_CRUMB, { name: { en: 'Soothing Cream Gel', zh: '舒緩啫喱膏' }, path: '/product/' }]),
+      breadcrumb([HOME_CRUMB, { name: { en: 'What is VITAS', zh: '甚麼是 VITAS' }, path: '/product/' }]),
     ],
   };
 }
@@ -857,13 +906,30 @@ ${sectionHead({
             .join('\n          ')}
         </ul>
       </div>
+    </section>
+
+    <section class="section sports reveal" id="your-sport">
+      <div class="wrap">
+${sectionHead({
+  eyebrow: { en: 'Your sport', zh: '你的運動' },
+  heading: { en: 'Routines for the way you actually train', zh: '按你真正的訓練方式而設的用法' },
+  lede: {
+    en: 'Hyrox, padel and running load the body differently, so the two minutes before and the ten minutes after look different too. Pick yours.',
+    zh: 'Hyrox、板式網球與跑步對身體的負荷各異，賽前兩分鐘與賽後十分鐘的做法也不同。選擇你的運動。',
+  },
+})}
+        <div class="grid grid--3">
+          ${SPORTS.map(sportCard).join('\n          ')}
+        </div>
+        ${sensoryNote('note')}
+      </div>
     </section>`;
 
   return {
     title: { en: 'How to use', zh: '使用方法' },
     description: {
-      en: 'Three simple routines for VITAS Soothing Cream Gel: a two-minute pre-training check-in, a ten-minute post-training wind-down, and a three-minute desk reset.',
-      zh: 'VITAS 舒緩啫喱膏的三套用法：訓練前兩分鐘自我檢查、訓練後十分鐘放鬆，以及辦公桌前三分鐘重設。',
+      en: 'How to use VITAS Soothing Cream Gel: a pre-training warm-up, a post-training wind-down, a three-minute desk reset, plus routines for Hyrox, padel and running.',
+      zh: 'VITAS 舒緩啫喱膏的使用方法：訓練前熱身、訓練後放鬆、辦公桌前三分鐘重設，以及 Hyrox、板式網球與跑步的專屬用法。',
     },
     path: '/how-to-use/',
     active: '/how-to-use/',
@@ -1287,7 +1353,7 @@ export function sport(sp) {
     lede: sp.lede,
     trail: [
       HOME_CRUMB,
-      { name: { en: 'Your Sport', zh: '你的運動' }, path: '/for/' },
+      { name: { en: 'How to Use', zh: '使用方法' }, path: '/how-to-use/' },
       { name: sp.name, path },
     ],
   })}
@@ -1344,12 +1410,12 @@ ${buyStrip()}`;
       zh: `${sp.hook.zh} 香港${sp.name.zh}運動者在訓練前後如何使用 VITAS。`,
     },
     path,
-    active: '/for/',
+    active: '/how-to-use/',
     body,
     jsonLd: [
       breadcrumb([
         HOME_CRUMB,
-        { name: { en: 'Your sport', zh: '你的運動' }, path: '/for/' },
+        { name: { en: 'How to use', zh: '使用方法' }, path: '/how-to-use/' },
         { name: sp.name, path },
       ]),
     ],
