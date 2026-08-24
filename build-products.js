@@ -394,6 +394,14 @@ ${FONTS}
 <link rel="stylesheet" href="/assets/site.css">
 <link rel="stylesheet" href="/assets/productpage.css">
 <script type="application/ld+json">${JSON.stringify(ld)}</script>
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=AW-18249191886"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'AW-18249191886');
+</script>
 </head>
 <body>
 ${header()}
