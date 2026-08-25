@@ -1,0 +1,6 @@
+# Keep internal docs and notes out of the public deployment.
+# src/ and package.json stay: api/checkout.js imports src/data.mjs and needs
+# the stripe dependency at runtime.
+docs
+README.md
+.env.example
