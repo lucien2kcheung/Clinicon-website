@@ -380,6 +380,10 @@ function page(p, slug, i) {
 <title>${esc(title)}</title>
 <meta name="description" content="${esc(desc)}">
 <link rel="canonical" href="${url}">
+<link rel="icon" href="/favicon.ico" sizes="48x48">
+<link rel="icon" type="image/png" href="/favicon-48x48.png" sizes="48x48">
+<link rel="icon" type="image/png" href="/favicon-192x192.png" sizes="192x192">
+<link rel="apple-touch-icon" href="/apple-touch-icon.png">
 <meta property="og:type" content="product">
 <meta property="og:title" content="${esc(p.name_en)}">
 <meta property="og:description" content="${esc(desc)}">
