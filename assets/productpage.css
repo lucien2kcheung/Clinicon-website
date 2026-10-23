@@ -81,3 +81,16 @@ html[data-pp-lang="tc"] .pp-en{display:none;}
   .pp-spectable th{width:44%;white-space:normal;}
   .pp-spectable th,.pp-spectable td{padding:8px 9px;font-size:.9rem;}
 }
+
+/* Photo gallery (only rendered when a product has more than one photo) */
+.pp-gallery{width:100%;}
+.pp-gal-main{position:relative;display:grid;place-items:center;}
+.pp-gal-main img{max-width:100%;max-height:560px;height:auto;object-fit:contain;}
+.pp-gal-btn{position:absolute;top:50%;transform:translateY(-50%);width:40px;height:40px;border-radius:50%;border:1px solid var(--line);background:rgba(255,255,255,.92);color:var(--ink);font-size:1.6rem;line-height:1;cursor:pointer;display:grid;place-items:center;box-shadow:var(--shadow);}
+.pp-gal-btn:hover{border-color:var(--teal);color:var(--teal-dark);}
+.pp-gal-prev{left:0;}
+.pp-gal-next{right:0;}
+.pp-thumbs{display:flex;gap:10px;justify-content:center;flex-wrap:wrap;margin-top:16px;}
+.pp-thumb{width:64px;height:64px;padding:4px;border:2px solid var(--line);border-radius:10px;background:var(--white);cursor:pointer;display:grid;place-items:center;}
+.pp-thumb img{max-width:100%;max-height:100%;object-fit:contain;}
+.pp-thumb.is-active,.pp-thumb:hover{border-color:var(--teal);}
