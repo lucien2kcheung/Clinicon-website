@@ -207,7 +207,9 @@ function page(p, slug, i) {
   const title = `${p.name_en} | Clinicon Medical Ltd.`;
   const desc = (p.blurb_en || `${p.name_en} — available from Clinicon Medical Ltd., a trusted Hong Kong medical supplies distributor since 1980.`)
     .replace(/\s+/g, " ").trim().slice(0, 300);
-  const imgUrl = p.image_missing ? "" : SITE + abs(p.image);
+  /* Photos: `image` is the main photo; optional `images` (array, main first) adds a gallery. */
+  const imgList = p.image_missing ? [] : ((p.images && p.images.length) ? p.images : [p.image]);
+  const imgUrl = imgList.length ? SITE + abs(imgList[0]) : "";
 
   const waEn = `${WA}?text=${encodeURIComponent(`I would like to enquire about: ${p.name_en} (${pr.en}) — ${url}`)}`;
   const waTc = `${WA}?text=${encodeURIComponent(`您好，我想查詢以下產品：${p.name_tc || p.name_en}（${pr.tc}）— ${url}`)}`;
@@ -277,7 +279,7 @@ function page(p, slug, i) {
         "@type": "Product",
         "@id": url + "#product",
         name: p.name_en, alternateName: p.name_tc || undefined,
-        image: imgUrl || undefined, description: desc,
+        image: imgList.length > 1 ? imgList.map(x => SITE + abs(x)) : (imgUrl || undefined), description: desc,
         brand: { "@type": "Brand", name: (p.brand && p.brand !== "Other") ? p.brand : "Clinicon Medical Ltd." },
         category: p.category || undefined,
         sku: p.stock_id || undefined,
@@ -318,7 +320,15 @@ function page(p, slug, i) {
 
   const figure = p.image_missing
     ? `<div class="pp-noimg">${bi("Image coming soon", "圖片即將上載")}</div>`
-    : `<img src="${abs(p.image)}" alt="${esc(p.name_en)}" width="640" height="640" loading="eager">`;
+    : (imgList.length > 1
+        ? `<div class="pp-gallery">
+      <div class="pp-gal-main"><img src="${abs(imgList[0])}" alt="${esc(p.name_en)}" width="640" height="640" loading="eager">
+        <button type="button" class="pp-gal-btn pp-gal-prev" aria-label="Previous photo">&#8249;</button>
+        <button type="button" class="pp-gal-btn pp-gal-next" aria-label="Next photo">&#8250;</button></div>
+      <div class="pp-thumbs">${imgList.map((x, k) => `<button type="button" class="pp-thumb${k === 0 ? " is-active" : ""}" data-src="${abs(x)}" aria-label="Photo ${k + 1} of ${imgList.length}"><img src="${abs(x)}" alt="${esc(p.name_en)} – photo ${k + 1}" loading="lazy"></button>`).join("")}</div>
+    </div>
+    <script>(function(){var g=document.currentScript.parentNode.querySelector(".pp-gallery"),m=g.querySelector(".pp-gal-main img"),t=[].slice.call(g.querySelectorAll(".pp-thumb")),i=0;function s(k){i=(k+t.length)%t.length;m.src=t[i].getAttribute("data-src");t.forEach(function(b,j){b.classList.toggle("is-active",j===i)});}t.forEach(function(b,j){b.addEventListener("click",function(){s(j)});});g.querySelector(".pp-gal-prev").addEventListener("click",function(){s(i-1)});g.querySelector(".pp-gal-next").addEventListener("click",function(){s(i+1)});})();</script>`
+        : `<img src="${abs(p.image)}" alt="${esc(p.name_en)}" width="640" height="640" loading="eager">`);
 
   const variants = (p.variants && p.variants.length)
     ? `<table class="pp-variants"><thead><tr><th>${bi("Model", "型號")}</th><th>${bi("Price", "價格")}</th><th></th></tr></thead><tbody>${
