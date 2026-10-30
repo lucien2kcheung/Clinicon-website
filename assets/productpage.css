@@ -94,3 +94,7 @@ html[data-pp-lang="tc"] .pp-en{display:none;}
 .pp-thumb{width:64px;height:64px;padding:4px;border:2px solid var(--line);border-radius:10px;background:var(--white);cursor:pointer;display:grid;place-items:center;}
 .pp-thumb img{max-width:100%;max-height:100%;object-fit:contain;}
 .pp-thumb.is-active,.pp-thumb:hover{border-color:var(--teal);}
+/* Single-language product pages: the EN / 繁 toggle is a pair of links to the twin page */
+.langtog a{display:inline-block;font-family:'Noto Sans HK',inherit;font-size:.82rem;font-weight:600;padding:7px 12px;color:var(--ink-soft);transition:.2s}
+.langtog a:hover{color:var(--teal-dark)}
+.langtog a.active{background:var(--ink);color:#fff}
