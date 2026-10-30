@@ -65,6 +65,14 @@ This regenerates all product pages + `sitemap.xml` from the current `PRODUCTS`. 
 (Requires Node.js installed locally. The homepage card links update automatically because they
 use the same slug logic.)
 
+## Separate English / Chinese pages for a product
+
+By default each product has ONE bilingual page with an EN/繁 toggle. To give a product two
+single-language pages instead, add `"zh_page": true` to its entry in `PRODUCTS`. The build then writes
+`/products/<slug>` (English only) and `/zh/products/<slug>` (Chinese only), links them with
+hreflang, and lists both in the sitemap. Such products use `blurb_en` / `blurb_tc`, and optionally
+`specs_en` / `specs_tc` for spec lists.
+
 ## Note on styles
 
 `assets/site.css` is a **snapshot** of the `<style>` block in your `index.html`, taken so the

@@ -82,7 +82,10 @@ if (!weak.length && !dupes.length) console.log("Slug check: clean.");
 
 /* Categories where lead time depends on manufacturer stock rather than our own.
    Everything else is treated as a stocked consumable (approx. 1 week). */
-const EQUIPMENT_CATEGORIES = new Set(["Refrigeration & Equipment", "O.R. Equipment"]);
+const EQUIPMENT_CATEGORIES = new Set(["Refrigeration & Equipment", "O.R. Equipment", "Electrical Appliances"]);
+
+/* Chinese labels for categories, used on single-language Chinese pages. Mirrors NAV_CATEGORIES in index.html. */
+const CATEGORY_TC = { "Electrical Appliances": "電器產品", "Refrigeration & Equipment": "冷藏及設備", "O.R. Equipment": "手術室設備" };
 
 /* ---- helpers ---- */
 const esc = s => String(s == null ? "" : s)
@@ -92,7 +95,18 @@ const stripTags = s => String(s == null ? "" : s)
   .replace(/<[^>]*>/g, " ").replace(/\s+/g, " ").trim();
 const fmtPrice = n => "HK$" + Number(n || 0).toLocaleString("en-HK");
 const abs = img => img ? ("/" + img.replace(/^\/+/, "")) : "";
-const bi = (en, tc) => `<span class="pp-en" lang="en">${en}</span><span class="pp-tc" lang="zh-Hant-HK">${tc || en}</span>`;
+/* Language mode. Most products get ONE bilingual page with an EN/繁 toggle (MODE = null).
+   Products flagged `zh_page: true` get two single-language pages instead:
+   /products/<slug> (MODE "en") and /zh/products/<slug> (MODE "tc"). page() sets MODE;
+   bi()/dual() then emit just that language, so no hidden text of the other language ships. */
+let MODE = null;
+let PAGE_SLUG = "";  // slug of the page being built; the header toggle uses it to link to the other-language twin
+const bi = (en, tc) => MODE === "en" ? en : MODE === "tc" ? (tc || en)
+  : `<span class="pp-en" lang="en">${en}</span><span class="pp-tc" lang="zh-Hant-HK">${tc || en}</span>`;
+const dual = (en, tc) => MODE === "en" ? en : MODE === "tc" ? tc
+  : `<span class="pp-en">${en}</span><span class="pp-tc">${tc}</span>`;
+const isZhPage = p => p.zh_page === true;
+const pageUrl = (slug, lang) => (lang === "tc" ? "/zh/products/" : "/products/") + slug;
 
 function priceParts(p) {
   if (p.variants && p.variants.length) {
@@ -119,24 +133,28 @@ const FONTS = `<link rel="preconnect" href="https://fonts.googleapis.com">
 const WA_SVG = `<svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M.057 24l1.687-6.163a11.867 11.867 0 0 1-1.587-5.946C.16 5.335 5.495 0 12.05 0a11.82 11.82 0 0 1 8.413 3.488 11.82 11.82 0 0 1 3.48 8.414c-.003 6.557-5.338 11.892-11.893 11.892a11.9 11.9 0 0 1-5.688-1.448L.057 24zm6.597-3.807c1.676.995 3.276 1.591 5.392 1.592 5.448 0 9.886-4.434 9.889-9.885.002-5.462-4.415-9.89-9.881-9.892-5.452 0-9.887 4.434-9.889 9.884a9.82 9.82 0 0 0 1.523 5.26l-.999 3.648 3.965-1.607zm11.387-5.464c-.074-.124-.272-.198-.57-.347-.297-.149-1.758-.868-2.031-.967-.272-.099-.47-.149-.669.149-.198.297-.768.967-.941 1.165-.173.198-.347.223-.644.074-.297-.149-1.255-.462-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.297-.347.446-.521.151-.172.2-.296.3-.495.099-.198.05-.372-.025-.521-.075-.148-.669-1.611-.916-2.206-.242-.579-.487-.501-.669-.51l-.57-.01c-.198 0-.52.074-.792.372s-1.04 1.016-1.04 2.479 1.065 2.876 1.213 3.074c.149.198 2.095 3.2 5.076 4.487.709.306 1.263.489 1.694.626.712.226 1.36.194 1.872.118.571-.085 1.758-.719 2.006-1.413.248-.695.248-1.29.173-1.414z"/></svg>`;
 
 function header() {
+  const HOME = MODE === "tc" ? "/zh" : "/";
   return `<header>
   <nav class="nav">
-    <a class="brand" href="/">
+    <a class="brand" href="${MODE === "tc" ? "/zh" : "/"}">
       <img src="/images/clinicon%20logo.png" alt="Clinicon Medical logo">
       <span class="bt"><b>Clinicon Medical</b><span>健力醫療器材有限公司</span></span>
     </a>
     <div class="menu" id="menu">
-      <a href="/#products">${bi("Products", "產品")}</a>
-      <a href="/#about">${bi("About Us", "關於我們")}</a>
-      <a href="/#contact">${bi("Contact", "聯絡我們")}</a>
+      <a href="${HOME}#products">${bi("Products", "產品")}</a>
+      <a href="${HOME}#about">${bi("About Us", "關於我們")}</a>
+      <a href="${HOME}#contact">${bi("Contact", "聯絡我們")}</a>
       <a class="wa-btn" href="${WA}" target="_blank" rel="noopener">
         <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2a10 10 0 0 0-8.6 15l-1.3 4.7 4.8-1.3A10 10 0 1 0 12 2zm5.8 14.1c-.2.7-1.4 1.3-2 1.4-.5.1-1.2.1-1.9-.1-.4-.1-1-.3-1.7-.6-3-1.3-4.9-4.3-5.1-4.5-.1-.2-1.2-1.5-1.2-2.9s.7-2 1-2.3c.2-.3.5-.3.7-.3h.5c.2 0 .4 0 .6.5l.8 2c.1.1.1.3 0 .5l-.4.5-.3.3c-.2.2-.3.4-.2.6.2.4.9 1.4 1.9 2.3 1.3 1.1 2.3 1.5 2.6 1.6.2.1.4.1.6-.1l.8-1c.2-.2.4-.2.6-.1l2 .9c.2.1.4.2.4.3.1.2.1.8-.1 1.5z"/></svg>
         ${bi("Order via WhatsApp", "透過 WhatsApp 下單")}
       </a>
-      <div class="langtog" id="langtog">
+      ${MODE ? `<div class="langtog" id="langtog">
+        ${MODE === "en" ? `<a class="active" href="${pageUrl(PAGE_SLUG, "en")}" hreflang="en">EN</a><a href="${pageUrl(PAGE_SLUG, "tc")}" hreflang="zh-Hant">繁</a>`
+                        : `<a href="${pageUrl(PAGE_SLUG, "en")}" hreflang="en">EN</a><a class="active" href="${pageUrl(PAGE_SLUG, "tc")}" hreflang="zh-Hant">繁</a>`}
+      </div>` : `<div class="langtog" id="langtog">
         <button data-pp-lang="en" class="active">EN</button>
         <button data-pp-lang="tc">繁</button>
-      </div>
+      </div>`}
     </div>
     <button class="burger" id="burger" aria-label="Menu"><span></span><span></span><span></span></button>
   </nav>
@@ -144,6 +162,7 @@ function header() {
 }
 
 function footer() {
+  const HOME = MODE === "tc" ? "/zh" : "/";
   return `<footer>
   <div class="wrap">
     <div class="fgrid">
@@ -155,9 +174,9 @@ function footer() {
       </div>
       <div>
         <h4>${bi("Explore", "探索")}</h4>
-        <a href="/#products">${bi("Products", "產品")}</a>
-        <a href="/#about">${bi("About Us", "關於我們")}</a>
-        <a href="/#contact">${bi("Contact", "聯絡我們")}</a>
+        <a href="${HOME}#products">${bi("Products", "產品")}</a>
+        <a href="${HOME}#about">${bi("About Us", "關於我們")}</a>
+        <a href="${HOME}#contact">${bi("Contact", "聯絡我們")}</a>
         <a href="/faq">${bi("FAQ", "常見問題")}</a>
         <a href="/terms-and-conditions">${bi("Terms &amp; Conditions", "條款及細則")}</a>
       </div>
@@ -185,7 +204,8 @@ function relatedBlock(i) {
     const fig = rp.image_missing
       ? `<div class="pp-rel-noimg"></div>`
       : `<img src="${abs(rp.image)}" alt="${esc(rp.name_en)}" loading="lazy">`;
-    return `<a class="pp-rel-card" href="/products/${rs}">
+    const href = isZhPage(rp) ? pageUrl(rs, MODE) : "/products/" + rs;
+    return `<a class="pp-rel-card" href="${href}">
       <div class="pp-rel-fig">${fig}</div>
       <div class="pp-rel-name">${bi(esc(rp.name_en), esc(rp.name_tc))}</div>
       <div class="pp-rel-price">${bi(pr.en, pr.tc)}</div>
@@ -198,14 +218,19 @@ function relatedBlock(i) {
   </section>`;
 }
 
-function page(p, slug, i) {
-  const url = `${SITE}/products/${slug}`;
+function page(p, slug, i, mode) {
+  MODE = mode || null;
+  PAGE_SLUG = slug;
+  const tc = MODE === "tc";
+  const name = tc ? (p.name_tc || p.name_en) : p.name_en;
+  const url = `${SITE}${pageUrl(slug, MODE)}`;
   const pr = priceParts(p);
   const isEquipment = EQUIPMENT_CATEGORIES.has(p.category);
   const packOptions = (p.variants && p.variants.length)
     ? p.variants.map(v => stripTags(v[0])).filter(Boolean).join(" · ") : "";
-  const title = `${p.name_en} | Clinicon Medical Ltd.`;
-  const desc = (p.blurb_en || `${p.name_en} — available from Clinicon Medical Ltd., a trusted Hong Kong medical supplies distributor since 1980.`)
+  const title = tc ? `${name} | 健力醫療器材有限公司` : `${p.name_en} | Clinicon Medical Ltd.`;
+  const desc = (tc ? (p.blurb_tc || `${name} — 健力醫療器材有限公司供應，自1980年服務香港醫療界。`)
+    : (p.blurb_en || `${p.name_en} — available from Clinicon Medical Ltd., a trusted Hong Kong medical supplies distributor since 1980.`))
     .replace(/\s+/g, " ").trim().slice(0, 300);
   /* Photos: `image` is the main photo; optional `images` (array, main first) adds a gallery. */
   const imgList = p.image_missing ? [] : ((p.images && p.images.length) ? p.images : [p.image]);
@@ -278,7 +303,7 @@ function page(p, slug, i) {
       {
         "@type": "Product",
         "@id": url + "#product",
-        name: p.name_en, alternateName: p.name_tc || undefined,
+        name: name, alternateName: MODE ? undefined : (p.name_tc || undefined),
         image: imgList.length > 1 ? imgList.map(x => SITE + abs(x)) : (imgUrl || undefined), description: desc,
         brand: { "@type": "Brand", name: (p.brand && p.brand !== "Other") ? p.brand : "Clinicon Medical Ltd." },
         category: p.category || undefined,
@@ -301,9 +326,9 @@ function page(p, slug, i) {
         "@type": "BreadcrumbList",
         "@id": url + "#breadcrumb",
         itemListElement: [
-          { "@type": "ListItem", position: 1, name: "Home", item: SITE + "/" },
-          { "@type": "ListItem", position: 2, name: p.category || "Products", item: SITE + "/#products" },
-          { "@type": "ListItem", position: 3, name: p.name_en }
+          { "@type": "ListItem", position: 1, name: tc ? "主頁" : "Home", item: tc ? SITE + "/zh" : SITE + "/" },
+          { "@type": "ListItem", position: 2, name: (tc ? CATEGORY_TC[p.category] : "") || p.category || (tc ? "產品" : "Products"), item: tc ? SITE + "/zh#products" : SITE + "/#products" },
+          { "@type": "ListItem", position: 3, name: name }
         ]
       },
       {
@@ -313,7 +338,7 @@ function page(p, slug, i) {
         isPartOf: { "@id": SITE + "/#website" },
         about: { "@id": url + "#product" },
         breadcrumb: { "@id": url + "#breadcrumb" },
-        inLanguage: "en-HK"
+        inLanguage: tc ? "zh-HK" : "en-HK"
       }
     ]
   };
@@ -322,13 +347,13 @@ function page(p, slug, i) {
     ? `<div class="pp-noimg">${bi("Image coming soon", "圖片即將上載")}</div>`
     : (imgList.length > 1
         ? `<div class="pp-gallery">
-      <div class="pp-gal-main"><img src="${abs(imgList[0])}" alt="${esc(p.name_en)}" width="640" height="640" loading="eager">
-        <button type="button" class="pp-gal-btn pp-gal-prev" aria-label="Previous photo">&#8249;</button>
-        <button type="button" class="pp-gal-btn pp-gal-next" aria-label="Next photo">&#8250;</button></div>
-      <div class="pp-thumbs">${imgList.map((x, k) => `<button type="button" class="pp-thumb${k === 0 ? " is-active" : ""}" data-src="${abs(x)}" aria-label="Photo ${k + 1} of ${imgList.length}"><img src="${abs(x)}" alt="${esc(p.name_en)} – photo ${k + 1}" loading="lazy"></button>`).join("")}</div>
+      <div class="pp-gal-main"><img src="${abs(imgList[0])}" alt="${esc(name)}" width="640" height="640" loading="eager">
+        <button type="button" class="pp-gal-btn pp-gal-prev" aria-label="${tc ? "上一張" : "Previous photo"}">&#8249;</button>
+        <button type="button" class="pp-gal-btn pp-gal-next" aria-label="${tc ? "下一張" : "Next photo"}">&#8250;</button></div>
+      <div class="pp-thumbs">${imgList.map((x, k) => `<button type="button" class="pp-thumb${k === 0 ? " is-active" : ""}" data-src="${abs(x)}" aria-label="${tc ? `相片 ${k + 1} / ${imgList.length}` : `Photo ${k + 1} of ${imgList.length}`}"><img src="${abs(x)}" alt="${esc(name)} – photo ${k + 1}" loading="lazy"></button>`).join("")}</div>
     </div>
     <script>(function(){var g=document.currentScript.parentNode.querySelector(".pp-gallery"),m=g.querySelector(".pp-gal-main img"),t=[].slice.call(g.querySelectorAll(".pp-thumb")),i=0;function s(k){i=(k+t.length)%t.length;m.src=t[i].getAttribute("data-src");t.forEach(function(b,j){b.classList.toggle("is-active",j===i)});}t.forEach(function(b,j){b.addEventListener("click",function(){s(j)});});g.querySelector(".pp-gal-prev").addEventListener("click",function(){s(i-1)});g.querySelector(".pp-gal-next").addEventListener("click",function(){s(i+1)});})();</script>`
-        : `<img src="${abs(p.image)}" alt="${esc(p.name_en)}" width="640" height="640" loading="eager">`);
+        : `<img src="${abs(p.image)}" alt="${esc(name)}" width="640" height="640" loading="eager">`);
 
   const variants = (p.variants && p.variants.length)
     ? `<table class="pp-variants"><thead><tr><th>${bi("Model", "型號")}</th><th>${bi("Price", "價格")}</th><th></th></tr></thead><tbody>${
@@ -341,7 +366,7 @@ function page(p, slug, i) {
 
   /* Some legacy spec entries are nested arrays containing raw HTML; flatten and
      strip so they render as clean list items rather than escaped markup. */
-  const specLines = (p.specs || []).flat(Infinity)
+  const specLines = ((MODE === "en" && p.specs_en) || (tc && p.specs_tc) || p.specs || []).flat(Infinity)
     .map(stripTags).filter(Boolean);
   const specs = specLines.length
     ? `<ul class="pp-specs">${specLines.map(x => `<li>${esc(x)}</li>`).join("")}</ul>` : "";
@@ -352,7 +377,7 @@ function page(p, slug, i) {
      omitted rather than rendered empty. */
   const detailRows = [
     [bi("Brand", "品牌"), p.brand && p.brand !== "Other" ? esc(p.brand) : ""],
-    [bi("Category", "類別"), p.category ? esc(p.category) : ""],
+    [bi("Category", "類別"), p.category ? esc(tc ? (CATEGORY_TC[p.category] || p.category) : p.category) : ""],
     [bi("Product code", "產品編號"), p.stock_id ? esc(p.stock_id) : ""],
     [bi("Pack options", "包裝選項"), packOptions ? esc(packOptions) : ""],
     [bi("Price", "價格"), pr.num > 0 ? bi(pr.en, pr.tc)
@@ -376,32 +401,41 @@ function page(p, slug, i) {
     ${specs}
   </section>`;
 
-  const descBlock = (p.blurb_en || p.blurb_tc) ? `<section class="pp-desc">
+  const descBlock = MODE
+    ? ((tc ? p.blurb_tc : p.blurb_en) ? `<section class="pp-desc">
+    <h2>${bi("Product details", "產品詳情")}</h2>
+    <p lang="${tc ? "zh-Hant-HK" : "en"}">${esc(tc ? p.blurb_tc : p.blurb_en)}</p>
+  </section>` : "")
+    : (p.blurb_en || p.blurb_tc) ? `<section class="pp-desc">
     <h2>${bi("Product details", "產品詳情")}</h2>
     ${p.blurb_en ? `<p class="pp-en">${esc(p.blurb_en)}</p>` : ""}
     <p class="pp-tc" lang="zh-Hant">${esc(p.blurb_tc || p.blurb_en)}</p>
   </section>` : "";
 
   return `<!DOCTYPE html>
-<html lang="en" data-pp-lang="en">
+<html lang="${tc ? "zh-Hant-HK" : "en"}" data-pp-lang="${tc ? "tc" : "en"}">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>${esc(title)}</title>
 <meta name="description" content="${esc(desc)}">
-<link rel="canonical" href="${url}">
+<link rel="canonical" href="${url}">${MODE ? `
+<link rel="alternate" hreflang="en" href="${SITE}${pageUrl(slug, "en")}">
+<link rel="alternate" hreflang="zh-Hant" href="${SITE}${pageUrl(slug, "tc")}">
+<link rel="alternate" hreflang="x-default" href="${SITE}${pageUrl(slug, "en")}">` : ""}
 <link rel="icon" href="/favicon.ico" sizes="48x48">
 <link rel="icon" type="image/png" href="/favicon-48x48.png" sizes="48x48">
 <link rel="icon" type="image/png" href="/favicon-192x192.png" sizes="192x192">
 <link rel="apple-touch-icon" href="/apple-touch-icon.png">
 <meta property="og:type" content="product">
-<meta property="og:title" content="${esc(p.name_en)}">
+<meta property="og:title" content="${esc(name)}">${tc ? `
+<meta property="og:locale" content="zh_HK">` : ""}
 <meta property="og:description" content="${esc(desc)}">
 <meta property="og:url" content="${url}">
 ${imgUrl ? `<meta property="og:image" content="${imgUrl}">` : ""}
 <meta property="og:site_name" content="Clinicon Medical Ltd.">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:title" content="${esc(p.name_en)}">
+<meta name="twitter:title" content="${esc(name)}">
 <meta name="twitter:description" content="${esc(desc)}">
 ${imgUrl ? `<meta name="twitter:image" content="${imgUrl}">` : ""}
 ${FONTS}
@@ -421,23 +455,23 @@ ${FONTS}
 ${header()}
 <main class="pp-main wrap">
   <nav class="pp-crumb" aria-label="Breadcrumb">
-    <a href="/">${bi("Home", "主頁")}</a> <span>/</span>
-    <a href="/#products">${esc(p.category || "Products")}</a> <span>/</span>
+    <a href="${tc ? "/zh" : "/"}">${bi("Home", "主頁")}</a> <span>/</span>
+    <a href="${tc ? "/zh" : "/"}#products">${esc(tc ? (CATEGORY_TC[p.category] || p.category || "產品") : (p.category || "Products"))}</a> <span>/</span>
     <span aria-current="page">${bi(esc(p.name_en), esc(p.name_tc))}</span>
   </nav>
 
   <div class="pp-grid">
     <div class="pp-figure">${figure}</div>
     <div class="pp-info">
-      ${p.category ? `<div class="pp-eyebrow">${esc(p.category)}</div>` : ""}
+      ${p.category ? `<div class="pp-eyebrow">${esc(tc ? (CATEGORY_TC[p.category] || p.category) : p.category)}</div>` : ""}
       <h1 class="pp-name">${bi(esc(p.name_en), esc(p.name_tc))}</h1>
       <div class="pp-price">${bi(pr.en, pr.tc)}</div>
       ${variants}
       <div class="pp-cta">
         ${addSolo}
-        <a class="pp-wa pp-en" href="${waEn}" target="_blank" rel="noopener">${WA_SVG} Enquire via WhatsApp</a>
-        <a class="pp-wa pp-tc" href="${waTc}" target="_blank" rel="noopener">${WA_SVG} 透過 WhatsApp 查詢</a>
-        <a class="pp-back" href="/#products">${bi("← All products", "← 所有產品")}</a>
+        ${MODE === "tc" ? "" : `<a class="pp-wa${MODE ? "" : " pp-en"}" href="${waEn}" target="_blank" rel="noopener">${WA_SVG} Enquire via WhatsApp</a>`}
+        ${MODE === "en" ? "" : `<a class="pp-wa${MODE ? "" : " pp-tc"}" href="${waTc}" target="_blank" rel="noopener">${WA_SVG} 透過 WhatsApp 查詢</a>`}
+        <a class="pp-back" href="${tc ? "/zh" : "/"}#products">${bi("← All products", "← 所有產品")}</a>
       </div>
     </div>
   </div>
@@ -449,19 +483,24 @@ ${header()}
   ${relatedBlock(i)}
 
   <p class="pp-enquiry-note">
-    <span class="pp-en">To order or ask a question, message us on WhatsApp at <a href="${WA}" target="_blank" rel="noopener">9320 9650</a> or email <a href="mailto:info@clinicon.com.hk">info@clinicon.com.hk</a>.</span>
-    <span class="pp-tc">如需下單或查詢，請透過 WhatsApp <a href="${WA}" target="_blank" rel="noopener">9320 9650</a> 與我們聯絡，或電郵至 <a href="mailto:info@clinicon.com.hk">info@clinicon.com.hk</a>。</span>
+    ${MODE ? dual(`To order or ask a question, message us on WhatsApp at <a href="${WA}" target="_blank" rel="noopener">9320 9650</a> or email <a href="mailto:info@clinicon.com.hk">info@clinicon.com.hk</a>.`,
+           `如需下單或查詢，請透過 WhatsApp <a href="${WA}" target="_blank" rel="noopener">9320 9650</a> 與我們聯絡，或電郵至 <a href="mailto:info@clinicon.com.hk">info@clinicon.com.hk</a>。`)
+    : `<span class="pp-en">To order or ask a question, message us on WhatsApp at <a href="${WA}" target="_blank" rel="noopener">9320 9650</a> or email <a href="mailto:info@clinicon.com.hk">info@clinicon.com.hk</a>.</span>
+    <span class="pp-tc">如需下單或查詢，請透過 WhatsApp <a href="${WA}" target="_blank" rel="noopener">9320 9650</a> 與我們聯絡，或電郵至 <a href="mailto:info@clinicon.com.hk">info@clinicon.com.hk</a>。</span>`}
   </p>
 </main>
 
 <div class="pp-toast" id="ppToast" role="status" aria-live="polite">
-  <span class="pp-en">Added to cart ✓</span><span class="pp-tc">已加入購物車 ✓</span>
-  <a class="pp-toast-link" href="/?cart=open"><span class="pp-en">View cart</span><span class="pp-tc">查看購物車</span></a>
+  ${dual("Added to cart ✓", "已加入購物車 ✓")}
+  <a class="pp-toast-link" href="${tc ? "/zh?cart=open" : "/?cart=open"}">${dual("View cart", "查看購物車")}</a>
 </div>
 <script>window.PP={pi:${i},name_en:${JSON.stringify(p.name_en)},name_tc:${JSON.stringify(p.name_tc || "")},price:${Number(p.price) || 0},na:${pr.na ? "true" : "false"},variants:${JSON.stringify(p.variants || [])}};</script>
 ${footer()}
 <script>
-(function(){
+${MODE ? `(function(){
+  var bg=document.getElementById("burger"),m=document.getElementById("menu");
+  if(bg&&m)bg.addEventListener("click",function(){m.classList.toggle("open")});
+})();` : `(function(){
   var K="clinicon-lang";
   function set(l){document.documentElement.setAttribute("data-pp-lang",l);
     document.documentElement.setAttribute("lang",l==="tc"?"zh-Hant":"en");
@@ -472,7 +511,7 @@ ${footer()}
   document.querySelectorAll(".langtog button").forEach(function(b){b.addEventListener("click",function(){set(b.getAttribute("data-pp-lang"))})});
   var bg=document.getElementById("burger"),m=document.getElementById("menu");
   if(bg&&m)bg.addEventListener("click",function(){m.classList.toggle("open")});
-})();
+})();`}
 (function(){
   var P=window.PP; if(!P) return;
   var toast=document.getElementById("ppToast");
@@ -500,18 +539,30 @@ ${footer()}
 
 /* ---- write everything ---- */
 let count = 0;
+let zhCount = 0;
 products.forEach((p, i) => {
-  const dir = path.join(OUT, "products", slugs[i]);
-  fs.mkdirSync(dir, { recursive: true });
-  fs.writeFileSync(path.join(dir, "index.html"), page(p, slugs[i], i));
+  const write = (base, html) => {
+    const dir = path.join(OUT, base, slugs[i]);
+    fs.mkdirSync(dir, { recursive: true });
+    fs.writeFileSync(path.join(dir, "index.html"), html);
+  };
+  if (isZhPage(p)) {
+    // single-language twins: English at /products/<slug>, Chinese at /zh/products/<slug>
+    write("products", page(p, slugs[i], i, "en"));
+    write(path.join("zh", "products"), page(p, slugs[i], i, "tc"));
+    zhCount++;
+  } else {
+    write("products", page(p, slugs[i], i));
+  }
   count++;
 });
+MODE = null;
 
 const today = new Date().toISOString().slice(0, 10);
 
-/* Homepage is bilingual (/ and /zh), so it carries hreflang. Product pages are
-   English-only URLs today, so they must NOT claim a zh-Hant alternate. If you
-   ever add /zh/products/<slug>, extend this to emit the pair. */
+/* Homepage is bilingual (/ and /zh), so it carries hreflang. Regular product pages
+   are bilingual single URLs, so they carry no zh-Hant alternate. Products flagged
+   `zh_page` have a separate /zh/products/<slug> twin, so they list both. */
 const HOME_ALT =
   `<xhtml:link rel="alternate" hreflang="en" href="${SITE}/"/>` +
   `<xhtml:link rel="alternate" hreflang="zh-Hant" href="${SITE}/zh"/>` +
@@ -522,7 +573,16 @@ const entries = [
   `  <url><loc>${SITE}/zh</loc><lastmod>${today}</lastmod>${HOME_ALT}</url>`,
   `  <url><loc>${SITE}/faq</loc><lastmod>${today}</lastmod></url>`,
   `  <url><loc>${SITE}/terms-and-conditions</loc><lastmod>${today}</lastmod></url>`,
-  ...slugs.map(s => `  <url><loc>${SITE}/products/${s}</loc><lastmod>${today}</lastmod></url>`)
+  ...slugs.flatMap((s, i) => {
+    if (!isZhPage(products[i])) return [`  <url><loc>${SITE}/products/${s}</loc><lastmod>${today}</lastmod></url>`];
+    const alt = `<xhtml:link rel="alternate" hreflang="en" href="${SITE}/products/${s}"/>` +
+      `<xhtml:link rel="alternate" hreflang="zh-Hant" href="${SITE}/zh/products/${s}"/>` +
+      `<xhtml:link rel="alternate" hreflang="x-default" href="${SITE}/products/${s}"/>`;
+    return [
+      `  <url><loc>${SITE}/products/${s}</loc><lastmod>${today}</lastmod>${alt}</url>`,
+      `  <url><loc>${SITE}/zh/products/${s}</loc><lastmod>${today}</lastmod>${alt}</url>`
+    ];
+  })
 ];
 
 fs.writeFileSync(path.join(OUT, "sitemap.xml"),
@@ -534,4 +594,4 @@ ${entries.join("\n")}
 fs.writeFileSync(path.join(OUT, "slug-map.json"),
   JSON.stringify(products.map((p, i) => ({ name: p.name_en, slug: slugs[i], url: `/products/${slugs[i]}` })), null, 1));
 
-console.log(`Generated ${count} bilingual product pages + sitemap.xml (${entries.length} urls).`);
+console.log(`Generated ${count} product pages (${zhCount} with a separate /zh/products twin) + sitemap.xml (${entries.length} urls).`);
