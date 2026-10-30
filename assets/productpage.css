@@ -114,3 +114,9 @@ html[data-pp-lang="tc"] .pp-en{display:none;}
 .br-empty{max-width:62ch;color:var(--ink-soft);}
 .br-empty a{color:var(--teal-dark);font-weight:600;}
 @media(max-width:760px){.br-hero{grid-template-columns:1fr;gap:22px;}.br-logo{max-width:260px;}}
+
+/* Brand link on product pages */
+.pp-brandline{margin:-4px 0 14px;font-size:.95rem;color:var(--ink-soft);}
+.pp-brandline a{color:var(--teal-dark);font-weight:600;}
+.pp-brandline a:hover{text-decoration:underline;}
+.pp-spectable td a{color:var(--teal-dark);font-weight:600;}

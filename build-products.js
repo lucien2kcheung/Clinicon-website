@@ -218,9 +218,18 @@ function relatedBlock(i) {
   </section>`;
 }
 
+/* Link from a product to its brand page (brands/brandProducts are built further down,
+   before any page is written). Returns null for products with no real brand. */
+function brandLinkFor(p) {
+  if (!p.brand || p.brand === "Other") return null;
+  const b = brands.find(x => x.name === p.brand);
+  return b ? { href: "/brands/" + b.slug, name: b.name, count: brandProducts(b).length } : null;
+}
+
 function page(p, slug, i, mode) {
   MODE = mode || null;
   PAGE_SLUG = slug;
+  const bl = brandLinkFor(p);
   const tc = MODE === "tc";
   const name = tc ? (p.name_tc || p.name_en) : p.name_en;
   const url = `${SITE}${pageUrl(slug, MODE)}`;
@@ -376,7 +385,7 @@ function page(p, slug, i, mode) {
      table to extract and buyers a scannable summary. Rows with no data are
      omitted rather than rendered empty. */
   const detailRows = [
-    [bi("Brand", "品牌"), p.brand && p.brand !== "Other" ? esc(p.brand) : ""],
+    [bi("Brand", "品牌"), bl ? `<a href="${bl.href}">${esc(p.brand)}</a>` : (p.brand && p.brand !== "Other" ? esc(p.brand) : "")],
     [bi("Category", "類別"), p.category ? esc(tc ? (CATEGORY_TC[p.category] || p.category) : p.category) : ""],
     [bi("Product code", "產品編號"), p.stock_id ? esc(p.stock_id) : ""],
     [bi("Pack options", "包裝選項"), packOptions ? esc(packOptions) : ""],
@@ -464,7 +473,8 @@ ${header()}
     <div class="pp-figure">${figure}</div>
     <div class="pp-info">
       ${p.category ? `<div class="pp-eyebrow">${esc(tc ? (CATEGORY_TC[p.category] || p.category) : p.category)}</div>` : ""}
-      <h1 class="pp-name">${bi(esc(p.name_en), esc(p.name_tc))}</h1>
+      <h1 class="pp-name">${bi(esc(p.name_en), esc(p.name_tc))}</h1>${bl ? `
+      <div class="pp-brandline">${bi("Brand", "品牌")}: <a href="${bl.href}">${esc(bl.name)}</a>${bl.count > 1 ? ` · <a href="${bl.href}">${bi(`See all ${bl.count} ${esc(bl.name)} products`, `查看全部 ${bl.count} 款 ${esc(bl.name)} 產品`)} →</a>` : ""}</div>` : ""}
       <div class="pp-price">${bi(pr.en, pr.tc)}</div>
       ${variants}
       <div class="pp-cta">
