@@ -218,9 +218,18 @@ function relatedBlock(i) {
   </section>`;
 }
 
+/* Link from a product to its brand page (brands/brandProducts are built further down,
+   before any page is written). Returns null for products with no real brand. */
+function brandLinkFor(p) {
+  if (!p.brand || p.brand === "Other") return null;
+  const b = brands.find(x => x.name === p.brand);
+  return b ? { href: "/brands/" + b.slug, name: b.name, count: brandProducts(b).length } : null;
+}
+
 function page(p, slug, i, mode) {
   MODE = mode || null;
   PAGE_SLUG = slug;
+  const bl = brandLinkFor(p);
   const tc = MODE === "tc";
   const name = tc ? (p.name_tc || p.name_en) : p.name_en;
   const url = `${SITE}${pageUrl(slug, MODE)}`;
@@ -376,7 +385,7 @@ function page(p, slug, i, mode) {
      table to extract and buyers a scannable summary. Rows with no data are
      omitted rather than rendered empty. */
   const detailRows = [
-    [bi("Brand", "品牌"), p.brand && p.brand !== "Other" ? esc(p.brand) : ""],
+    [bi("Brand", "品牌"), bl ? `<a href="${bl.href}">${esc(p.brand)}</a>` : (p.brand && p.brand !== "Other" ? esc(p.brand) : "")],
     [bi("Category", "類別"), p.category ? esc(tc ? (CATEGORY_TC[p.category] || p.category) : p.category) : ""],
     [bi("Product code", "產品編號"), p.stock_id ? esc(p.stock_id) : ""],
     [bi("Pack options", "包裝選項"), packOptions ? esc(packOptions) : ""],
@@ -464,7 +473,8 @@ ${header()}
     <div class="pp-figure">${figure}</div>
     <div class="pp-info">
       ${p.category ? `<div class="pp-eyebrow">${esc(tc ? (CATEGORY_TC[p.category] || p.category) : p.category)}</div>` : ""}
-      <h1 class="pp-name">${bi(esc(p.name_en), esc(p.name_tc))}</h1>
+      <h1 class="pp-name">${bi(esc(p.name_en), esc(p.name_tc))}</h1>${bl ? `
+      <div class="pp-brandline">${bi("Brand", "品牌")}: <a href="${bl.href}">${esc(bl.name)}</a>${bl.count > 1 ? ` · <a href="${bl.href}">${bi(`See all ${bl.count} ${esc(bl.name)} products`, `查看全部 ${bl.count} 款 ${esc(bl.name)} 產品`)} →</a>` : ""}</div>` : ""}
       <div class="pp-price">${bi(pr.en, pr.tc)}</div>
       ${variants}
       <div class="pp-cta">
@@ -537,6 +547,189 @@ ${MODE ? `(function(){
 </html>`;
 }
 
+
+/* =====================================================================
+   Brand pages  ->  /brands/<slug>
+   Data lives in brands.json (website, logo, description). Every brand tagged on a
+   product also gets a page, with no description if brands.json has none.
+   A product is listed on a brand's page when its `brand` matches OR the brand is in
+   its `tags` (this is how 3M and Solventum share one product list).
+   ===================================================================== */
+const brandData = JSON.parse(fs.readFileSync(path.join(__dirname, "brands.json"), "utf8"));
+function brandSlug(n) {
+  return String(n).normalize("NFKD").replace(/[̀-ͯ]/g, "").toLowerCase()
+    .replace(/[^a-z0-9]+/g, "-").replace(/^-+|-+$/g, "") || "brand";
+}
+const brands = brandData.map(b => Object.assign({}, b));
+/* No logo set in brands.json? Use images/brands/<slug>.<ext> if someone has uploaded one. */
+const findLogo = slug => { for (const ext of ["png", "jpg", "jpeg", "svg", "webp"])
+  if (fs.existsSync(path.join(__dirname, "images", "brands", slug + "." + ext))) return `/images/brands/${slug}.${ext}`;
+  return null; };
+{
+  const known = new Set(brands.map(b => b.name));
+  products.forEach(p => {
+    const b = p.brand;
+    if (b && b !== "Other" && !known.has(b)) {
+      known.add(b);
+      brands.push({ name: b, slug: brandSlug(b), tile: false, logo: null, website: null, description: [] });
+    }
+  });
+  brands.forEach(b => { if (!b.logo) b.logo = findLogo(b.slug); });
+  const seen = {};
+  brands.forEach(b => {
+    if (seen[b.slug]) { console.error("!! BRAND SLUG COLLISION: " + b.slug); process.exit(1); }
+    seen[b.slug] = 1;
+  });
+}
+const brandProducts = b => products.map((p, i) => i)
+  .filter(i => products[i].brand === b.name || (products[i].tags || []).includes(b.name));
+
+const clip = (t, n) => { t = String(t).replace(/\s+/g, " ").trim(); if (t.length <= n) return t;
+  const c = t.slice(0, n - 1); return c.slice(0, c.lastIndexOf(" ")) + "…"; };
+const siteHost = u => { try { return new URL(u).hostname.replace(/^www\./, ""); } catch (e) { return u; } };
+
+function brandCard(j) {
+  const rp = products[j], rs = slugs[j], pr = priceParts(rp);
+  const fig = rp.image_missing
+    ? `<div class="pp-rel-noimg"></div>`
+    : `<img src="${abs(rp.image)}" alt="${esc(rp.name_en)}" loading="lazy">`;
+  return `<a class="pp-rel-card" href="/products/${rs}">
+      <div class="pp-rel-fig">${fig}</div>
+      <div class="pp-rel-name">${bi(esc(rp.name_en), esc(rp.name_tc))}</div>
+      <div class="pp-rel-price">${bi(pr.en, pr.tc)}</div>
+    </a>`;
+}
+
+function brandPage(b) {
+  MODE = null; PAGE_SLUG = "";
+  const idx = brandProducts(b);
+  const url = `${SITE}/brands/${b.slug}`;
+  const paras = b.description || [];
+  const title = `${b.name} products | Clinicon Medical Ltd.`;
+  const desc = clip(paras[0] || `${b.name} products available from Clinicon Medical Ltd., a trusted Hong Kong medical supplies distributor since 1980.`, 300);
+  const logoUrl = b.logo ? SITE + b.logo : "";
+
+  const ld = {
+    "@context": "https://schema.org",
+    "@graph": [
+      { "@type": "Brand", "@id": url + "#brand", name: b.name, url,
+        logo: logoUrl || undefined, description: paras.length ? paras.join(" ") : undefined,
+        sameAs: b.website ? [b.website] : undefined },
+      { "@type": "BreadcrumbList", "@id": url + "#breadcrumb", itemListElement: [
+        { "@type": "ListItem", position: 1, name: "Home", item: SITE + "/" },
+        { "@type": "ListItem", position: 2, name: "Brands", item: SITE + "/#brands" },
+        { "@type": "ListItem", position: 3, name: b.name } ] },
+      { "@type": "CollectionPage", "@id": url + "#webpage", url, name: title, inLanguage: "en-HK",
+        isPartOf: { "@id": SITE + "/#website" }, about: { "@id": url + "#brand" },
+        breadcrumb: { "@id": url + "#breadcrumb" },
+        mainEntity: { "@type": "ItemList", numberOfItems: idx.length,
+          itemListElement: idx.map((j, k) => ({ "@type": "ListItem", position: k + 1, url: `${SITE}/products/${slugs[j]}` })) } }
+    ]
+  };
+
+  const logoBlock = b.logo ? `<div class="br-logo"><img src="${b.logo}" alt="${esc(b.name)} logo"></div>` : "";
+  const siteLink = b.website
+    ? `<a class="br-site" href="${esc(b.website)}" target="_blank" rel="noopener">${bi("Official website", "官方網站")}: ${esc(siteHost(b.website))} ↗</a>` : "";
+  const aka = b.now_known_as
+    ? `<a class="br-aka" href="/brands/${b.now_known_as.slug}">${bi("Now known as " + esc(b.now_known_as.name), "現稱 " + esc(b.now_known_as.name))} →</a>` : "";
+  const idBlock = (logoBlock || siteLink || aka) ? `<div class="br-id">${logoBlock}${siteLink}${aka}</div>` : "";
+
+  const productsBlock = idx.length
+    ? `<section class="pp-related br-products">
+    <h2>${bi(`Products we supply (${idx.length})`, `我們供應的產品（${idx.length}）`)}</h2>
+    <div class="pp-rel-grid">${idx.map(brandCard).join("")}</div>
+  </section>`
+    : `<section class="pp-related br-products">
+    <h2>${bi("Products we supply", "我們供應的產品")}</h2>
+    <p class="br-empty">${bi(
+      `We don't have any ${esc(b.name)} products listed online right now. To enquire, message us on <a href="${WA}" target="_blank" rel="noopener">WhatsApp 9320 9650</a> or email <a href="mailto:info@clinicon.com.hk">info@clinicon.com.hk</a>.`,
+      `目前網上暫無 ${esc(b.name)} 產品。如需查詢，請透過 <a href="${WA}" target="_blank" rel="noopener">WhatsApp 9320 9650</a> 或電郵 <a href="mailto:info@clinicon.com.hk">info@clinicon.com.hk</a> 與我們聯絡。`)}</p>
+  </section>`;
+
+  return `<!DOCTYPE html>
+<html lang="en" data-pp-lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>${esc(title)}</title>
+<meta name="description" content="${esc(desc)}">
+<link rel="canonical" href="${url}">
+<link rel="icon" href="/favicon.ico" sizes="48x48">
+<link rel="icon" type="image/png" href="/favicon-48x48.png" sizes="48x48">
+<link rel="icon" type="image/png" href="/favicon-192x192.png" sizes="192x192">
+<link rel="apple-touch-icon" href="/apple-touch-icon.png">
+<meta property="og:type" content="website">
+<meta property="og:title" content="${esc(b.name)}">
+<meta property="og:description" content="${esc(desc)}">
+<meta property="og:url" content="${url}">
+${logoUrl ? `<meta property="og:image" content="${logoUrl}">` : ""}
+<meta property="og:site_name" content="Clinicon Medical Ltd.">
+${FONTS}
+<link rel="stylesheet" href="/assets/site.css">
+<link rel="stylesheet" href="/assets/productpage.css">
+<script type="application/ld+json">${JSON.stringify(ld)}</script>
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=AW-18249191886"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'AW-18249191886');
+</script>
+</head>
+<body>
+${header()}
+<main class="pp-main wrap">
+  <nav class="pp-crumb" aria-label="Breadcrumb">
+    <a href="/">${bi("Home", "主頁")}</a> <span>/</span>
+    <a href="/#brands">${bi("Brands", "品牌")}</a> <span>/</span>
+    <span aria-current="page">${esc(b.name)}</span>
+  </nav>
+
+  <section class="br-hero${idBlock ? "" : " br-hero-solo"}">
+    ${idBlock}
+    <div class="br-text">
+      <div class="pp-eyebrow">${bi("Brand", "品牌")}</div>
+      <h1 class="pp-name">${esc(b.name)}</h1>
+      ${paras.map(t => `<p>${esc(t)}</p>`).join("\n      ")}${b.part_of ? `
+      <p class="br-partof">${b.part_of.slug ? esc(b.part_of.text).replace(esc(b.part_of.name), `<a href="/brands/${b.part_of.slug}">${esc(b.part_of.name)}</a>`) : esc(b.part_of.text)}</p>` : ""}
+    </div>
+  </section>
+
+  ${productsBlock}
+
+  <p class="pp-enquiry-note">
+    <span class="pp-en">To order or ask a question, message us on WhatsApp at <a href="${WA}" target="_blank" rel="noopener">9320 9650</a> or email <a href="mailto:info@clinicon.com.hk">info@clinicon.com.hk</a>.</span>
+    <span class="pp-tc">如需下單或查詢，請透過 WhatsApp <a href="${WA}" target="_blank" rel="noopener">9320 9650</a> 與我們聯絡，或電郵至 <a href="mailto:info@clinicon.com.hk">info@clinicon.com.hk</a>。</span>
+  </p>
+</main>
+${footer()}
+<script>
+(function(){
+  var K="clinicon-lang";
+  function set(l){document.documentElement.setAttribute("data-pp-lang",l);
+    document.documentElement.setAttribute("lang",l==="tc"?"zh-Hant":"en");
+    try{localStorage.setItem(K,l)}catch(e){}
+    document.querySelectorAll(".langtog button").forEach(function(b){b.classList.toggle("active",b.getAttribute("data-pp-lang")===l)});}
+  var init="en";try{init=localStorage.getItem(K)||"en"}catch(e){}
+  set(init);
+  document.querySelectorAll(".langtog button").forEach(function(b){b.addEventListener("click",function(){set(b.getAttribute("data-pp-lang"))})});
+  var bg=document.getElementById("burger"),m=document.getElementById("menu");
+  if(bg&&m)bg.addEventListener("click",function(){m.classList.toggle("open")});
+})();
+</script>
+</body>
+</html>`;
+}
+
+/* Homepage brand tiles link to these pages; fail the build if a link would 404. */
+{
+  const slugSet = new Set(brands.map(b => b.slug));
+  const home = fs.readFileSync(path.join(__dirname, "index.html"), "utf8");
+  const bad = [...home.matchAll(/href="\/brands\/([^"]+)"/g)].map(m => m[1]).filter(x => !slugSet.has(x));
+  if (bad.length) { console.error("!! index.html links to brand pages that do not exist: " + bad.join(", ")); process.exit(1); }
+}
+
 /* ---- write everything ---- */
 let count = 0;
 let zhCount = 0;
@@ -555,6 +748,13 @@ products.forEach((p, i) => {
     write("products", page(p, slugs[i], i));
   }
   count++;
+});
+MODE = null;
+
+brands.forEach(b => {
+  const dir = path.join(OUT, "brands", b.slug);
+  fs.mkdirSync(dir, { recursive: true });
+  fs.writeFileSync(path.join(dir, "index.html"), brandPage(b));
 });
 MODE = null;
 
@@ -582,7 +782,8 @@ const entries = [
       `  <url><loc>${SITE}/products/${s}</loc><lastmod>${today}</lastmod>${alt}</url>`,
       `  <url><loc>${SITE}/zh/products/${s}</loc><lastmod>${today}</lastmod>${alt}</url>`
     ];
-  })
+  }),
+  ...brands.map(b => `  <url><loc>${SITE}/brands/${b.slug}</loc><lastmod>${today}</lastmod></url>`)
 ];
 
 fs.writeFileSync(path.join(OUT, "sitemap.xml"),
@@ -594,4 +795,4 @@ ${entries.join("\n")}
 fs.writeFileSync(path.join(OUT, "slug-map.json"),
   JSON.stringify(products.map((p, i) => ({ name: p.name_en, slug: slugs[i], url: `/products/${slugs[i]}` })), null, 1));
 
-console.log(`Generated ${count} product pages (${zhCount} with a separate /zh/products twin) + sitemap.xml (${entries.length} urls).`);
+console.log(`Generated ${brands.length} brand pages, ${count} product pages (${zhCount} with a separate /zh/products twin) + sitemap.xml (${entries.length} urls).`);

@@ -1,0 +1,459 @@
+[
+ {
+  "name": "3M",
+  "slug": "3m",
+  "tile": true,
+  "logo": "/images/brands/3m.png",
+  "website": "https://www.3m.com",
+  "description": [
+   "3M was founded in 1902 in Two Harbors, Minnesota, as the Minnesota Mining and Manufacturing Company. Its first venture was a mining operation that struggled, and its first successful product was sandpaper. Over the following century it grew into a global science company known for adhesives, abrasives, safety equipment, electronics, filtration and consumer products.",
+   "In healthcare, 3M became a familiar name through products such as Tegaderm dressings, Micropore tape and Littmann stethoscopes. In April 2024 3M completed the spin-off of its health care business as a separate company, Solventum, so many of the wound care, tape and infection prevention products we supply are now made by Solventum, although some packaging still carries the 3M name."
+  ],
+  "now_known_as": {
+   "name": "Solventum",
+   "slug": "solventum"
+  }
+ },
+ {
+  "name": "ALP K2",
+  "slug": "alp-k2",
+  "tile": true,
+  "logo": "/images/brands/alp-k2.png",
+  "website": null,
+  "description": []
+ },
+ {
+  "name": "B. Braun",
+  "slug": "b-braun",
+  "tile": true,
+  "logo": "/images/brands/b-braun.png",
+  "website": "https://www.bbraun.com",
+  "description": [
+   "B. Braun traces its origins to 1839, when Julius Wilhelm Braun bought the Rose Pharmacy in Melsungen, Germany. The company registered the B. Braun name in 1867 and is still owned by the Braun family. It built its reputation on surgical sutures and infusion therapy, and its Sterofundin infusion solution, introduced in 1930, was among the first to be produced industrially.",
+   "Today B. Braun supplies around 5,000 healthcare products worldwide, including infusion solutions and pumps (its Infusomat pump dates from 1971), IV access products, and surgical instruments through its Aesculap business."
+  ]
+ },
+ {
+  "name": "Baxter",
+  "slug": "baxter",
+  "tile": true,
+  "logo": "/images/brands/baxter.png",
+  "website": "https://www.baxter.com",
+  "description": [
+   "Baxter was founded in 1931 in the United States as a maker and distributor of intravenous (IV) solutions, and grew into one of the best-known names in medical products. Its Viaflex plastic IV bag, developed from a plastic blood container introduced in 1948, allowed solutions to be given without opening the system to contamination.",
+   "The company is also known for dialysis, including the first commercial kidney dialysis system and continuous ambulatory peritoneal dialysis, and for blood products. In 2021 it acquired Hillrom, bringing brands such as Welch Allyn into the Baxter group."
+  ]
+ },
+ {
+  "name": "Betadine",
+  "slug": "betadine",
+  "tile": true,
+  "logo": "/images/brands/betadine.png",
+  "website": "https://www.mundipharma.com",
+  "description": [
+   "Betadine is a well-known povidone-iodine antiseptic brand. Povidone-iodine, a complex of iodine and the polymer povidone, was first produced in the 1950s, and the Betadine brand was launched internationally in the 1960s.",
+   "Mundipharma describes Betadine as its flagship brand, and it is sold in many countries through regional distributors and licence holders."
+  ],
+  "part_of": {
+   "name": "Mundipharma",
+   "text": "Betadine is now part of the Mundipharma group."
+  }
+ },
+ {
+  "name": "Braun",
+  "slug": "braun",
+  "tile": true,
+  "logo": "/images/brands/braun.png",
+  "website": "https://www.braunhealthcare.com",
+  "description": [
+   "Braun ThermoScan is a range of infrared ear thermometers that measure the heat given off by the eardrum and surrounding tissue. The thermometers carry the Braun name under licence and are designed in Germany. They are sold by Kaz, which has been part of Helen of Troy since 2010.",
+   "Replacement probe covers (hygiene caps) are available for each model. Braun ThermoScan is a separate brand from B. Braun, the German infusion and surgical products group."
+  ]
+ },
+ {
+  "name": "Cardinal Detecto",
+  "slug": "cardinal-detecto",
+  "tile": true,
+  "logo": "/images/brands/cardinal-detecto.png",
+  "website": "https://www.detecto.com",
+  "description": [
+   "Detecto is one of the oldest scale makers in the United States, founded in New York in 1900. Cardinal Scale Manufacturing was founded in 1950 in Webb City, Missouri, and acquired Detecto in 1981; the two brands now operate together as Cardinal/Detecto.",
+   "The privately held, family-owned company is based in Webb City, Missouri, and makes medical, clinical and commercial scales."
+  ]
+ },
+ {
+  "name": "CCD International",
+  "slug": "ccd-international",
+  "tile": true,
+  "logo": "/images/brands/ccd-international.png",
+  "website": null,
+  "description": []
+ },
+ {
+  "name": "Covidien",
+  "slug": "covidien",
+  "tile": true,
+  "logo": "/images/brands/covidien.jpeg",
+  "website": "https://www.medtronic.com",
+  "description": [
+   "Covidien traces its roots to the Kendall Company, a Massachusetts textile business founded in 1903 that grew into a medical products maker. Tyco International bought Kendall in 1994 to enter healthcare, and spun the healthcare division off as the independent company Covidien in 2007.",
+   "Medtronic agreed to acquire Covidien in 2014 in a deal valued at about US$42.9 billion, completed in early 2015."
+  ],
+  "part_of": {
+   "name": "Medtronic",
+   "text": "Covidien is now part of the Medtronic group."
+  }
+ },
+ {
+  "name": "Daiwha",
+  "slug": "daiwha",
+  "tile": true,
+  "logo": "/images/brands/daiwha.png",
+  "website": null,
+  "description": [
+   "Daiwha Corp. is a South Korean medical device company based in Seoul, founded in 1979. It imports and distributes foreign medical equipment and manufactures electrosurgical units and infusion pumps, which it exports to around 60 countries."
+  ]
+ },
+ {
+  "name": "EOS",
+  "slug": "eos",
+  "tile": true,
+  "logo": "/images/brands/eos.jpeg",
+  "website": null,
+  "description": []
+ },
+ {
+  "name": "Ethicon",
+  "slug": "ethicon",
+  "tile": true,
+  "logo": "/images/brands/ethicon.jpeg",
+  "website": "https://www.jnjmedtech.com",
+  "description": [
+   "Ethicon's story starts with Johnson & Johnson, which in 1887 produced the world's first mass-produced sterile surgical sutures. J&J later bought a Scottish suture maker and formed Ethicon as a separate company in the late 1940s. In 1956 Ethicon became the first to sterilise its sutures by radiation.",
+   "Ethicon is best known for sutures such as Ethilon nylon, Vicryl and Monocryl, as well as wound closure, stapling, energy and haemostasis products."
+  ],
+  "part_of": {
+   "name": "Johnson & Johnson MedTech",
+   "slug": "johnson-johnson",
+   "text": "Ethicon is now part of Johnson & Johnson MedTech, the medical technology group of Johnson & Johnson."
+  }
+ },
+ {
+  "name": "Heine",
+  "slug": "heine",
+  "tile": true,
+  "logo": "/images/brands/heine.png",
+  "website": "https://www.heine.com",
+  "description": [
+   "HEINE Optotechnik was founded in 1946 in Herrsching, Germany, by the physicist Helmut A. Heine. Its first products were a handheld otoscope and a direct ophthalmoscope. It remains a family-owned company, now run by the third generation, and moved to new headquarters in Gilching, near Munich, in 2020.",
+   "HEINE is known for high-quality diagnostic instruments, including otoscopes, ophthalmoscopes and dermatoscopes, and still makes more than 80% of the individual parts of its instruments in-house."
+  ]
+ },
+ {
+  "name": "InBody",
+  "slug": "inbody",
+  "tile": true,
+  "logo": "/images/brands/inbody.png",
+  "website": "https://inbody.com",
+  "description": [
+   "InBody was founded in 1996 in Seoul, South Korea, as Biospace Co., Ltd. by Dr. Ki-Chul Cha, who had previously held a postdoctoral fellowship at Harvard Medical School. The company took the InBody name in 2014 and is listed on the KOSDAQ stock market.",
+   "InBody is best known for body composition analysers, which measure muscle, fat and water in the body, and has branches and distributors in more than 80 countries."
+  ]
+ },
+ {
+  "name": "Johnson & Johnson",
+  "slug": "johnson-johnson",
+  "tile": true,
+  "logo": "/images/brands/johnson-and-johnson.png",
+  "website": "https://www.jnj.com",
+  "description": [
+   "Johnson & Johnson was founded in 1886 in New Brunswick, New Jersey, by the brothers Robert Wood Johnson, James Wood Johnson and Edward Mead Johnson, starting with ready-to-use sterile surgical dressings. It launched Johnson's Baby Powder in 1894 and became a public company in 1944.",
+   "Today it focuses on pharmaceuticals and medical devices; its consumer health business was separated as Kenvue in 2023. Its surgical products are sold under the Ethicon brand, which has its own page on this site."
+  ]
+ },
+ {
+  "name": "Kenz",
+  "slug": "kenz",
+  "tile": true,
+  "logo": "/images/brands/kenz.png",
+  "website": null,
+  "description": [
+   "Kenz is a cardiology brand of Suzuken, a Japanese company headquartered in Nagoya. According to distributors, the brand has been on the market since the mid-1970s and is sold in more than 50 countries.",
+   "It is best known for electrocardiographs (ECG machines) and ECG accessories, and its products are made at Suzuken's plant in Shenzhen, China."
+  ]
+ },
+ {
+  "name": "Köffmann",
+  "slug": "koffmann",
+  "tile": true,
+  "logo": "/images/brands/koffmann.png",
+  "website": null,
+  "description": []
+ },
+ {
+  "name": "Littmann",
+  "slug": "littmann",
+  "tile": true,
+  "logo": "/images/brands/littmann.png",
+  "website": "https://www.littmann.com",
+  "description": [
+   "Littmann stethoscopes are named after Dr. David Littmann (1906-1981), a Harvard Medical School cardiologist who developed a stethoscope with improved acoustic performance in the early 1960s and founded Cardiosonics, Inc. to sell it. 3M acquired the business in 1967.",
+   "The brand introduced its Cardiology stethoscope in 1979 and patented Tunable Technology in 1984, and Littmann remains a leading name in stethoscopes."
+  ]
+ },
+ {
+  "name": "Medline",
+  "slug": "medline",
+  "tile": true,
+  "logo": "/images/brands/medline.png",
+  "website": "https://www.medline.com",
+  "description": [
+   "Medline was founded in 1966 by the brothers Jim and Jon Mills in the Chicago area, starting as a small family-run manufacturer of healthcare apparel.",
+   "It has since grown into one of the largest manufacturers and distributors of medical supplies in the United States, serving hospitals, clinics and healthcare providers."
+  ]
+ },
+ {
+  "name": "Miltex",
+  "slug": "miltex",
+  "tile": true,
+  "logo": "/images/brands/miltex.png",
+  "website": "https://www.integralife.com",
+  "description": [
+   "Miltex is a long-established name in surgical instruments, with roots going back more than a century. The business was acquired by Integra LifeSciences in 2006 and has traded as Integra Miltex since around 2010.",
+   "It is known for hand-held surgical instruments, including scissors, forceps, needle holders and retractors."
+  ]
+ },
+ {
+  "name": "MIR",
+  "slug": "mir",
+  "tile": true,
+  "logo": "/images/brands/mir.png",
+  "website": "https://www.spirometry.com",
+  "description": [
+   "MIR (Medical International Research) was founded in Rome, Italy, in 1993. The company designs portable spirometers, pulse oximeters and related telemedicine software for assessing lung function.",
+   "Its products are sold in around 100 countries, with direct branches in North America, France and Brazil."
+  ]
+ },
+ {
+  "name": "Omron",
+  "slug": "omron",
+  "tile": true,
+  "logo": "/images/brands/omron.jpeg",
+  "website": "https://www.omron-healthcare.com",
+  "description": [
+   "Omron began in 1933 in Kyoto, Japan, when Kazuma Tateisi founded the company that later became Omron Corporation. The name comes from Omuro, the Kyoto district where it started.",
+   "Omron Healthcare launched its first blood pressure monitor in 1973, introduced the world's first wrist blood pressure monitor in 1985, and has sold more than 200 million blood pressure monitors worldwide."
+  ]
+ },
+ {
+  "name": "Purell",
+  "slug": "purell",
+  "tile": true,
+  "logo": "/images/brands/purell.png",
+  "website": "https://www.purell.com",
+  "description": [
+   "Purell is the hand sanitiser brand of GOJO Industries, a family company founded in 1946 in Akron, Ohio, by Jerry and Goldie Lippman. GOJO introduced Purell Instant Hand Sanitizer in 1988.",
+   "Rights to the consumer version passed through Pfizer and Johnson & Johnson before GOJO bought the brand back in 2010."
+  ]
+ },
+ {
+  "name": "Reda",
+  "slug": "reda",
+  "tile": true,
+  "logo": "/images/brands/reda.png",
+  "website": "https://www.reda-instrumente.de",
+  "description": [
+   "REDA Instrumente GmbH was founded in September 1990 in Tuttlingen, Germany, a town long associated with surgical instrument making, starting with three employees.",
+   "The company makes surgical instruments for general, neuro, vascular, heart and thorax surgery, gynaecology and ENT, and has been certified to ISO 13485 since 1997."
+  ]
+ },
+ {
+  "name": "Riester",
+  "slug": "riester",
+  "tile": true,
+  "logo": "/images/brands/riester.png",
+  "website": "https://riester.de",
+  "description": [
+   "Rudolf Riester GmbH was founded in 1948 in Jungingen, Germany. Its first product was a mercury blood pressure device, and its first export order came from Egypt in 1949. Stethoscopes, aneroid blood pressure devices and ENT and ophthalmic diagnostic instruments followed in the 1950s.",
+   "Riester became part of the UK group Halma plc in 2007 and today sells to more than 150 countries."
+  ]
+ },
+ {
+  "name": "Scimitar",
+  "slug": "scimitar",
+  "tile": true,
+  "logo": "/images/brands/scimitar.jpeg",
+  "website": null,
+  "description": []
+ },
+ {
+  "name": "Sigma",
+  "slug": "sigma",
+  "tile": true,
+  "logo": "/images/brands/sigma.png",
+  "website": null,
+  "description": []
+ },
+ {
+  "name": "Smith & Nephew",
+  "slug": "smith-nephew",
+  "tile": true,
+  "logo": "/images/brands/smith-nephew.png",
+  "website": "https://www.smith-nephew.com",
+  "description": [
+   "Smith & Nephew traces its history to 1856, when the pharmacist Thomas James Smith opened a small shop in Hull, England, initially specialising in cod liver oil. In 1896 his nephew Horatio Smith joined him, forming T.J. Smith & Nephew.",
+   "It has grown into a global medical technology company with businesses in wound care, orthopaedics and sports medicine."
+  ]
+ },
+ {
+  "name": "Solventum",
+  "slug": "solventum",
+  "tile": true,
+  "logo": "/images/brands/solventum.png",
+  "website": "https://www.solventum.com",
+  "description": [
+   "Solventum is the health care company created when 3M spun off its health care business, formerly 3M Healthcare, on 1 April 2024. It is listed on the New York Stock Exchange under the symbol SOLV.",
+   "Its largest segment is MedSurg, which covers wound care, IV management and patient monitoring, alongside dental, health information systems, and purification and filtration. Many of the wound care, tape and infection prevention products we supply under the 3M name now belong to Solventum, and newer packaging carries the Solventum name."
+  ]
+ },
+ {
+  "name": "Spirit",
+  "slug": "spirit",
+  "tile": true,
+  "logo": "/images/brands/spirit.png",
+  "website": null,
+  "description": [
+   "Spirit Medical Co., Ltd. is a Taiwanese manufacturer based in New Taipei City. It is known for blood pressure measurement devices, including mercury-free, aneroid and electronic sphygmomanometers, as well as stethoscopes.",
+   "Sources date the Spirit brand to the mid-to-late 1970s, and most of its output is exported."
+  ]
+ },
+ {
+  "name": "Sugico",
+  "slug": "sugico",
+  "tile": true,
+  "logo": "/images/brands/sugico.png",
+  "website": null,
+  "description": []
+ },
+ {
+  "name": "Swann-Morton",
+  "slug": "swann-morton",
+  "tile": true,
+  "logo": "/images/brands/swann-morton.png",
+  "website": "https://www.swann-morton.com",
+  "description": [
+   "Swann-Morton was founded in Sheffield, England, in 1932 by Walter Swann, Alfred Morton and Doris Fairweather, initially to make razor blades. It moved into surgical blades and, after the Bard-Parker patent for two-piece scalpels expired in 1935, expanded into scalpel handles and blades.",
+   "In the 1960s it developed gamma-irradiation sterilisation for its blades, and it still manufactures in Sheffield."
+  ]
+ },
+ {
+  "name": "Takara Belmont",
+  "slug": "takara-belmont",
+  "tile": true,
+  "logo": "/images/brands/takara-belmont.jpeg",
+  "website": "https://www.takarabelmont.com",
+  "description": [
+   "Takara Belmont was founded in 1921 in Osaka, Japan, as a foundry. After receiving orders for cast parts of barber chairs it began making barber chairs in 1931, and in 1967 it applied that technology to dental and medical equipment.",
+   "The company celebrated its centenary in 2021 and now makes dental chairs and units as well as salon furniture and equipment."
+  ]
+ },
+ {
+  "name": "Tanita",
+  "slug": "tanita",
+  "tile": true,
+  "logo": "/images/brands/tanita.png",
+  "website": "https://tanita.asia/hk",
+  "description": [
+   "Tanita is a Japanese maker of health measurement devices. Most sources date the company to 1944, when it started as a metalworking business, and it began making scales in 1959. It produced Japan's first digital health meter in 1978.",
+   "Tanita is credited with launching the world's first home body-fat scale in the early 1990s, and is best known for body composition monitors."
+  ]
+ },
+ {
+  "name": "Tecno-Gaz",
+  "slug": "tecno-gaz",
+  "tile": true,
+  "logo": "/images/brands/tecno-gaz.jpeg",
+  "website": "https://www.tecnogaz.com",
+  "description": [
+   "Tecno-Gaz is an Italian company founded in 1979 in Sala Baganza, near Parma, that started out making equipment for dental laboratories.",
+   "It later expanded into medical and healthcare products and is now known for sterilisation, including its Europa B range of benchtop class B autoclaves."
+  ]
+ },
+ {
+  "name": "Terumo",
+  "slug": "terumo",
+  "tile": true,
+  "logo": "/images/brands/terumo.png",
+  "website": "https://www.terumo.com",
+  "description": [
+   "Terumo was founded in 1921 in Japan by a group of physicians and scientists led by Kitasato Shibasaburo, to make clinical thermometers at a time when Japan relied on imports from Germany. The company took the Terumo name in 1974.",
+   "It has since grown from thermometers into a global medical technology company known for syringes, needles, IV products and cardiovascular devices."
+  ]
+ },
+ {
+  "name": "TIDI",
+  "slug": "tidi",
+  "tile": true,
+  "logo": "/images/brands/tidi.png",
+  "website": "https://www.tidiproducts.com",
+  "description": [
+   "TIDI Products, LLC is a US company founded in 1969 and based in Neenah, Wisconsin.",
+   "It makes single-use medical products and protective products for healthcare providers, and its brands include Posey, which covers patient safety products."
+  ]
+ },
+ {
+  "name": "Top Glove",
+  "slug": "top-glove",
+  "tile": true,
+  "logo": "/images/brands/top-glove.png",
+  "website": "https://www.topglove.com",
+  "description": [
+   "Top Glove was founded in 1991 in Malaysia by Lim Wee Chai, starting with one factory, three production lines and about a hundred employees. It listed on the Kuala Lumpur stock exchange in 2001.",
+   "It became one of the world's largest makers of gloves, including nitrile, natural rubber and surgical gloves, and its 2018 acquisition of Aspion made it the world's largest surgical glove maker."
+  ]
+ },
+ {
+  "name": "Wallach",
+  "slug": "wallach",
+  "tile": true,
+  "logo": "/images/brands/wallach.png",
+  "website": "https://www.coopersurgical.com",
+  "description": [
+   "Wallach is a women's health and gynaecology brand, now part of CooperSurgical, a medical device company based in Trumbull, Connecticut.",
+   "Its range covers colposcopy, LEEP electrosurgery and cervical cryosurgery equipment, and its products have been used by physicians for more than 30 years."
+  ]
+ },
+ {
+  "name": "Welch Allyn",
+  "slug": "welch-allyn",
+  "tile": true,
+  "logo": "/images/brands/welch-allyn.png",
+  "website": "https://www.welchallyn.com",
+  "description": [
+   "Welch Allyn was founded in 1915 in Auburn, New York, by the physician Dr. Francis Welch and the inventor William Noah Allyn, and moved to Skaneateles Falls, New York, in 1953. It was family-owned until Hillrom acquired it in 2015 for around US$2 billion; Baxter in turn acquired Hillrom in 2021.",
+   "Welch Allyn is best known for diagnostic instruments such as otoscopes, ophthalmoscopes and blood pressure equipment."
+  ]
+ },
+ {
+  "name": "Liebherr",
+  "slug": "liebherr",
+  "tile": false,
+  "logo": null,
+  "website": "https://www.liebherr.com/en-us/refrigerators-freezers/refrigerators-3033407",
+  "description": [
+   "Liebherr was founded in 1949 by Hans Liebherr in Kirchdorf, Germany, and its first product was a mobile tower crane. It moved into refrigeration in the 1950s: the first Liebherr refrigerator was built in 1954 at Ochsenhausen in southern Germany, and series production began a year later.",
+   "Today Liebherr's appliance division also makes laboratory and pharmacy refrigerators, used in hospitals, clinics, pharmacies and research laboratories."
+  ]
+ },
+ {
+  "name": "Medicom",
+  "slug": "medicom",
+  "tile": false,
+  "logo": null,
+  "website": "https://www.medicom-asia.com/",
+  "description": [
+   "Medicom was founded in 1988 in Montreal, Canada, by Ronald Reuben, in response to a shortage of protective equipment during the HIV/AIDS crisis, and began by distributing medical gloves.",
+   "It has grown into a global infection prevention group whose brands include Medicom, Kolmi-Hopen and Ritmed, with subsidiaries including Medicom Asia in Hong Kong. It is known for masks, gloves, gowns and other infection control products."
+  ]
+ }
+]
