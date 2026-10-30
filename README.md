@@ -73,6 +73,14 @@ single-language pages instead, add `"zh_page": true` to its entry in `PRODUCTS`.
 hreflang, and lists both in the sitemap. Such products use `blurb_en` / `blurb_tc`, and optionally
 `specs_en` / `specs_tc` for spec lists.
 
+## Brand pages
+
+`/brands/<slug>` is generated for every brand in `brands.json` plus every other brand tagged on a product
+(those get no description). `brands.json` holds the website, logo and description paragraphs. A product is
+listed on a brand's page when its `brand` matches or the brand appears in its `tags` (that is how 3M and
+Solventum share a list). Drop a logo at `images/brands/<slug>.png` and the page picks it up. Homepage brand tiles
+link to these pages, and the build fails if a tile points at a page that does not exist.
+
 ## Note on styles
 
 `assets/site.css` is a **snapshot** of the `<style>` block in your `index.html`, taken so the
