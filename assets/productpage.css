@@ -120,3 +120,5 @@ html[data-pp-lang="tc"] .pp-en{display:none;}
 .pp-brandline a{color:var(--teal-dark);font-weight:600;}
 .pp-brandline a:hover{text-decoration:underline;}
 .pp-spectable td a{color:var(--teal-dark);font-weight:600;}
+.br-text p.br-partof{font-weight:600;color:var(--ink);border-left:3px solid var(--teal);padding-left:12px;margin-top:6px;}
+.br-partof a{color:var(--teal-dark);}

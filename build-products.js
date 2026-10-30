@@ -691,7 +691,8 @@ ${header()}
     <div class="br-text">
       <div class="pp-eyebrow">${bi("Brand", "品牌")}</div>
       <h1 class="pp-name">${esc(b.name)}</h1>
-      ${paras.map(t => `<p>${esc(t)}</p>`).join("\n      ")}
+      ${paras.map(t => `<p>${esc(t)}</p>`).join("\n      ")}${b.part_of ? `
+      <p class="br-partof">${b.part_of.slug ? esc(b.part_of.text).replace(esc(b.part_of.name), `<a href="/brands/${b.part_of.slug}">${esc(b.part_of.name)}</a>`) : esc(b.part_of.text)}</p>` : ""}
     </div>
   </section>
 

@@ -52,8 +52,12 @@
   "website": "https://www.mundipharma.com",
   "description": [
    "Betadine is a well-known povidone-iodine antiseptic brand. Povidone-iodine, a complex of iodine and the polymer povidone, was first produced in the 1950s, and the Betadine brand was launched internationally in the 1960s.",
-   "In many markets the brand is owned by Mundipharma, which describes Betadine as its flagship brand, and it is sold in many countries through regional distributors and licence holders."
-  ]
+   "Mundipharma describes Betadine as its flagship brand, and it is sold in many countries through regional distributors and licence holders."
+  ],
+  "part_of": {
+   "name": "Mundipharma",
+   "text": "Betadine is now part of the Mundipharma group."
+  }
  },
  {
   "name": "Braun",
@@ -93,8 +97,12 @@
   "website": "https://www.medtronic.com",
   "description": [
    "Covidien traces its roots to the Kendall Company, a Massachusetts textile business founded in 1903 that grew into a medical products maker. Tyco International bought Kendall in 1994 to enter healthcare, and spun the healthcare division off as the independent company Covidien in 2007.",
-   "Medtronic agreed to acquire Covidien in 2014 in a deal valued at about US$42.9 billion, completed in early 2015. Covidien-branded products now form part of Medtronic's range of medical devices and supplies."
-  ]
+   "Medtronic agreed to acquire Covidien in 2014 in a deal valued at about US$42.9 billion, completed in early 2015."
+  ],
+  "part_of": {
+   "name": "Medtronic",
+   "text": "Covidien is now part of the Medtronic group."
+  }
  },
  {
   "name": "Daiwha",
@@ -122,8 +130,13 @@
   "website": "https://www.jnjmedtech.com",
   "description": [
    "Ethicon's story starts with Johnson & Johnson, which in 1887 produced the world's first mass-produced sterile surgical sutures. J&J later bought a Scottish suture maker and formed Ethicon as a separate company in the late 1940s. In 1956 Ethicon became the first to sterilise its sutures by radiation.",
-   "Ethicon is best known for sutures such as Ethilon nylon, Vicryl and Monocryl, as well as wound closure, stapling, energy and haemostasis products. Since September 2024 it has operated as part of Johnson & Johnson MedTech."
-  ]
+   "Ethicon is best known for sutures such as Ethilon nylon, Vicryl and Monocryl, as well as wound closure, stapling, energy and haemostasis products."
+  ],
+  "part_of": {
+   "name": "Johnson & Johnson MedTech",
+   "slug": "johnson-johnson",
+   "text": "Ethicon is now part of Johnson & Johnson MedTech, the medical technology group of Johnson & Johnson."
+  }
  },
  {
   "name": "Heine",
