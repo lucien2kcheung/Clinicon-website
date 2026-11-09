@@ -729,7 +729,8 @@ function brandPage(b) {
   const cats = [...new Set(idx.map(j => products[j].category).filter(Boolean))];
   /* English-only product names for the sentence: drop any Chinese tail, skip names that would be left too short. */
   const sample = idx.map(j => products[j].name_en.replace(/\s*[\u3400-\u9fff].*$/, "").trim())
-    .filter((n, k, a) => n.length >= 8 && a.indexOf(n) === k).slice(0, 3);
+    .filter((n, k, a) => n.replace(new RegExp(b.name.replace(/[.*+?^${}()|[\]\\]/g, "\\$&"), "ig"), "").replace(/[\s\-–—]/g, "").length >= 4
+      && a.indexOf(n) === k).slice(0, 3);
   const listEn = a => a.length > 1 ? a.slice(0, -1).join(", ") + " and " + a[a.length - 1] : (a[0] || "");
   const listTc = a => a.join("、");
   const catsEn = listEn(cats.slice(0, 4)), catsTc = listTc(cats.slice(0, 4).map(c => CATEGORY_TC[c] || c));
