@@ -1861,6 +1861,26 @@
       "permanent": true
     },
     {
+      "source": "/product-page/cotton-wool-ball",
+      "destination": "/products/cotton-wool-ball",
+      "permanent": true
+    },
+    {
+      "source": "/product-page/3m-littmann-stethoscope",
+      "destination": "/products/3m-littmann-stethoscope",
+      "permanent": true
+    },
+    {
+      "source": "/product-page/probe-cover",
+      "destination": "/products/probe-cover",
+      "permanent": true
+    },
+    {
+      "source": "/product-page/sharp-box-7-6l",
+      "destination": "/products/sharps-box-7-6-litre",
+      "permanent": true
+    },
+    {
       "source": "/zh/product-page/:slug*",
       "destination": "/product-page/:slug*",
       "permanent": true
