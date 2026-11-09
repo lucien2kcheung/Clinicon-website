@@ -133,3 +133,9 @@ html[data-pp-lang="tc"] .pp-en{display:none;}
 .hub-list li{break-inside:avoid;padding:5px 0;line-height:1.35;}
 .hub-list a{text-decoration:none;}
 .hub-list a:hover{text-decoration:underline;}
+
+/* Question-led answers (product and brand pages) */
+.pp-qa{margin:34px 0 0;max-width:760px;}
+.pp-qa h2{font-size:1.15rem;margin:0 0 14px;color:var(--ink);}
+.pp-qa h3{font-size:1rem;margin:18px 0 6px;color:var(--ink);}
+.pp-qa p{color:var(--ink-soft);line-height:1.7;margin:0;}

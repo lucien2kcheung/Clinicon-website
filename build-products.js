@@ -242,6 +242,21 @@ function brandLinkFor(p) {
   return b ? { href: "/brands/" + b.slug, name: b.name, count: brandProducts(b).length } : null;
 }
 
+/* Cut text to at most n chars: at a sentence end if one falls after minSent, otherwise at a word boundary + "…". */
+function cutText(t, n, minSent) {
+  t = String(t).replace(/\s+/g, " ").trim();
+  if (t.length <= n) return t;
+  const cut = t.slice(0, n);
+  const sent = Math.max(cut.lastIndexOf(". "), cut.lastIndexOf("。"));
+  if (sent >= minSent) return cut.slice(0, sent + 1);
+  return cut.slice(0, cut.lastIndexOf(" ")).replace(/[,;:\s]+$/, "") + "…";
+}
+/* A real description is a sentence, not a pack size like "50/box" or "1322". */
+const isRealBlurb = t => !!t && String(t).trim().length >= 45 && /[.。]\s*$/.test(String(t).trim());
+const NAME_COUNT = {};
+products.forEach(p => { NAME_COUNT[p.name_en] = (NAME_COUNT[p.name_en] || 0) + 1; });
+const DEFAULT_OG = SITE + "/images/og-clinicon.jpg";
+
 function page(p, slug, i, mode) {
   MODE = mode || null;
   PAGE_SLUG = slug;
@@ -253,24 +268,29 @@ function page(p, slug, i, mode) {
   const isEquipment = EQUIPMENT_CATEGORIES.has(p.category);
   const packOptions = (p.variants && p.variants.length)
     ? p.variants.map(v => stripTags(v[0])).filter(Boolean).join(" · ") : "";
-  const title = tc ? `${name} | 健力醫療器材有限公司` : `${p.name_en} | Clinicon Medical Ltd.`;
+  /* Title: keep the full brand suffix when it fits in ~60 characters, otherwise use the short one.
+     Products that share a name (e.g. the two underpads) get their product code appended. */
+  const dupName = (NAME_COUNT[p.name_en] || 0) > 1 && p.stock_id ? ` (${p.stock_id})` : "";
+  const fullTitleEn = `${p.name_en}${dupName} | Clinicon Medical Ltd.`;
+  const title = tc ? `${name} | 健力醫療器材有限公司`
+    : (fullTitleEn.length <= 60 ? fullTitleEn : `${p.name_en}${dupName} | Clinicon`);
+  /* Some products only have a pack size in blurb_en ("50/box", "1322"). That is a spec, not a description:
+     show it as a "Pack size" row and build the description from name, brand, category and price instead. */
+  const realEn = isRealBlurb(p.blurb_en) ? p.blurb_en : "";
+  const packNote = (!realEn && p.blurb_en) ? String(p.blurb_en).replace(/\s+/g, " ").trim() : "";
   let desc = (tc ? (p.blurb_tc || `${name} — 健力醫療器材有限公司供應，自1980年服務香港醫療界。`)
-    : (p.blurb_en || [
+    : (realEn || [
         p.name_en + (p.category ? " — " + p.category : "") + (bl ? " by " + bl.name : "") + ".",
         pr.na ? "" : pr.en + ".",
         p.stock_id ? "Product code " + p.stock_id + "." : "",
         "Supplied by Clinicon Medical Ltd., a Hong Kong medical supplies distributor since 1980. Order online or via WhatsApp."
       ].filter(Boolean).join(" ")))
     .replace(/\s+/g, " ").trim();
-  /* Keep descriptions <= 300 chars, cutting at a sentence (or word) boundary, never mid-word. */
+  /* Structured-data description: <= 300 chars, cut at a sentence (or word) boundary, never mid-word.
+     Meta / social description: <= 160 chars so search results do not truncate it. */
   const descFull = desc;
-  desc = (() => {
-    if (descFull.length <= 300) return descFull;
-    const cut = descFull.slice(0, 300);
-    const sent = Math.max(cut.lastIndexOf(". "), cut.lastIndexOf("。"));
-    if (sent >= 120) return cut.slice(0, sent + 1);
-    return cut.slice(0, cut.lastIndexOf(" ")).replace(/[,;:\s]+$/, "") + "…";
-  })();
+  desc = cutText(descFull, 300, 120);
+  const metaDesc = cutText(descFull, 160, 80);
   /* Photos: `image` is the main photo; optional `images` (array, main first) adds a gallery. */
   const imgList = p.image_missing ? [] : ((p.images && p.images.length) ? p.images : [p.image]);
   const imgUrl = imgList.length ? SITE + abs(imgList[0]) : "";
@@ -354,6 +374,7 @@ function page(p, slug, i, mode) {
           p.stock_id ? { "@type": "PropertyValue", name: "Product code", value: p.stock_id } : null,
           p.category ? { "@type": "PropertyValue", name: "Category", value: p.category } : null,
           packOptions ? { "@type": "PropertyValue", name: "Pack options", value: packOptions } : null,
+          packNote ? { "@type": "PropertyValue", name: "Specification", value: packNote } : null,
           { "@type": "PropertyValue", name: "Lead time",
             value: isEquipment ? "Varies with stock availability" : "Typically within 1 week" }
         ].filter(Boolean),
@@ -419,6 +440,7 @@ function page(p, slug, i, mode) {
     [bi("Category", "類別"), p.category ? esc(tc ? (CATEGORY_TC[p.category] || p.category) : p.category) : ""],
     [bi("Product code", "產品編號"), p.stock_id ? esc(p.stock_id) : ""],
     [bi("Pack options", "包裝選項"), packOptions ? esc(packOptions) : ""],
+    [bi("Specification", "規格"), packNote ? esc(packNote) : ""],
     [bi("Price", "價格"), pr.num > 0 ? bi(pr.en, pr.tc)
       : bi("On enquiry", "請查詢")],
     [bi("Lead time", "交貨期"), isEquipment
@@ -440,15 +462,36 @@ function page(p, slug, i, mode) {
     ${specs}
   </section>`;
 
+  /* ---- question-led answers, built only from data already on the page ---- */
+  const leadEn = isEquipment ? "varies with stock availability, so please enquire for the current lead time"
+                             : "typically within 1 week";
+  const leadTc = isEquipment ? "視乎存貨供應情況而定，請向我們查詢最新交貨期" : "一般在一星期內";
+  const priceEn = pr.num > 0 ? `Price: ${pr.en}.` : "Price on enquiry.";
+  const priceTc = pr.num > 0 ? `價格：${pr.tc}。` : "價格請向我們查詢。";
+  const brandEn = bl ? ` from ${esc(p.brand)}` : "";
+  const brandTc = bl ? `（${esc(p.brand)}）` : "";
+  const qaBlock = `<section class="pp-qa">
+    <h2>${bi("Quick answers", "常見問題")}</h2>
+    <h3>${bi(`What is the lead time for ${esc(p.name_en)}?`, `${esc(p.name_tc || p.name_en)} 的交貨期是多久？`)}</h3>
+    <p>${bi(`Lead time for this product is ${leadEn}. Delivery is free within Hong Kong on orders over HK$500.`,
+            `此產品的交貨期${leadTc}。香港境內訂單滿 HK$500 免費送貨。`)}</p>
+    <h3>${bi(`Is ${esc(p.name_en)} available in Hong Kong?`, `香港可以買到 ${esc(p.name_tc || p.name_en)} 嗎？`)}</h3>
+    <p>${bi(`Yes. Clinicon Medical Ltd., a Hong Kong medical supplies distributor since 1980, supplies this product${brandEn}. ${priceEn} Order online, or message us on WhatsApp to confirm current stock.`,
+            `可以。自1980年服務香港的健力醫療器材有限公司供應此產品${brandTc}。${priceTc}歡迎網上下單，或透過 WhatsApp 查詢現時存貨。`)}</p>
+    <h3>${bi("What if the goods are defective or incorrect?", "如貨品有損壞或發錯怎麼辦？")}</h3>
+    <p>${bi('Notify us within 7 days of delivery. After verification we will repair, replace or refund the affected goods at no extra cost, as set out in our <a href="/terms-and-conditions">terms and conditions</a>.',
+            '請於收貨後7天內通知我們。經核實後，我們會按<a href="/terms-and-conditions">條款及細則</a>免費維修、更換或退款。')}</p>
+  </section>`;
+
   const descBlock = MODE
-    ? ((tc ? p.blurb_tc : p.blurb_en) ? `<section class="pp-desc">
+    ? ((tc ? p.blurb_tc : realEn) ? `<section class="pp-desc">
     <h2>${bi("Product details", "產品詳情")}</h2>
-    <p lang="${tc ? "zh-Hant-HK" : "en"}">${esc(tc ? p.blurb_tc : p.blurb_en)}</p>
+    <p lang="${tc ? "zh-Hant-HK" : "en"}">${esc(tc ? p.blurb_tc : realEn)}</p>
   </section>` : "")
-    : (p.blurb_en || p.blurb_tc) ? `<section class="pp-desc">
+    : (realEn || p.blurb_tc) ? `<section class="pp-desc">
     <h2>${bi("Product details", "產品詳情")}</h2>
-    ${p.blurb_en ? `<p class="pp-en">${esc(p.blurb_en)}</p>` : ""}
-    <p class="pp-tc" lang="zh-Hant">${esc(p.blurb_tc || p.blurb_en)}</p>
+    ${realEn ? `<p class="pp-en">${esc(realEn)}</p>` : ""}
+    <p class="pp-tc" lang="zh-Hant">${esc(p.blurb_tc || realEn)}</p>
   </section>` : "";
 
   return `<!DOCTYPE html>
@@ -457,7 +500,7 @@ function page(p, slug, i, mode) {
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>${esc(title)}</title>
-<meta name="description" content="${esc(desc)}">
+<meta name="description" content="${esc(metaDesc)}">
 <link rel="canonical" href="${url}">${MODE ? `
 <link rel="alternate" hreflang="en" href="${SITE}${pageUrl(slug, "en")}">
 <link rel="alternate" hreflang="zh-Hant" href="${SITE}${pageUrl(slug, "tc")}">
@@ -469,14 +512,14 @@ function page(p, slug, i, mode) {
 <meta property="og:type" content="product">
 <meta property="og:title" content="${esc(name)}">${tc ? `
 <meta property="og:locale" content="zh_HK">` : ""}
-<meta property="og:description" content="${esc(desc)}">
+<meta property="og:description" content="${esc(metaDesc)}">
 <meta property="og:url" content="${url}">
-${imgUrl ? `<meta property="og:image" content="${imgUrl}">` : ""}
+<meta property="og:image" content="${imgUrl || DEFAULT_OG}">
 <meta property="og:site_name" content="Clinicon Medical Ltd.">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:title" content="${esc(name)}">
-<meta name="twitter:description" content="${esc(desc)}">
-${imgUrl ? `<meta name="twitter:image" content="${imgUrl}">` : ""}
+<meta name="twitter:description" content="${esc(metaDesc)}">
+<meta name="twitter:image" content="${imgUrl || DEFAULT_OG}">
 ${FONTS}
 <link rel="stylesheet" href="/assets/site.css">
 <link rel="stylesheet" href="/assets/productpage.css">
@@ -521,6 +564,8 @@ ${header()}
   ${descBlock}
 
   ${detailsTable}
+
+  ${qaBlock}
 
   ${relatedBlock(i)}
 
@@ -639,6 +684,7 @@ function brandPage(b) {
   const paras = b.description || [];
   const title = `${b.name} products | Clinicon Medical Ltd.`;
   const desc = clip(paras[0] || `${b.name} products available from Clinicon Medical Ltd., a trusted Hong Kong medical supplies distributor since 1980.`, 300);
+  const metaDesc = cutText(desc, 160, 80);
   const logoUrl = b.logo ? SITE + b.logo : "";
 
   const ld = {
@@ -666,6 +712,27 @@ function brandPage(b) {
     ? `<a class="br-aka" href="/brands/${b.now_known_as.slug}">${bi("Now known as " + esc(b.now_known_as.name), "現稱 " + esc(b.now_known_as.name))} →</a>` : "";
   const idBlock = (logoBlock || siteLink || aka) ? `<div class="br-id">${logoBlock}${siteLink}${aka}</div>` : "";
 
+  /* Facts about what we list for this brand, derived from the catalogue (no invented history). */
+  const cats = [...new Set(idx.map(j => products[j].category).filter(Boolean))];
+  /* English-only product names for the sentence: drop any Chinese tail, skip names that would be left too short. */
+  const sample = idx.map(j => products[j].name_en.replace(/\s*[\u3400-\u9fff].*$/, "").trim())
+    .filter((n, k, a) => n.length >= 8 && a.indexOf(n) === k).slice(0, 3);
+  const listEn = a => a.length > 1 ? a.slice(0, -1).join(", ") + " and " + a[a.length - 1] : (a[0] || "");
+  const listTc = a => a.join("、");
+  const catsEn = listEn(cats.slice(0, 4)), catsTc = listTc(cats.slice(0, 4).map(c => CATEGORY_TC[c] || c));
+  const brandQa = `<section class="pp-qa br-qa">
+    <h2>${bi(`${esc(b.name)} at Clinicon`, `${esc(b.name)}：健力供應資訊`)}</h2>
+    <h3>${bi(`Is ${esc(b.name)} available from Clinicon in Hong Kong?`, `香港健力醫療器材有限公司有供應 ${esc(b.name)} 嗎？`)}</h3>
+    <p>${idx.length
+      ? bi(`Yes. Clinicon Medical Ltd. lists ${idx.length} ${esc(b.name)} product${idx.length > 1 ? "s" : ""} for Hong Kong customers${catsEn ? `, in ${esc(catsEn)}` : ""}${sample.length ? `, including ${esc(listEn(sample))}` : ""}. Prices, pack options and lead times are on each product page.`,
+           `有。健力醫療器材有限公司現為香港客戶提供 ${idx.length} 款 ${esc(b.name)} 產品${catsTc ? `，涵蓋${esc(catsTc)}` : ""}。價格、包裝選項及交貨期載於各產品頁。`)
+      : bi(`We don't list any ${esc(b.name)} products online right now. Message us on WhatsApp or email and we will check what we can supply.`,
+           `目前網上未有 ${esc(b.name)} 產品。歡迎透過 WhatsApp 或電郵查詢，我們會為你查看可供應的產品。`)}</p>
+    <h3>${bi(`How do I order ${esc(b.name)} products?`, `如何訂購 ${esc(b.name)} 產品？`)}</h3>
+    <p>${bi(`Add items to the cart on the product pages, or message us on <a href="${WA}" target="_blank" rel="noopener">WhatsApp 9320 9650</a> or email <a href="mailto:info@clinicon.com.hk">info@clinicon.com.hk</a> for a quotation. Delivery within Hong Kong is free on orders over HK$500.`,
+            `可在產品頁加入購物車，或透過 <a href="${WA}" target="_blank" rel="noopener">WhatsApp 9320 9650</a>、電郵 <a href="mailto:info@clinicon.com.hk">info@clinicon.com.hk</a> 索取報價。香港境內訂單滿 HK$500 免費送貨。`)}</p>
+  </section>`;
+
   const productsBlock = idx.length
     ? `<section class="pp-related br-products">
     <h2>${bi(`Products we supply (${idx.length})`, `我們供應的產品（${idx.length}）`)}</h2>
@@ -684,7 +751,7 @@ function brandPage(b) {
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>${esc(title)}</title>
-<meta name="description" content="${esc(desc)}">
+<meta name="description" content="${esc(metaDesc)}">
 <link rel="canonical" href="${url}">
 <link rel="icon" href="/favicon.ico" sizes="48x48">
 <link rel="icon" type="image/png" href="/favicon-48x48.png" sizes="48x48">
@@ -692,10 +759,14 @@ function brandPage(b) {
 <link rel="apple-touch-icon" href="/apple-touch-icon.png">
 <meta property="og:type" content="website">
 <meta property="og:title" content="${esc(b.name)}">
-<meta property="og:description" content="${esc(desc)}">
+<meta property="og:description" content="${esc(metaDesc)}">
 <meta property="og:url" content="${url}">
-${logoUrl ? `<meta property="og:image" content="${logoUrl}">` : ""}
+<meta property="og:image" content="${logoUrl || DEFAULT_OG}">
 <meta property="og:site_name" content="Clinicon Medical Ltd.">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="${esc(b.name)}">
+<meta name="twitter:description" content="${esc(metaDesc)}">
+<meta name="twitter:image" content="${logoUrl || DEFAULT_OG}">
 ${FONTS}
 <link rel="stylesheet" href="/assets/site.css">
 <link rel="stylesheet" href="/assets/productpage.css">
@@ -731,6 +802,8 @@ ${header()}
   </section>
 
   ${productsBlock}
+
+  ${brandQa}
 
   <p class="pp-enquiry-note">
     <span class="pp-en">To order or ask a question, message us on WhatsApp at <a href="${WA}" target="_blank" rel="noopener">9320 9650</a> or email <a href="mailto:info@clinicon.com.hk">info@clinicon.com.hk</a>.</span>
@@ -945,6 +1018,10 @@ const entries = [
   `  <url><loc>${SITE}/</loc>${HOME_ALT}</url>`,
   `  <url><loc>${SITE}/zh</loc>${HOME_ALT}</url>`,
   `  <url><loc>${SITE}/faq</loc></url>`,
+  `  <url><loc>${SITE}/services</loc></url>`,
+  `  <url><loc>${SITE}/how-to-order</loc></url>`,
+  `  <url><loc>${SITE}/clinic-packages</loc></url>`,
+  /* /promotions is deliberately left out: it is a "coming soon" page marked noindex until real offers are published. */
   `  <url><loc>${SITE}/terms-and-conditions</loc></url>`,
   `  <url><loc>${SITE}/products</loc></url>`,
   `  <url><loc>${SITE}/brands</loc></url>`,
