@@ -496,7 +496,9 @@ html[lang^="zh"] .faq summary h3{font-family:'Noto Sans HK',sans-serif;font-weig
   function gtag(){dataLayer.push(arguments);}
   gtag('js', new Date());
   gtag('config', 'AW-18249191886');
+  gtag('config', 'G-P6NNSWFGGZ');
 </script>
+<script src="/assets/track.js" defer></script>
 </head>
 <body>
 
@@ -9636,6 +9638,8 @@ function sendCartWhatsApp(){
   cart.forEach(it=>{ lines.push(`• ${cartItemName(it)} ×${it.qty} = ${it.noprice ? "NA" : fmt(it.price*it.qty)}`); });
   lines.push("");
   lines.push(`${T.cart_wa_total[LANG]}: ${cartTotal()>0 ? fmt(cartTotal()) : "NA"}`);
+  const refTag = window.clRef ? window.clRef().trim() : "";
+  if (refTag) lines.push(refTag);
   const msg = encodeURIComponent(lines.join("\n"));
   window.open(`${WA}?text=${msg}`, "_blank");
 }

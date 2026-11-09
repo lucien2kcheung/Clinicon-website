@@ -458,7 +458,9 @@ ${FONTS}
   function gtag(){dataLayer.push(arguments);}
   gtag('js', new Date());
   gtag('config', 'AW-18249191886');
+  gtag('config', 'G-P6NNSWFGGZ');
 </script>
+<script src="/assets/track.js" defer></script>
 </head>
 <body>
 ${header()}
@@ -675,7 +677,9 @@ ${FONTS}
   function gtag(){dataLayer.push(arguments);}
   gtag('js', new Date());
   gtag('config', 'AW-18249191886');
+  gtag('config', 'G-P6NNSWFGGZ');
 </script>
+<script src="/assets/track.js" defer></script>
 </head>
 <body>
 ${header()}
