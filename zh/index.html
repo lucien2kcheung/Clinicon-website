@@ -5676,7 +5676,7 @@ function renderGrid(){
     if(p.brand && p.brand!=="Other") tags.push(`<span class="tag brand">${p.brand}</span>`);
     if(p.category) tags.push(`<span class="tag cat">${p.category}</span>`);
     return `<article class="card reveal" data-idx="${idx}" style="transition-delay:${(i%6)*40}ms">
-      <a class="cardlink" href="/products/${SLUGS[idx]}" target="_blank" rel="noopener">
+      <a class="cardlink" href="/zh/products/${SLUGS[idx]}" target="_blank" rel="noopener">
       <div class="imgwrap">${p.ribbon?`<span class="ribbon">${p.ribbon}</span>`:""}${imgInner}</div>
       <div class="body">
         <div class="tags">${tags.join("")}</div>
