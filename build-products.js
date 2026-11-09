@@ -254,14 +254,23 @@ function page(p, slug, i, mode) {
   const packOptions = (p.variants && p.variants.length)
     ? p.variants.map(v => stripTags(v[0])).filter(Boolean).join(" · ") : "";
   const title = tc ? `${name} | 健力醫療器材有限公司` : `${p.name_en} | Clinicon Medical Ltd.`;
-  const desc = (tc ? (p.blurb_tc || `${name} — 健力醫療器材有限公司供應，自1980年服務香港醫療界。`)
+  let desc = (tc ? (p.blurb_tc || `${name} — 健力醫療器材有限公司供應，自1980年服務香港醫療界。`)
     : (p.blurb_en || [
         p.name_en + (p.category ? " — " + p.category : "") + (bl ? " by " + bl.name : "") + ".",
         pr.na ? "" : pr.en + ".",
         p.stock_id ? "Product code " + p.stock_id + "." : "",
         "Supplied by Clinicon Medical Ltd., a Hong Kong medical supplies distributor since 1980. Order online or via WhatsApp."
       ].filter(Boolean).join(" ")))
-    .replace(/\s+/g, " ").trim().slice(0, 300);
+    .replace(/\s+/g, " ").trim();
+  /* Keep descriptions <= 300 chars, cutting at a sentence (or word) boundary, never mid-word. */
+  const descFull = desc;
+  desc = (() => {
+    if (descFull.length <= 300) return descFull;
+    const cut = descFull.slice(0, 300);
+    const sent = Math.max(cut.lastIndexOf(". "), cut.lastIndexOf("。"));
+    if (sent >= 120) return cut.slice(0, sent + 1);
+    return cut.slice(0, cut.lastIndexOf(" ")).replace(/[,;:\s]+$/, "") + "…";
+  })();
   /* Photos: `image` is the main photo; optional `images` (array, main first) adds a gallery. */
   const imgList = p.image_missing ? [] : ((p.images && p.images.length) ? p.images : [p.image]);
   const imgUrl = imgList.length ? SITE + abs(imgList[0]) : "";
