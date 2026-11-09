@@ -262,6 +262,8 @@ function cutText(t, n, minSent) {
 }
 /* A real description is a sentence, not a pack size like "50/box" or "1322". */
 const isRealBlurb = t => !!t && String(t).trim().length >= 45 && /[.。]\s*$/.test(String(t).trim());
+const TC_COUNT = {};
+products.forEach(p => { const k = p.name_tc || p.name_en; TC_COUNT[k] = (TC_COUNT[k] || 0) + 1; });
 const NAME_COUNT = {};
 products.forEach(p => { NAME_COUNT[p.name_en] = (NAME_COUNT[p.name_en] || 0) + 1; });
 const DEFAULT_OG = SITE + "/images/og-clinicon.jpg";
@@ -281,7 +283,9 @@ function page(p, slug, i, mode) {
      Products that share a name (e.g. the two underpads) get their product code appended. */
   const dupName = (NAME_COUNT[p.name_en] || 0) > 1 && p.stock_id ? ` (${p.stock_id})` : "";
   const fullTitleEn = `${p.name_en}${dupName} | Clinicon Medical Ltd.`;
-  const title = tc ? `${name} | 健力醫療器材有限公司`
+  /* Chinese titles must be unique too: products sharing a Chinese name get their English name (or code) appended. */
+  const tcDup = tc && (TC_COUNT[name] || 0) > 1 ? ` (${p.name_en !== name ? p.name_en : (p.stock_id || "")})` : "";
+  const title = tc ? `${name}${tcDup} | 健力醫療器材有限公司`
     : (fullTitleEn.length <= 60 ? fullTitleEn : `${p.name_en}${dupName} | Clinicon`);
   /* Some products only have a pack size in blurb_en ("50/box", "1322"). That is a spec, not a description:
      show it as a "Pack size" row and build the description from name, brand, category and price instead. */
