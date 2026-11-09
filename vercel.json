@@ -1836,18 +1836,48 @@
       "permanent": true
     },
     {
+      "source": "/product-page/top-glove-exam-glove",
+      "destination": "/products/exam-glove",
+      "permanent": true
+    },
+    {
+      "source": "/product-page/scalpel-blade-11",
+      "destination": "/products/scalpel-blade",
+      "permanent": true
+    },
+    {
+      "source": "/product-page/disposalble-proctoscope",
+      "destination": "/products/eos-disposalble-proctoscope",
+      "permanent": true
+    },
+    {
       "source": "/category/:slug*",
-      "destination": "/#products",
+      "destination": "/products",
       "permanent": true
     },
     {
       "source": "/zh/category/:slug*",
-      "destination": "/#products",
+      "destination": "/products",
       "permanent": true
     },
     {
-      "source": "/showroom/:path*",
-      "destination": "/",
+      "source": "/product-page/cotton-wool-ball",
+      "destination": "/products/cotton-wool-ball",
+      "permanent": true
+    },
+    {
+      "source": "/product-page/3m-littmann-stethoscope",
+      "destination": "/products/3m-littmann-stethoscope",
+      "permanent": true
+    },
+    {
+      "source": "/product-page/probe-cover",
+      "destination": "/products/probe-cover",
+      "permanent": true
+    },
+    {
+      "source": "/product-page/sharp-box-7-6l",
+      "destination": "/products/sharps-box-7-6-litre",
       "permanent": true
     },
     {
