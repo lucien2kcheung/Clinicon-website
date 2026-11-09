@@ -85,7 +85,15 @@ if (!weak.length && !dupes.length) console.log("Slug check: clean.");
 const EQUIPMENT_CATEGORIES = new Set(["Refrigeration & Equipment", "O.R. Equipment", "Electrical Appliances"]);
 
 /* Chinese labels for categories, used on single-language Chinese pages. Mirrors NAV_CATEGORIES in index.html. */
-const CATEGORY_TC = { "Electrical Appliances": "電器產品", "Refrigeration & Equipment": "冷藏及設備", "O.R. Equipment": "手術室設備" };
+const CATEGORY_TC = {
+  "Electrical Appliances": "電器產品", "Refrigeration & Equipment": "冷藏及設備", "O.R. Equipment": "手術室設備",
+  "Other Consumables": "其他消耗品", "Surgical Instruments": "手術器械", "Wound Management": "傷口護理",
+  "Diagnostic Supplies": "診斷用品", "Masks & Gloves": "口罩及手套", "Bandages": "繃帶",
+  "Autoclave Accessories": "滅菌爐配件", "Syringes & Needles": "針筒及針咀", "Cotton Wool & Gauze": "棉花及紗布",
+  "Accessories": "配件", "Disinfectant Solutions": "消毒藥水", "Gynecology": "婦科",
+  "ECG Accessories": "心電圖配件", "Scalpel Blades & Sutures": "手術刀片及縫線", "I.V. Supplies": "靜脈輸液用品",
+  "Jelly": "啫喱", "Treatment Room Supplies": "治療室用品", "Catheters": "導管"
+}; /* first-pass translations: to be reviewed by a native reader */
 
 /* ---- helpers ---- */
 const esc = s => String(s == null ? "" : s)
@@ -105,7 +113,8 @@ const bi = (en, tc) => MODE === "en" ? en : MODE === "tc" ? (tc || en)
   : `<span class="pp-en" lang="en">${en}</span><span class="pp-tc" lang="zh-Hant-HK">${tc || en}</span>`;
 const dual = (en, tc) => MODE === "en" ? en : MODE === "tc" ? tc
   : `<span class="pp-en">${en}</span><span class="pp-tc">${tc}</span>`;
-const isZhPage = p => p.zh_page === true;
+/* Every product gets a separate Chinese page (/zh/products/<slug>); set `zh_page: false` on a product to opt out. */
+const isZhPage = p => p.zh_page !== false;
 const pageUrl = (slug, lang) => (lang === "tc" ? "/zh/products/" : "/products/") + slug;
 
 function priceParts(p) {
@@ -253,6 +262,8 @@ function cutText(t, n, minSent) {
 }
 /* A real description is a sentence, not a pack size like "50/box" or "1322". */
 const isRealBlurb = t => !!t && String(t).trim().length >= 45 && /[.。]\s*$/.test(String(t).trim());
+const TC_COUNT = {};
+products.forEach(p => { const k = p.name_tc || p.name_en; TC_COUNT[k] = (TC_COUNT[k] || 0) + 1; });
 const NAME_COUNT = {};
 products.forEach(p => { NAME_COUNT[p.name_en] = (NAME_COUNT[p.name_en] || 0) + 1; });
 const DEFAULT_OG = SITE + "/images/og-clinicon.jpg";
@@ -272,13 +283,15 @@ function page(p, slug, i, mode) {
      Products that share a name (e.g. the two underpads) get their product code appended. */
   const dupName = (NAME_COUNT[p.name_en] || 0) > 1 && p.stock_id ? ` (${p.stock_id})` : "";
   const fullTitleEn = `${p.name_en}${dupName} | Clinicon Medical Ltd.`;
-  const title = tc ? `${name} | 健力醫療器材有限公司`
+  /* Chinese titles must be unique too: products sharing a Chinese name get their English name (or code) appended. */
+  const tcDup = tc && (TC_COUNT[name] || 0) > 1 ? ` (${p.name_en !== name ? p.name_en : (p.stock_id || "")})` : "";
+  const title = tc ? `${name}${tcDup} | 健力醫療器材有限公司`
     : (fullTitleEn.length <= 60 ? fullTitleEn : `${p.name_en}${dupName} | Clinicon`);
   /* Some products only have a pack size in blurb_en ("50/box", "1322"). That is a spec, not a description:
      show it as a "Pack size" row and build the description from name, brand, category and price instead. */
   const realEn = isRealBlurb(p.blurb_en) ? p.blurb_en : "";
   const packNote = (!realEn && p.blurb_en) ? String(p.blurb_en).replace(/\s+/g, " ").trim() : "";
-  let desc = (tc ? (p.blurb_tc || `${name} — 健力醫療器材有限公司供應，自1980年服務香港醫療界。`)
+  let desc = (tc ? (p.blurb_tc || [`${name}${p.category ? " — " + (CATEGORY_TC[p.category] || p.category) : ""}${bl ? "，" + bl.name : ""}。`, pr.na ? "" : `價格：${pr.tc}。`, "自1980年服務香港醫療界的健力醫療器材有限公司供應此產品，歡迎網上下單或透過 WhatsApp 查詢。"].filter(Boolean).join(""))
     : (realEn || [
         p.name_en + (p.category ? " — " + p.category : "") + (bl ? " by " + bl.name : "") + ".",
         pr.na ? "" : pr.en + ".",
