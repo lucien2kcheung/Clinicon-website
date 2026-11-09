@@ -1836,18 +1836,28 @@
       "permanent": true
     },
     {
+      "source": "/product-page/top-glove-exam-glove",
+      "destination": "/products/exam-glove",
+      "permanent": true
+    },
+    {
+      "source": "/product-page/scalpel-blade-11",
+      "destination": "/products/scalpel-blade",
+      "permanent": true
+    },
+    {
+      "source": "/product-page/disposalble-proctoscope",
+      "destination": "/products/eos-disposalble-proctoscope",
+      "permanent": true
+    },
+    {
       "source": "/category/:slug*",
-      "destination": "/#products",
+      "destination": "/products",
       "permanent": true
     },
     {
       "source": "/zh/category/:slug*",
-      "destination": "/#products",
-      "permanent": true
-    },
-    {
-      "source": "/showroom/:path*",
-      "destination": "/",
+      "destination": "/products",
       "permanent": true
     },
     {
