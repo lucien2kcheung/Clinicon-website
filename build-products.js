@@ -117,13 +117,27 @@ function priceParts(p) {
   return { en: "NA", tc: "NA", num: 0, na: true };
 }
 
+/* Related products. Each product links to the products that FOLLOW it (wrapping round) in
+   its brand, then its category, then the whole catalogue. Rotating like this means every
+   product is linked from the ones before it, so no page is left without inbound links.
+   (The previous version always took the first 4 products of the category, so those few got
+   hundreds of links and the rest got none, which left ~50 pages "Discovered - not indexed".) */
 function relatedFor(i, n = 4) {
-  const self = products[i], sameCat = [], others = [];
-  products.forEach((p, j) => {
-    if (j === i) return;
-    (p.category && p.category === self.category ? sameCat : others).push(j);
-  });
-  return [...sameCat, ...others].slice(0, n);
+  const self = products[i];
+  const sameBrand = j => self.brand && self.brand !== "Other" && products[j].brand === self.brand;
+  const sameCat = j => self.category && products[j].category === self.category;
+  const picked = new Set(), res = [];
+  const add = (pred, take) => {
+    let got = 0;
+    for (let k = 1; k < products.length && got < take && res.length < n; k++) {
+      const j = (i + k) % products.length;
+      if (pred(j) && !picked.has(j)) { picked.add(j); res.push(j); got++; }
+    }
+  };
+  add(sameBrand, 1);
+  add(sameCat, n);
+  add(() => true, n);
+  return res;
 }
 
 const FONTS = `<link rel="preconnect" href="https://fonts.googleapis.com">
@@ -175,6 +189,8 @@ function footer() {
       <div>
         <h4>${bi("Explore", "探索")}</h4>
         <a href="${HOME}#products">${bi("Products", "產品")}</a>
+        <a href="/products">${bi("All products", "所有產品")}</a>
+        <a href="/brands">${bi("Brands", "品牌")}</a>
         <a href="${HOME}#about">${bi("About Us", "關於我們")}</a>
         <a href="${HOME}#contact">${bi("Contact", "聯絡我們")}</a>
         <a href="/faq">${bi("FAQ", "常見問題")}</a>
@@ -239,7 +255,12 @@ function page(p, slug, i, mode) {
     ? p.variants.map(v => stripTags(v[0])).filter(Boolean).join(" · ") : "";
   const title = tc ? `${name} | 健力醫療器材有限公司` : `${p.name_en} | Clinicon Medical Ltd.`;
   const desc = (tc ? (p.blurb_tc || `${name} — 健力醫療器材有限公司供應，自1980年服務香港醫療界。`)
-    : (p.blurb_en || `${p.name_en} — available from Clinicon Medical Ltd., a trusted Hong Kong medical supplies distributor since 1980.`))
+    : (p.blurb_en || [
+        p.name_en + (p.category ? " — " + p.category : "") + (bl ? " by " + bl.name : "") + ".",
+        pr.na ? "" : pr.en + ".",
+        p.stock_id ? "Product code " + p.stock_id + "." : "",
+        "Supplied by Clinicon Medical Ltd., a Hong Kong medical supplies distributor since 1980. Order online or via WhatsApp."
+      ].filter(Boolean).join(" ")))
     .replace(/\s+/g, " ").trim().slice(0, 300);
   /* Photos: `image` is the main photo; optional `images` (array, main first) adds a gallery. */
   const imgList = p.image_missing ? [] : ((p.images && p.images.length) ? p.images : [p.image]);
@@ -483,7 +504,7 @@ ${header()}
         ${addSolo}
         ${MODE === "tc" ? "" : `<a class="pp-wa${MODE ? "" : " pp-en"}" href="${waEn}" target="_blank" rel="noopener">${WA_SVG} Enquire via WhatsApp</a>`}
         ${MODE === "en" ? "" : `<a class="pp-wa${MODE ? "" : " pp-tc"}" href="${waTc}" target="_blank" rel="noopener">${WA_SVG} 透過 WhatsApp 查詢</a>`}
-        <a class="pp-back" href="${tc ? "/zh" : "/"}#products">${bi("← All products", "← 所有產品")}</a>
+        <a class="pp-back" href="/products">${bi("← All products", "← 所有產品")}</a>
       </div>
     </div>
   </div>
@@ -619,7 +640,7 @@ function brandPage(b) {
         sameAs: b.website ? [b.website] : undefined },
       { "@type": "BreadcrumbList", "@id": url + "#breadcrumb", itemListElement: [
         { "@type": "ListItem", position: 1, name: "Home", item: SITE + "/" },
-        { "@type": "ListItem", position: 2, name: "Brands", item: SITE + "/#brands" },
+        { "@type": "ListItem", position: 2, name: "Brands", item: SITE + "/brands" },
         { "@type": "ListItem", position: 3, name: b.name } ] },
       { "@type": "CollectionPage", "@id": url + "#webpage", url, name: title, inLanguage: "en-HK",
         isPartOf: { "@id": SITE + "/#website" }, about: { "@id": url + "#brand" },
@@ -686,7 +707,7 @@ ${header()}
 <main class="pp-main wrap">
   <nav class="pp-crumb" aria-label="Breadcrumb">
     <a href="/">${bi("Home", "主頁")}</a> <span>/</span>
-    <a href="/#brands">${bi("Brands", "品牌")}</a> <span>/</span>
+    <a href="/brands">${bi("Brands", "品牌")}</a> <span>/</span>
     <span aria-current="page">${esc(b.name)}</span>
   </nav>
 
@@ -726,6 +747,138 @@ ${footer()}
 </html>`;
 }
 
+
+/* ---- crawlable hub pages: /products (every product) and /brands (every brand) ----
+   Plain <a> links, linked from every footer, so no product or brand page depends on
+   JavaScript or on the related-products rotation to be discovered. */
+function hubShell({ path: hubPath, title, desc, crumbEn, crumbTc, eyebrowEn, eyebrowTc, h1En, h1Tc, introEn, introTc, body }) {
+  MODE = null; PAGE_SLUG = "";
+  const url = SITE + hubPath;
+  const ld = {
+    "@context": "https://schema.org",
+    "@graph": [
+      { "@type": "BreadcrumbList", "@id": url + "#breadcrumb", itemListElement: [
+        { "@type": "ListItem", position: 1, name: "Home", item: SITE + "/" },
+        { "@type": "ListItem", position: 2, name: crumbEn } ] },
+      { "@type": "CollectionPage", "@id": url + "#webpage", url, name: title, inLanguage: "en-HK",
+        isPartOf: { "@id": SITE + "/#website" }, breadcrumb: { "@id": url + "#breadcrumb" } }
+    ]
+  };
+  return `<!DOCTYPE html>
+<html lang="en" data-pp-lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>${esc(title)}</title>
+<meta name="description" content="${esc(desc)}">
+<link rel="canonical" href="${url}">
+<link rel="icon" href="/favicon.ico" sizes="48x48">
+<link rel="icon" type="image/png" href="/favicon-48x48.png" sizes="48x48">
+<link rel="icon" type="image/png" href="/favicon-192x192.png" sizes="192x192">
+<link rel="apple-touch-icon" href="/apple-touch-icon.png">
+<meta property="og:type" content="website">
+<meta property="og:title" content="${esc(h1En)}">
+<meta property="og:description" content="${esc(desc)}">
+<meta property="og:url" content="${url}">
+<meta property="og:site_name" content="Clinicon Medical Ltd.">
+${FONTS}
+<link rel="stylesheet" href="/assets/site.css">
+<link rel="stylesheet" href="/assets/productpage.css">
+<script type="application/ld+json">${JSON.stringify(ld)}</script>
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=AW-18249191886"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'AW-18249191886');
+  gtag('config', 'G-P6NNSWFGGZ');
+</script>
+<script src="/assets/track.js" defer></script>
+</head>
+<body>
+${header()}
+<main class="pp-main wrap">
+  <nav class="pp-crumb" aria-label="Breadcrumb">
+    <a href="/">${bi("Home", "主頁")}</a> <span>/</span>
+    <span aria-current="page">${bi(crumbEn, crumbTc)}</span>
+  </nav>
+  <section class="hub-head">
+    <div class="pp-eyebrow">${bi(eyebrowEn, eyebrowTc)}</div>
+    <h1 class="pp-name">${bi(h1En, h1Tc)}</h1>
+    <p class="hub-intro">${bi(introEn, introTc)}</p>
+  </section>
+  ${body}
+  <p class="pp-enquiry-note">
+    <span class="pp-en">To order or ask a question, message us on WhatsApp at <a href="${WA}" target="_blank" rel="noopener">9320 9650</a> or email <a href="mailto:info@clinicon.com.hk">info@clinicon.com.hk</a>.</span>
+    <span class="pp-tc">如需下單或查詢，請透過 WhatsApp <a href="${WA}" target="_blank" rel="noopener">9320 9650</a> 與我們聯絡，或電郵至 <a href="mailto:info@clinicon.com.hk">info@clinicon.com.hk</a>。</span>
+  </p>
+</main>
+${footer()}
+<script>
+(function(){
+  var K="clinicon-lang";
+  function set(l){document.documentElement.setAttribute("data-pp-lang",l);
+    document.documentElement.setAttribute("lang",l==="tc"?"zh-Hant":"en");
+    try{localStorage.setItem(K,l)}catch(e){}
+    document.querySelectorAll(".langtog button").forEach(function(b){b.classList.toggle("active",b.getAttribute("data-pp-lang")===l)});}
+  var init="en";try{init=localStorage.getItem(K)||"en"}catch(e){}
+  set(init);
+  document.querySelectorAll(".langtog button").forEach(function(b){b.addEventListener("click",function(){set(b.getAttribute("data-pp-lang"))})});
+  var bg=document.getElementById("burger"),m=document.getElementById("menu");
+  if(bg&&m)bg.addEventListener("click",function(){m.classList.toggle("open")});
+})();
+</script>
+</body>
+</html>`;
+}
+
+function productsHubPage() {
+  const groups = new Map();
+  products.forEach((p, i) => {
+    const c = p.category || "Other";
+    if (!groups.has(c)) groups.set(c, []);
+    groups.get(c).push(i);
+  });
+  const body = [...groups].map(([cat, idx]) => `<section class="hub-group">
+    <h2>${bi(esc(cat), esc(CATEGORY_TC[cat] || cat))} <span class="hub-count">(${idx.length})</span></h2>
+    <ul class="hub-list">
+${idx.map(j => `      <li><a href="/products/${slugs[j]}">${bi(esc(products[j].name_en), esc(products[j].name_tc || products[j].name_en))}</a></li>`).join("\n")}
+    </ul>
+  </section>`).join("\n  ");
+  return hubShell({
+    path: "/products",
+    title: "All products | Clinicon Medical Ltd.",
+    desc: `Browse all ${products.length} medical supplies and equipment from Clinicon Medical Ltd., a Hong Kong medical supplies distributor since 1980, by category.`,
+    crumbEn: "All products", crumbTc: "所有產品",
+    eyebrowEn: "Catalogue", eyebrowTc: "產品目錄",
+    h1En: "All products", h1Tc: "所有產品",
+    introEn: `${products.length} products across ${groups.size} categories. Select a product for price, pack options and ordering.`,
+    introTc: `共 ${products.length} 款產品，分為 ${groups.size} 個類別。點選產品即可查看價格、包裝選項及下單方法。`,
+    body
+  });
+}
+
+function brandsHubPage() {
+  const rows = brands.map(b => ({ b, n: brandProducts(b).length }));
+  const body = `<section class="hub-group">
+    <ul class="hub-list">
+${rows.map(({ b, n }) => `      <li><a href="/brands/${b.slug}">${esc(b.name)}</a>${n ? ` <span class="hub-count">(${n})</span>` : ""}</li>`).join("\n")}
+    </ul>
+  </section>`;
+  return hubShell({
+    path: "/brands",
+    title: "Brands | Clinicon Medical Ltd.",
+    desc: `Medical brands supplied by Clinicon Medical Ltd. in Hong Kong, including ${brands.slice(0, 4).map(b => b.name).join(", ")} and more.`,
+    crumbEn: "Brands", crumbTc: "品牌",
+    eyebrowEn: "Brands", eyebrowTc: "品牌",
+    h1En: "Brands we supply", h1Tc: "我們供應的品牌",
+    introEn: `${brands.length} brands. Select a brand to see its products.`,
+    introTc: `共 ${brands.length} 個品牌。點選品牌即可查看其產品。`,
+    body
+  });
+}
+
 /* Homepage brand tiles link to these pages; fail the build if a link would 404. */
 {
   const slugSet = new Set(brands.map(b => b.slug));
@@ -762,7 +915,14 @@ brands.forEach(b => {
 });
 MODE = null;
 
-const today = new Date().toISOString().slice(0, 10);
+fs.mkdirSync(path.join(OUT, "products"), { recursive: true });
+fs.writeFileSync(path.join(OUT, "products", "index.html"), productsHubPage());
+fs.mkdirSync(path.join(OUT, "brands"), { recursive: true });
+fs.writeFileSync(path.join(OUT, "brands", "index.html"), brandsHubPage());
+MODE = null;
+
+/* No <lastmod>: it used to be the build date on every URL, which is not when a page changed,
+   and Google ignores lastmod once it learns it is unreliable. */
 
 /* Homepage is bilingual (/ and /zh), so it carries hreflang. Regular product pages
    are bilingual single URLs, so they carry no zh-Hant alternate. Products flagged
@@ -773,21 +933,23 @@ const HOME_ALT =
   `<xhtml:link rel="alternate" hreflang="x-default" href="${SITE}/"/>`;
 
 const entries = [
-  `  <url><loc>${SITE}/</loc><lastmod>${today}</lastmod>${HOME_ALT}</url>`,
-  `  <url><loc>${SITE}/zh</loc><lastmod>${today}</lastmod>${HOME_ALT}</url>`,
-  `  <url><loc>${SITE}/faq</loc><lastmod>${today}</lastmod></url>`,
-  `  <url><loc>${SITE}/terms-and-conditions</loc><lastmod>${today}</lastmod></url>`,
+  `  <url><loc>${SITE}/</loc>${HOME_ALT}</url>`,
+  `  <url><loc>${SITE}/zh</loc>${HOME_ALT}</url>`,
+  `  <url><loc>${SITE}/faq</loc></url>`,
+  `  <url><loc>${SITE}/terms-and-conditions</loc></url>`,
+  `  <url><loc>${SITE}/products</loc></url>`,
+  `  <url><loc>${SITE}/brands</loc></url>`,
   ...slugs.flatMap((s, i) => {
-    if (!isZhPage(products[i])) return [`  <url><loc>${SITE}/products/${s}</loc><lastmod>${today}</lastmod></url>`];
+    if (!isZhPage(products[i])) return [`  <url><loc>${SITE}/products/${s}</loc></url>`];
     const alt = `<xhtml:link rel="alternate" hreflang="en" href="${SITE}/products/${s}"/>` +
       `<xhtml:link rel="alternate" hreflang="zh-Hant" href="${SITE}/zh/products/${s}"/>` +
       `<xhtml:link rel="alternate" hreflang="x-default" href="${SITE}/products/${s}"/>`;
     return [
-      `  <url><loc>${SITE}/products/${s}</loc><lastmod>${today}</lastmod>${alt}</url>`,
-      `  <url><loc>${SITE}/zh/products/${s}</loc><lastmod>${today}</lastmod>${alt}</url>`
+      `  <url><loc>${SITE}/products/${s}</loc>${alt}</url>`,
+      `  <url><loc>${SITE}/zh/products/${s}</loc>${alt}</url>`
     ];
   }),
-  ...brands.map(b => `  <url><loc>${SITE}/brands/${b.slug}</loc><lastmod>${today}</lastmod></url>`)
+  ...brands.map(b => `  <url><loc>${SITE}/brands/${b.slug}</loc></url>`)
 ];
 
 fs.writeFileSync(path.join(OUT, "sitemap.xml"),

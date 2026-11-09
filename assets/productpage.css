@@ -122,3 +122,14 @@ html[data-pp-lang="tc"] .pp-en{display:none;}
 .pp-spectable td a{color:var(--teal-dark);font-weight:600;}
 .br-text p.br-partof{font-weight:600;color:var(--ink);border-left:3px solid var(--teal);padding-left:12px;margin-top:6px;}
 .br-partof a{color:var(--teal-dark);}
+
+/* Hub pages: /products and /brands */
+.hub-head{margin:8px 0 28px;}
+.hub-intro{color:var(--muted,#5b6770);max-width:46em;margin:10px 0 0;}
+.hub-group{margin:0 0 36px;}
+.hub-group h2{font-size:1.25rem;margin:0 0 12px;}
+.hub-count{font-weight:400;opacity:.6;font-size:.9em;}
+.hub-list{list-style:none;margin:0;padding:0;columns:3 260px;column-gap:28px;}
+.hub-list li{break-inside:avoid;padding:5px 0;line-height:1.35;}
+.hub-list a{text-decoration:none;}
+.hub-list a:hover{text-decoration:underline;}
