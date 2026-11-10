@@ -115,15 +115,47 @@ const dual = (en, tc) => MODE === "en" ? en : MODE === "tc" ? tc
   : `<span class="pp-en">${en}</span><span class="pp-tc">${tc}</span>`;
 /* Every product gets a separate Chinese page (/zh/products/<slug>); set `zh_page: false` on a product to opt out. */
 const isZhPage = p => p.zh_page !== false;
+/* Pages that have a separate Chinese twin (see pages.config.js): Chinese pages link to /zh/<page>. */
+const SPLIT_PAGES = require("./pages.config.js");
+const ZH_SLUGS = new Set(SPLIT_PAGES.filter(x => x.zh).map(x => "/" + x.slug));
+const pageHref = p => (MODE === "tc" && ZH_SLUGS.has(p)) ? "/zh" + p : p;
 const pageUrl = (slug, lang) => (lang === "tc" ? "/zh/products/" : "/products/") + slug;
 
+/* A price counts only if it is a number above zero. Numeric strings ("1,200") are accepted;
+   anything else ("N/A", "", 0) means "no published price". Never let such a value reach fmtPrice(),
+   which used to turn "N/A" into "HK$NaN". */
+const toPrice = v => {
+  const n = typeof v === "number" ? v : parseFloat(String(v == null ? "" : v).replace(/[^0-9.]/g, ""));
+  return isFinite(n) && n > 0 ? n : 0;
+};
+const QUOTE_EN = "Request a quote", QUOTE_TC = "查詢報價";
 function priceParts(p) {
   if (p.variants && p.variants.length) {
-    const min = Math.min(...p.variants.map(v => Number(v[1]) || Infinity));
-    if (isFinite(min) && min > 0) return { en: "From " + fmtPrice(min), tc: fmtPrice(min) + " 起", num: min };
+    const vp = p.variants.map(v => toPrice(v[1])).filter(n => n > 0);
+    if (vp.length) { const min = Math.min(...vp); return { en: "From " + fmtPrice(min), tc: fmtPrice(min) + " 起", num: min }; }
   }
-  if (p.price) return { en: fmtPrice(p.price), tc: fmtPrice(p.price), num: p.price };
-  return { en: "NA", tc: "NA", num: 0, na: true };
+  const n = toPrice(p.price);
+  if (n > 0) return { en: fmtPrice(n), tc: fmtPrice(n), num: n };
+  return { en: QUOTE_EN, tc: QUOTE_TC, num: 0, na: true };
+}
+
+/* Build-time safety net: stop the build instead of publishing "HK$NaN", "undefined" or a bad price in schema. */
+function assertClean(html, label) {
+  const problems = [];
+  const visible = html.replace(/<script[\s\S]*?<\/script>/g, "").replace(/<style[\s\S]*?<\/style>/g, "");
+  if (/\bNaN\b|\bundefined\b|\[object Object\]|HK\$\s*(?:NA|N\/A|Infinity)\b/.test(visible)) problems.push("NaN/undefined/NA text in page");
+  for (const m of html.matchAll(/<script type="application\/ld\+json">([\s\S]*?)<\/script>/g)) {
+    let j; try { j = JSON.parse(m[1]); } catch (e) { problems.push("invalid JSON-LD"); continue; }
+    (function walk(o) {
+      if (Array.isArray(o)) return o.forEach(walk);
+      if (o && typeof o === "object") for (const [k, v] of Object.entries(o)) {
+        if (/^(price|lowPrice|highPrice)$/.test(k) && !(Number(v) > 0 && isFinite(Number(v)))) problems.push(k + "=" + JSON.stringify(v));
+        walk(v);
+      }
+    })(j);
+  }
+  if (problems.length) { console.error("!! " + label + ": " + problems.join("; ")); process.exit(1); }
+  return html;
 }
 
 /* Related products. Each product links to the products that FOLLOW it (wrapping round) in
@@ -202,8 +234,8 @@ function footer() {
         <a href="/brands">${bi("Brands", "品牌")}</a>
         <a href="${HOME}#about">${bi("About Us", "關於我們")}</a>
         <a href="${HOME}#contact">${bi("Contact", "聯絡我們")}</a>
-        <a href="/faq">${bi("FAQ", "常見問題")}</a>
-        <a href="/terms-and-conditions">${bi("Terms &amp; Conditions", "條款及細則")}</a>
+        <a href="${pageHref("/faq")}">${bi("FAQ", "常見問題")}</a>
+        <a href="/terms-and-conditions">${bi("Terms &amp; Conditions", "條款及細則（英文版）")}</a>
       </div>
       <div>
         <h4>${bi("Contact", "聯絡")}</h4>
@@ -308,8 +340,8 @@ function page(p, slug, i, mode) {
   const imgList = p.image_missing ? [] : ((p.images && p.images.length) ? p.images : [p.image]);
   const imgUrl = imgList.length ? SITE + abs(imgList[0]) : "";
 
-  const waEn = `${WA}?text=${encodeURIComponent(`I would like to enquire about: ${p.name_en} (${pr.en}) — ${url}`)}`;
-  const waTc = `${WA}?text=${encodeURIComponent(`您好，我想查詢以下產品：${p.name_tc || p.name_en}（${pr.tc}）— ${url}`)}`;
+  const waEn = `${WA}?text=${encodeURIComponent(`I would like to enquire about: ${p.name_en}${pr.na ? "" : ` (${pr.en})`} — ${url}`)}`;
+  const waTc = `${WA}?text=${encodeURIComponent(`您好，我想查詢以下產品：${p.name_tc || p.name_en}${pr.na ? "" : `（${pr.tc}）`} — ${url}`)}`;
 
   /* ---- structured data ----------------------------------------------
      Product + Offer/AggregateOffer, BreadcrumbList, and a reference back to
@@ -342,7 +374,10 @@ function page(p, slug, i, mode) {
   };
 
   // Prices are quoted, not time-limited; give Google a rolling 12-month window.
-  const priceValidUntil = new Date(Date.now() + 365 * 864e5).toISOString().slice(0, 10);
+  /* priceValidUntil = build date + 1 year, so every rebuild rewrites it on all ~750 pages.
+     Set BUILD_DATE=YYYY-MM-DD to pin it and keep a rebuild's diff down to the real changes. */
+  const buildNow = process.env.BUILD_DATE ? new Date(process.env.BUILD_DATE).getTime() : Date.now();
+  const priceValidUntil = new Date(buildNow + 365 * 864e5).toISOString().slice(0, 10);
 
   const offerBase = {
     priceCurrency: "HKD",
@@ -463,7 +498,7 @@ function page(p, slug, i, mode) {
                                 "香港境內訂單滿HK$500免費送貨")],
     [bi("Returns", "退貨"), bi(
       'Defective or incorrect goods: notify within 7 days. <a href="/faq">See FAQ</a>',
-      '如貨品有損壞或發錯，請於7天內通知我們。<a href="/faq">查看常見問題</a>')]
+      '如貨品有損壞或發錯，請於7天內通知我們。<a href="/zh/faq">查看常見問題</a>')]
   ].filter(r => r[1]);
 
   const detailsTable = `<section class="pp-detailtable">
@@ -493,7 +528,7 @@ function page(p, slug, i, mode) {
             `可以。自1980年服務香港的健力醫療器材有限公司供應此產品${brandTc}。${priceTc}歡迎網上下單，或透過 WhatsApp 查詢現時存貨。`)}</p>
     <h3>${bi("What if the goods are defective or incorrect?", "如貨品有損壞或發錯怎麼辦？")}</h3>
     <p>${bi('Notify us within 7 days of delivery. After verification we will repair, replace or refund the affected goods at no extra cost, as set out in our <a href="/terms-and-conditions">terms and conditions</a>.',
-            '請於收貨後7天內通知我們。經核實後，我們會按<a href="/terms-and-conditions">條款及細則</a>免費維修、更換或退款。')}</p>
+            '請於收貨後7天內通知我們。經核實後，我們會按<a href="/terms-and-conditions">條款及細則（英文版）</a>免費維修、更換或退款。')}</p>
   </section>`;
 
   const descBlock = MODE
@@ -605,7 +640,8 @@ ${MODE ? `(function(){
   function set(l){document.documentElement.setAttribute("data-pp-lang",l);
     document.documentElement.setAttribute("lang",l==="tc"?"zh-Hant":"en");
     try{localStorage.setItem(K,l)}catch(e){}
-    document.querySelectorAll(".langtog button").forEach(function(b){b.classList.toggle("active",b.getAttribute("data-pp-lang")===l)});}
+    document.querySelectorAll(".langtog button").forEach(function(b){b.classList.toggle("active",b.getAttribute("data-pp-lang")===l)});
+    document.querySelectorAll('a[href="/faq"],a[href="/zh/faq"]').forEach(function(a){a.setAttribute("href",l==="tc"?"/zh/faq":"/faq")});}
   var init="en";try{init=localStorage.getItem(K)||"en"}catch(e){}
   set(init);
   document.querySelectorAll(".langtog button").forEach(function(b){b.addEventListener("click",function(){set(b.getAttribute("data-pp-lang"))})});
@@ -831,7 +867,8 @@ ${footer()}
   function set(l){document.documentElement.setAttribute("data-pp-lang",l);
     document.documentElement.setAttribute("lang",l==="tc"?"zh-Hant":"en");
     try{localStorage.setItem(K,l)}catch(e){}
-    document.querySelectorAll(".langtog button").forEach(function(b){b.classList.toggle("active",b.getAttribute("data-pp-lang")===l)});}
+    document.querySelectorAll(".langtog button").forEach(function(b){b.classList.toggle("active",b.getAttribute("data-pp-lang")===l)});
+    document.querySelectorAll('a[href="/faq"],a[href="/zh/faq"]').forEach(function(a){a.setAttribute("href",l==="tc"?"/zh/faq":"/faq")});}
   var init="en";try{init=localStorage.getItem(K)||"en"}catch(e){}
   set(init);
   document.querySelectorAll(".langtog button").forEach(function(b){b.addEventListener("click",function(){set(b.getAttribute("data-pp-lang"))})});
@@ -917,7 +954,8 @@ ${footer()}
   function set(l){document.documentElement.setAttribute("data-pp-lang",l);
     document.documentElement.setAttribute("lang",l==="tc"?"zh-Hant":"en");
     try{localStorage.setItem(K,l)}catch(e){}
-    document.querySelectorAll(".langtog button").forEach(function(b){b.classList.toggle("active",b.getAttribute("data-pp-lang")===l)});}
+    document.querySelectorAll(".langtog button").forEach(function(b){b.classList.toggle("active",b.getAttribute("data-pp-lang")===l)});
+    document.querySelectorAll('a[href="/faq"],a[href="/zh/faq"]').forEach(function(a){a.setAttribute("href",l==="tc"?"/zh/faq":"/faq")});}
   var init="en";try{init=localStorage.getItem(K)||"en"}catch(e){}
   set(init);
   document.querySelectorAll(".langtog button").forEach(function(b){b.addEventListener("click",function(){set(b.getAttribute("data-pp-lang"))})});
@@ -990,7 +1028,7 @@ products.forEach((p, i) => {
   const write = (base, html) => {
     const dir = path.join(OUT, base, slugs[i]);
     fs.mkdirSync(dir, { recursive: true });
-    fs.writeFileSync(path.join(dir, "index.html"), html);
+    fs.writeFileSync(path.join(dir, "index.html"), assertClean(html, base + "/" + slugs[i]));
   };
   if (isZhPage(p)) {
     // single-language twins: English at /products/<slug>, Chinese at /zh/products/<slug>
@@ -1007,14 +1045,14 @@ MODE = null;
 brands.forEach(b => {
   const dir = path.join(OUT, "brands", b.slug);
   fs.mkdirSync(dir, { recursive: true });
-  fs.writeFileSync(path.join(dir, "index.html"), brandPage(b));
+  fs.writeFileSync(path.join(dir, "index.html"), assertClean(brandPage(b), "brands/" + b.slug));
 });
 MODE = null;
 
 fs.mkdirSync(path.join(OUT, "products"), { recursive: true });
-fs.writeFileSync(path.join(OUT, "products", "index.html"), productsHubPage());
+fs.writeFileSync(path.join(OUT, "products", "index.html"), assertClean(productsHubPage(), "products hub"));
 fs.mkdirSync(path.join(OUT, "brands"), { recursive: true });
-fs.writeFileSync(path.join(OUT, "brands", "index.html"), brandsHubPage());
+fs.writeFileSync(path.join(OUT, "brands", "index.html"), assertClean(brandsHubPage(), "brands hub"));
 MODE = null;
 
 /* No <lastmod>: it used to be the build date on every URL, which is not when a page changed,
@@ -1031,12 +1069,15 @@ const HOME_ALT =
 const entries = [
   `  <url><loc>${SITE}/</loc>${HOME_ALT}</url>`,
   `  <url><loc>${SITE}/zh</loc>${HOME_ALT}</url>`,
-  `  <url><loc>${SITE}/faq</loc></url>`,
-  `  <url><loc>${SITE}/services</loc></url>`,
-  `  <url><loc>${SITE}/how-to-order</loc></url>`,
-  `  <url><loc>${SITE}/clinic-packages</loc></url>`,
+  /* FAQ, services, how-to-order, clinic-packages and terms (pages.config.js): an English URL, plus a Chinese twin with hreflang where one exists. */
   /* /promotions is deliberately left out: it is a "coming soon" page marked noindex until real offers are published. */
-  `  <url><loc>${SITE}/terms-and-conditions</loc></url>`,
+  ...SPLIT_PAGES.flatMap(pg => {
+    if (!pg.zh) return [`  <url><loc>${SITE}/${pg.slug}</loc></url>`];
+    const alt = `<xhtml:link rel="alternate" hreflang="en" href="${SITE}/${pg.slug}"/>` +
+      `<xhtml:link rel="alternate" hreflang="zh-Hant" href="${SITE}/zh/${pg.slug}"/>` +
+      `<xhtml:link rel="alternate" hreflang="x-default" href="${SITE}/${pg.slug}"/>`;
+    return [`  <url><loc>${SITE}/${pg.slug}</loc>${alt}</url>`, `  <url><loc>${SITE}/zh/${pg.slug}</loc>${alt}</url>`];
+  }),
   `  <url><loc>${SITE}/products</loc></url>`,
   `  <url><loc>${SITE}/brands</loc></url>`,
   ...slugs.flatMap((s, i) => {

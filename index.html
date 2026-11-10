@@ -2658,8 +2658,8 @@ const PRODUCTS = [
   ]
  },
  {
-  "name_en": "3M N95 1860 Repirator Mask 防護口罩",
-  "name_tc": "3M N95 1860 Repirator Mask 防護口罩",
+  "name_en": "3M N95 1860 Respirator Mask 防護口罩",
+  "name_tc": "3M N95 1860 Respirator Mask 防護口罩",
   "category": "Masks & Gloves",
   "price": 230,
   "ribbon": "",
@@ -2936,8 +2936,8 @@ const PRODUCTS = [
   ]
  },
  {
-  "name_en": "EOS Disposalble Proctoscope",
-  "name_tc": "EOS Disposalble Proctoscope",
+  "name_en": "EOS Disposable Proctoscope",
+  "name_tc": "EOS Disposable Proctoscope",
   "category": "Treatment Room Supplies",
   "price": 17,
   "ribbon": "",
@@ -9298,6 +9298,8 @@ const T = {
   dd_all_cats:{en:"All categories", tc:"所有分類"},
   img_soon:{en:"Photo coming soon", tc:"圖片即將上載"},
   price_from:{en:"from", tc:"由"},
+  price_quote:{en:"Request a quote", tc:"查詢報價"},
+  cart_quote:{en:"Quote on request", tc:"待報價"},
   search_ph:{en:"Search products…", tc:"搜尋產品…"},
   search_btn:{en:"Search", tc:"搜尋"},
   no_results:{en:"No products match your search.", tc:"沒有符合搜尋的產品。"},
@@ -9311,6 +9313,9 @@ const pname = p => (LANG==="tc" && p.name_tc) ? p.name_tc : p.name_en;
 
 /* ---------- Render filters + grid ---------- */
 const fmt = n => "HK$" + n.toLocaleString("en-HK");
+/* A price is usable only if it is a number above zero ("N/A", "" and 0 mean "no published price"). */
+const priceNum = v => { const n = typeof v === "number" ? v : parseFloat(String(v == null ? "" : v).replace(/[^0-9.]/g, "")); return isFinite(n) && n > 0 ? n : 0; };
+const priceOrQuote = v => priceNum(v) ? fmt(priceNum(v)) : T.price_quote[LANG];
 const grid = document.getElementById("grid");
 const filtersEl = document.getElementById("filters");
 let activeCat = "All";
@@ -9336,7 +9341,7 @@ function priceLabel(p){
     const min = Math.min(...prices), max = Math.max(...prices);
     return `<span class="from">${T.price_from[LANG]}</span>${fmt(min)}${max>min?` – ${fmt(max)}`:""}`;
   }
-  return fmt(p.price);
+  return priceOrQuote(p.price);
 }
 
 function matchesSearch(p){
@@ -9523,7 +9528,7 @@ function openModal(p){
     : "";
   const varRows = p.variants && p.variants.length
     ? `<div class="variants"><div style="font-weight:700;margin-bottom:6px">${T.modal_models[LANG]}</div>${p.variants.map((v,i)=>`<div class="vrow"><span>${v[0]}</span><b>${fmt(v[1])}</b><button class="add-btn" data-pi="${idx}" data-vi="${i}">+ ${T.modal_add[LANG]}</button></div>`).join("")}</div>`
-    : `<div class="mprice">${fmt(p.price)}</div><button class="add-btn" data-pi="${idx}" data-vi="-1">+ ${T.modal_add[LANG]}</button>`;
+    : `<div class="mprice">${priceOrQuote(p.price)}</div><button class="add-btn" data-pi="${idx}" data-vi="-1">+ ${T.modal_add[LANG]}</button>`;
   modal.innerHTML = `
     <button class="mclose" id="mclose" aria-label="Close">×</button>
     <div class="mhead">
@@ -9571,11 +9576,12 @@ function addToCart(pi, vi){
   if(!p) return;
   const isVar = vi >= 0 && p.variants && p.variants[vi];
   const key = pi + "_" + vi;
-  const price = isVar ? p.variants[vi][1] : p.price;
+  const noprice = !isVar && !priceNum(p.price);
+  const price = isVar ? priceNum(p.variants[vi][1]) : priceNum(p.price);
   const vlabel = isVar ? p.variants[vi][0] : "";
   const existing = cart.find(c=>c.key===key);
   if(existing){ existing.qty++; }
-  else cart.push({ key, name_en:p.name_en, name_tc:p.name_tc, vlabel, price, qty:1 });
+  else cart.push({ key, name_en:p.name_en, name_tc:p.name_tc, vlabel, price, qty:1, noprice });
   saveCart(); renderCart();
   openCart();
 }
@@ -9592,7 +9598,7 @@ function cartItemName(it){
   const base = (LANG==="tc" && it.name_tc) ? it.name_tc : it.name_en;
   return it.vlabel ? `${base} — ${it.vlabel}` : base;
 }
-function cartTotal(){ return cart.reduce((s,it)=>s + it.price*it.qty, 0); }
+function cartTotal(){ return cart.reduce((s,it)=>s + (it.noprice ? 0 : priceNum(it.price)*it.qty), 0); }
 function cartCountTotal(){ return cart.reduce((s,it)=>s + it.qty, 0); }
 
 function renderCart(){
@@ -9612,7 +9618,7 @@ function renderCart(){
     <div class="cart-item">
       <div class="ci-info">
         <div class="ci-name">${cartItemName(it)}</div>
-        <div class="ci-price">${it.noprice ? "NA" : fmt(it.price)}</div>
+        <div class="ci-price">${it.noprice ? T.cart_quote[LANG] : fmt(it.price)}</div>
         <div class="ci-controls">
           <button class="qbtn" data-q="minus" data-k="${it.key}">−</button>
           <span class="qnum">${it.qty}</span>
@@ -9622,7 +9628,7 @@ function renderCart(){
       </div>
     </div>`).join("");
   footEl.innerHTML = `
-    <div class="cart-total-row"><span class="ct-label">${T.cart_total[LANG]}</span><span class="ct-amt">${cartTotal()>0 ? fmt(cartTotal()) : "NA"}</span></div>
+    <div class="cart-total-row"><span class="ct-label">${T.cart_total[LANG]}</span><span class="ct-amt">${cartTotal()>0 ? fmt(cartTotal()) : T.cart_quote[LANG]}</span></div>
     <a class="cart-send-btn" id="cartSend" href="#">
       <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2a10 10 0 0 0-8.6 15l-1.3 4.7 4.8-1.3A10 10 0 1 0 12 2zm5.8 14.1c-.2.7-1.4 1.3-2 1.4-.5.1-1.2.1-1.9-.1-.4-.1-1-.3-1.7-.6-3-1.3-4.9-4.3-5.1-4.5-.1-.2-1.2-1.5-1.2-2.9s.7-2 1-2.3c.2-.3.5-.3.7-.3h.5c.2 0 .4 0 .6.5l.8 2c.1.1.1.3 0 .5l-.4.5-.3.3c-.2.2-.3.4-.2.6.2.4.9 1.4 1.9 2.3 1.3 1.1 2.3 1.5 2.6 1.6.2.1.4.1.6-.1l.8-1c.2-.2.4-.2.6-.1l2 .9c.2.1.4.2.4.3.1.2.1.8-.1 1.5z"/></svg>
       ${T.cart_send[LANG]}
@@ -9639,9 +9645,9 @@ function renderCart(){
 function sendCartWhatsApp(){
   if(!cart.length) return;
   let lines = [T.cart_wa_intro[LANG], ""];
-  cart.forEach(it=>{ lines.push(`• ${cartItemName(it)} ×${it.qty} = ${it.noprice ? "NA" : fmt(it.price*it.qty)}`); });
+  cart.forEach(it=>{ lines.push(`• ${cartItemName(it)} ×${it.qty} = ${it.noprice ? T.cart_quote[LANG] : fmt(it.price*it.qty)}`); });
   lines.push("");
-  lines.push(`${T.cart_wa_total[LANG]}: ${cartTotal()>0 ? fmt(cartTotal()) : "NA"}`);
+  lines.push(`${T.cart_wa_total[LANG]}: ${cartTotal()>0 ? fmt(cartTotal()) : T.cart_quote[LANG]}`);
   const refTag = window.clRef ? window.clRef().trim() : "";
   if (refTag) lines.push(refTag);
   const msg = encodeURIComponent(lines.join("\n"));

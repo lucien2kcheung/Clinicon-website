@@ -87,3 +87,37 @@ link to these pages, and the build fails if a tile points at a page that does no
 product pages look identical to the site. If you later restyle the homepage, re-copy that
 `<style>` content into `assets/site.css` (or tell your developer to), so the product pages stay
 in sync.
+
+## FAQ, Services, How to order, Clinic packages, Terms (English + Chinese URLs)
+
+These five pages are hand-written masters in `src/pages/<slug>.html`, with every phrase written twice:
+`<span class="pp-en">English</span><span class="pp-tc">中文</span>`. **Edit the master, never the generated files**, then run:
+
+```
+node build-pages.js
+node build-products.js     # only needed if you changed pages.config.js (it writes the sitemap)
+```
+
+`build-pages.js` writes `/<slug>` (English only) and `/zh/<slug>` (Chinese only), each with its own title, meta
+description, H1, JSON-LD, canonical, `hreflang` pair and a language switch that links to the other URL.
+`pages.config.js` holds the English meta description (max 155 characters, enforced by the build) and the Chinese
+title and description. If the JSON-LD contains a string that is not visible on the page, the build stops and asks for
+a Chinese version in `zh.ld`. Terms and Conditions has `zh: null` because only its header and footer were ever
+translated, so it stays English-only until a proper Chinese legal text exists. `src/` is excluded from the deploy
+(`.vercelignore`) and sent with `X-Robots-Tag: noindex` as a backup.
+
+## Prices that are missing
+
+A product with no usable price (`"N/A"`, empty, or 0) shows "Request a quote" / 查詢報價 on product pages, brand
+pages, the homepage and the cart, and gets no `Offer` in its JSON-LD. `build-products.js` stops the build if any page
+would contain `NaN`, `undefined`, an "NA" price, or a non-numeric `price` in JSON-LD.
+
+## Rebuilding without touching every page
+
+`priceValidUntil` is "build date + 1 year", so a normal rebuild rewrites all ~750 pages. Pin the date to keep a
+commit down to the real changes: `BUILD_DATE=2026-11-09 node build-products.js`.
+
+## Renaming a product
+
+The slug comes from the English name. When you fix a name, add a 301 for `/products/<old>` and `/zh/products/<old>`
+in `vercel.json`, and delete the old folders (the build does not remove them).
