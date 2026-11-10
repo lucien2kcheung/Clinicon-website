@@ -82,11 +82,11 @@
     <div class="pp-rel-grid"><a class="pp-rel-card" href="/products/medicom-surgical-gown-m-m">
       <div class="pp-rel-fig"><div class="pp-rel-noimg"></div></div>
       <div class="pp-rel-name"><span class="pp-en" lang="en">Medicom Surgical Gown (M) 手術袍 M碼</span><span class="pp-tc" lang="zh-Hant-HK">Medicom Surgical Gown (M) 手術袍 M碼</span></div>
-      <div class="pp-rel-price"><span class="pp-en" lang="en">NA</span><span class="pp-tc" lang="zh-Hant-HK">NA</span></div>
+      <div class="pp-rel-price"><span class="pp-en" lang="en">Request a quote</span><span class="pp-tc" lang="zh-Hant-HK">查詢報價</span></div>
     </a><a class="pp-rel-card" href="/products/medicom-surgical-gown-l-l">
       <div class="pp-rel-fig"><div class="pp-rel-noimg"></div></div>
       <div class="pp-rel-name"><span class="pp-en" lang="en">MEDICOM Surgical Gown (L) 手術袍 L碼</span><span class="pp-tc" lang="zh-Hant-HK">MEDICOM Surgical Gown (L) 手術袍 L碼</span></div>
-      <div class="pp-rel-price"><span class="pp-en" lang="en">NA</span><span class="pp-tc" lang="zh-Hant-HK">NA</span></div>
+      <div class="pp-rel-price"><span class="pp-en" lang="en">Request a quote</span><span class="pp-tc" lang="zh-Hant-HK">查詢報價</span></div>
     </a><a class="pp-rel-card" href="/products/surgical-mask">
       <div class="pp-rel-fig"><img src="/images/MAAAKA.jpg" alt="Surgical Mask" loading="lazy"></div>
       <div class="pp-rel-name"><span class="pp-en" lang="en">Surgical Mask</span><span class="pp-tc" lang="zh-Hant-HK">高質外科口罩</span></div>
@@ -122,7 +122,7 @@
         <a href="/#about"><span class="pp-en" lang="en">About Us</span><span class="pp-tc" lang="zh-Hant-HK">關於我們</span></a>
         <a href="/#contact"><span class="pp-en" lang="en">Contact</span><span class="pp-tc" lang="zh-Hant-HK">聯絡我們</span></a>
         <a href="/faq"><span class="pp-en" lang="en">FAQ</span><span class="pp-tc" lang="zh-Hant-HK">常見問題</span></a>
-        <a href="/terms-and-conditions"><span class="pp-en" lang="en">Terms &amp; Conditions</span><span class="pp-tc" lang="zh-Hant-HK">條款及細則</span></a>
+        <a href="/terms-and-conditions"><span class="pp-en" lang="en">Terms &amp; Conditions</span><span class="pp-tc" lang="zh-Hant-HK">條款及細則（英文版）</span></a>
       </div>
       <div>
         <h4><span class="pp-en" lang="en">Contact</span><span class="pp-tc" lang="zh-Hant-HK">聯絡</span></h4>
@@ -144,7 +144,8 @@
   function set(l){document.documentElement.setAttribute("data-pp-lang",l);
     document.documentElement.setAttribute("lang",l==="tc"?"zh-Hant":"en");
     try{localStorage.setItem(K,l)}catch(e){}
-    document.querySelectorAll(".langtog button").forEach(function(b){b.classList.toggle("active",b.getAttribute("data-pp-lang")===l)});}
+    document.querySelectorAll(".langtog button").forEach(function(b){b.classList.toggle("active",b.getAttribute("data-pp-lang")===l)});
+    document.querySelectorAll('a[href="/faq"],a[href="/zh/faq"]').forEach(function(a){a.setAttribute("href",l==="tc"?"/zh/faq":"/faq")});}
   var init="en";try{init=localStorage.getItem(K)||"en"}catch(e){}
   set(init);
   document.querySelectorAll(".langtog button").forEach(function(b){b.addEventListener("click",function(){set(b.getAttribute("data-pp-lang"))})});

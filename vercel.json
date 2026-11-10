@@ -24,6 +24,15 @@
           "value": "max-age=63072000"
         }
       ]
+    },
+    {
+      "source": "/src/(.*)",
+      "headers": [
+        {
+          "key": "X-Robots-Tag",
+          "value": "noindex, nofollow"
+        }
+      ]
     }
   ],
   "redirects": [
@@ -719,12 +728,12 @@
     },
     {
       "source": "/product-page/3m-n95-1860-repirator-mask-防護口罩",
-      "destination": "/products/3m-n95-1860-repirator-mask",
+      "destination": "/products/3m-n95-1860-respirator-mask",
       "permanent": true
     },
     {
       "source": "/product-page/3m-n95-1860-repirator-mask-%E9%98%B2%E8%AD%B7%E5%8F%A3%E7%BD%A9",
-      "destination": "/products/3m-n95-1860-repirator-mask",
+      "destination": "/products/3m-n95-1860-respirator-mask",
       "permanent": true
     },
     {
@@ -819,7 +828,7 @@
     },
     {
       "source": "/product-page/eos-disposalble-proctoscope",
-      "destination": "/products/eos-disposalble-proctoscope",
+      "destination": "/products/eos-disposable-proctoscope",
       "permanent": true
     },
     {
@@ -1874,7 +1883,7 @@
     },
     {
       "source": "/product-page/disposalble-proctoscope",
-      "destination": "/products/eos-disposalble-proctoscope",
+      "destination": "/products/eos-disposable-proctoscope",
       "permanent": true
     },
     {
@@ -1910,6 +1919,26 @@
     {
       "source": "/zh/product-page/:slug*",
       "destination": "/product-page/:slug*",
+      "permanent": true
+    },
+    {
+      "source": "/products/3m-n95-1860-repirator-mask",
+      "destination": "/products/3m-n95-1860-respirator-mask",
+      "permanent": true
+    },
+    {
+      "source": "/zh/products/3m-n95-1860-repirator-mask",
+      "destination": "/zh/products/3m-n95-1860-respirator-mask",
+      "permanent": true
+    },
+    {
+      "source": "/products/eos-disposalble-proctoscope",
+      "destination": "/products/eos-disposable-proctoscope",
+      "permanent": true
+    },
+    {
+      "source": "/zh/products/eos-disposalble-proctoscope",
+      "destination": "/zh/products/eos-disposable-proctoscope",
       "permanent": true
     }
   ]

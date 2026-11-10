@@ -133,7 +133,7 @@
     <ul class="hub-list">
       <li><a href="/products/disposable-razor"><span class="pp-en" lang="en">Disposable Razor 手術除毛剃刀</span><span class="pp-tc" lang="zh-Hant-HK">Disposable Razor 手術除毛剃刀</span></a></li>
       <li><a href="/products/disposable-dermal-curette"><span class="pp-en" lang="en">皮膚刮匙 Disposable Dermal Curette</span><span class="pp-tc" lang="zh-Hant-HK">皮膚刮匙 Disposable Dermal Curette</span></a></li>
-      <li><a href="/products/eos-disposalble-proctoscope"><span class="pp-en" lang="en">EOS Disposalble Proctoscope</span><span class="pp-tc" lang="zh-Hant-HK">EOS Disposalble Proctoscope</span></a></li>
+      <li><a href="/products/eos-disposable-proctoscope"><span class="pp-en" lang="en">EOS Disposable Proctoscope</span><span class="pp-tc" lang="zh-Hant-HK">EOS Disposable Proctoscope</span></a></li>
       <li><a href="/products/disposable-ear-curette"><span class="pp-en" lang="en">Disposable Ear Curette</span><span class="pp-tc" lang="zh-Hant-HK">耳垢/異物挖匙</span></a></li>
     </ul>
   </section>
@@ -448,7 +448,7 @@
       <li><a href="/products/kenz-surgical-mask"><span class="pp-en" lang="en">Kenz Surgical Mask 日本醫用外科口罩</span><span class="pp-tc" lang="zh-Hant-HK">Kenz Surgical Mask 日本醫用外科口罩</span></a></li>
       <li><a href="/products/3m-n95-1804s-respirator-mask"><span class="pp-en" lang="en">3M N95 1804S Respirator Mask 防護口罩</span><span class="pp-tc" lang="zh-Hant-HK">3M N95 1804S Respirator Mask 防護口罩</span></a></li>
       <li><a href="/products/3m-n95-1870-respirator-mask"><span class="pp-en" lang="en">3M N95 1870 Respirator Mask 防護口罩</span><span class="pp-tc" lang="zh-Hant-HK">3M N95 1870 Respirator Mask 防護口罩</span></a></li>
-      <li><a href="/products/3m-n95-1860-repirator-mask"><span class="pp-en" lang="en">3M N95 1860 Repirator Mask 防護口罩</span><span class="pp-tc" lang="zh-Hant-HK">3M N95 1860 Repirator Mask 防護口罩</span></a></li>
+      <li><a href="/products/3m-n95-1860-respirator-mask"><span class="pp-en" lang="en">3M N95 1860 Respirator Mask 防護口罩</span><span class="pp-tc" lang="zh-Hant-HK">3M N95 1860 Respirator Mask 防護口罩</span></a></li>
       <li><a href="/products/soft-touch-sterile-examination-glove-size-m-m"><span class="pp-en" lang="en">Soft-touch Sterile Examination Glove Size &#39;M&#39; 消毒紙托手套 M碼</span><span class="pp-tc" lang="zh-Hant-HK">Soft-touch Sterile Examination Glove Size &#39;M&#39; 消毒紙托手套 M碼</span></a></li>
       <li><a href="/products/surgical-mask-adult-white-box-50-japan"><span class="pp-en" lang="en">Surgical Mask, Adult-white, BOX/50,JAPAN</span><span class="pp-tc" lang="zh-Hant-HK">Surgical Mask, Adult-white, BOX/50,JAPAN</span></a></li>
       <li><a href="/products/soft-touch-examination-glove-s-s"><span class="pp-en" lang="en">Soft-Touch Examination Glove (S) 檢查手套 S碼</span><span class="pp-tc" lang="zh-Hant-HK">Soft-Touch Examination Glove (S) 檢查手套 S碼</span></a></li>
@@ -565,7 +565,7 @@
         <a href="/#about"><span class="pp-en" lang="en">About Us</span><span class="pp-tc" lang="zh-Hant-HK">關於我們</span></a>
         <a href="/#contact"><span class="pp-en" lang="en">Contact</span><span class="pp-tc" lang="zh-Hant-HK">聯絡我們</span></a>
         <a href="/faq"><span class="pp-en" lang="en">FAQ</span><span class="pp-tc" lang="zh-Hant-HK">常見問題</span></a>
-        <a href="/terms-and-conditions"><span class="pp-en" lang="en">Terms &amp; Conditions</span><span class="pp-tc" lang="zh-Hant-HK">條款及細則</span></a>
+        <a href="/terms-and-conditions"><span class="pp-en" lang="en">Terms &amp; Conditions</span><span class="pp-tc" lang="zh-Hant-HK">條款及細則（英文版）</span></a>
       </div>
       <div>
         <h4><span class="pp-en" lang="en">Contact</span><span class="pp-tc" lang="zh-Hant-HK">聯絡</span></h4>
@@ -587,7 +587,8 @@
   function set(l){document.documentElement.setAttribute("data-pp-lang",l);
     document.documentElement.setAttribute("lang",l==="tc"?"zh-Hant":"en");
     try{localStorage.setItem(K,l)}catch(e){}
-    document.querySelectorAll(".langtog button").forEach(function(b){b.classList.toggle("active",b.getAttribute("data-pp-lang")===l)});}
+    document.querySelectorAll(".langtog button").forEach(function(b){b.classList.toggle("active",b.getAttribute("data-pp-lang")===l)});
+    document.querySelectorAll('a[href="/faq"],a[href="/zh/faq"]').forEach(function(a){a.setAttribute("href",l==="tc"?"/zh/faq":"/faq")});}
   var init="en";try{init=localStorage.getItem(K)||"en"}catch(e){}
   set(init);
   document.querySelectorAll(".langtog button").forEach(function(b){b.addEventListener("click",function(){set(b.getAttribute("data-pp-lang"))})});

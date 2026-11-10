@@ -109,7 +109,7 @@
         <a href="/#about"><span class="pp-en" lang="en">About Us</span><span class="pp-tc" lang="zh-Hant-HK">關於我們</span></a>
         <a href="/#contact"><span class="pp-en" lang="en">Contact</span><span class="pp-tc" lang="zh-Hant-HK">聯絡我們</span></a>
         <a href="/faq"><span class="pp-en" lang="en">FAQ</span><span class="pp-tc" lang="zh-Hant-HK">常見問題</span></a>
-        <a href="/terms-and-conditions"><span class="pp-en" lang="en">Terms &amp; Conditions</span><span class="pp-tc" lang="zh-Hant-HK">條款及細則</span></a>
+        <a href="/terms-and-conditions"><span class="pp-en" lang="en">Terms &amp; Conditions</span><span class="pp-tc" lang="zh-Hant-HK">條款及細則（英文版）</span></a>
       </div>
       <div>
         <h4><span class="pp-en" lang="en">Contact</span><span class="pp-tc" lang="zh-Hant-HK">聯絡</span></h4>
@@ -131,7 +131,8 @@
   function set(l){document.documentElement.setAttribute("data-pp-lang",l);
     document.documentElement.setAttribute("lang",l==="tc"?"zh-Hant":"en");
     try{localStorage.setItem(K,l)}catch(e){}
-    document.querySelectorAll(".langtog button").forEach(function(b){b.classList.toggle("active",b.getAttribute("data-pp-lang")===l)});}
+    document.querySelectorAll(".langtog button").forEach(function(b){b.classList.toggle("active",b.getAttribute("data-pp-lang")===l)});
+    document.querySelectorAll('a[href="/faq"],a[href="/zh/faq"]').forEach(function(a){a.setAttribute("href",l==="tc"?"/zh/faq":"/faq")});}
   var init="en";try{init=localStorage.getItem(K)||"en"}catch(e){}
   set(init);
   document.querySelectorAll(".langtog button").forEach(function(b){b.addEventListener("click",function(){set(b.getAttribute("data-pp-lang"))})});
